@@ -1,8 +1,3 @@
-local Unlocker, awful, project = ...
-local monk = project.monk.fistweaver
-
-print("Sisterfister Monk PvP rotation loaded!")
-
 monk:Init(function()local Unlocker, awful, project = ...
 local monk = project.monk.fistweaver
 
