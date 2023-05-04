@@ -1,7 +1,34 @@
 local Unlocker, awful, project = ...
 local monk = project.monk.mistweaver
 
-local Spell = awful.Spell
+-- Define Spell class (example)
+local Spell = {
+  __index = function(self, key)
+    if key == "damage" then
+      return self.damageType
+    elseif key == "heal" then
+      return self.healing
+    elseif key == "cc" then
+      return self.ccType
+    elseif key == "targeted" then
+      return self.targetType
+    else
+      return rawget(self, key)
+    end
+  end,
+  __call = function(self, spellID, options)
+    options = options or {}
+    return setmetatable({
+      id = spellID,
+      damageType = options.damage,
+      healing = options.heal,
+      ccType = options.cc,
+      targetType = options.targeted,
+    }, self)
+  end,
+}
+setmetatable(Spell, { __call = function(_, ...) return Spell(...) end })
+
 awful.Populate({
   tigerPalm = Spell(100780, { damage = "physical" }),
   blackoutKick = Spell(100784, { damage = "physical" }),
@@ -41,82 +68,4 @@ chiTorpedo:Callback("gapclose", function(spell)
             awful.alert("Roll (Gapclose)", spell.id)
         end
     end
-end)
-
--- damage callbacks
-
-tigerPalm:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-blackoutKick:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-risingSunKick:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-spinningCraneKick:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-touchOfDeath:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-faelineStomp:Callback(function(spell)
-    spell:Cast(target)
-end)
-
--- healing callbacks
-
-envelopingMist:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-renewingMist:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-soothingMist:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-essenceFont:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-chiWave:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-lifeCocoon:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-
--- cc callbacks
-
-legSweep:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-paralyze:Callback(function(spell)
-    spell:Cast(target)
-end)
-
--- defensive callbacks
-
-dampenHarm:Callback(function(spell)
-    spell:Cast(target)
-end
-
-diffuseMagic:Callback(function(spell)
-    spell:Cast(target)
-end)
-
-fortifyingBrew:Callback(function(spell)
-    spell:Cast(target)
-end)
 end)
