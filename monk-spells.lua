@@ -16,7 +16,7 @@ awful.Populate({
   lifeCocoon = Spell(116849, { heal = true, targeted = true }),
   roll = Spell(109132),
   chiTorpedo = Spell(119582),
-  faelineStomp = Spell(327037),
+  faelineStomp = Spell(327104),
   paralyze = Spell(115078, { cc = true, targeted = true }),
   legSweep = Spell(119381, { cc = true, targeted = true }),
   flyingSerpentKick = Spell(101545, { damage = "magical" }),
