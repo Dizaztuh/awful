@@ -3,49 +3,26 @@ local monk = project.monk.mistweaver
 
 local Spell = awful.Spell
 awful.Populate({
-
-  -- static objects [not req. but tiny perf. increase and takes care of declaration where i use them]
-  target = awful.target,
-  focus = awful.focus,
-  player = awful.player,
-  healer = awful.healer,
-  pet = awful.pet,
-  enemyHealer = awful.enemyHealer,
-
-  -- damage
   tigerPalm = Spell(100780, { damage = "physical" }),
   blackoutKick = Spell(100784, { damage = "physical" }),
   risingSunKick = Spell(107428, { damage = "physical", targeted = true }),
   spinningCraneKick = Spell(101546, { damage = "physical" }),
   touchOfDeath = Spell(115080, { damage = "physical", targeted = true }),
-
-
-  -- healing
   envelopingMist = Spell(124682, { heal = true, targeted = true }),
   renewingMist = Spell(119611, { heal = true, targeted = true }),
   soothingMist = Spell(115175, { heal = true }),
   essenceFont = Spell(191837, { heal = true }),
   chiWave = Spell(115098, { damage = "magical", heal = true }),
   lifeCocoon = Spell(116849, { heal = true, targeted = true }),
- 
-
-  -- movement
   roll = Spell(109132),
   chiTorpedo = Spell(119582),
   faelineStomp = Spell(327037),
-
-  -- cc
   paralyze = Spell(115078, { cc = true, targeted = true }),
   legSweep = Spell(119381, { cc = true, targeted = true }),
-
-  -- offensive
   flyingSerpentKick = Spell(101545, { damage = "magical" }),
-
-  -- defensive
   fortifyingBrew = Spell(243435),
   dampenHarm = Spell(122278),
   diffuseMagic = Spell(122783),
-
 }, monk, getfenv(1))
 
 
