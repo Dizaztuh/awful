@@ -24,8 +24,6 @@ if target.distance <= 8 then
 faelineStomp:Cast(target)
 end
 
-css
-Copy code
 if risingSunKick:Cooldown() == 0 then
     risingSunKick:Cast(target)
 else
