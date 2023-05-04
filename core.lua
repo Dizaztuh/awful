@@ -1,4 +1,4 @@
 local Unlocker, awful, project = ...
-print("project Monk rotation loaded and ready!")
+print("Sisterfister Monk Loaded!")
 project.monk = {}
 project.monk.mistweaver = awful.Actor:New({ spec = 2, class = "monk" })
