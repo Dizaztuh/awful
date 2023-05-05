@@ -53,8 +53,11 @@ faelineStomp:Callback(function (spell)
 end)
 
 tigerPalm:Callback(function(spell)
-    spell:Cast(target)
-    blackoutKick.Queue
+    if lastSpellCast ~= "tigerPalm" then
+        spell:Cast(target)
+        lastSpellCast = "tigerPalm"
+        blackoutKick:Caster(target)
+    end
 end)
 
 fortifyingBrew:Callback(function(spell)
