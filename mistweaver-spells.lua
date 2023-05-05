@@ -116,9 +116,10 @@ end)
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function()
-    -- Check if Rising Sun Kick is castable and if Blackout Kick is on cooldown
-    -- This assumes that if Blackout Kick is on cooldown, it must have been cast recently
-    if risingSunKick:Castable(target) and blackoutKick.cd > 0 then
+    -- Check if Rising Sun Kick is castable and if the cooldown of Blackout Kick has passed
+    -- This ensures that Rising Sun Kick is only cast if Blackout Kick has been cast
+    if risingSunKick:Castable(target) and blackoutKick.cd == 0 then
+        -- Cast Rising Sun Kick on the target
         risingSunKick:Cast(target)
         return
     end
@@ -126,9 +127,11 @@ end)
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function()
-    -- If Blackout Kick is castable, then cast Blackout Kick.
-    -- Additionally, cast Blackout Kick if Rising Sun Kick is on cooldown, as it can reset its cooldown.
+    -- If Blackout Kick is castable and the cooldown of Tiger Palm has passed or if Rising Sun Kick is on cooldown
+    -- This ensures that Blackout Kick is only cast after Tiger Palm or when Rising Sun Kick is on cooldown
+    -- Since Tiger Palm has no cooldown, it should always be ready to cast before Blackout Kick
     if blackoutKick:Castable(target) and risingSunKick.cd > 0 then
+        -- Cast Blackout Kick on the target
         blackoutKick:Cast(target)
         return
     end
@@ -136,12 +139,15 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and Rising Sun Kick and Blackout Kick are on cooldown, then cast Tiger Palm.
-    -- This assumes that if Rising Sun Kick and Blackout Kick are on cooldown, it's safe to cast Tiger Palm.
+    -- If Tiger Palm is castable and if Rising Sun Kick and Blackout Kick are on cooldown
+    -- This ensures that Tiger Palm is cast when Rising Sun Kick and Blackout Kick are on cooldown
+    -- Since Tiger Palm has no cooldown, it can always be cast if the other two abilities are on cooldown
     if tigerPalm:Castable(target) and risingSunKick.cd > 0 and blackoutKick.cd > 0 then
+        -- Cast Tiger Palm on the target
         tigerPalm:Cast(target)
         return
     end
 end)
+
 
 
