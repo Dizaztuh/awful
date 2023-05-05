@@ -36,19 +36,17 @@ awful.Populate({
     healingElixir = Spell(122281)
 }, mistweaver, getfenv(1))
 
-local lastBlackoutKickTime = 0 -- initialize the time of the last blackout kick cast to 0
-
-tigerPalm:Callback(function (spell)
-    spell:Cast(target)
-end)
-
-blackoutKick:Callback(function (spell)
-    if risingSunKick.cd > 0 or GetTime() - lastBlackoutKickTime < 10 then
-        spell:Cast(target)
+blackoutKick:Callback(function(spell)
+    if risingSunKick.cd == 0 then
+        risingSunKick:Cast(target)
     else
         spell:Cast(target)
-        lastBlackoutKickTime = GetTime()
     end
+end)
+
+
+risingSunKick:Callback(function(spell)
+    spell:Cast(target)
 end)
 
 faelineStomp:Callback(function (spell)
