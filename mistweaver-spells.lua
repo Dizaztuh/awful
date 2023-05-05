@@ -38,14 +38,9 @@ awful.Populate({
 
 blackoutKick:Callback(function(spell)
     if risingSunKick.cd == 0 then
-        risingSunKick:Cast(target)
+    risingSunKick:Cast(target)
     else
-        spell:Cast(target)
-    end
-    if player.lastCast ~= "Blackout Kick" then
-        -- Cast Tiger Palm
-        spell:Cast(target)
-        player.lastCast = "Blackout Kick"
+    spell:Cast(target)
     end
 end)
 
@@ -58,14 +53,7 @@ faelineStomp:Callback(function (spell)
 end)
 
 tigerPalm:Callback(function(spell)
-    -- Check if Tiger Palm was not the last spell cast
-    if player.lastCast ~= "Tiger Palm" then
-        -- Cast Tiger Palm
-        spell:Cast(target)
-
-        -- Set the lastCast property to "Tiger Palm"
-        player.lastCast = "Tiger Palm"
-    end
+    spell:Cast(target)
 end)
 
 fortifyingBrew:Callback(function(spell)
