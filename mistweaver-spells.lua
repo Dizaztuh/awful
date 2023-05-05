@@ -114,27 +114,29 @@ paralyze:Callback(function(spell)
     end
 end)
 
--- Callback for Tiger Palm
-tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and the more important spells (Blackout Kick and Rising Sun Kick) are on cooldown,
-    -- then cast Tiger Palm.
-    if tigerPalm:Castable(target) and 
-       (blackoutKick.cd > blackoutKick.gcd or risingSunKick.cd > risingSunKick.gcd) then
-        -- Cast Tiger Palm on the target.
+local lastCastSpellId = nil
+
+-- Callback for the rotation
+rotation:Callback(function()
+    -- If Rising Sun Kick is castable, cast Rising Sun Kick.
+    if risingSunKick:Castable(target) then
+        risingSunKick:Cast(target)
+        lastCastSpellId = risingSunKick.id
+        return
+    end
+
+    -- If Blackout Kick is castable and Tiger Palm was the last cast spell, cast Blackout Kick.
+    if blackoutKick:Castable(target) and lastCastSpellId == tigerPalm.id then
+        blackoutKick:Cast(target)
+        lastCastSpellId = blackoutKick.id
+        return
+    end
+
+    -- If Tiger Palm is castable and Rising Sun Kick and Blackout Kick are on cooldown, cast Tiger Palm.
+    if tigerPalm:Castable(target) and risingSunKick.cd > 0 and blackoutKick.cd > 0 then
         tigerPalm:Cast(target)
+        lastCastSpellId = tigerPalm.id
         return
     end
 end)
 
-
-blackoutKick:Callback("prio", function(spell)
-    if not spell:Castable(target) then return end
-    if tigerPalm.cd > 0 then
-        return spell:Cast(target)
-    end
-end)
-
-risingSunKick:Callback("prio", function(spell)
-    if not spell:Castable(target) then return end
-    return spell:Cast(target)
-end)
