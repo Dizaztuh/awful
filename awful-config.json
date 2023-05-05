@@ -1,8 +1,0 @@
-{
-    "load": [
-    "gui.lua",
-    "core.lua",
-    "sisterfister.lua",
-    "monk-spells.lua"
-    ]
-    }
