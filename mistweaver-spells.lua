@@ -25,7 +25,7 @@ awful.Populate({
     zenSpheres = Spell(410777, {heal = true, targeted = true}),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
-    faelineStomp = Spell(327040),
+    faelineStomp = Spell(388193),
     paralyze = Spell(115078, { charm = true, targeted = true }),
     legSweep = Spell(119381, { stun = true, targeted = true }),
     ringOfPeace = Spell(116844, { cc = true, targeted = false }),
