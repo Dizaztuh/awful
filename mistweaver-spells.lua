@@ -53,10 +53,10 @@ faelineStomp:Callback(function (spell)
 end)
 
 tigerPalm:Callback(function(spell)
-    if lastSpellCast ~= "tigerPalm" then
+    if player.lastcast == "Tiger Palm" then
+        return
+    else
         spell:Cast(target)
-        lastSpellCast = "tigerPalm"
-        blackoutKick:Caster(target)
     end
 end)
 
