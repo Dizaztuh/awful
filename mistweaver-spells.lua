@@ -108,7 +108,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within 20 yards range, and the target's health is below 40%
-    if enemyHealer.exists and enemyHealer.Distance() <= 20 and target.hp < 0.4 then
+    if enemyHealer.exists and enemyHealer.Distance() <= 20 and target.hp < 40 then
         -- If the conditions are met, cast Paralyze on the enemy healer
         spell:Cast(enemyHealer)
     end
@@ -135,7 +135,7 @@ end)
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function()
-    if risingSunKick:Castable(target) then
+    if risingSunKick:Castable(target) and player.lastCast == blackoutkick.id then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
     end
