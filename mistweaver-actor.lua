@@ -5,7 +5,7 @@ local risingSunKickCD = 0
 -- Print message to confirm addon is loaded
 print("Sisterfister loaded and ready to fist!")
 
-awful.events:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", handleCombatEvent)
+awful.events:RegisterEvent("PLAYER_REGEN_DISABLED", startRotation)
 
 local function defensiveCheck()
     -- Check if an offensive cooldown was used
@@ -55,7 +55,7 @@ end
         essenceFont()
     end
 
-local function rotation()
+local function startRotation()
     -- Keep in mind we're only doing *anything* in this if/then statement if there is an enemy target.
     
     if target.enemy then
