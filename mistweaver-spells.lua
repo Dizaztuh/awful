@@ -36,14 +36,6 @@ awful.Populate({
     healingElixir = Spell(122281)
 }, mistweaver, getfenv(1))
 
-target = awful.target,
-focus = awful.focus,
-player = awful.player,
-healer = awful.healer,
-pet = awful.pet,
-enemyHealer = awful.enemyHealer,
-enemy = awful.enemy,
-
 blackoutKick:Callback(function(spell)
     if risingSunKick.cd == 0 then
         risingSunKick:Cast
