@@ -135,10 +135,9 @@ end)
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function()
-    if risingSunKick:Castable(target) and player.lastCast ~= risingSunKick.id then
+    if risingSunKick:Castable(target) then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
-        return
     end
 end)
 
