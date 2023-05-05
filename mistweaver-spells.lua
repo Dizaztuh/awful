@@ -30,16 +30,11 @@ awful.Populate({
     sphereofHope = Spell (410777, {heal = true, targeted = true })
 }, mistweaver, getfenv(1))
 
--- Create a callback for the Life Cocoon ability
+
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        -- If the friend is not in combat, their health is above 50%, or they are out of the range of Life Cocoon, we skip them
-        -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% health, and are within the range of Life Cocoon
-        -- friend.dist provides the distance to the friend
-        -- lifeCocoon.range provides the range of the Life Cocoon spell
-        -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
-        if not friend.combat or friend.hp > 85 or sphereofHope.dist > sphereofHope.range then 
+        if not friend.combat or friend.hp > 85 or sphereofHope.distance > sphereofHope.range then 
             return 
         end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
@@ -47,19 +42,13 @@ sphereofHope:Callback(function(spell)
     end)
 end)
 
--- Create a callback for the Life Cocoon ability
+
 envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        -- If the friend is not in combat, their health is above 50%, or they are out of the range of Life Cocoon, we skip them
-        -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% health, and are within the range of Life Cocoon
-        -- friend.dist provides the distance to the friend
-        -- lifeCocoon.range provides the range of the Life Cocoon spell
-        -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
-        if not friend.combat or friend.hp > 70 or envelopingMist.dist > envelopingMist.range then 
+        if not friend.combat or friend.hp > 70 or envelopingMist.distance > envelopingMist.range then 
             return 
         end
-        -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return spell:Cast(friend)
     end)
 end)
