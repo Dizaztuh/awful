@@ -38,14 +38,14 @@ awful.Populate({
 
 local lastBlackoutKickTime = 0 -- initialize the time of the last blackout kick cast to 0
 
-blackoutKick:Callback(function (spell)
+blackoutKick:Callback(function (spell, target)
     spell:Cast(target)
     lastBlackoutKickTime = GetTime() -- record the time of the last blackout kick cast
     if risingSunKick.cd > 0 then -- check if risingSunKick is on cooldown using the "cd" attribute
     end
 end)
 
-risingSunKick:Callback(function (spell)
+risingSunKick:Callback(function (spell, target)
     spell:Cast(target)
     if blackoutKick.cd == 0 and GetTime() - lastBlackoutKickTime > 10 then -- check if blackoutKick is off cooldown and if 10 seconds have passed since the last blackout kick cast
         blackoutKick:Cast(target) -- cast blackoutKick
@@ -100,6 +100,12 @@ legSweep:Callback(function(spell)
         -- If the target's health is at or below 40%, cast Leg Sweep on the target
         spell:Cast(target)
         return
+    end
+end)
+
+dampenHarm:Callback(function(spell)
+    if player.hp <= 0.6 then -- check if the player's health is at or below 60%
+        spell:Cast(player) -- cast Dampen Harm on the player
     end
 end)
 
