@@ -1,7 +1,0 @@
-{
-    "load": [
-    "core.lua",
-    "sisterfister.lua",
-    "monk-spells.lua"
-    ]
-    }
