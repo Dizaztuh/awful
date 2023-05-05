@@ -47,7 +47,7 @@ local function defensiveCheck()
         end
         if unit.healthPercent <= 40 and ringOfPeace:Cooldown() == 0 then
             local x, y, z = unit:Position()
-            ringOfPeace:Cast(x, y, z)
+            ringOfPeace(x, y, z)
         end
     end
 end
