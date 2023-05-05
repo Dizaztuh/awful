@@ -34,7 +34,7 @@ awful.Populate({
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        if not friend.combat or friend.hp > 0.85 or sphereofHope.distance > sphereofHope.range then 
+        if not friend.combat or friend.hp > 85 or sphereofHope.distance > sphereofHope.range then 
             return 
         end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
@@ -46,7 +46,7 @@ end)
 envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        if not friend.combat or friend.hp > 0.70 or envelopingMist.distance > envelopingMist.range then 
+        if not friend.combat or friend.hp > 70 or envelopingMist.distance > envelopingMist.range then 
             return 
         end
         return spell:Cast(friend)
@@ -61,13 +61,13 @@ faelineStomp:Callback(function (spell)
 end)
 
 fortifyingBrew:Callback(function(spell)
-    if player.health <= 0.40 then
+    if player.health <= 40 then
         spell:Cast()
     end
 end)
 
 healingElixir:Callback(function(spell)
-    if player.health <= 0.75 then
+    if player.health <= 75 then
         spell:Cast()
     end
 end)
@@ -80,7 +80,7 @@ diffuseMagic:Callback(function(spell)
     if player.debuffFrom(badStuff) then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         spell:Cast()
-    elseif player.hp <= 0.35 then
+    elseif player.hp <= 35 then
         -- If player hp is 0.35 or less, cast Diffuse Magic on the player
         spell:Cast()
     end
@@ -89,7 +89,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Check if the target's health percentage is at or below 40%
-    if target.hp <= 0.40 then
+    if target.hp <= 40 then
         -- If the target's health is at or below 40%, cast Leg Sweep on the target
         spell:Cast(target)
         return
@@ -97,7 +97,7 @@ legSweep:Callback(function(spell)
 end)
 
 dampenHarm:Callback(function(spell)
-    if player.hp <= 0.60 then -- check if the player's health is at or below 60%
+    if player.hp <= 60 then -- check if the player's health is at or below 60%
         spell:Cast() -- cast Dampen Harm on the player
     end
 end)
@@ -107,7 +107,7 @@ touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range
     awful.enemies.loop(function(enemy)
         -- Check if enemy hp is less than or equal to 15%
-        if enemy.hp <= 0.15 then
+        if enemy.hp <= 15 then
             -- Cast Touch of Death on the enemy
             spell:Cast(enemy)
             return true -- exit the loop after casting the spell
@@ -124,7 +124,7 @@ lifeCocoon:Callback(function(spell)
         -- friend.dist provides the distance to the friend
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
-        if not friend.combat or friend.hp > 0.50 or friend.dist > lifeCocoon.range then return end
+        if not friend.combat or friend.hp > 50 or friend.dist > lifeCocoon.range then return end
 
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
@@ -135,7 +135,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within 20 yards range, and the target's health is below 40%
-    if enemyHealer.Distance <= 20 and target.hp < 0.40 then
+    if enemyHealer.Distance <= 20 and target.hp < 40 then
         -- If the conditions are met, cast Paralyze on the enemy healer
         spell:Cast(enemyHealer)
     end
