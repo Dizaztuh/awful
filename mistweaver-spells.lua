@@ -130,7 +130,7 @@ risingSunKick:Callback(function()
     if risingSunKick:Castable(target) then
         risingSunKick:Cast(target)
     else
-        tigerPalm:Cast()
+        tigerPalm:Cast(target)
         return
     end
 end)
