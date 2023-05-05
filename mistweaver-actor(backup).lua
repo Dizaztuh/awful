@@ -7,8 +7,10 @@ print("Sisterfister loaded and ready to fist!")
 
 awful.events:RegisterEvent("PLAYER_REGEN_DISABLED", startRotation)
 
+-- Define a function called "defensiveCheck"
 local function defensiveCheck()
     -- Check if an offensive cooldown was used
+    -- "lastCast:HasAny()" checks if any of the given spell IDs were cast by the player recently
     if lastCast:HasAny(
         315443, 152861, -- Death Knight
         187827, 211048, 206491, 323639, -- Demon Hunter
@@ -24,14 +26,15 @@ local function defensiveCheck()
         107574, 1719, 184367, 227847 -- Warrior
     ) then
         -- Defensive abilities will be prioritized in this order: Fortifying Brew, Dampen Harm, Diffuse Magic
-        if fortifyingBrew:Cooldown() == 0 then
-            fortifyingBrew()
-        elseif dampenHarm:Cooldown() == 0 then
+        if fortifyingBrew.cd == 0 then -- "fortifyingBrew.cd" returns the remaining cooldown time for the Fortifying Brew spell
+            fortifyingBrew() -- cast Fortifying Brew if it's off cooldown
+        elseif dampenHarm.cd == 0 then
             dampenHarm()
-        elseif diffuseMagic:Cooldown() == 0 then
+        elseif diffuseMagic.cd == 0 then
             diffuseMagic()
         end
     end
+end
     
     -- Check if the Ancient Teachings: of the Monastery buff is not active and Faeline Stomp is on cooldown
     if not awful.player:Buff(126890) and faelineStomp:Cooldown() > 0 then
