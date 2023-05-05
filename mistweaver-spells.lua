@@ -114,11 +114,6 @@ paralyze:Callback(function(spell)
     end
 end)
 
--- Callback for Tiger Palm
-tigerPalm:Callback(function()
-
-    tigerPalm:Cast(target)
-end)
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function()
