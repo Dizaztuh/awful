@@ -10,7 +10,7 @@ mistweaver:Init(function()
     if target.enemy then
         player.face(target)
         StartAttack()
-        tigerPalm("prio")
+        tigerPalm()
         blackoutKick("prio")
         risingSunKick("prio")
         healingElixir()
