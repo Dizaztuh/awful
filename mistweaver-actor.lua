@@ -20,7 +20,4 @@ mistweaver:Init(function()
         legSweep()
         touchOfDeath()
     end
-    
-    -- This function will be called every frame, meaning that any action that needs to be taken
-    -- on a per-frame basis should be done within this function
 end)
