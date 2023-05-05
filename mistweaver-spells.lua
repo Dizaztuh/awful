@@ -56,7 +56,7 @@ tigerPalm:Callback(function(spell)
     -- Check if Tiger Palm was not the last spell cast
     if player.lastCast ~= "Tiger Palm" then
         -- Cast Tiger Palm
-        blackoutKick:Cast(target)
+        spell:Cast(target)
 
         -- Set the lastCast property to "Tiger Palm"
         player.lastCast = "Tiger Palm"
