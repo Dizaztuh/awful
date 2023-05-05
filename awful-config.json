@@ -1,7 +1,7 @@
 {
     "load": [
     "core.lua",
-    "sisterfister.lua",
-    "monk-spells.lua"
+    "mistweaver-actor.lua",
+    "mistweaver-spells.lua"
     ]
     }
