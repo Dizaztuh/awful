@@ -1,11 +1,11 @@
 -- Import the necessary modules and get the mistweaver monk profile
 local Unlocker, awful, project = ...
-local monk = project.monk.mistweaver
+local mistweaver = project.monk.mistweaver
 
 print("Sisterfister Loaded and ready to fist!")
 
 -- Initialize the mistweaver monk profile
-monk:Init(function()
+mistweaver:Init(function()
     -- Check if there is an enemy target
     if target.enemy then
         player.face(target)
