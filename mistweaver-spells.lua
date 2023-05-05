@@ -29,6 +29,12 @@ awful.Populate({
     healingElixir = Spell(122281, { heal = true })
 }, mistweaver, getfenv(1))
 
+zenSpheres:Callback(function (spell)
+    if zenSpheres:Castable(target) and not target.buff ("Sphere of Despair") then
+        spell:Cast(target)
+    end
+end)
+
 faelineStomp:Callback(function (spell)
     spell:Cast(target)
 end)
@@ -108,7 +114,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within 20 yards range, and the target's health is below 40%
-    if enemyHealer.exists and enemyHealer.Distance() <= 20 and target.hp < 40 then
+    if enemyHealer.Distance <= 20 and target.hp < 40 then
         -- If the conditions are met, cast Paralyze on the enemy healer
         spell:Cast(enemyHealer)
     end
