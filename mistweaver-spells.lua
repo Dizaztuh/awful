@@ -52,7 +52,7 @@ diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        spell:Cast
+        spell:Cast()
     elseif player.hp <= 35 then
         -- If player hp is 0.35 or less, cast Diffuse Magic on the player
         spell:Cast()
