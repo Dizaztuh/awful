@@ -53,6 +53,13 @@ sphereofHope:Callback(function(spell)
     end)
 end)
 
+envelopingMist:Callback(function (spell)
+    if envelopingMist.castTime <= 0 then
+    spell:Cast(target)
+    else
+        return
+end)
+
 faelineStomp:Callback(function (spell)
     spell:Cast(target)
 end)
