@@ -26,7 +26,7 @@ awful.Populate({
     fortifyingBrew = Spell(115203, { heal = true }),
     dampenHarm = Spell(122278),
     diffuseMagic = Spell(122783),
-    healingElixir = Spell(122281, { heal = true })
+    healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, {heal = true, targeted = true })
 }, mistweaver, getfenv(1))
 
