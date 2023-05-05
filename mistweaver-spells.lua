@@ -53,7 +53,7 @@ faelineStomp:Callback(function (spell)
 end)
 
 tigerPalm:Callback(function(spell)
-    if player.lastcast == "Tiger Palm" then
+    if player.lastcast == 1 then
         return
     else
         spell:Cast(target)
