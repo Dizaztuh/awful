@@ -116,14 +116,15 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function()
-    -- Check if Tiger Palm is castable and if player does not have the "Alpha Tiger" buff
-    -- If this is the case, cast Tiger Palm
-    if tigerPalm:Castable(target) and not player.buff("287504") then
+    -- Check if Tiger Palm is castable and either Rising Sun Kick or Blackout Kick are on cooldown.
+    -- If this is the case, cast Tiger Palm. This will allow Tiger Palm to be cast more frequently.
+    if tigerPalm:Castable(target) and (risingSunKick.cd > 0 or blackoutKick.cd > 0) then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
         return
     end
 end)
+
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function()
