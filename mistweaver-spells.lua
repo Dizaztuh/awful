@@ -114,15 +114,32 @@ paralyze:Callback(function(spell)
     end
 end)
 
-local function Rotation()
+-- Callback for Tiger Palm
+tigerPalm:Callback(function()
+    -- If Tiger Palm is castable and both Rising Sun Kick and Blackout Kick are not castable, cast Tiger Palm.
+    if  risingSunKick:Castable(target) and not blackoutKick:Castable(target) then
+        tigerPalm:Cast(target)
+        return
+    end
+end)
+
+-- Callback for Blackout Kick
+blackoutKick:Callback(function()
+    -- If Blackout Kick is castable and Rising Sun Kick is on cooldown or not castable, cast Blackout Kick.
+    if blackoutKick:Castable(target) and (risingSunKick.cd > 0 or not risingSunKick:Castable(target)) then
+        blackoutKick:Cast(target)
+        return
+    end
+end)
+
+-- Callback for Rising Sun Kick
+risingSunKick:Callback(function()
+    -- If Rising Sun Kick is castable, cast Rising Sun Kick.
     if risingSunKick:Castable(target) then
         risingSunKick:Cast(target)
-    elseif tigerPalm:Castable(target) and (not blackoutKick:Castable(target) or blackoutKick.cd > 0) then
-        tigerPalm:Cast(target)
-    elseif blackoutKick:Castable(target) then
-        blackoutKick:Cast(target)
+        return
     end
-end
+end)
 
 
 
