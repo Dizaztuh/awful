@@ -20,5 +20,6 @@ mistweaver:Init(function()
         paralyze()
         touchOfDeath()
         zenSpheres()
+        envelopingMist()
     end
 end)
