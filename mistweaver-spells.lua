@@ -52,11 +52,11 @@ risingSunKick:Callback(function (spell, target)
     end
 end)
 
-faelineStomp:Callback(function (spell)
+faelineStomp:Callback(function (spell, target)
     spell:Cast(target)
 end)
 
-tigerPalm:Callback(function (spell)
+tigerPalm:Callback(function (spell, target)
     spell:Cast(target)
 end)
 
