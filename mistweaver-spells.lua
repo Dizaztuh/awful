@@ -115,7 +115,7 @@ paralyze:Callback(function(spell)
 end)
 
 -- Callback for Tiger Palm
-tigerPalm:Callback("prio", function(spell)
+tigerPalm:Callback(function(spell)
         tigerPalm:Cast(target)
 
 end)
