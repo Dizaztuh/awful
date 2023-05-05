@@ -114,40 +114,22 @@ paralyze:Callback(function(spell)
     end
 end)
 
--- Create a boolean flag to track if Tiger Palm was cast last
-local lastSpellWasTigerPalm = false
+local lastSpell = ""
 
--- Callback for Tiger Palm
-tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and the last spell wasn't Tiger Palm
-    -- And either Rising Sun Kick or Blackout Kick are on cooldown
-    if tigerPalm:Castable(target) and not lastSpellWasTigerPalm then
-        -- Cast Tiger Palm on the target and update the flag
-        tigerPalm:Cast(target)
-        lastSpellWasTigerPalm = true
-        return
-    end
-end)
-
--- Callback for Blackout Kick
-blackoutKick:Callback(function()
-    -- Check if Blackout Kick is castable and Tiger Palm was cast last
-    if blackoutKick:Castable(target) and lastSpellWasTigerPalm then
-        -- Cast Blackout Kick on the target and update the flag
+mistweaverRotation:Callback(function()
+    -- If the last spell was Tiger Palm and Blackout Kick is castable, cast it
+    if lastSpell == "tigerPalm" and blackoutKick:Castable(target) then
         blackoutKick:Cast(target)
-        lastSpellWasTigerPalm = false
-        return
-    end
-end)
-
--- Callback for Rising Sun Kick
-risingSunKick:Callback(function()
-    -- Check if Rising Sun Kick is castable
-    if risingSunKick:Castable(target) then
-        -- Cast Rising Sun Kick on the target
+        lastSpell = "blackoutKick"
+    -- If the last spell was Blackout Kick and Rising Sun Kick is castable, cast it
+    elseif lastSpell == "blackoutKick" and risingSunKick:Castable(target) then
         risingSunKick:Cast(target)
-        return
+        lastSpell = "risingSunKick"
+    -- If neither Blackout Kick nor Rising Sun Kick were the last spell, cast Tiger Palm
+    else
+        if tigerPalm:Castable(target) then
+            tigerPalm:Cast(target)
+            lastSpell = "tigerPalm"
+        end
     end
 end)
-
-
