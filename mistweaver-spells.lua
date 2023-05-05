@@ -116,10 +116,9 @@ end)
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function()
-    -- Check if Rising Sun Kick is castable and if the cooldown of Blackout Kick has passed
-    -- This ensures that Rising Sun Kick is only cast if Blackout Kick has been cast
+    -- Check if Rising Sun Kick is castable and if blackout kick is off cooldown.
     if risingSunKick:Castable(target) and blackoutKick.cd == 0 then
-        -- Cast Rising Sun Kick on the target
+        -- Cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
         return
     end
@@ -127,11 +126,9 @@ end)
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function()
-    -- If Blackout Kick is castable and the cooldown of Tiger Palm has passed or if Rising Sun Kick is on cooldown
-    -- This ensures that Blackout Kick is only cast after Tiger Palm or when Rising Sun Kick is on cooldown
-    -- Since Tiger Palm has no cooldown, it should always be ready to cast before Blackout Kick
+    -- Check if Blackout Kick is castable and if Rising Sun Kick is on cooldown.
     if blackoutKick:Castable(target) and risingSunKick.cd > 0 then
-        -- Cast Blackout Kick on the target
+        -- Cast Blackout Kick on the target.
         blackoutKick:Cast(target)
         return
     end
@@ -139,15 +136,10 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and if Rising Sun Kick and Blackout Kick are on cooldown
-    -- This ensures that Tiger Palm is cast when Rising Sun Kick and Blackout Kick are on cooldown
-    -- Since Tiger Palm has no cooldown, it can always be cast if the other two abilities are on cooldown
-    if tigerPalm:Castable(target) and risingSunKick.cd > 0 and blackoutKick.cd > 0 then
-        -- Cast Tiger Palm on the target
+    -- If Tiger Palm is castable and Blackout Kick is on cooldown.
+    if tigerPalm:Castable(target) and blackoutKick.cd > 0 then
+        -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
         return
     end
 end)
-
-
-
