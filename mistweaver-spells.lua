@@ -10,7 +10,7 @@ awful.Populate({
     healer = awful.healer,
     pet = awful.pet,
     enemyHealer = awful.enemyHealer,
-    enemy = awful.enemy
+    enemy = awful.enemy,
     tigerPalm = Spell(100780, { damage = "physical" }),
     blackoutKick = Spell(100784, { damage = "physical" }),
     risingSunKick = Spell(107428, { damage = "physical" }),
