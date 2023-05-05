@@ -47,14 +47,16 @@ sphereofHope:Callback(function(spell)
         -- friend.dist provides the distance to the friend
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
-        if not friend.combat or friend.hp > 85 or sphereofHope.dist > sphereofHope.range then return end
+        if not friend.combat or friend.hp > 85 or sphereofHope.dist > sphereofHope.range then 
+            return 
+        end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return sphereofHope:Cast(friend)
     end)
 end)
 
 envelopingMist:Callback(function (spell)
-    if envelopingMist.castTime <= 0 then
+    if envelopingMist.castTime >= 0 then
     spell:Cast(target)
     else
         return
