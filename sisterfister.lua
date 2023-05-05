@@ -1,8 +1,6 @@
 local Unlocker, awful, project = monk
 local monk = project.monk.mistweaver
 local risingSunKickCD = 0
--- Require the GUI file
-require("gui")
 
 -- Print message to confirm addon is loaded
 print("Sisterfister loaded and ready to fist!")
