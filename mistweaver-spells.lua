@@ -42,6 +42,10 @@ blackoutKick:Callback(function(spell)
     else
         spell:Cast(target)
     end
+    if player.lastCast ~= "Blackout Kick" then
+        spell:Cast(target)
+        player.lastCast = "Blackout Kick"
+    end
 end)
 
 risingSunKick:Callback(function(spell)
