@@ -116,13 +116,8 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and both Rising Sun Kick and Blackout Kick are on cooldown, then cast Tiger Palm.
-    -- This ensures that Tiger Palm is cast only when both Rising Sun Kick and Blackout Kick are on cooldown.
-    if tigerPalm:Castable(target) and risingSunKick.cd > 0 and blackoutKick.cd > 0 then
-        -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
-        return
-    end
+
 end)
 
 blackoutKick:Callback("prio", function(spell)
