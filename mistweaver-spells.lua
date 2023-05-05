@@ -12,7 +12,7 @@ awful.Populate({
     enemyHealer = awful.enemyHealer,
     enemy = awful.enemy,
     tigerPalm = Spell(100780, { damage = "physical" }),
-    blackoutKick = Spell(100784, { damage = "physical" }),
+    blackoutKick = Spell(118166, { damage = "physical" }),
     risingSunKick = Spell(107428, { damage = "physical" }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
     touchOfDeath = Spell(115080, { damage = "physical", targeted = true }),
