@@ -32,6 +32,8 @@ awful.Populate({
 zenSpheres:Callback(function (spell)
     if zenSpheres:Castable(target) and not target.buff (411038) then
         spell:Cast(target)
+    else
+        return
     end
 end)
 
