@@ -118,7 +118,7 @@ end)
 tigerPalm:Callback(function()
     -- Check if Tiger Palm is castable and if player does not have the "Alpha Tiger" buff
     -- If this is the case, cast Tiger Palm
-    if tigerPalm:Castable(target) and not player.buff("Alpha Tiger") then
+    if tigerPalm:Castable(target) and not player.buff("287504") then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
         return
