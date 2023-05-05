@@ -54,7 +54,10 @@ envelopingMist:Callback(function(spell)
 end)
 
 faelineStomp:Callback(function (spell)
+    if player.buff not ("Awakened Faeline.id") then
     spell:Cast(target)
+    elseif
+    return
 end)
 
 fortifyingBrew:Callback(function(spell)
