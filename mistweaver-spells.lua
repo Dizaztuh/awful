@@ -32,9 +32,9 @@ awful.Populate({
 
 sphereofDespair:Callback(function (spell)
     if target.buff ("Sphere of Despair") then
+        return
     else
         spell:Cast(target)
-        return
     end
 end)
 
