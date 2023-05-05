@@ -1,6 +1,6 @@
 -- Import the necessary modules and get the mistweaver monk profile
 local Unlocker, awful, project = ...
-local monk = project.monk.mistweavr
+local monk = project.monk.mistweaver
 
 print("Sisterfister Loaded and ready to fist!")
 
