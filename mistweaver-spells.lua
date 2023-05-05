@@ -118,8 +118,8 @@ local tigerPalmCast = false
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function()
-    -- If Tiger Palm is castable, cast Tiger Palm and set the tigerPalmCast flag to true.
-    if tigerPalm:Castable(target) then
+    -- If Tiger Palm is castable and Blackout Kick is on cooldown, cast Tiger Palm and set the tigerPalmCast flag to true.
+    if tigerPalm:Castable(target) and blackoutKick.cd > 0 then
         tigerPalm:Cast(target)
         tigerPalmCast = true
         return
@@ -128,8 +128,8 @@ end)
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function()
-    -- If Blackout Kick is castable and Tiger Palm has been cast since the last Blackout Kick, cast Blackout Kick and reset the tigerPalmCast flag.
-    if blackoutKick:Castable(target) and tigerPalmCast then
+    -- If Blackout Kick is castable, Rising Sun Kick is on cooldown, and Tiger Palm has been cast since the last Blackout Kick, cast Blackout Kick and reset the tigerPalmCast flag.
+    if blackoutKick:Castable(target) and risingSunKick.cd > 0 and tigerPalmCast then
         blackoutKick:Cast(target)
         tigerPalmCast = false
         return
@@ -144,3 +144,4 @@ risingSunKick:Callback(function()
         return
     end
 end)
+
