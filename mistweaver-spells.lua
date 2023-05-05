@@ -48,16 +48,16 @@ end)
 risingSunKick:Callback(function (spell, target)
     spell:Cast(target)
     if blackoutKick.cd == 0 and GetTime() - lastBlackoutKickTime > 10 then -- check if blackoutKick is off cooldown and if 10 seconds have passed since the last blackout kick cast
-        blackoutKick:Cast(target) -- cast blackoutKick
+        blackoutKick:Cast(target, target) -- cast blackoutKick
     end
 end)
 
-faelineStomp:Callback(function (spell, target)
+faelineStomp:Callback(function (spell)
     spell:Cast(target)
 end)
 
 tigerPalm:Callback(function (spell, target)
-    spell:Cast(target)
+    spell:Cast(target, target)
 end)
 
 fortifyingBrew:Callback(function(spell)
