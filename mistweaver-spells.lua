@@ -54,6 +54,7 @@ end)
 
 tigerPalm:Callback(function(spell)
     spell:Cast(target)
+    blackoutKick:Queue
 end)
 
 fortifyingBrew:Callback(function(spell)
