@@ -10,6 +10,7 @@ mistweaver:Init(function()
     if target.enemy then
         StartAttack()
         faelineStomp()
+        zenSpheres()
         risingSunKick("prio")
         tigerPalm()
         blackoutKick()
