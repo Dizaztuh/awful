@@ -1,6 +1,6 @@
 lua 
 local Unlocker, awful, project = ...
-local monk = project.monk.mistweaver
+local mistweaver = project.monk.mistweaver
 
 local Spell = awful.Spell
 
