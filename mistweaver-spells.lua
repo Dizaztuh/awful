@@ -34,7 +34,7 @@ awful.Populate({
     dampenHarm = Spell(122278),
     diffuseMagic = Spell(122783),
     healingElixir = Spell(122281)
-}, monk, getfenv(1))
+}, mistweaver, getfenv(1))
 
 local lastBlackoutKickTime = 0 -- initialize the time of the last blackout kick cast to 0
 
