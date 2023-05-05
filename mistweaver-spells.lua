@@ -15,7 +15,7 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true }),
-    zenSpheres = Spell(410777, { heal = true, targeted = true }),
+    sphereofDespair = Spell(410777, { heal = true, targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193),
@@ -27,14 +27,30 @@ awful.Populate({
     dampenHarm = Spell(122278),
     diffuseMagic = Spell(122783),
     healingElixir = Spell(122281, { heal = true })
+    sphereofHope = Spell (410777, {heal = true, targeted = true })
 }, mistweaver, getfenv(1))
 
-zenSpheres:Callback(function (spell)
+sphereofDespair:Callback(function (spell)
     if not target.buff ("Sphere of Despair") then
         spell:Cast(target)
     else
         return
     end
+end)
+
+-- Create a callback for the Life Cocoon ability
+sphereofHope:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.friends.loop(function(friend)
+        -- If the friend is not in combat, their health is above 50%, or they are out of the range of Life Cocoon, we skip them
+        -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% health, and are within the range of Life Cocoon
+        -- friend.dist provides the distance to the friend
+        -- lifeCocoon.range provides the range of the Life Cocoon spell
+        -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
+        if not friend.combat or friend.hp > 85 or sphereofHope.dist > sphereofHope.range then return end
+        -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
+        return sphereofHope:Cast(friend)
+    end)
 end)
 
 faelineStomp:Callback(function (spell)
