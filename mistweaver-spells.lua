@@ -114,34 +114,20 @@ paralyze:Callback(function(spell)
     end
 end)
 
-local tigerPalmCast = false
+-- Callbacks and Priorities for Tiger Palm, Blackout Kick, and Rising Sun Kick
+tigerPalm:Callback("prio", function(spell)
+    if not spell:Castable(target) then return end
+    return spell:Cast(target)
+end)
 
--- Callback for Tiger Palm
-tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and Blackout Kick is on cooldown, cast Tiger Palm and set the tigerPalmCast flag to true.
-    if tigerPalm:Castable(target) and blackoutKick.cd > 0 then
-        tigerPalm:Cast(target)
-        tigerPalmCast = true
-        return
+blackoutKick:Callback("prio", function(spell)
+    if not spell:Castable(target) then return end
+    if tigerPalm.cd > 0 then
+        return spell:Cast(target)
     end
 end)
 
--- Callback for Blackout Kick
-blackoutKick:Callback(function()
-    -- If Blackout Kick is castable, Rising Sun Kick is on cooldown, and Tiger Palm has been cast since the last Blackout Kick, cast Blackout Kick and reset the tigerPalmCast flag.
-    if blackoutKick:Castable(target) and risingSunKick.cd > 0 and tigerPalmCast then
-        blackoutKick:Cast(target)
-        tigerPalmCast = false
-        return
-    end
+risingSunKick:Callback("prio", function(spell)
+    if not spell:Castable(target) then return end
+    return spell:Cast(target)
 end)
-
--- Callback for Rising Sun Kick
-risingSunKick:Callback(function()
-    -- If Rising Sun Kick is castable, cast Rising Sun Kick.
-    if risingSunKick:Castable(target) then
-        risingSunKick:Cast(target)
-        return
-    end
-end)
-
