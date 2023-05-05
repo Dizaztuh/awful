@@ -114,15 +114,6 @@ paralyze:Callback(function(spell)
     end
 end)
 
--- Callback for Tiger Palm
-tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and both Rising Sun Kick and Blackout Kick are not castable, cast Tiger Palm.
-    if  risingSunKick:Castable(target) and not blackoutKick:Castable(target) then
-        tigerPalm:Cast(target)
-        return
-    end
-end)
-
 -- Callback for Blackout Kick
 blackoutKick:Callback(function()
     -- If Blackout Kick is castable and Rising Sun Kick is on cooldown or not castable, cast Blackout Kick.
@@ -138,7 +129,7 @@ risingSunKick:Callback(function()
     if risingSunKick:Castable(target) then
         risingSunKick:Cast(target)
     else
-        tigerPalm:Cast(target)
+        tigerPalm:Cast()
         return
     end
 end)
