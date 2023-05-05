@@ -137,6 +137,8 @@ risingSunKick:Callback(function()
     -- If Rising Sun Kick is castable, cast Rising Sun Kick.
     if risingSunKick:Castable(target) then
         risingSunKick:Cast(target)
+    elseif
+        tigerPalm:Cast(target)
         return
     end
 end)
