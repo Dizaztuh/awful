@@ -36,25 +36,32 @@ awful.Populate({
     healingElixir = Spell(122281)
 }, mistweaver, getfenv(1))
 
+target = awful.target,
+focus = awful.focus,
+player = awful.player,
+healer = awful.healer,
+pet = awful.pet,
+enemyHealer = awful.enemyHealer,
+enemy = awful.enemy,
+
 blackoutKick:Callback(function(spell)
     if risingSunKick.cd == 0 then
-        risingSunKick:Cast(target)
+        risingSunKick:Cast
     else
-        spell:Cast(target)
+        spell:Cast
     end
 end)
 
-
 risingSunKick:Callback(function(spell)
-    spell:Cast(target)
+    spell:Cast
 end)
 
 faelineStomp:Callback(function (spell)
-    spell:Cast(target)
+    spell:Cast
 end)
 
 tigerPalm:Callback(function (spell)
-    spell:Cast(target, target)
+    spell:Cast(target)
 end)
 
 fortifyingBrew:Callback(function(spell)
