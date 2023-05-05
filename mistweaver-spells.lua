@@ -34,7 +34,7 @@ sphereofDespair:Callback(function (spell)
     if not target.buff ("Sphere of Despair") then
         spell:Cast(target)
     else
-        return
+    end
     end
 end)
 
