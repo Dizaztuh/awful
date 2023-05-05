@@ -52,8 +52,15 @@ faelineStomp:Callback(function (spell)
     spell:Cast(target)
 end)
 
-tigerPalm:Callback(function (spell)
-    spell:Cast(target)
+tigerPalm:Callback(function(spell)
+    -- Check if Tiger Palm was not the last spell cast
+    if player.lastCast ~= "Tiger Palm" then
+        -- Cast Tiger Palm
+        blackoutKick:Cast(target)
+
+        -- Set the lastCast property to "Tiger Palm"
+        player.lastCast = "Tiger Palm"
+    end
 end)
 
 fortifyingBrew:Callback(function(spell)
