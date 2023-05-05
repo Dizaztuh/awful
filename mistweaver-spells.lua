@@ -30,7 +30,7 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 zenSpheres:Callback(function (spell)
-    if not target.buff (Sphere of Despair.id) then
+    if not target.buff ("Sphere of Despair") then
         spell:Cast(target)
     else
         return
