@@ -116,8 +116,8 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function()
-    -- If Tiger Palm is castable and Rising Sun Kick is on cooldown and Blackout Kick is on cooldown or not castable, cast Tiger Palm.
-    if tigerPalm:Castable(target) and (risingSunKick.cd > 0 or not risingSunKick:Castable(target)) and (blackoutKick.cd > 0 or not blackoutKick:Castable(target)) then
+    -- If Tiger Palm is castable and both Rising Sun Kick and Blackout Kick are not castable, cast Tiger Palm.
+    if tigerPalm:Castable(target) and not risingSunKick:Castable(target) and not blackoutKick:Castable(target) then
         tigerPalm:Cast(target)
         return
     end
