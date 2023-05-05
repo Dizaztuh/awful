@@ -30,14 +30,6 @@ awful.Populate({
     sphereofHope = Spell (410777, {heal = true, targeted = true })
 }, mistweaver, getfenv(1))
 
-sphereofDespair:Callback(function (spell)
-    if target.buff ("Sphere of Despair") then
-        return
-    else
-        spell:Cast(target)
-    end
-end)
-
 -- Create a callback for the Life Cocoon ability
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
