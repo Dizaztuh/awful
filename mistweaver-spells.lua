@@ -1,4 +1,3 @@
-lua 
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 
