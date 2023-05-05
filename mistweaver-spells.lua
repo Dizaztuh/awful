@@ -114,7 +114,7 @@ paralyze:Callback(function(spell)
     end
 end)
 
-Rotation:Callback(function)
+local function Rotation()
     if risingSunKick:Castable(target) then
         risingSunKick:Cast(target)
     elseif tigerPalm:Castable(target) and (not blackoutKick:Castable(target) or blackoutKick.cd > 0) then
