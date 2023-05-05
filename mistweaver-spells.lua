@@ -54,7 +54,7 @@ envelopingMist:Callback(function(spell)
 end)
 
 faelineStomp:Callback(function (spell)
-    if player.buff not ("Awakened Faeline.id") then
+    if player.buff not (389387) then
     spell:Cast(target)
     elseif
     return
