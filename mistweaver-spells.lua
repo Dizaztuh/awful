@@ -38,18 +38,18 @@ awful.Populate({
 
 blackoutKick:Callback(function(spell)
     if risingSunKick.cd == 0 then
-        risingSunKick:Cast
+        risingSunKick:Cast(target)
     else
-        spell:Cast
+        spell:Cast(target)
     end
 end)
 
 risingSunKick:Callback(function(spell)
-    spell:Cast
+    spell:Cast(target)
 end)
 
 faelineStomp:Callback(function (spell)
-    spell:Cast
+    spell:Cast(target)
 end)
 
 tigerPalm:Callback(function (spell)
