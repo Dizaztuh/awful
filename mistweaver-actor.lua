@@ -1,15 +1,13 @@
 -- Import the necessary modules and get the mistweaver monk profile
 local Unlocker, awful, project = ...
-local mistweaver = project.monk.mistweavr
+local monk = project.monk.mistweavr
 
--- Print a message to the console to confirm that the addon has been loaded
 print("Sisterfister Loaded and ready to fist!")
 
 -- Initialize the mistweaver monk profile
-mistweaver:Init(function()
+monk:Init(function()
     -- Check if there is an enemy target
     if target.enemy then
-        -- Make the player face the target before attacking
         player.face(target)
         StartAttack()
         healingElixir()
