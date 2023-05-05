@@ -43,9 +43,9 @@ blackoutKick:Callback(function(spell)
         spell:Cast(target)
     end
     if player.lastCast ~= "Blackout Kick" then
+        -- Cast Tiger Palm
         spell:Cast(target)
         player.lastCast = "Blackout Kick"
-    end
 end)
 
 risingSunKick:Callback(function(spell)
