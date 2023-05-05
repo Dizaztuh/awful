@@ -1,19 +1,27 @@
-lua local Unlocker, awful, project = ...
+-- Import the necessary modules and get the mistweaver monk profile
+local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweavr
 
--- stuff out here only runs once, when the file is first loaded.
+-- Print a message to the console to confirm that the addon has been loaded
 print("Sisterfister Loaded and ready to fist!")
 
+-- Initialize the mistweaver monk profile
 mistweaver:Init(function()
+    -- Check if there is an enemy target
     if target.enemy then
-        player.face(target) -- Make the player face the target before attacking
+        -- Make the player face the target before attacking
+        player.face(target)
         StartAttack()
+        healingElixir()
+        dampenHarm()
+        fortifyingBrew()
         tigerPalm()
         blackoutKick()
         risingSunKick()
+        legSweep()
+        touchOfDeath()
     end
-    -- everything in here is running *on every tick*
-    -- its goal is to "act" every frame
-    -- that's why you will be spammed with this print when you toggle your routine.
-    -- these are comments and you can remove them :
+    
+    -- This function will be called every frame, meaning that any action that needs to be taken
+    -- on a per-frame basis should be done within this function
 end)
