@@ -1,5 +1,6 @@
 local Unlocker, awful, project = ...
-require("gui.lua")
+local mistweaverUI = require("gui")
+
 -- Initialize the UI
 mistweaverUI:init()
 awful.DevMode = true
