@@ -15,7 +15,7 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true, ranged = true }),
     lifeCocoon = Spell(116849, { heal = true, ranged = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(411038, { ranged = true, targeted = true }),
+    sphereofDespair = Spell(410777, { ranged = true, targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
@@ -28,7 +28,7 @@ awful.Populate({
     revival = Spell(115310, { heal = true, ranged = true }),
     diffuseMagic = Spell(122783),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, {heal = true, ranged = true targeted = true })
+    sphereofHope = Spell (410777, {heal = true, ranged = true, targeted = true })
 }, mistweaver, getfenv(1))
 
 
@@ -113,7 +113,6 @@ legSweep:Callback(function(spell)
     if target.hp <= 40 then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
         legSweep:Cast(target)
-        return
     end
 end)
 
