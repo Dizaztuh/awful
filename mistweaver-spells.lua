@@ -62,13 +62,13 @@ end)
 
 fortifyingBrew:Callback(function(spell)
     if player.health <= 40 then
-        spell:Cast()
+        spell:Cast(player)
     end
 end)
 
 healingElixir:Callback(function(spell)
     if player.health <= 75 then
-        spell:Cast()
+        spell:Cast(player)
     end
 end)
 
