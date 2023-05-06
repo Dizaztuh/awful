@@ -34,7 +34,6 @@ awful.Populate({
     restoral = Spell(388615, { heal = true, ranged = true }),
     tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
     invokeChiJi = Spell(325197, { targeted = false })
-
 }, mistweaver, getfenv(1))
 
 
@@ -160,7 +159,7 @@ spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
     -- Check if the target is casting a spell from the kickAllTable or kickHealsTable
-    if targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
+    if targetCastingSpell and (kickAllSpells[targetCastingSpell] or kickHealsSpells[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
         spearHandStrike:Cast(target)
     end
@@ -171,7 +170,7 @@ detox:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
-        for _, debuffName in ipairs(cleanseTable) do
+        for _, debuffName in ipairs(cleanseSpells) do
             if friend.debuff(debuffName) then
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
                 detox:Cast(friend)
@@ -360,12 +359,3 @@ touchOfDeath:Callback("prio", function(spell)
         end
     end)
 end)
-
-local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_LOGIN")
-eventFrame:SetScript("OnEvent", function(self, event)
-    if event == "PLAYER_LOGIN" then
-        mistweaver:OnInitialize()
-    end
-end)
-
