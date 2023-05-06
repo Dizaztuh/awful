@@ -7,7 +7,6 @@ function mistweaver:OnInitialize()
     -- Load the UI
     mistweaverUI:Load()
 end
-return mistweaver
 
 local Spell = awful.Spell
 awful.Populate({
