@@ -32,7 +32,7 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 -- Create a callback for the Touch of Death ability
-touchOfDeath:Callback(function(spell)
+touchOfDeath:Callback("prio", function(spell)
     -- Loop through all enemies within range
     awful.enemies.loop(function(enemy)
         -- Check if enemy hp is less than or equal to 15%
@@ -41,13 +41,14 @@ touchOfDeath:Callback(function(spell)
             target.enemy = enemy
             
             -- Check if the spell is castable on the enemy
-            if touchOfDeath:Castable(enemy) then
+            if spell:Castable(enemy) then
                 -- Cast Touch of Death on the enemy
                 touchOfDeath:Cast(enemy)
                 
                 return true -- exit the loop after casting the spell
             end
         end
+        return false -- continue iterating through enemies
     end)
 end)
 
