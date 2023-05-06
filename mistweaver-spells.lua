@@ -46,7 +46,7 @@ end)
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-        if not friend.combat or friend.hp > 85 or not friend.buff(411036) then 
+        if not friend.combat or friend.hp > 75 or friend.buff(411036) then 
             return 
     end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
@@ -94,7 +94,7 @@ fortifyingBrew:Callback(function(spell)
 end)
 
 healingElixir:Callback(function(spell)
-    if player.hp <= 75 then
+    if player.hp <= 55 then
         healingElixir:Cast(player)
     end
 end)
@@ -104,7 +104,7 @@ local badStuff = {"Mindgames"}
 
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
-    if player.debuffFrom(badStuff) or player.hp <= 37 and spell.charges >= 1 then
+    if player.debuffFrom(badStuff) or player.hp <= 34 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
     end
@@ -122,7 +122,7 @@ end)
 
 
 dampenHarm:Callback(function(spell)
-    if player.hp <= 60 then -- check if the player's hp is at or below 60%
+    if player.hp <= 65 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
 end)
