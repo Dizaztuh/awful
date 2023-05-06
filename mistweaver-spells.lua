@@ -38,7 +38,7 @@ revival:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 30 then
             -- Cast Revival
-            return spell:Cast()
+            return spell:Cast(player)
         end
     end)
 end)
