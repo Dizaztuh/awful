@@ -43,16 +43,28 @@ revival:Callback(function(spell)
     end)
 end)
 
+local lastCastTime = 0
+
 sphereofHope:Callback(function(spell)
-    -- Loop through all friendly units
+    -- Check if 30 seconds have passed since the last cast
+    if GetTime() - lastCastTime >= 30 then
+        -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-        if not friend.combat or friend.hp > 75 or friend.buff(411036) then 
-            return 
+            if not friend.combat or friend.hp > 90 or friend.buff(411036) then
+                return
+            end
+            -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
+            sphereofHope:Cast(friend)
+
+            -- Update the lastCastTime variable
+            lastCastTime = GetTime()
+
+            -- Exit the loop
+            return true
+        end)
     end
-        -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
-        return sphereofHope:Cast(friend)
-    end)
 end)
+
 
 
 sphereofDespair:Callback(function (spell)
