@@ -1,6 +1,6 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-local awful.UI
+local UI = awful.UI
 
 local awfulCream = {1, 0.98, 0.82, 1}
 
