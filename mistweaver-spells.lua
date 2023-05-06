@@ -133,13 +133,6 @@ dampenHarm:Callback("prio", function(spell)
     end
 end)
 
--- Create a callback for the Touch of Death ability
-touchOfDeath:Callback("prio", function(spell)
-        if enemy.hp <= 15 then
-            touchOfDeath:Cast(target)
-            return true -- exit the loop after casting the spell
-    end)
-
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback("prio", function(spell)
