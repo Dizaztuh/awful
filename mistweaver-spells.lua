@@ -55,9 +55,8 @@ end)
 
 faelineStomp:Callback(function (spell)
     if not player.buff (389387) then
-    spell:Cast(target)
-    elseif
-    return
+        spell:Cast(target)
+    end
 end)
 
 fortifyingBrew:Callback(function(spell)
