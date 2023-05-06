@@ -1,7 +1,84 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-
 local Spell = awful.Spell
+local UI = awful.UI
+
+-- Other mistweaver code
+
+-- Create settings tables
+mistweaver.settings = {
+    healingElixir = {
+        hp = 55,
+    },
+    lifeCocoon = {
+        hp = 50,
+    },
+    fortifyingBrew = {
+        hp = 40,
+    },
+    legSweep = {
+        enabled = true,
+    },
+    paralyze = {
+        enabled = true,
+    },
+    faelineStomp = {
+        enabled = true,
+    },
+    dampenHarm = {
+        enabled = true,
+    },
+    touchOfDeath = {
+        enabled = true,
+    },
+}
+
+-- UI code
+-- ...
+
+-- Update the healingElixir.hp value
+healingElixirSlider:SetScript("OnValueChanged", function(self, value)
+    mistweaver.settings.healingElixir.hp = value
+end)
+
+-- Update the lifeCocoon.hp value
+lifeCocoonSlider:SetScript("OnValueChanged", function(self, value)
+    mistweaver.settings.lifeCocoon.hp = value
+end)
+
+-- Update the fortifyingBrew.hp value
+fortifyingBrewSlider:SetScript("OnValueChanged", function(self, value)
+    mistweaver.settings.fortifyingBrew.hp = value
+end)
+
+-- Enable/disable Leg Sweep based on the toggle state
+legSweepToggle:SetScript("OnClick", function(self)
+    mistweaver.settings.legSweep.enabled = self:GetChecked()
+end)
+
+-- Enable/disable Paralyze based on the toggle state
+paralyzeToggle:SetScript("OnClick", function(self)
+    mistweaver.settings.paralyze.enabled = self:GetChecked()
+end)
+
+-- Enable/disable Faeline Stomp based on the toggle state
+faelineStompToggle:SetScript("OnClick", function(self)
+    mistweaver.settings.faelineStomp.enabled = self:GetChecked()
+end)
+
+-- Enable/disable Dampen Harm based on the toggle state
+dampenHarmToggle:SetScript("OnClick", function(self)
+    mistweaver.settings.dampenHarm.enabled = self:GetChecked()
+end)
+
+-- Enable/disable Touch of Death based on the toggle state
+touchOfDeathToggle:SetScript("OnClick", function(self)
+    mistweaver.settings.touchOfDeath.enabled = self:GetChecked()
+end)
+
+-- Rest of the UI code
+-- ...
+
 
 awful.Populate({
     tigerPalm = Spell(100780, { damage = "physical" }),
