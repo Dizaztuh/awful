@@ -21,7 +21,7 @@ local mistweaverGroup = UI:Group({
 local healingTab = mistweaverGroup:Tab("Healing")
 local crowdControlTab = mistweaverGroup:Tab("Crowd Control")
 local offensiveTab = mistweaverGroup:Tab("Offensive")
-local defensiveTab =mistweaverGroup:Tab("Defensive")
+local defensiveTab = mistweaverGroup:Tab("Defensive")
 
 --! HEALING TAB !--
 healingTab:Slider({
