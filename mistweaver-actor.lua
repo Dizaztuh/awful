@@ -25,4 +25,4 @@ mistweaver:Init(function()
         diffuseMagic()
         revival("prio")
     end
-end)
+end, 0.1)
