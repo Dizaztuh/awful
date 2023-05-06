@@ -29,8 +29,11 @@ awful.Populate({
     detox = Spell(115450, { dispel = true }),
     spearHandStrike = Spell(116705, { interrupt = true }),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, { targeted = true })
+    sphereofHope = Spell (410777, { targeted = true }),
     thunderFocusTea = Spell(116680, { buff = true }),
+    tigersLust = Spell(116841, { dispel = true, targeted = true, range = 30 }),
+    invokeChiJi = Spell(322118)
+
 }, mistweaver, getfenv(1))
 
 
@@ -97,6 +100,54 @@ local cleanseSpells = {
     "Curse of Weakness",
     "Polymorph",
 }
+
+-- Callback for Tiger's Lust ability
+tigersLust:Callback(function(spell)
+    -- Check if the player is rooted for more than 3 seconds and their health is below 50%
+    if player.rootRemains > 3 and player.hp < 50 then
+        return tigersLust:Cast(player)
+    end
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
+        if friend.rootRemains > 3 and friend.hp < 50 then
+            return tigersLust:Cast(friend)
+        end
+    end)
+
+    -- Loop through all enemy units
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
+        if enemy.rootRemains > 3 and enemy.hp < 50 then
+            return tigersLust:Cast(enemy)
+        end
+    end)
+end)
+
+-- Callback for Invoke Chi-Ji, the Red Crane ability
+invokeChiJi:Callback(function(spell)
+    -- Check if the player is rooted for more than 3 seconds and their health is below 50%
+    if player.rootRemains > 3 and player.hp < 50 then
+        return invokeChiJi:Cast()
+    end
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
+        if friend.rootRemains > 3 and friend.hp < 50 then
+            return invokeChiJi:Cast()
+        end
+    end)
+
+    -- Loop through all enemy units
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
+        if enemy.rootRemains > 3 and enemy.hp < 50 then
+            return invokeChiJi:Cast()
+        end
+    end)
+end)
 
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
