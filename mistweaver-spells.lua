@@ -9,7 +9,7 @@ awful.Populate({
     risingSunKick = Spell(107428, { damage = "physical" }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
     touchOfDeath = Spell(115080, { damage = "physical", ranged = true, targeted = true, range = 5 }),
-    envelopingMist = Spell(124682, { heal = true, targeted = true }),
+    envelopingMist = Spell(124682, { heal = true, ranged = true, targeted = true }),
     renewingMist = Spell(119611, { heal = true, ranged = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true }),
     essenceFont = Spell(191837, { heal = true }),
@@ -109,22 +109,13 @@ diffuseMagic:Callback(function(spell)
     end
 end)
 
+
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback("prio", function(spell)
-    local legSweepRange = 6 -- Leg Sweep range in yards
-    local enemiesInRange = 0 -- Initialize the count of enemies in range
-
-    awful.enemies.loop(function(enemy)
-        -- Check if the enemy is within the Leg Sweep range
-        if enemy.distance <= legSweepRange then
-            enemiesInRange = enemiesInRange + 1 -- Increment the count of enemies in range
-        end
-    end)
-
-    -- Check if either the target's hp percentage is at or below 40% or there are at least 2 enemies in range
-    if target.hp <= 40 or enemiesInRange >= 2 then
-        -- If either of the conditions is met, cast Leg Sweep on the target
-        return legSweep:Cast(target)
+    -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
+    if target.hp <= 40 and spell:Castable(target) and target.distance <= legSweep.range then
+        -- If the target's hp is at or below 40%, cast Leg Sweep on the target
+       return legSweep:Cast(target)
     end
 end)
 
@@ -137,12 +128,13 @@ end)
 
 -- Create a callback for the Touch of Death ability
 touchOfDeath:Callback("prio", function(spell)
-    -- Check if target enemy hp is less than or equal to 15% and the spell is castable on the target
-    if target.hp <= 15 and spell:Castable(target) then
+    -- Check if target enemy hp is less than or equal to 15%, the spell is castable on the target, and the target is in range
+    if target.hp <= 15 and spell:Castable(target) and target.distance <= touchOfDeath.range then
         -- Cast Touch of Death on the target enemy
         touchOfDeath:Cast(target)
     end
 end)
+
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback("prio", function(spell)
