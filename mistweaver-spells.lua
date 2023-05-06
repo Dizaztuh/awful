@@ -177,11 +177,15 @@ risingSunKick:Callback("prio", function()
     end
 end)
 
--- Create a callback for the Touch of Death ability
-touchOfDeath:Callback("prio", function(spell)
-    -- Check if the target enemy's HP is less than or equal to 15% and the target is within range
-    if target.hp <= 15 then
-        -- Cast Touch of Death on the target enemy
-        touchOfDeath:Cast(target)
-    end
+Touch of Death ability
+touchOfDeath:Callback(function(spell)
+    -- Loop through all enemies within range, something arbitrary like 10 yards
+    awful.enemies.within(10).loop(function(enemy)
+        -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
+        if spell:Castable(enemy) and enemy.hp < 15 then
+            -- Cast Touch of Death on the enemy
+            spell:Cast(enemy)
+            return true -- exit the loop after casting the spell
+        end
+    end)
 end)
