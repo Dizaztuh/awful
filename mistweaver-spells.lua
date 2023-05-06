@@ -60,13 +60,13 @@ faelineStomp:Callback(function (spell)
 end)
 
 fortifyingBrew:Callback(function(spell)
-    if player.health <= 40 then
+    if player.hp <= 40 then
         spell:Cast(player)
     end
 end)
 
 healingElixir:Callback(function(spell)
-    if player.health <= 75 then
+    if player.hp <= 75 then
         spell:Cast(player)
     end
 end)
@@ -87,16 +87,16 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Check if the target's health percentage is at or below 40%
+    -- Check if the target's hp percentage is at or below 40%
     if target.hp <= 40 then
-        -- If the target's health is at or below 40%, cast Leg Sweep on the target
+        -- If the target's hp is at or below 40%, cast Leg Sweep on the target
         spell:Cast(target)
         return
     end
 end)
 
 dampenHarm:Callback(function(spell)
-    if player.hp <= 60 then -- check if the player's health is at or below 60%
+    if player.hp <= 60 then -- check if the player's hp is at or below 60%
         spell:Cast(player) -- cast Dampen Harm on the player
     end
 end)
@@ -118,8 +118,8 @@ end)
 lifeCocoon:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        -- If the friend is not in combat, their health is above 50%, or they are out of the range of Life Cocoon, we skip them
-        -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% health, and are within the range of Life Cocoon
+        -- If the friend is not in combat, their hp is above 50%, or they are out of the range of Life Cocoon, we skip them
+        -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% hp, and are within the range of Life Cocoon
         -- friend.dist provides the distance to the friend
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
@@ -133,7 +133,7 @@ end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
-    -- Check if the enemy healer is valid, within 20 yards range, and the target's health is below 40%
+    -- Check if the enemy healer is valid, within 20 yards range, and the target's hp is below 40%
     if enemyHealer.Distance <= 20 and target.hp < 40 then
         -- If the conditions are met, cast Paralyze on the enemy healer
         spell:Cast(enemyHealer)
