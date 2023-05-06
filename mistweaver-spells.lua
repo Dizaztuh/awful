@@ -14,11 +14,11 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true, ranged = true }),
     lifeCocoon = Spell(116849, { heal = true, ranged = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(410777, { ranged = true, targeted = true }),
+    sphereofDespair = Spell(410777, { targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
-    paralyze = Spell(115078, { stun = true, targeted = true, range = 20 }),
+    paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
     legSweep = Spell(119381, { stun = true, range = 6 }),
     ringOfPeace = Spell(116844, { cc = true }),
     flyingSerpentKick = Spell(101545),
@@ -29,7 +29,7 @@ awful.Populate({
     detox = Spell(115450, { dispel = true }),
     spearHandStrike = Spell(116705, { interrupt = true }),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, {heal = true, ranged = true, targeted = true })
+    sphereofHope = Spell (410777, { targeted = true })
 }, mistweaver, getfenv(1))
 
 
@@ -180,7 +180,7 @@ envelopingMist:Callback("prio", function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 75% HP
-        if not friend.combat or friend.hp > 75 then
+        if not friend.combat then
             -- If any of the conditions are met, skip this friendly unit
             return
         end
@@ -230,7 +230,7 @@ legSweep:Callback(function(spell)
     if target.hp <= 70 and legSweep:Castable(target) then
         -- If the target's hp is at or below 70%, cast Leg Sweep on the target
         return legSweep:Cast(target)
-    elseif enemies.around(player, 6) >= 2 then
+    elseif enemies.around(player, 6) >= 2 and legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         return legSweep:Cast(target)
     end
