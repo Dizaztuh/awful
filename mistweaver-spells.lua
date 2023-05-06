@@ -66,7 +66,6 @@ sphereofHope:Callback(function(spell)
 end)
 
 
-
 sphereofDespair:Callback(function (spell)
     -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
     if not target.debuff(411038) and spell:Castable(target) then
@@ -126,7 +125,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
-    if target.hp <= 40 and spell:Castable(target) then
+    if target.hp <= 70 and legSweep:Castable(target) then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
        return legSweep:Cast(target)
     end
@@ -157,7 +156,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, and the spell is castable on the enemy healer
-    if enemyHealer.distance <= paralyze.range and target.hp < 40 and paralyze:Castable(enemyHealer) then
+    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
     end
