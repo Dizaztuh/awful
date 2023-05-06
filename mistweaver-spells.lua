@@ -43,7 +43,7 @@ revival:Callback("prio", function(spell)
     end)
 end)
 
-sphereofHope:Callback("prio", function(spell)
+sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         if not friend.combat or friend.hp > 85 or friend.buff(411036) then 
@@ -55,7 +55,7 @@ sphereofHope:Callback("prio", function(spell)
 end)
 
 
-sphereofDespair:Callback("prio", function (spell)
+sphereofDespair:Callback(function (spell)
     -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
     if not target.debuff(411038) and spell:Castable(target) then
         sphereofDespair:Cast(target)
@@ -64,7 +64,7 @@ end)
 
 
 -- Callback for Enveloping Mist spell
-envelopingMist:Callback("prio", function(spell)
+envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
@@ -178,7 +178,7 @@ risingSunKick:Callback("prio", function()
 end)
 
 -- Create a callback for the Touch of Death ability
-touchOfDeath:Callback("prio", function(spell)
+touchOfDeath:Callback(function(spell)
     -- Check if the target enemy's HP is less than or equal to 15% and the target is within range
     if target.hp <= 15 then
         -- Cast Touch of Death on the target enemy
