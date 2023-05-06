@@ -76,11 +76,3 @@ offensiveTab:Checkbox({
     default = true,
     var = "touchOfDeathEnabled",
 })
-
-local mistweaverUI = {}
-
-function mistweaverUI.Load()
-end
-
-return mistweaverUI
-
