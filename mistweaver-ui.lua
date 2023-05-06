@@ -74,3 +74,11 @@ offensiveTab:Checkbox({
     default = true,
     var = "touchOfDeathEnabled",
 })
+
+local function Load()
+    -- Your existing UI code should be here
+end
+
+return {
+    Load = Load,
+}
