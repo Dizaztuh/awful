@@ -1,7 +1,6 @@
     local Unlocker, awful, project = ...
-    local mistweaver = project.monk.mistweaver
     local UI = awful.UI
-
+    project.settings = settings
     local mistweaverGreen = { 0.2, 0.8, 0.4, 1.0 }
     local mistweaverDarkGreen = { 0.1, 0.4, 0.2, 1.0 }
 
