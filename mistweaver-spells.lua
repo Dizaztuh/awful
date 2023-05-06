@@ -70,7 +70,7 @@ envelopingMist:Callback("prio", function(spell)
             return
         end
         -- Check if Enveloping Mist's cooldown is 0
-        if envelopingMist.cd == 0 then
+        if envelopingMist.castTime == 0 then
             -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
             return envelopingMist:Cast(friend)
         end
@@ -109,12 +109,23 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback("prio", function(spell)
-    -- Check if the target's hp percentage is at or below 40%
-    if target.hp <= 40 then
-        -- If the target's hp is at or below 40%, cast Leg Sweep on the target
-       return legSweep:Cast(target)
+    local legSweepRange = 6 -- Leg Sweep range in yards
+    local enemiesInRange = 0 -- Initialize the count of enemies in range
+
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy is within the Leg Sweep range
+        if enemy.distance <= legSweepRange then
+            enemiesInRange = enemiesInRange + 1 -- Increment the count of enemies in range
+        end
+    end)
+
+    -- Check if either the target's hp percentage is at or below 40% or there are at least 2 enemies in range
+    if target.hp <= 40 or enemiesInRange >= 2 then
+        -- If either of the conditions is met, cast Leg Sweep on the target
+        return legSweep:Cast(target)
     end
 end)
+
 
 dampenHarm:Callback("prio", function(spell)
     if player.hp <= 60 then -- check if the player's hp is at or below 60%
