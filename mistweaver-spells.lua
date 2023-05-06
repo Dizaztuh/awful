@@ -1,12 +1,5 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-local mistweaverUI = require("gui.lua")
-local UI = awful.UI
-
-function mistweaver:OnInitialize()
-    -- Load the UI
-    mistweaverUI:Init()
-end
 
 local Spell = awful.Spell
 awful.Populate({
