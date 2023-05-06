@@ -34,7 +34,7 @@ awful.Populate({
 
 revival:Callback(function(spell)
     -- Loop through all friendly units
-        group.loop(function(player)
+        awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
         if friend.hp < 30 then
             -- Cast Revival
@@ -45,7 +45,7 @@ end)
 
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
-        group.loop(function(friend)
+        awful.fgroup.loop(function(friend)
         if not friend.combat or friend.hp > 85 or friend.buff(411036) then 
             return 
         end
@@ -63,7 +63,7 @@ end)
 -- Callback for Enveloping Mist spell
 envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
-    awful.fullGroup.loop(function(fullGroup)
+    awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
         if not friend.combat or friend.hp > 75 then
             -- If any of the conditions are met, skip this friendly unit
@@ -76,7 +76,6 @@ envelopingMist:Callback(function(spell)
         end
     end)
 end)
-
 
 
 faelineStomp:Callback(function (spell)
@@ -143,7 +142,7 @@ end)
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback(function(spell)
     -- Loop through all friendly units
-    awful.fullGroup.loop(function(fullGroup)
+    awful.fgroup.loop(function(friend)
         -- If the friend is not in combat, their hp is above 50%, or they are out of the range of Life Cocoon, we skip them
         -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% hp, and are within the range of Life Cocoon
         -- friend.dist provides the distance to the friend
@@ -155,7 +154,6 @@ lifeCocoon:Callback(function(spell)
     end)
 end)
 
-
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within 20 yards range, and the target's hp is below 40%
@@ -164,7 +162,6 @@ paralyze:Callback(function(spell)
         paralyze:Cast(enemyHealer)
     end
 end)
-
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function()
@@ -191,5 +188,3 @@ risingSunKick:Callback("prio", function()
         risingSunKick:Cast(target)
     end
 end)
-
-
