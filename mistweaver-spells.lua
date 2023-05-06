@@ -38,7 +38,7 @@ revival:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
             -- Cast Revival
-            return revival:Cast(player)
+            return spell:Cast(friend)
         end
     end)
 end)
@@ -50,7 +50,7 @@ sphereofHope:Callback(function(spell)
             return 
     end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
-        return sphereofHope:Cast(friend)
+        return spell:Cast(friend)
     end)
 end)
 
@@ -58,24 +58,24 @@ end)
 sphereofDespair:Callback(function (spell)
     -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
     if not target.debuff(411038) and spell:Castable(target) then
-        sphereofDespair:Cast(target)
+        spell:Cast(target)
     end
 end)
 
 
--- Callback for Enveloping Mist spell
-envelopingMist:Callback(function(spell)
+envelopingMist:Callback("prio", function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
-        if not friend.combat or friend.hp > 95 then
+        -- Check if the friendly unit is not in combat, has more than 75% HP
+        if not friend.combat or friend.hp > 75 then
             -- If any of the conditions are met, skip this friendly unit
             return
         end
-        -- Check if Enveloping Mist's cooldown is 0
+        -- Check if Enveloping Mist's cast time is 0
         if envelopingMist.castTime == 0 then
             -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
-            return envelopingMist:Cast(player)
+            spell:Cast(friend)
+            return true -- exit the loop
         end
     end)
 end)
@@ -83,7 +83,7 @@ end)
 
 faelineStomp:Callback(function (spell)
     if not player.buff (389387) then
-        faelineStomp:Cast(target)
+        spell:Cast(target)
     end
 end)
 
