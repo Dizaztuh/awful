@@ -1,11 +1,12 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-local mistweaverUI = require("mistweaver-ui")
+local mistweaverUI = awful.Module("mistweaver-ui")
 
 function mistweaver:OnInitialize()
     -- Load the UI
     mistweaverUI:Load()
 end
+return mistweaver
 
 local Spell = awful.Spell
 awful.Populate({
