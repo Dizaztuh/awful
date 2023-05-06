@@ -46,9 +46,8 @@ end)
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-        if not friend.combat or friend.hp > 85 or if not friend.buff(411036) then 
+        if not friend.combat or friend.hp > 85 or not friend.buff(411036) then 
             return 
-        end
     end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return sphereofHope:Cast(friend)
