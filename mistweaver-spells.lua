@@ -8,7 +8,7 @@ awful.Populate({
     blackoutKick = Spell(118166, { damage = "physical" }),
     risingSunKick = Spell(107428, { damage = "physical" }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
-    touchOfDeath = Spell(115080, { damage = "physical", ranged = true, targeted = true, range = 5 }),
+    touchOfDeath = Spell(115080, { damage = "physical", targeted = true, range = 5 }),
     envelopingMist = Spell(124682, { heal = true, ranged = true, targeted = true }),
     renewingMist = Spell(119611, { heal = true, ranged = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true }),
@@ -19,8 +19,8 @@ awful.Populate({
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
-    paralyze = Spell(115078, { stun = true, targeted = true }),
-    legSweep = Spell(119381, { stun = true, targeted = true }),
+    paralyze = Spell(115078, { stun = true, targeted = true, range = 20 }),
+    legSweep = Spell(119381, { stun = true, targeted = true, range = 6 }),
     ringOfPeace = Spell(116844, { cc = true, targeted = false }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
@@ -36,7 +36,7 @@ revival:Callback("prio", function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
-        if friend.hp < 30 then
+        if friend.hp < 33 then
             -- Cast Revival
             return revival:Cast(player)
         end
@@ -74,7 +74,7 @@ envelopingMist:Callback("prio", function(spell)
         -- Check if Enveloping Mist's cooldown is 0
         if envelopingMist.castTime == 0 then
             -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
-            return envelopingMist:Cast(friend)
+            return envelopingMist:Cast(player)
         end
     end)
 end)
@@ -103,7 +103,7 @@ local badStuff = {"Mindgames"}
 
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
-    if player.debuffFrom(badStuff) or player.hp <= 35 then
+    if player.debuffFrom(badStuff) or player.hp <= 37 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
     end
@@ -153,8 +153,8 @@ end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback("prio", function(spell)
-    -- Check if the enemy healer is valid, within 20 yards range, and the target's hp is below 40%
-    if enemyHealer.distance <= 20 and target.hp < 40 then
+    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, and the spell is castable on the enemy healer
+    if enemyHealer.distance <= paralyze.range and target.hp < 40 and spell:Castable(enemyHealer) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
     end
