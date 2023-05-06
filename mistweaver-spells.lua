@@ -63,7 +63,7 @@ end)
 -- Callback for Enveloping Mist spell
 envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
-        group.loop(function(fgroup)
+    awful.fullGroup.loop(function(fullGroup)
         -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
         if not friend.combat or friend.hp > 75 then
             -- If any of the conditions are met, skip this friendly unit
@@ -143,7 +143,7 @@ end)
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback(function(spell)
     -- Loop through all friendly units
-    fgroup.loop(function(fgroup)
+    awful.fullGroup.loop(function(fullGroup)
         -- If the friend is not in combat, their hp is above 50%, or they are out of the range of Life Cocoon, we skip them
         -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% hp, and are within the range of Life Cocoon
         -- friend.dist provides the distance to the friend
