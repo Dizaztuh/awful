@@ -34,7 +34,7 @@ awful.Populate({
 
 revival:Callback(function(spell)
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+        group.loop(function(player)
         -- Check if the friend's health is below 30%
         if friend.hp < 30 then
             -- Cast Revival
@@ -45,7 +45,7 @@ end)
 
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+        group.loop(function(friend)
         if not friend.combat or friend.hp > 85 or friend.buff(411036) then 
             return 
         end
@@ -63,7 +63,7 @@ end)
 -- Callback for Enveloping Mist spell
 envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+        group.loop(function(fgroup)
         -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
         if not friend.combat or friend.hp > 75 then
             -- If any of the conditions are met, skip this friendly unit
@@ -143,14 +143,13 @@ end)
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback(function(spell)
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+    fgroup.loop(function(fgroup)
         -- If the friend is not in combat, their hp is above 50%, or they are out of the range of Life Cocoon, we skip them
         -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% hp, and are within the range of Life Cocoon
         -- friend.dist provides the distance to the friend
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
-
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
     end)
