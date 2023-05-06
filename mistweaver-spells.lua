@@ -31,16 +31,6 @@ awful.Populate({
     sphereofHope = Spell (410777, {heal = true, ranged = true, targeted = true })
 }, mistweaver, getfenv(1))
 
--- Create a callback for the Touch of Death ability
-touchOfDeath:Callback("prio", function(spell)
-    -- Check if the target enemy's HP is less than or equal to 15% and the target is within range
-    if target.hp <= 15 then
-        -- Cast Touch of Death on the target enemy
-        touchOfDeath:Cast(target)
-    end
-end)
-
-
 revival:Callback("prio", function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
@@ -182,5 +172,14 @@ risingSunKick:Callback("prio", function()
     if risingSunKick:Castable(target) then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
+    end
+end)
+
+-- Create a callback for the Touch of Death ability
+touchOfDeath:Callback("prio", function(spell)
+    -- Check if the target enemy's HP is less than or equal to 15% and the target is within range
+    if target.hp <= 15 then
+        -- Cast Touch of Death on the target enemy
+        touchOfDeath:Cast(target)
     end
 end)
