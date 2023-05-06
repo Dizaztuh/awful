@@ -33,7 +33,7 @@ awful.Populate({
     thunderFocusTea = Spell(116680),
     restoral = Spell(388615, { heal = true, ranged = true }),
     tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
-    invokeChiJi = Spell(325197, { targeted = false })
+    invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
 
