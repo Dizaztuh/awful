@@ -9,7 +9,7 @@ mistweaver:Init(function()
     -- Check if there is an enemy target
     if target.enemy then
         faelineStomp()
-        risingSunKick("prio")
+        risingSunKick()
         tigerPalm()
         blackoutKick()
         legSweep()
