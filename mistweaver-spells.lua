@@ -139,12 +139,17 @@ touchOfDeath:Callback("prio", function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if enemy hp is less than or equal to 15%
         if enemy.hp <= 15 then
+            -- Select the enemy as the new target
+            awful.target(enemy)
+            
             -- Cast Touch of Death on the enemy
-            touchOfDeath:Cast(enemy)
+            touchOfDeath:Cast(target)
+            
             return true -- exit the loop after casting the spell
         end
     end)
 end)
+
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback("prio", function(spell)
