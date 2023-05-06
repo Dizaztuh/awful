@@ -8,27 +8,27 @@ awful.Populate({
     blackoutKick = Spell(118166, { damage = "physical" }),
     risingSunKick = Spell(107428, { damage = "physical" }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
-    touchOfDeath = Spell(115080, { damage = "physical", targeted = true }),
+    touchOfDeath = Spell(115080, { damage = "physical", ranged = true, targeted = true }),
     envelopingMist = Spell(124682, { heal = true, targeted = true }),
-    renewingMist = Spell(119611, { heal = true, targeted = true }),
+    renewingMist = Spell(119611, { heal = true, ranged = true targeted = true }),
     soothingMist = Spell(115175, { heal = true }),
     essenceFont = Spell(191837, { heal = true }),
-    chiWave = Spell(115098, { heal = true }),
-    lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(411038, { heal = true, targeted = true }),
+    chiWave = Spell(115098, { heal = true, ranged = true }),
+    lifeCocoon = Spell(116849, { heal = true, ranged = true, targeted = true, range = 40 }),
+    sphereofDespair = Spell(411038, { ranged = true, targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
-    faelineStomp = Spell(388193),
+    faelineStomp = Spell(388193, {heal = true, ranged = true}),
     paralyze = Spell(115078, { stun = true, targeted = true }),
     legSweep = Spell(119381, { stun = true, targeted = true }),
     ringOfPeace = Spell(116844, { cc = true, targeted = false }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
     dampenHarm = Spell(122278),
-    revival = Spell(115310, { heal = true }),
+    revival = Spell(115310, { heal = true, ranged = true }),
     diffuseMagic = Spell(122783),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, {heal = true, targeted = true })
+    sphereofHope = Spell (410777, {heal = true, ranged = true targeted = true })
 }, mistweaver, getfenv(1))
 
 
@@ -101,11 +101,8 @@ local badStuff = {"Mindgames"}
 
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
-    if player.debuffFrom(badStuff) then
+    if player.debuffFrom(badStuff) or player.hp <= 35 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        diffuseMagic:Cast(player)
-    elseif player.hp <= 35 then
-        -- If player hp is 0.35 or less, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
     end
 end)
