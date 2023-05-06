@@ -32,7 +32,7 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 
-revival:Callback("prio", function(spell)
+revival:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
@@ -112,7 +112,7 @@ end)
 
 
 -- Create a callback for the Leg Sweep ability
-legSweep:Callback("prio", function(spell)
+legSweep:Callback(function(spell)
     -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
     if target.hp <= 40 and spell:Castable(target) then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
@@ -121,7 +121,7 @@ legSweep:Callback("prio", function(spell)
 end)
 
 
-dampenHarm:Callback("prio", function(spell)
+dampenHarm:Callback(function(spell)
     if player.hp <= 60 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
@@ -143,7 +143,7 @@ lifeCocoon:Callback("prio", function(spell)
 end)
 
 -- Create a callback for the Paralyze ability
-paralyze:Callback("prio", function(spell)
+paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, and the spell is castable on the enemy healer
     if enemyHealer.distance <= paralyze.range and target.hp < 40 and spell:Castable(enemyHealer) then
         -- If the conditions are met, cast Paralyze on the enemy healer
