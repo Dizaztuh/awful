@@ -21,6 +21,8 @@ mistweaver:Init(function()
         touchOfDeath()
         sphereofDespair()
         sphereofHope()
+        fortifyingBrew()
+        diffuseMagic()
         revival()
         envelopingMist()
     end
