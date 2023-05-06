@@ -2,6 +2,7 @@ local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 local Spell = awful.Spell
 local UI = awful.UI
+project.Load("monk/mistweaver/mistweaver-ui.lua")
 
 -- Other mistweaver code
 
