@@ -31,6 +31,14 @@ awful.Populate({
     sphereofHope = Spell (410777, {heal = true, ranged = true, targeted = true })
 }, mistweaver, getfenv(1))
 
+-- Create a callback for the Touch of Death ability
+touchOfDeath:Callback("prio", function(spell)
+    -- Check if target enemy hp is less than or equal to 15%, the spell is castable on the target, and the target is in range
+    if target.hp <= 15 and spell:Castable(target) and target.distance <= touchOfDeath.range then
+        -- Cast Touch of Death on the target enemy
+        touchOfDeath:Cast(target)
+    end
+end)
 
 revival:Callback("prio", function(spell)
     -- Loop through all friendly units
@@ -125,16 +133,6 @@ dampenHarm:Callback("prio", function(spell)
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
 end)
-
--- Create a callback for the Touch of Death ability
-touchOfDeath:Callback("prio", function(spell)
-    -- Check if target enemy hp is less than or equal to 15%, the spell is castable on the target, and the target is in range
-    if target.hp <= 15 and spell:Castable(target) and target.distance <= touchOfDeath.range then
-        -- Cast Touch of Death on the target enemy
-        touchOfDeath:Cast(target)
-    end
-end)
-
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback("prio", function(spell)
