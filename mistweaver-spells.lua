@@ -177,7 +177,6 @@ risingSunKick:Callback(function()
     end
 end)
 
-
 touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
     awful.enemies.within(10).loop(function(enemy)
