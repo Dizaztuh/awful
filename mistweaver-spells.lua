@@ -30,6 +30,7 @@ awful.Populate({
     spearHandStrike = Spell(116705, { interrupt = true }),
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, { targeted = true })
+    thunderFocusTea = Spell(116680, { buff = true }),
 }, mistweaver, getfenv(1))
 
 
@@ -96,6 +97,24 @@ local cleanseSpells = {
     "Curse of Weakness",
     "Polymorph",
 }
+
+-- Create a callback for Thunder Focus Tea
+thunderFocusTea:Callback(function(spell)
+    -- Check if the player's hp is at or below 75% and the spell is castable
+    if player.hp <= 75 and thunderFocusTea:Castable() then
+        -- If the player's hp is at or below 75%, cast Thunder Focus Tea on the player
+        return thunderFocusTea:Cast(player)
+    else
+        -- Loop through all friendly units to check their hp
+        awful.fgroup.loop(function(friend)
+            -- Check if the friendly unit's hp is at or below 75% and the spell is castable
+            if friend.hp <= 75 and thunderFocusTea:Castable() then
+                -- If the friendly unit's hp is at or below 75%, cast Thunder Focus Tea on the player
+                return thunderFocusTea:Cast(player)
+            end
+        end)
+    end
+end)
 
 
 -- Callback for Spear Hand Strike ability
@@ -223,7 +242,6 @@ diffuseMagic:Callback(function(spell)
     end
 end)
 
-
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Check if the target's hp percentage is at or below 70%, the spell is castable on the target, and the target is in range
@@ -235,8 +253,6 @@ legSweep:Callback(function(spell)
         return legSweep:Cast(target)
     end
 end)
-
-
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
@@ -294,7 +310,7 @@ risingSunKick:Callback("prio", function(spell)
     end
 end)
 
-touchOfDeath:Callback(function(spell)
+touchOfDeath:Callback("prio", function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
     awful.enemies.within(10).loop(function(enemy)
         -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
