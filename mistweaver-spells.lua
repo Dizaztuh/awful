@@ -31,7 +31,7 @@ awful.Populate({
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, { targeted = true }),
     thunderFocusTea = Spell(116680),
-    restoral = Spell(388615{ heal = true, ranged = true }),
+    restoral = Spell(388615, { heal = true, ranged = true }),
     tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
     invokeChiJi = Spell(322118)
 
