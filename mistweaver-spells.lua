@@ -180,7 +180,7 @@ end)
 -- Create a callback for the Touch of Death ability
 touchOfDeath:Callback("prio", function(spell)
     -- Check if the target enemy's HP is less than or equal to 15% and the target is within range
-    if target.hp <= 15 and touchofdeath:Castable then
+    if target.hp <= 15 then
         -- Cast Touch of Death on the target enemy
         touchOfDeath:Cast(target)
     end
