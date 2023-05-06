@@ -33,12 +33,24 @@ awful.Populate({
 
 -- Create a callback for the Touch of Death ability
 touchOfDeath:Callback("prio", function(spell)
-    -- Check if target enemy hp is less than or equal to 15%, the spell is castable on the target, and the target is in range
-    if target.hp <= 15 and spell:Castable(target) and target.distance <= touchOfDeath.range then
-        -- Cast Touch of Death on the target enemy
-        touchOfDeath:Cast(target)
-    end
+    -- Loop through all enemies within range
+    awful.enemies.loop(function(enemy)
+        -- Check if enemy hp is less than or equal to 15%
+        if enemy.hp <= 15 then
+            -- Select the enemy as the new target
+            target.enemy = enemy
+            
+            -- Check if the spell is castable on the enemy
+            if spell:Castable(enemy) then
+                -- Cast Touch of Death on the enemy
+                touchOfDeath:Cast(enemy)
+                
+                return true -- exit the loop after casting the spell
+            end
+        end
+    end)
 end)
+
 
 revival:Callback("prio", function(spell)
     -- Loop through all friendly units
