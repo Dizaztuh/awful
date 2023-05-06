@@ -112,7 +112,7 @@ legSweep:Callback(function(spell)
     -- Check if the target's hp percentage is at or below 40%
     if target.hp <= 40 then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
-        legSweep:Cast(target)
+       return legSweep:Cast(target)
     end
 end)
 
