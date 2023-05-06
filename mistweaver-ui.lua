@@ -2,6 +2,8 @@ local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 local UI = awful.UI
 
+local awfulCream = {1, 0.98, 0.82, 1}
+
 -- Other mistweaver code
 
 -- Create Mistweaver group with custom colors
@@ -76,7 +78,6 @@ offensiveTab:Checkbox({
 })
 
 local function Load()
-    -- Your existing UI code should be here
 end
 
 return {
