@@ -5,7 +5,7 @@ local UI = awful.UI
 
 function mistweaver:OnInitialize()
     -- Load the UI
-    mistweaverUI:Load()
+    mistweaverUI:Init()
 end
 
 local Spell = awful.Spell
