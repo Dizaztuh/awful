@@ -25,11 +25,23 @@ awful.Populate({
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
     dampenHarm = Spell(122278),
+    revival = Spell(115310, { heal = true }),
     diffuseMagic = Spell(122783),
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, {heal = true, targeted = true })
 }, mistweaver, getfenv(1))
 
+
+revival:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.friends.loop(function(friend)
+        -- Check if the friend's health is below 30%
+        if friend.hp < 30 then
+            -- Cast Revival
+            return spell:Cast()
+        end
+    end)
+end)
 
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
@@ -42,6 +54,11 @@ sphereofHope:Callback(function(spell)
     end)
 end)
 
+sphereofDespair:Callback(function (spell)
+    if not target.buff (411038) then
+        spell:Cast(target)
+    end
+end)
 
 envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
