@@ -25,4 +25,4 @@ mistweaver:Init(function()
         diffuseMagic()
         revival()
     end
-end, 0.0)
+end)
