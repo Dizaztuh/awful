@@ -8,7 +8,7 @@ awful.Populate({
     blackoutKick = Spell(118166, { damage = "physical" }),
     risingSunKick = Spell(107428, { damage = "physical" }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
-    touchOfDeath = Spell(322109, { damage = "physical", targeted = true, range = 5 }),
+    touchOfDeath = Spell(322109, { damage = "physical", targeted = true }),
     envelopingMist = Spell(124682, { heal = true, ranged = true, targeted = true }),
     renewingMist = Spell(119611, { heal = true, ranged = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true }),
@@ -180,7 +180,7 @@ end)
 -- Create a callback for the Touch of Death ability
 touchOfDeath:Callback(function(spell)
     -- Check if the target enemy's HP is less than or equal to 15% and the target is within range
-    if target.hp <= 15 and target.distance > touchOfDeath.range then
+    if target.hp <= 15 then
         -- Cast Touch of Death on the target enemy
         touchOfDeath:Cast(target)
     end
