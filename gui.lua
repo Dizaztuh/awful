@@ -1,4 +1,5 @@
 local Unlocker, awful, project = ...
+project.monk = project.monk or
 local mistweaver = project.monk.mistweaver
 
 local function init()
