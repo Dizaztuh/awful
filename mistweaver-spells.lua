@@ -1,6 +1,6 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-local mistweaverUI = require("gui")
+local mistweaverUI = require("gui.lua")
 local UI = awful.UI
 
 function mistweaver:OnInitialize()
