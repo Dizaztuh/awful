@@ -38,7 +38,7 @@ touchOfDeath:Callback("prio", function(spell)
         -- Check if enemy hp is less than or equal to 15%
         if enemy.hp <= 15 then
             -- Select the enemy as the new target
-            target.enemy = enemy
+            awful.target(enemy)
             
             -- Check if the spell is castable on the enemy
             if spell:Castable(enemy) then
@@ -48,10 +48,9 @@ touchOfDeath:Callback("prio", function(spell)
                 return true -- exit the loop after casting the spell
             end
         end
-        return false -- continue iterating through enemies
+        return false -- continue iterating through enemies if the spell is not castable
     end)
 end)
-
 
 revival:Callback("prio", function(spell)
     -- Loop through all friendly units
