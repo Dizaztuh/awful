@@ -155,7 +155,7 @@ end)
 tigerPalm:Callback(function()
     if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
-        spell:Cast(target)
+        tigerPalm:Cast(target)
         return
     end
 end)
@@ -164,7 +164,7 @@ end)
 blackoutKick:Callback(function()
     if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
-        spell:Cast(target)
+        blackoutKick:Cast(target)
         return
     end
 end)
@@ -173,7 +173,7 @@ end)
 risingSunKick:Callback("prio", function()
     if risingSunKick:Castable(target) then
         -- If so, cast Rising Sun Kick on the target.
-        spell:Cast(target)
+        risingSunKick:Cast(target)
     end
 end)
 
