@@ -32,7 +32,7 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 -- Create a callback for the Touch of Death ability
-touchOfDeath:Callback("prio", function(spell)
+touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range
     awful.enemies.loop(function(enemy)
         -- Check if enemy hp is less than or equal to 15%
