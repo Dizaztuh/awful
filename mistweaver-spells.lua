@@ -41,7 +41,7 @@ touchOfDeath:Callback("prio", function(spell)
             target.enemy = enemy
             
             -- Check if the spell is castable on the enemy
-            if spell:Castable(enemy) then
+            if touchOfDeath:Castable(enemy) then
                 -- Cast Touch of Death on the enemy
                 touchOfDeath:Cast(enemy)
                 
