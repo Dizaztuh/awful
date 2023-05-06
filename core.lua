@@ -1,5 +1,5 @@
 local Unlocker, awful, project = ...
-require("mistweaver-ui")
+require "mistweaver-ui"
 
 awful.DevMode = true
 project.monk = {}
