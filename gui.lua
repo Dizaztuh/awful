@@ -2,23 +2,20 @@ local Unlocker, awful, project = ...
 project.monk = project.monk or
 local mistweaver = project.monk.mistweaver
 
-local function init()
-    -- Your UI code goes here
-
-    -- RGBA color scheme
+-- RGBA color scheme
 local darkGreen = {0, 0.5, 0, 1}
 local lightGreen = {0, 1, 0, 1}
 local white = {1, 1, 1, 1}
 local dark = {21, 21, 21, 0.45}
 
-local gui, settings, cmd = awful.UI:New("mistweaver", {
+local gui, settings, cmd = awful.UI:New("core", {
     title = "Sister Fister",
     show = false,
     colors = {
         title = lightGreen,
         primary = white,
         accent = darkGreen,
-        background = dark,
+        background = grey,
     }
 })
 
@@ -45,23 +42,17 @@ end
 local function onClick(self, event)
     awful.enabled = not awful.enabled
     if awful.enabled then
-        awful.alert("Mistweaver Monk Enabled", 190319)
+        awful.alert("Sister Fister Enabled", 190319)
         self.text:SetText("Enabled")
         self.text:SetTextColor(0, 1, 0, 1) -- Green color when turned on
     else
-        awful.alert("Mistweaver Monk Disabled", 190319)
+        awful.alert("Sister Fister Disabled", 190319)
         self.text:SetText("Disabled")
         self.text:SetTextColor(1, 1, 1, 1) -- White color when turned off
     end
 end
 
+createClickableText(crowdControl.content, "Crowd Control", 14, 10, onClick)
 createClickableText(healing.content, "Healing", 14, 10, onClick)
 createClickableText(defensive.content, "Defensive", 14, 10, onClick)
-createClickableText(crowdControl.content, "Crowd Control", 14, 10, onClick)
 createClickableText(offensive.content, "Offensive", 14, 10, onClick)
-
-end
-
-return {
-    init = init
-}
