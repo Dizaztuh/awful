@@ -38,7 +38,7 @@ revival:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
             -- Cast Revival
-            return spell:Cast(friend)
+            return revival:Cast(friend)
         end
     end)
 end)
@@ -50,7 +50,7 @@ sphereofHope:Callback(function(spell)
             return 
     end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
-        return spell:Cast(friend)
+        return sphereofHope:Cast(friend)
     end)
 end)
 
@@ -58,7 +58,7 @@ end)
 sphereofDespair:Callback(function (spell)
     -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
     if not target.debuff(411038) and spell:Castable(target) then
-        spell:Cast(target)
+        sphereofDespair:Cast(target)
     end
 end)
 
@@ -74,7 +74,7 @@ envelopingMist:Callback("prio", function(spell)
         -- Check if Enveloping Mist's cast time is 0
         if envelopingMist.castTime == 0 then
             -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
-            spell:Cast(friend)
+            envelopingMist:Cast(friend)
             return true -- exit the loop
         end
     end)
@@ -83,7 +83,7 @@ end)
 
 faelineStomp:Callback(function (spell)
     if not player.buff (389387) then
-        spell:Cast(target)
+        faelineStomp:Cast(target)
     end
 end)
 
@@ -106,7 +106,7 @@ diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        spell:Cast(player)
+        diffuseMagic:Cast(player)
     end
 end)
 
@@ -116,14 +116,14 @@ legSweep:Callback(function(spell)
     -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
     if target.hp <= 40 and spell:Castable(target) then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
-       return spell:Cast(target)
+       return legSweep:Cast(target)
     end
 end)
 
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
-        spell:Cast(player) -- cast Dampen Harm on the player
+        dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
 end)
 
@@ -138,21 +138,21 @@ lifeCocoon:Callback("prio", function(spell)
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
-        return spell:Cast(friend)
+        return lifeCocoon:Cast(friend)
     end)
 end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, and the spell is castable on the enemy healer
-    if enemyHealer.distance <= paralyze.range and target.hp < 40 and spell:Castable(enemyHealer) then
+    if enemyHealer.distance <= paralyze.range and target.hp < 40 and paralyze:Castable(enemyHealer) then
         -- If the conditions are met, cast Paralyze on the enemy healer
-        spell:Cast(enemyHealer)
+        paralyze:Cast(enemyHealer)
     end
 end)
 
 -- Callback for Tiger Palm
-tigerPalm:Callback(function()
+tigerPalm:Callback(function(spell)
     if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
@@ -161,7 +161,7 @@ tigerPalm:Callback(function()
 end)
 
 -- Callback for Blackout Kick
-blackoutKick:Callback(function()
+blackoutKick:Callback(function(spell)
     if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
         blackoutKick:Cast(target)
@@ -170,7 +170,7 @@ blackoutKick:Callback(function()
 end)
 
 -- Callback for Rising Sun Kick
-risingSunKick:Callback("prio", function()
+risingSunKick:Callback("prio", function(spell)
     if risingSunKick:Castable(target) then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
