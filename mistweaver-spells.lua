@@ -14,7 +14,7 @@ awful.Populate({
     soothingMist = Spell(115175, { heal = true }),
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true }),
-    lifeCocoon = Spell(116849, { heal = true, targeted = true }),
+    lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40 }),
     sphereofDespair = Spell(410777, { heal = true, targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
@@ -46,7 +46,7 @@ end)
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        if not friend.combat or friend.hp > 85 or sphereofHope.distance > sphereofHope.range or friend.buff(411036) then 
+        if not friend.combat or friend.hp > 85 or friend.buff(411036) then 
             return 
         end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
@@ -65,7 +65,7 @@ envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
-        if not friend.combat or friend.hp > 75 or envelopingMist.distance > envelopingMist.range then
+        if not friend.combat or friend.hp > 75 then
             -- If any of the conditions are met, skip this friendly unit
             return
         end
