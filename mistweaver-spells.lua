@@ -106,7 +106,7 @@ diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        diffuseMagic:Cast(player)
+        spell:Cast(player)
     end
 end)
 
@@ -116,14 +116,14 @@ legSweep:Callback(function(spell)
     -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
     if target.hp <= 40 and spell:Castable(target) then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
-       return legSweep:Cast(target)
+       return spell:Cast(target)
     end
 end)
 
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
-        dampenHarm:Cast(player) -- cast Dampen Harm on the player
+        spell:Cast(player) -- cast Dampen Harm on the player
     end
 end)
 
@@ -138,7 +138,7 @@ lifeCocoon:Callback("prio", function(spell)
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
-        return lifeCocoon:Cast(friend)
+        return spell:Cast(friend)
     end)
 end)
 
@@ -147,7 +147,7 @@ paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, and the spell is castable on the enemy healer
     if enemyHealer.distance <= paralyze.range and target.hp < 40 and spell:Castable(enemyHealer) then
         -- If the conditions are met, cast Paralyze on the enemy healer
-        paralyze:Cast(enemyHealer)
+        spell:Cast(enemyHealer)
     end
 end)
 
@@ -181,7 +181,7 @@ touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
     awful.enemies.within(10).loop(function(enemy)
         -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
-        if spell:Castable(enemy) and enemy.hp < 14 then
+        if spell:Castable(enemy) and enemy.hp < 15 then
             -- Cast Touch of Death on the enemy
             spell:Cast(enemy)
             return true -- exit the loop after casting the spell
