@@ -33,7 +33,7 @@ awful.Populate({
     thunderFocusTea = Spell(116680),
     restoral = Spell(388615, { heal = true, ranged = true }),
     tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
-    invokeChiJi = Spell(322118, { targeted = false })
+    invokeChiJi = Spell(325197, { targeted = false })
 
 }, mistweaver, getfenv(1))
 
@@ -130,7 +130,7 @@ end)
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if player.rootRemains > 3 and player.hp < 50 then
-        return invokeChiJi:Cast()
+        return invokeChiJi:Cast(player)
     end
 end)
 
