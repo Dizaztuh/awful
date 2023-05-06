@@ -32,7 +32,7 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 
-revival:Callback(function(spell)
+revival:Callback("prio", function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
@@ -43,7 +43,7 @@ revival:Callback(function(spell)
     end)
 end)
 
-sphereofHope:Callback(function(spell)
+sphereofHope:Callback("prio", function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         if not friend.combat or friend.hp > 85 or friend.buff(411036) then 
@@ -54,14 +54,14 @@ sphereofHope:Callback(function(spell)
     end)
 end)
 
-sphereofDespair:Callback(function (spell)
+sphereofDespair:Callback("prio", function (spell)
     if not target.debuff (411038) then
         sphereofDespair:Cast(target)
     end
 end)
 
 -- Callback for Enveloping Mist spell
-envelopingMist:Callback(function(spell)
+envelopingMist:Callback("prio", function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
@@ -123,7 +123,7 @@ dampenHarm:Callback(function(spell)
 end)
 
 -- Create a callback for the Touch of Death ability
-touchOfDeath:Callback(function(spell)
+touchOfDeath:Callback("prio", function(spell)
     -- Loop through all enemies within range
     awful.enemies.loop(function(enemy)
         -- Check if enemy hp is less than or equal to 15%
@@ -136,7 +136,7 @@ touchOfDeath:Callback(function(spell)
 end)
 
 -- Create a callback for the Life Cocoon ability
-lifeCocoon:Callback(function(spell)
+lifeCocoon:Callback("prio", function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- If the friend is not in combat, their hp is above 50%, or they are out of the range of Life Cocoon, we skip them
@@ -151,7 +151,7 @@ lifeCocoon:Callback(function(spell)
 end)
 
 -- Create a callback for the Paralyze ability
-paralyze:Callback(function(spell)
+paralyze:Callback("prio", function(spell)
     -- Check if the enemy healer is valid, within 20 yards range, and the target's hp is below 40%
     if enemyHealer.distance <= 20 and target.hp < 40 then
         -- If the conditions are met, cast Paralyze on the enemy healer
