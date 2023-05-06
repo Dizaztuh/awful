@@ -95,6 +95,7 @@ local cleanseTable = {
     Landslide = Spell(331972),
     CurseOfWeakness = Spell(702),
     Polymorph = Spell(118),
+    HammerofJustice = Spell (853)
 }
 
 
