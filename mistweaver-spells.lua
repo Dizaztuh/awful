@@ -31,6 +31,7 @@ awful.Populate({
     sphereofHope = Spell (410777, {heal = true, ranged = true, targeted = true })
 }, mistweaver, getfenv(1))
 
+
 revival:Callback("prio", function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
@@ -52,6 +53,7 @@ sphereofHope:Callback("prio", function(spell)
         return sphereofHope:Cast(friend)
     end)
 end)
+
 
 sphereofDespair:Callback("prio", function (spell)
     -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
@@ -112,7 +114,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback("prio", function(spell)
     -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
-    if target.hp <= 40 and spell:Castable(target) and target.distance <= legSweep.range then
+    if target.hp <= 40 and spell:Castable(target) then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
        return legSweep:Cast(target)
     end
