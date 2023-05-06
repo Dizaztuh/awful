@@ -38,7 +38,7 @@ revival:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 30 then
             -- Cast Revival
-            return spell:Cast(player)
+            return revival:Cast(player)
         end
     end)
 end)
@@ -50,41 +50,50 @@ sphereofHope:Callback(function(spell)
             return 
         end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
-        return spell:Cast(friend)
+        return sphereofHope:Cast(friend)
     end)
 end)
 
 sphereofDespair:Callback(function (spell)
     if not target.debuff (411038) then
-        spell:Cast(target)
+        sphereofDespair:Cast(target)
     end
 end)
 
+-- Callback for Enveloping Mist spell
 envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        if not friend.combat or friend.hp > 70 or envelopingMist.distance > envelopingMist.range then 
-            return 
+        -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
+        if not friend.combat or friend.hp > 75 or envelopingMist.distance > envelopingMist.range then
+            -- If any of the conditions are met, skip this friendly unit
+            return
         end
-        return spell:Cast(friend)
+        -- Check if Enveloping Mist's cooldown is 0
+        if envelopingMist.cd == 0 then
+            -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
+            return envelopingMist:Cast(friend)
+        end
     end)
 end)
 
+
+
 faelineStomp:Callback(function (spell)
     if not player.buff (389387) then
-        spell:Cast(target)
+        faelineStomp:Cast(target)
     end
 end)
 
 fortifyingBrew:Callback(function(spell)
     if player.hp <= 40 then
-        spell:Cast(player)
+        fortifyingBrew:Cast(player)
     end
 end)
 
 healingElixir:Callback(function(spell)
     if player.hp <= 75 then
-        spell:Cast(player)
+        healingElixir:Cast(player)
     end
 end)
 
@@ -95,10 +104,10 @@ diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        spell:Cast(player)
+        diffuseMagic:Cast(player)
     elseif player.hp <= 35 then
         -- If player hp is 0.35 or less, cast Diffuse Magic on the player
-        spell:Cast(player)
+        diffuseMagic:Cast(player)
     end
 end)
 
@@ -107,14 +116,14 @@ legSweep:Callback(function(spell)
     -- Check if the target's hp percentage is at or below 40%
     if target.hp <= 40 then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
-        spell:Cast(target)
+        legSweep:Cast(target)
         return
     end
 end)
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 60 then -- check if the player's hp is at or below 60%
-        spell:Cast(player) -- cast Dampen Harm on the player
+        dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
 end)
 
@@ -125,7 +134,7 @@ touchOfDeath:Callback(function(spell)
         -- Check if enemy hp is less than or equal to 15%
         if enemy.hp <= 15 then
             -- Cast Touch of Death on the enemy
-            spell:Cast(enemy)
+            touchOfDeath:Cast(enemy)
             return true -- exit the loop after casting the spell
         end
     end)
@@ -153,7 +162,7 @@ paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within 20 yards range, and the target's hp is below 40%
     if enemyHealer.Distance <= 20 and target.hp < 40 then
         -- If the conditions are met, cast Paralyze on the enemy healer
-        spell:Cast(enemyHealer)
+        paralyze:Cast(enemyHealer)
     end
 end)
 
