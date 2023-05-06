@@ -54,7 +54,7 @@ envelopingMist:Callback(function(spell)
 end)
 
 faelineStomp:Callback(function (spell)
-    if player.buff not (389387) then
+    if not player.buff (389387) then
     spell:Cast(target)
     elseif
     return
@@ -79,10 +79,10 @@ diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        spell:Cast()
+        spell:Cast(player)
     elseif player.hp <= 35 then
         -- If player hp is 0.35 or less, cast Diffuse Magic on the player
-        spell:Cast()
+        spell:Cast(player)
     end
 end)
 
@@ -98,7 +98,7 @@ end)
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 60 then -- check if the player's health is at or below 60%
-        spell:Cast() -- cast Dampen Harm on the player
+        spell:Cast(player) -- cast Dampen Harm on the player
     end
 end)
 
