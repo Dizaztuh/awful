@@ -135,13 +135,12 @@ end)
 
 -- Create a callback for the Touch of Death ability
 touchOfDeath:Callback("prio", function(spell)
-    -- Check if target enemy hp is less than or equal to 15%
-    if target.hp <= 15 then
+    -- Check if target enemy hp is less than or equal to 15% and the spell is castable on the target
+    if target.hp <= 15 and spell:Castable(target) then
         -- Cast Touch of Death on the target enemy
         touchOfDeath:Cast(target)
     end
 end)
-
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback("prio", function(spell)
