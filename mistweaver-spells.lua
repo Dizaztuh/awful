@@ -33,69 +33,68 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 
-local kickAllTable = {
-    Cyclone = Spell(33786),
-    ChaosBolt = Spell(116858),
-    RingOfFrost = Spell(113724),
-    RevivePet = Spell(982),
-    MassDispel = Spell(32375),
-    SummonWaterElemental = Spell(31687),
-    GlacialSpike = Spell(199786),
-    GreaterPyroblast = Spell(257541),
-    RayOfFrost = Spell(205021),
-    Shadowfury = Spell(30283),
-    Schism = Spell(214621),
-    LightningLasso = Spell(305483),
-    CyclotronicBlast = Spell(293491),
-    FocusedEnergy = Spell(295373),
-    ConvokeTheSpirits = Spell(323764),
-    Deathborne = Spell(324220),
-    Mindgames = Spell(323706),
-    Repentance = Spell(20066),
-    SummonDemonicTyrant = Spell(265187),
-    Banish = Spell(710),
-    EternitySurge = Spell(344594),
-    Demonfire = Spell(270402),
+local kickAllSpells = {
+    "Cyclone",
+    "Chaos Bolt",
+    "Ring of Frost",
+    "Revive Pet",
+    "Mass Dispel",
+    "Summon Water Elemental",
+    "Glacial Spike",
+    "Greater Pyroblast",
+    "Ray of Frost",
+    "Shadowfury",
+    "Schism",
+    "Lightning Lasso",
+    "Cyclotronic Blast",
+    "Focused Energy",
+    "Convoke the Spirits",
+    "Deathborne",
+    "Mindgames",
+    "Repentance",
+    "Summon Demonic Tyrant",
+    "Banish",
+    "Eternity Surge",
+    "Demonfire",
 }
 
-local kickHealsTable = {
-    Regrowth = Spell(8936),
-    WildGrowth = Spell(48438),
-    Nourish = Spell(50464),
-    FlashOfLight = Spell(19750),
-    HolyLight = Spell(82326),
-    FlashHeal = Spell(2061),
-    Heal = Spell(2060),
-    PrayerOfHealing = Spell(596),
-    PrayerOfMending = Spell(33076),
-    ClarityOfWill = Spell(152118),
-    DivineHymn = Spell(64843),
-    GreaterHeal = Spell(289666),
-    Penance = Spell(47540),
-    SoothingMist = Spell(115175),
-    EnvelopingMist = Spell(124682),
-    Vivify = Spell(116670),
-    ChainHeal = Spell(1064),
-    HealingWave = Spell(77472),
-    HealingSurge = Spell(8004),
-    HealingRain = Spell(73920),
-    DrainLife = Spell(234153),
-    DreamBreath = Spell(333477),
-    Spiritbloom = Spell(343201),
-    LivingFlame = Spell(303380),
+local kickHealsSpells = {
+    "Regrowth",
+    "Wild Growth",
+    "Nourish",
+    "Flash of Light",
+    "Holy Light",
+    "Flash Heal",
+    "Heal",
+    "Prayer of Healing",
+    "Prayer of Mending",
+    "Clarity of Will",
+    "Divine Hymn",
+    "Greater Heal",
+    "Penance",
+    "Soothing Mist",
+    "Enveloping Mist",
+    "Vivify",
+    "Chain Heal",
+    "Healing Wave",
+    "Healing Surge",
+    "Healing Rain",
+    "Drain Life",
+    "Dream Breath",
+    "Spiritbloom",
+    "Living Flame",
 }
 
-local cleanseTable = {
-    Hex = Spell(51514),
-    MirrorsOfTorment = Spell(314793),
-    Mindgames = Spell(323706),
-    Sepsis = Spell(328305),
-    FireBreath = Spell(341282),
-    CurseOfExhaustion = Spell(18223),
-    Landslide = Spell(331972),
-    CurseOfWeakness = Spell(702),
-    Polymorph = Spell(118),
-    HammerofJustice = Spell (853)
+local cleanseSpells = {
+    "Hex",
+    "Mirrors of Torment",
+    "Mindgames",
+    "Sepsis",
+    "Fire Breath",
+    "Curse of Exhaustion",
+    "Landslide",
+    "Curse of Weakness",
+    "Polymorph",
 }
 
 
@@ -227,12 +226,16 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
+    -- Check if the target's hp percentage is at or below 70%, the spell is castable on the target, and the target is in range
     if target.hp <= 70 and legSweep:Castable(target) then
-        -- If the target's hp is at or below 40%, cast Leg Sweep on the target
-       return legSweep:Cast(target)
+        -- If the target's hp is at or below 70%, cast Leg Sweep on the target
+        return legSweep:Cast(target)
+    elseif enemies.around(player, 6) >= 2 then
+        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
+        return legSweep:Cast(target)
     end
 end)
+
 
 
 dampenHarm:Callback(function(spell)
