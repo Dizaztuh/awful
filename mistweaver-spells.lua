@@ -55,10 +55,12 @@ sphereofHope:Callback("prio", function(spell)
 end)
 
 sphereofDespair:Callback("prio", function (spell)
-    if not target.debuff (411038) then
+    -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+    if not target.debuff(411038) and spell:Castable(target) then
         sphereofDespair:Cast(target)
     end
 end)
+
 
 -- Callback for Enveloping Mist spell
 envelopingMist:Callback("prio", function(spell)
