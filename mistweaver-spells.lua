@@ -46,9 +46,10 @@ end)
 sphereofHope:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-        if not friend.combat or friend.hp > 85 or friend.buff(411036) then 
+        if not friend.combat or friend.hp > 85 or if not friend.buff(411036) then 
             return 
         end
+    end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return sphereofHope:Cast(friend)
     end)
@@ -68,7 +69,7 @@ envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 70% HP, or is out of range for Enveloping Mist
-        if not friend.combat or friend.hp > 75 then
+        if not friend.combat or friend.hp > 95 then
             -- If any of the conditions are met, skip this friendly unit
             return
         end
@@ -104,7 +105,7 @@ local badStuff = {"Mindgames"}
 
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
-    if player.debuffFrom(badStuff) or player.hp <= 37 then
+    if player.debuffFrom(badStuff) or player.hp <= 37 and spell.charges >= 1 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
     end
