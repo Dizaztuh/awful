@@ -108,7 +108,7 @@ diffuseMagic:Callback(function(spell)
 end)
 
 -- Create a callback for the Leg Sweep ability
-legSweep:Callback(function(spell)
+legSweep:Callback("prio", function(spell)
     -- Check if the target's hp percentage is at or below 40%
     if target.hp <= 40 then
         -- If the target's hp is at or below 40%, cast Leg Sweep on the target
@@ -116,7 +116,7 @@ legSweep:Callback(function(spell)
     end
 end)
 
-dampenHarm:Callback(function(spell)
+dampenHarm:Callback("prio", function(spell)
     if player.hp <= 60 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
