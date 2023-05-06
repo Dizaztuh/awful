@@ -1,8 +1,13 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
+local mistweaverUI = require("mistweaver-ui")
+
+function mistweaver:OnInitialize()
+    -- Load the UI
+    mistweaverUI:Load()
+end
 
 local Spell = awful.Spell
-
 awful.Populate({
     tigerPalm = Spell(100780, { damage = "physical" }),
     blackoutKick = Spell(118166, { damage = "physical" }),
@@ -206,4 +211,12 @@ touchOfDeath:Callback(function(spell)
             return true -- exit the loop after casting the spell
         end
     end)
+end)
+
+local eventFrame = CreateFrame("Frame")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:SetScript("OnEvent", function(self, event)
+    if event == "PLAYER_LOGIN" then
+        OnInitialize()
+    end
 end)
