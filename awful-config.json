@@ -1,8 +1,7 @@
 {
     "load": [
         "core.lua",
-        "gui.lua"
         "mistweaver-actor.lua",
-        "mistweaver-spells.lua",
+        "mistweaver-spells.lua"
     ]
 }
