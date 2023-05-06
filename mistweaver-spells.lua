@@ -149,7 +149,7 @@ lifeCocoon:Callback(function(spell)
         -- friend.dist provides the distance to the friend
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
-        if not friend.combat or friend.hp > 50 or friend.dist > lifeCocoon.range then return end
+        if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
 
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
@@ -160,7 +160,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within 20 yards range, and the target's hp is below 40%
-    if enemyHealer.Distance <= 20 and target.hp < 40 then
+    if enemyHealer.distance <= 20 and target.hp < 40 then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
     end
