@@ -8,11 +8,10 @@ print("Sisterfister Loaded and ready to fist!")
 mistweaver:Init(function()
     -- Check if there is an enemy target
     if target.enemy then
-        StartAttack()
+        touchOfDeath("prio")
         envelopingMist("prio")
         sphereofDespair("prio")
         sphereofHope()
-        touchOfDeath("prio")
         faelineStomp()
         risingSunKick("prio")
         tigerPalm()
