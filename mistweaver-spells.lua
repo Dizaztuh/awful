@@ -30,8 +30,9 @@ awful.Populate({
     spearHandStrike = Spell(116705, { interrupt = true }),
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, { targeted = true }),
-    thunderFocusTea = Spell(116680, { buff = true }),
-    tigersLust = Spell(116841, { dispel = true, targeted = true, range = 30 }),
+    thunderFocusTea = Spell(116680),
+    restoral = Spell(388615{ heal = true, ranged = true }),
+    tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
     invokeChiJi = Spell(322118)
 
 }, mistweaver, getfenv(1))
@@ -207,6 +208,17 @@ revival:Callback(function(spell)
     end)
 end)
 
+restoral:Callback(function(spell)
+    -- Loop through all friendly units
+        awful.fgroup.loop(function(friend)
+        -- Check if the friend's health is below 30%
+        if friend.hp < 33 then
+            -- Cast Revival
+            return restoral:Cast(friend)
+        end
+    end)
+end)
+
 local lastCastTime = 0
 
 sphereofHope:Callback(function(spell)
@@ -230,22 +242,14 @@ sphereofHope:Callback(function(spell)
 end)
 
 
-local lastCastTimeDespair = 0
-
 sphereofDespair:Callback(function (spell)
-    -- Check if 30 seconds have passed since the last cast
-    if GetTime() - lastCastTimeDespair >= 30 then
-        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-        if not target.debuff(411038) then
-            sphereofDespair:Cast(target)
-            -- Update the lastCastTimeDespair variable
-            lastCastTimeDespair = GetTime()
-        end
+    -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+    if not target.debuff(411038) and sphereofDespair:Castable then
+        return sphereofDespair:Cast(target)
     end
 end)
 
-
-envelopingMist:Callback("prio", function(spell)
+envelopingMist:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 75% HP
@@ -254,7 +258,7 @@ envelopingMist:Callback("prio", function(spell)
             return
         end
         -- Check if Enveloping Mist's cast time is 0
-        if envelopingMist.castTime == 0 then
+        if envelopingMist.castTime == 0 and envelopingMist.Castable then
             -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
             envelopingMist:Cast(friend)
             return true -- exit the loop
