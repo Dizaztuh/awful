@@ -307,7 +307,7 @@ sphereofDespair:Callback(function (spell)
         if not target.debuff(411038) then
             awful.alert({
                 message="Casted Sphere of Despair on Target!", 
-                texture=388615,
+                texture=410777,
                 })
             sphereofDespair:Cast(target)
             -- Update the lastCastTimeDespair variable
@@ -396,11 +396,23 @@ legSweep:Callback(function(spell)
     local playersInRange = enemies.around(player, 10)   
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
+        awful.alert({
+            message="Casted Leg Sweep!", 
+            texture=119381,
+            })
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
+            awful.alert({
+                message="Casted Leg Sweep!", 
+                texture=119381,
+                })
             return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
+            awful.alert({
+                message="Casted Leg Sweep!", 
+                texture=119381,
+                })
             return legSweep:Cast(target)
         end
     end
@@ -409,6 +421,10 @@ legSweep:Callback(function(spell)
     awful.fgroup.loop(function(friend)
         -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
         if playersInRange >= 1 and friend.hp <= 40 then
+            awful.alert({
+                message="Casted Leg Sweep!", 
+                texture=119381,
+                })
             return legSweep:Cast(target)
         end
     end)
@@ -418,6 +434,10 @@ end)
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
+        awful.alert({
+            message="Casted Dampen Harm!", 
+            texture=122278,
+            })
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
 end)
@@ -431,6 +451,10 @@ lifeCocoon:Callback(function(spell)
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
+        awful.alert({
+            message="Casted Life Cocoon on an Ally!", 
+            texture=116849,
+            })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
     end)
