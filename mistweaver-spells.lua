@@ -90,10 +90,18 @@ sphereofHope:Callback(function(spell)
 end)
 
 
+local lastCastTimeDespair = 0
+
 sphereofDespair:Callback(function (spell)
-    -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-    if not target.debuff(411038) and sphereofDespair:Castable then
-        sphereofDespair:Cast(target)
+    -- Check if 30 seconds have passed since the last cast
+    if GetTime() - lastCastTimeDespair >= 30 then
+        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+        if not target.debuff(411038) and spell:Castable(target) then
+            sphereofDespair:Cast(target)
+
+            -- Update the lastCastTimeDespair variable
+            lastCastTimeDespair = GetTime()
+        end
     end
 end)
 
