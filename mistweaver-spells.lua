@@ -110,12 +110,12 @@ spearHandStrike:Callback(function(spell)
     -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
     if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
+        awful.alert({
+            message="Cast Interrupted!", 
+            texture=116705,
+            })
         spearHandStrike:Cast(target)   
     end
-    awful.alert({
-        message="Cast Interrupted!", 
-        texture=116705,
-        })
 end)
 
 -- Callback for Detox ability
@@ -126,15 +126,15 @@ detox:Callback(function(spell)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for _, debuffName in ipairs(cleanseTable) do
             if friend.debuff(debuffName) then
+                awful.alert({
+                    message="Cast Detox!", 
+                    texture=115450,
+                    })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
                 detox:Cast(friend)
                 detoxCast = true -- Set the flag to true
                 return true -- exit the inner loop
             end
-            awful.alert({
-                message="Cast Detox!", 
-                texture=115450,
-                })
         end
         -- Exit the outer loop if Detox was cast
         return detoxCast
@@ -147,34 +147,34 @@ end)
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
-        return tigersLust:Cast(player)
-    end
-    awful.alert({
-        message="Casted Tigers Lust!", 
-        texture=116841,
-        })
-    -- Loop through all friendly units
-    awful.friends.loop(function(friend)
-        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
-            return tigersLust:Cast(friend)
-        end
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
             })
+        return tigersLust:Cast(player)
+    end
+    -- Loop through all friendly units
+    awful.friends.loop(function(friend)
+        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
+        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
+            awful.alert({
+                message="Casted Tigers Lust!", 
+                texture=116841,
+                })
+            return tigersLust:Cast(friend)
+        end
     end)
 
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
+            awful.alert({
+                message="Casted Tigers Lust!", 
+                texture=116841,
+                })
             return tigersLust:Cast(friend)
         end
-        awful.alert({
-            message="Casted Tigers Lust!", 
-            texture=116841,
-            })
     end)
 end)
 
