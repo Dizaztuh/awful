@@ -112,6 +112,10 @@ spearHandStrike:Callback(function(spell)
         -- If so, cast Spear Hand Strike on the target to interrupt it
         spearHandStrike:Cast(target)   
     end
+    awful.alert({
+        message="Cast Interrupted!", 
+        texture=116705,
+        })
 end)
 
 -- Callback for Detox ability
@@ -127,6 +131,10 @@ detox:Callback(function(spell)
                 detoxCast = true -- Set the flag to true
                 return true -- exit the inner loop
             end
+            awful.alert({
+                message="Cast Detox!", 
+                texture=115450,
+                })
         end
         -- Exit the outer loop if Detox was cast
         return detoxCast
@@ -141,13 +149,20 @@ tigersLust:Callback(function(spell)
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         return tigersLust:Cast(player)
     end
-
+    awful.alert({
+        message="Casted Tigers Lust!", 
+        texture=116841,
+        })
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             return tigersLust:Cast(friend)
         end
+        awful.alert({
+            message="Casted Tigers Lust!", 
+            texture=116841,
+            })
     end)
 
     -- Loop through all enemy units
@@ -156,6 +171,10 @@ tigersLust:Callback(function(spell)
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             return tigersLust:Cast(friend)
         end
+        awful.alert({
+            message="Casted Tigers Lust!", 
+            texture=116841,
+            })
     end)
 end)
 
@@ -395,11 +414,6 @@ tigerPalm:Callback(function(spell)
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
         return
-        awful.alert({
-        message="Casted Tiger Palm", 
-        texture=100780,
-        imgX = -250
-        })
     end
 end)
 
