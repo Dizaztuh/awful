@@ -316,7 +316,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 6)
+    local playersInRange = enemies.around(player, 8)
     
     -- Check if the spell is castable on the target, and there are 2 or more players in range
     if legSweep:Castable(target) and playersInRange >= 2 then
