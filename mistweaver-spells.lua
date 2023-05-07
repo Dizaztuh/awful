@@ -117,7 +117,7 @@ end)
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
-    local targetCastingSpell = target.spellName -- Get the name of the spell being cast by the target
+    local targetCastingSpell = target.Casting -- Get the name of the spell being cast by the target
 
     -- Check if the target is casting a spell from the kickAllTable or kickHealsTable
     if targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) then
