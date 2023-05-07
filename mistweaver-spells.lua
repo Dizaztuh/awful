@@ -305,6 +305,10 @@ sphereofDespair:Callback(function (spell)
     if GetTime() - lastCastTimeDespair >= 5 then
         -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
         if not target.debuff(411038) then
+            awful.alert({
+                message="Casted Sphere of Despair on Target!", 
+                texture=388615,
+                })
             sphereofDespair:Cast(target)
             -- Update the lastCastTimeDespair variable
             lastCastTimeDespair = GetTime()
@@ -330,6 +334,10 @@ envelopingMist:Callback(function(spell)
 
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
+        awful.alert({
+            message="Casted Instant Enveloping Mist on an Ally!", 
+            texture=124682,
+            })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         envelopingMist:Cast(lowestHpFriend)
     end
@@ -338,18 +346,30 @@ end)
 
 faelineStomp:Callback(function (spell)
     if not player.buff (388026) then
+        awful.alert({
+            message="Casted Faeline Stomp to Rebuff Teachings!", 
+            texture=388193,
+            })
         faelineStomp:Cast(target)    
     end
 end)
 
 fortifyingBrew:Callback(function(spell)
     if player.hp <= 40 then
+        awful.alert({
+            message="Casted Fortifying Brew! Gettin fk'n Rekt!", 
+            texture=115203,
+            })
         fortifyingBrew:Cast(player)      
     end
 end)
 
 healingElixir:Callback(function(spell)
     if player.hp <= 55 then
+        awful.alert({
+            message="Casted Healing Elixir!", 
+            texture=122281,
+            })
         healingElixir:Cast(player)
     end
 end)
@@ -360,6 +380,10 @@ local badStuff = {"Mindgames"}
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
+        awful.alert({
+            message="Casted Diffuse Magic! Punch SOMETHING!", 
+            texture=122783,
+            })
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
     end
