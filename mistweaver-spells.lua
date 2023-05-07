@@ -404,17 +404,18 @@ touchOfDeath:Callback(function(spell)
     end)
 end)
 
+local spellIds = {
+    [62618] = true,
+    [196718] = true,
+    [198838] = true,
+    [98008] = true,
+    [376079] = true,
+    [212182] = true
+}
 -- Create a callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
     -- Define a dictionary containing the desired spell IDs
-    local spellIds = {
-        [62618] = true,
-        [196718] = true,
-        [198838] = true,
-        [98008] = true,
-        [376079] = true,
-        [212182] = true
-    }
+
     -- Define a loop using the Awful framework's "triggers.loop" function to iterate through all active triggers.
     awful.triggers.loop(function(trigger)
         -- If the current trigger's ID is not in the spellIds table, skip to the next trigger.
