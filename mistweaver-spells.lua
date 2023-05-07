@@ -401,7 +401,7 @@ touchOfDeath:Callback(function(spell)
 
     -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
     for _, enemy in ipairs(awful.enemies) do
-        if player.distance(enemy) <= 8 then
+        if awful.distance(player, enemy) <= 5 then
             table.insert(enemiesInRange, enemy)
         end
     end
@@ -411,7 +411,7 @@ touchOfDeath:Callback(function(spell)
         -- Iterate through the enemiesInRange table
         for _, enemy in ipairs(enemiesInRange) do
             -- Check if the spell is castable and the enemy's HP is less than 15%
-            if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
+            if spell:Castable(enemy) and enemy.hp < 15 then
                 -- Cast Touch of Death on the enemy
                 touchOfDeath:Cast(enemy)
                 return true -- exit the loop after casting the spell
@@ -419,4 +419,5 @@ touchOfDeath:Callback(function(spell)
         end
     end
 end)
+
 
