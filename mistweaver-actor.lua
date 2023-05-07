@@ -32,4 +32,4 @@ mistweaver:Init(function()
         fortifyingBrew()
         diffuseMagic()
     end
-end, 0.1)
+end,)
