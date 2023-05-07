@@ -161,7 +161,7 @@ invokeChiJi:Callback(function(spell)
         return invokeChiJi:Cast(player)
     end
 
-    if player.hp < and invokeChiJi:Castable then
+    if (player.rootRemains > 3 or player.slowed) and player.hp <  then
         return invokeChiJi:Cast(player)
     end
 
