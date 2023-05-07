@@ -400,22 +400,25 @@ touchOfDeath:Callback(function(spell)
     end)
 end)
 
+local spellIds = {
+    [62618] = true,
+    [196718] = true,
+    [198838] = true,
+    [98008] = true,
+    [376079] = true
+}
+
+-- Callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
-    awful.triggers.loop(function(trigger)
-        local spellIds = {
-            [62618] = true,
-            [196718] = true,
-            [198838] = true,
-            [98008] = true,
-            [376079] = true
-        }
-        -- Check if the trigger.id is in the spellIds table
-        if trigger.id == spellIds then
+    for spellId, _ in pairs(spellIds) do
+        awful.triggers.add(spellId, function(trigger)
             -- Retrieve the x, y, and z coordinates of the trigger's position.
             local x, y, z = trigger.position()
             -- Cast Ring of Peace at the trigger's position
             ringOfPeace:AoECast(x, y, z)
-        end
-    end)
+        end)
+    end
 end)
+
+
 
