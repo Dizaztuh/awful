@@ -421,7 +421,7 @@ ringOfPeace:Callback(function(spell)
         -- Retrieve the x, y, and z coordinates of the trigger's position.
         local x, y, z = trigger.position()
         -- Perform desired actions based on the trigger's ID
-        ringOfPeace:AoECast(x, y, z)
+        spell:AoECast(x, y, z)
     end)
 end)
 
