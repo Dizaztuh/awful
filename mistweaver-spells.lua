@@ -422,7 +422,7 @@ end)
 -- Create a callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
     -- Define a table containing the desired spell IDs.
-    local spellIds = {62618, 196718, 198838, 98008, 376079}
+    local spellIds = ["62618", "196718", "198838", "98008", "376079"]
 
     -- Define a function to check if a value exists in a table.
     local function valueExists(tbl, val)
