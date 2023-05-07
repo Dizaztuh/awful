@@ -378,17 +378,16 @@ blackoutKick:Callback(function(spell)
     if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
         blackoutKick:Cast(target)
-        risingSunKick:Cast()
         return
     end
 end)
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
-    -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
-    if  risingSunKick.cd == 0 then
-        -- If so, cast Rising Sun Kick on the target.
+    if risingSunKick:Castable(target) and player.lastCast == blackoutKick.id and risingSunKick.cd == 0 then
+        -- Cast Blackout Kick on the target.
         risingSunKick:Cast(target)
+        return
     end
 end)
 
