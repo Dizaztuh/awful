@@ -36,6 +36,20 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
+-- Callback for Detox ability
+detox:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friendly unit has a debuff from the cleanseTable
+        for _, debuffName in ipairs(cleanseSpells) do
+            if friend.debuff(debuffName) then
+                -- If so, cast Detox on the friendly unit to cleanse the debuff
+                detox:Cast(friend)
+                return true -- exit the loop
+            end
+        end
+    end)
+end)
 
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
@@ -90,18 +104,10 @@ sphereofHope:Callback(function(spell)
 end)
 
 
-local lastCastTimeDespair = 0
-
 sphereofDespair:Callback(function (spell)
-    -- Check if 30 seconds have passed since the last cast
-    if GetTime() - lastCastTimeDespair >= 30 then
-        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-        if not target.debuff(411038) and spell:Castable(target) then
-            sphereofDespair:Cast(target)
-
-            -- Update the lastCastTimeDespair variable
-            lastCastTimeDespair = GetTime()
-        end
+    -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+    if not target.debuff(411038) and sphereofDespair:Castable then
+        sphereofDespair:Cast(target)
     end
 end)
 
