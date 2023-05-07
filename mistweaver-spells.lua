@@ -26,7 +26,7 @@ awful.Populate({
     dampenHarm = Spell(122278),
     revival = Spell(115310, { heal = true, ranged = true }),
     diffuseMagic = Spell(122783),
-    detox = Spell(115450, { dispel = true }),
+    detox = Spell(115450),
     spearHandStrike = Spell(116705),
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, { targeted = true }),
@@ -103,20 +103,6 @@ local cleanseTable = {
 }
 
 
--- Callback for Detox ability
-detox:Callback(function(spell)
-    -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit has a debuff from the cleanseTable
-        for _, debuffName in ipairs(cleanseTable) do
-            if friend.debuff(debuffName) then
-                -- If so, cast Detox on the friendly unit to cleanse the debuff
-                detox:Cast(friend)
-                return true -- exit the loop
-            end
-        end
-    end)
-end)
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
