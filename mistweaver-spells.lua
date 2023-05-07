@@ -401,7 +401,7 @@ touchOfDeath:Callback(function(spell)
 
     -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
     for _, enemy in ipairs(awful.enemies) do
-        if player:distance(enemy) <= 8 then
+        if player.distance(enemy) <= 8 then
             table.insert(enemiesInRange, enemy)
         end
     end
