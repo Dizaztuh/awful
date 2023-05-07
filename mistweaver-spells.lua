@@ -367,7 +367,7 @@ local risingSunKickOffCooldown = false
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    if not risingSunKickOffCooldown and tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
+    if not risingSunKickOffCooldown and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
     end
