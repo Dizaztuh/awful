@@ -36,6 +36,96 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
+local kickAllTable = {
+    "Cyclone",
+    "Chaos Bolt",
+    "Ring of Frost",
+    "Revive Pet",
+    "Mass Dispel",
+    "Summon Water Elemental",
+    "Glacial Spike",
+    "Greater Pyroblast",
+    "Ray of Frost",
+    "Shadowfury",
+    "Schism",
+    "Lightning Lasso",
+    "Cyclotronic Blast",
+    "Focused Energy",
+    "Convoke the Spirits",
+    "Deathborne",
+    "Mindgames",
+    "Repentance",
+    "Summon Demonic Tyrant",
+    "Banish",
+    "Eternity Surge",
+    "Demonfire",
+}
+
+local kickHealsTable = {
+    "Regrowth",
+    "Wild Growth",
+    "Nourish",
+    "Flash of Light",
+    "Holy Light",
+    "Flash Heal",
+    "Heal",
+    "Prayer of Healing",
+    "Prayer of Mending",
+    "Clarity of Will",
+    "Divine Hymn",
+    "Greater Heal",
+    "Penance",
+    "Soothing Mist",
+    "Enveloping Mist",
+    "Vivify",
+    "Chain Heal",
+    "Healing Wave",
+    "Healing Surge",
+    "Healing Rain",
+    "Drain Life",
+    "Dream Breath",
+    "Spiritbloom",
+    "Living Flame",
+}
+
+local cleanseTable = {
+    "Hex",
+    "Mirrors of Torment",
+    "Mindgames",
+    "Sepsis",
+    "Fire Breath",
+    "Curse of Exhaustion",
+    "Landslide",
+    "Curse of Weakness",
+    "Polymorph",
+}
+
+-- Callback for Detox ability
+detox:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friendly unit has a debuff from the cleanseTable
+        for _, debuffName in ipairs(cleanseSpells) do
+            if friend.debuff(debuffName) then
+                -- If so, cast Detox on the friendly unit to cleanse the debuff
+                detox:Cast(friend)
+                return true -- exit the loop
+            end
+        end
+    end)
+end)
+
+-- Callback for Spear Hand Strike ability
+spearHandStrike:Callback(function(spell)
+    local targetCastingSpell = target.spellName -- Get the name of the spell being cast by the target
+
+    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable
+    if targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) then
+        -- If so, cast Spear Hand Strike on the target to interrupt it
+        spearHandStrike:Cast(target)
+    end
+end)
+
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
