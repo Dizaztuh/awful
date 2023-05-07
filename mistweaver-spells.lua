@@ -410,7 +410,7 @@ ringOfPeace:Callback(function(spell)
             [376079] = true
         }
         -- Check if the trigger.id is in the spellIds table
-        if spellIds == trigger.id then
+        if trigger.id == spellIds then
             -- Retrieve the x, y, and z coordinates of the trigger's position.
             local x, y, z = trigger.position()
             -- Cast Ring of Peace at the trigger's position
