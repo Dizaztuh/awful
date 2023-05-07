@@ -317,13 +317,20 @@ end)
 legSweep:Callback(function(spell)
     -- Get the number of players in range
     local playersInRange = enemies.around(player, 6)
-
+    
     -- Check if the spell is castable on the target, and there are 2 or more players in range
     if legSweep:Castable(target) and playersInRange >= 2 then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         return legSweep:Cast(target)
     end
+
+    -- Check if the player's HP is below 45% and the spell is castable on the target
+    if player.hp < 45 and legSweep:Castable(target) then
+        -- If the player's HP is below 45%, cast Leg Sweep on the target
+        return legSweep:Cast(target)
+    end
 end)
+
 
 
 dampenHarm:Callback(function(spell)
