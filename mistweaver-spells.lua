@@ -443,18 +443,18 @@ ringOfPeace:Callback(function(spell)
         -- At this point, you can perform any desired actions with the detected trigger.
 
         -- Retrieve the x, y, and z coordinates of the trigger's position.
-
+        local x, y, z = trigger.position()
         -- Perform desired actions based on the trigger's ID
         if trigger.id == 62618 then
-            ringOfPeace:SmartAoE(x, y, z)
+            ringOfPeace:AoECast(x, y, z)
         elseif trigger.id == 196718 then
-            ringOfPeace:SmartAoE(x, y, z)
+            ringOfPeace:AoECast(x, y, z)
         elseif trigger.id == 198838 then
-            ringOfPeace:SmartAoE(x, y, z)
+            ringOfPeace:AoECast(x, y, z)
         elseif trigger.id == 198838 then
-            ringOfPeace:SmartAoE(x, y, z)
+            ringOfPeace:AoECast(x, y, z)
         elseif trigger.id == 376079 then
-            ringOfPeace:SmartAoE(x, y, z)
+            ringOfPeace:AoECast(x, y, z)
         end
     end)
 end)
