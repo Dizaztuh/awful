@@ -361,8 +361,27 @@ paralyze:Callback(function(spell)
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
+    elseif target.guid = enemyHealer.guid and target.hp < 40 then
+        local closestEnemy, closestDistance = nil, math.huge
+
+        -- Loop through all enemies within 20 yards
+        awful.enemies.around(player, 20, function(enemy)
+            local distance = enemy.distance
+
+            -- Find the closest enemy
+            if distance < closestDistance then
+                closestEnemy = enemy
+                closestDistance = distance
+            end
+        end)
+
+        -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
+        if closestEnemy and paralyze:Castable(closestEnemy) then
+            paralyze:Cast(closestEnemy)
+        end
     end
 end)
+
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
