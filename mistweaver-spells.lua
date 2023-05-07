@@ -395,13 +395,14 @@ end)
 
 
 touchOfDeath:Callback(function(spell)
-    -- Loop through all enemies within range, something arbitrary like 10 yards
-    awful.enemies.around(player, 8).loop(function(enemy)
-        -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
-        if enemy.hp < 15 then
+    -- Loop through all enemies within 8 yards
+    local enemiesInRange2 = awful.enemies.around(player, 8)
+    for _, enemy in ipairs(enemiesInRange2) do
+        -- Check if the spell is castable and the enemy's HP is less than 15%
+        if spell:Castable(enemy) and enemy.hp < 15 then
             -- Cast Touch of Death on the enemy
             touchOfDeath:Cast(enemy)
             return true -- exit the loop after casting the spell
         end
-    end)
+    end
 end)
