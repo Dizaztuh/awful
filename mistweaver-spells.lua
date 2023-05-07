@@ -367,19 +367,12 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    -- Check if Rising Sun Kick is off cooldown (cd == 0)
-    if risingSunKick.cd == 0 then
-        -- If Rising Sun Kick is off cooldown, do not cast Tiger Palm and return from the function.
-        return
-    end
-
     if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
         return
     end
 end)
-
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function(spell)
