@@ -107,7 +107,7 @@ spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
     -- Loop through all enemies within 5 yards
-    enemies.around(player, 5, function(enemy)
+    for _, enemy in ipairs(enemies.around(player, 5)) do
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
         -- Check if the enemy is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
@@ -115,8 +115,9 @@ spearHandStrike:Callback(function(spell)
             -- If so, cast Spear Hand Strike on the enemy to interrupt it
             spearHandStrike:Cast(enemy)
         end
-    end)
+    end
 end)
+
 
 
 -- Callback for Detox ability
