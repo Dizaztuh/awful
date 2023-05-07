@@ -411,7 +411,7 @@ local spellIds = {
 -- Callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
     for spellId, _ in pairs(spellIds) do
-        awful.triggers.add(spellId, function(trigger)
+        awful.triggers.loop(spellId, function(trigger)
             -- Retrieve the x, y, and z coordinates of the trigger's position.
             local x, y, z = trigger.position()
             -- Cast Ring of Peace at the trigger's position
