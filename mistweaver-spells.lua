@@ -20,7 +20,7 @@ awful.Populate({
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
     legSweep = Spell(119381, { stun = true, range = 9 }),
-    ringOfPeace = Spell(116844, {cc = true, targeted = false, ranged = true, range = 40 }),
+    ringOfPeace = Spell(116844, { targeted = false, ranged = true, range = 40 }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
     dampenHarm = Spell(122278),
@@ -116,6 +116,7 @@ end)
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
+    local detoxCast = false -- Flag variable to track if Detox has been cast
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
@@ -123,11 +124,15 @@ detox:Callback(function(spell)
             if friend.debuff(debuffName) then
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
                 detox:Cast(friend)
-                return true -- exit the loop
+                detoxCast = true -- Set the flag to true
+                return true -- exit the inner loop
             end
         end
+        -- Exit the outer loop if Detox was cast
+        return detoxCast
     end)
 end)
+
 
 
 -- Callback for Tiger's Lust ability
@@ -415,8 +420,4 @@ ringOfPeace:Callback(function(spell)
         end
     end)
 end)
-
-
-
-
 
