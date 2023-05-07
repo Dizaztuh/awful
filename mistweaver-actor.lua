@@ -10,7 +10,7 @@ mistweaver:Init(function()
     if target.enemy then
         faelineStomp()
         tigerPalm()
-        blackoutKick()
+        main()
         touchOfDeath()
         legSweep()
         paralyze()
