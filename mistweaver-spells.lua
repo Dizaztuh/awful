@@ -395,7 +395,11 @@ tigerPalm:Callback(function(spell)
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
         return
-        awful.alert("Casted Tiger Palm", 100780, imgX= -250)
+        awful.alert({
+        message="Casted Tiger Palm", 
+        texture=100780,
+        imgX = -250
+        })
     end
 end)
 
