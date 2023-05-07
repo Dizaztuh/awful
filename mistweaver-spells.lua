@@ -403,10 +403,6 @@ function main()
     end
 end
 
--- Call the main function
-main()
-Now the main function checks for both Blackout Kick and Rising Sun Kick conditions outside of their individual callbacks, and it should cast Rising Sun Kick if its condition is met. Make sure to call the main() function at the appropriate time in your script.
-
 touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
     awful.enemies.within(8).loop(function(enemy)
