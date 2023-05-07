@@ -378,8 +378,12 @@ blackoutKick:Callback(function(spell)
     if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
         blackoutKick:Cast(target)
+        return
     end
+end)
 
+-- Callback for Rising Sun Kick
+risingSunKick:Callback(function(spell)
     -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
     if risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
@@ -387,6 +391,21 @@ blackoutKick:Callback(function(spell)
     end
 end)
 
+-- Main function to check for Blackout Kick and Rising Sun Kick conditions
+function main()
+    if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
+        -- Cast Blackout Kick on the target.
+        blackoutKick:Cast(target)
+        return
+    elseif risingSunKick.cd == 0 then
+        -- If Rising Sun Kick is castable on the target and its cooldown is 0, cast it on the target.
+        risingSunKick:Cast(target)
+    end
+end
+
+-- Call the main function
+main()
+Now the main function checks for both Blackout Kick and Rising Sun Kick conditions outside of their individual callbacks, and it should cast Rising Sun Kick if its condition is met. Make sure to call the main() function at the appropriate time in your script.
 
 touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
