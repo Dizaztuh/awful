@@ -205,6 +205,17 @@ revival:Callback(function(spell)
     end)
 end)
 
+restoral:Callback(function(spell)
+    -- Loop through all friendly units
+        awful.fgroup.loop(function(friend)
+        -- Check if the friend's health is below 30%
+        if friend.hp < 33 then
+            -- Cast Revival
+            return restoral:Cast(friend)
+        end
+    end)
+end)
+
 local lastCastTime = 0
 
 sphereofHope:Callback(function(spell)
