@@ -26,7 +26,7 @@ awful.Populate({
     dampenHarm = Spell(122278),
     revival = Spell(115310, { heal = true, ranged = true }),
     diffuseMagic = Spell(122783),
-    detox = Spell(115450),
+    detox = Spell(115450, {targeted = true, ranged = true }),
     spearHandStrike = Spell(116705),
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, { targeted = true }),
