@@ -316,8 +316,6 @@ legSweep:Callback(function(spell)
 end)
 
 
-
-
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
@@ -341,12 +339,13 @@ end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
-    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, and the spell is castable on the enemy healer
-    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) then
+    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
+    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
     end
 end)
+
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
