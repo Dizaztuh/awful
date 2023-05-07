@@ -19,7 +19,7 @@ awful.Populate({
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
-    legSweep = Spell(119381, { stun = true, range = 9 }),
+    legSweep = Spell(119381, { effect = "physical", stun = true, range = 10 }),
     ringOfPeace = Spell(116844, { cc = true , ignoreMoving = true, range = 40 }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
@@ -327,7 +327,7 @@ legSweep:Callback(function(spell)
         if playersInRange > 1 then
             return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
-        elseif player.hp < 45 and playersInRange ~= 1 then
+        elseif player.hp < 45 and playersInRange <= 1 then
             return legSweep:Cast(target)
         end
     end
