@@ -106,7 +106,7 @@ local cleanseTable = {
 spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
-    -- Loop through all enemies within 5 yards
+    -- Loop through all enemies within 5 yards of the player
     for _, enemy in ipairs(enemies.around(player, 5)) do
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
@@ -117,6 +117,7 @@ spearHandStrike:Callback(function(spell)
         end
     end
 end)
+
 
 
 
