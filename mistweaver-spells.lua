@@ -384,7 +384,7 @@ end)
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
-    if risingSunKick:Castable(target) and player.lastCast == blackoutKick.id and risingSunKick.cd == 0 then
+    if risingSunKick:Castable(target) and risingSunKick.cd == 0 then
         -- Cast Blackout Kick on the target.
         risingSunKick:Cast(target)
         return
