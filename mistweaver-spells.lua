@@ -355,32 +355,14 @@ lifeCocoon:Callback(function(spell)
     end)
 end)
 
-touchOfDeath:Callback(function(spell)
-    -- Get the number of enemies within 8 yards and initialize an empty table to store enemies
-    local numOfEnemiesInRange = awful.enemies.around(player, 8)
-    local enemiesInRange2 = {}
-
-    -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
-    for _, enemy in ipairs(awful.enemies) do
-        if player:distance(enemy) <= 8 then
-            table.insert(enemiesInRange2, enemy)
-        end
-    end
-
-    -- Check if there are any enemies in range
-    if numOfEnemiesInRange > 0 then
-        -- Iterate through the enemiesInRange table
-        for _, enemy in ipairs(enemiesInRange2) do
-            -- Check if the spell is castable and the enemy's HP is less than 15%
-            if spell:Castable(enemy) and enemy.hp < 15 then
-                -- Cast Touch of Death on the enemy
-                touchOfDeath:Cast(enemy)
-                return true -- exit the loop after casting the spell
-            end
-        end
+-- Create a callback for the Paralyze ability
+paralyze:Callback(function(spell)
+    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
+    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
+        -- If the conditions are met, cast Paralyze on the enemy healer
+        paralyze:Cast(enemyHealer)
     end
 end)
-
 
 
 
@@ -413,14 +395,28 @@ end)
 
 
 touchOfDeath:Callback(function(spell)
-    -- Loop through all enemies within 8 yards
-    local enemiesInRange2 = awful.enemies.around(player, 8)
-    for _, enemy in ipairs(enemiesInRange2) do
-        -- Check if the spell is castable and the enemy's HP is less than 15%
-        if spell:Castable(enemy) and enemy.hp < 15 then
-            -- Cast Touch of Death on the enemy
-            touchOfDeath:Cast(enemy)
-            return true -- exit the loop after casting the spell
+    -- Get the number of enemies within 8 yards and initialize an empty table to store enemies
+    local numOfEnemiesInRange = awful.enemies.around(player, 8)
+    local enemiesInRange = {}
+
+    -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
+    for _, enemy in ipairs(awful.enemies) do
+        if player:distance(enemy) <= 8 then
+            table.insert(enemiesInRange, enemy)
+        end
+    end
+
+    -- Check if there are any enemies in range
+    if numOfEnemiesInRange > 0 then
+        -- Iterate through the enemiesInRange table
+        for _, enemy in ipairs(enemiesInRange) do
+            -- Check if the spell is castable and the enemy's HP is less than 15%
+            if spell:Castable(enemy) and enemy.hp < 15 then
+                -- Cast Touch of Death on the enemy
+                touchOfDeath:Cast(enemy)
+                return true -- exit the loop after casting the spell
+            end
         end
     end
 end)
+
