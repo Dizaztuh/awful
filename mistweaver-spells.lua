@@ -226,7 +226,7 @@ local lastCastTime = 0
 
 sphereofHope:Callback(function(spell)
     -- Check if 30 seconds have passed since the last cast
-    if GetTime() - lastCastTime >= 30 then
+    if GetTime() - lastCastTime >= 5 then
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
             if not friend.combat or friend.hp > 90 or friend.buff(411036) then
@@ -323,7 +323,7 @@ legSweep:Callback(function(spell)
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
-        if playersInRange >= 1 then
+        if playersInRange > 1 then
             return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 then
