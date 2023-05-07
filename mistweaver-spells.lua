@@ -100,20 +100,6 @@ local cleanseTable = {
     "Polymorph",
 }
 
--- Callback for Detox ability
-detox:Callback(function(spell)
-    -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit has a debuff from the cleanseTable
-        for _, debuffName in ipairs(cleanseSpells) do
-            if friend.debuff(debuffName) then
-                -- If so, cast Detox on the friendly unit to cleanse the debuff
-                detox:Cast(friend)
-                return true -- exit the loop
-            end
-        end
-    end)
-end)
 
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
