@@ -14,13 +14,13 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(410777, { effect = magic, targeted = true, range = 40 }),
+    sphereofDespair = Spell(410777),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
     legSweep = Spell(119381, { effect = "physical", stun = true, range = 10 }),
-    ringOfPeace = Spell(116844, { cc = true , ignoreMoving = true, range = 40 }),
+    ringOfPeace = Spell(116844),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
     dampenHarm = Spell(122278),
@@ -29,7 +29,7 @@ awful.Populate({
     detox = Spell(115450, { targeted = true, range = 40 }),
     spearHandStrike = Spell(116705),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, { effect = magic, targeted = true, range = 40 }),
+    sphereofHope = Spell (410777),
     thunderFocusTea = Spell(116680),
     restoral = Spell(388615, { heal = true, ranged = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true, range = 30 }),
@@ -548,7 +548,7 @@ ringOfPeace:Callback(function(spell)
             -- Retrieve the x, y, and z coordinates of the trigger's position.
             local x, y, z = trigger.position()
             -- Cast Ring of Peace at the trigger's position
-            ringOfPeace:AoECast(x, y, z)
+            ringOfPeace:AoECast({x, y, z})
         end
     end)
 end)
@@ -584,7 +584,6 @@ function stompTotems()
                 })
             -- If the totem is in the list, cast Tiger Palm on the totem
             tigerPalm:Cast(totem)
-        
         end
     end)
 end
