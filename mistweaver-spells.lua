@@ -349,7 +349,7 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
+    if tigerPalm:Castable(target) and player.lastCast ~= risingSunKick.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
         return
