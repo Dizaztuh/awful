@@ -419,7 +419,7 @@ end)
 
 -- Create a callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
-    -- Define a dictionary containing the desired spell IDs.
+    -- Define a dictionary containing the desired spell IDs
     local spellIds = {
         ["62618"] = true,
         ["196718"] = true,
@@ -428,11 +428,10 @@ ringOfPeace:Callback(function(spell)
         ["376079"] = true,
         ["212182"] = true
     }
-
     -- Define a loop using the Awful framework's "triggers.loop" function to iterate through all active triggers.
     awful.triggers.loop(function(trigger)
         -- If the current trigger's ID is not in the spellIds table, skip to the next trigger.
-        if not spellIds[tostring(trigger.id)] then return end
+        if spellIds[tostring(trigger.id)] then
 
         -- If the trigger's ID is in the spellIds table, continue processing this trigger.
         -- At this point, you can perform any desired actions with the detected trigger.
@@ -441,6 +440,8 @@ ringOfPeace:Callback(function(spell)
 
         -- Perform desired actions based on the trigger's ID
         ringOfPeace:Cast(x, y, z)
+        return 
+        end
     end)
 end)
 
