@@ -332,6 +332,7 @@ legSweep:Callback(function(spell)
 end)
 
 
+
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
