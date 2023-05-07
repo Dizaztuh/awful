@@ -400,7 +400,7 @@ touchOfDeath:Callback(function(spell)
 
     -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
     for _, enemy in ipairs(awful.enemies) do
-        if awful.distance(player, enemy) <= 5 then
+        if awful.distance(player, enemy) <= 10 then
             table.insert(enemiesInRange, enemy)
         end
     end
@@ -410,7 +410,7 @@ touchOfDeath:Callback(function(spell)
         -- Iterate through the enemiesInRange table
         for _, enemy in ipairs(enemiesInRange) do
             -- Check if the spell is castable and the enemy's HP is less than 15%
-            if touchOfDeath:Castable(enemy) and enemy.hp < 17 then
+            if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
                 -- Cast Touch of Death on the enemy
                 touchOfDeath:Cast(enemy)
                 return true -- exit the loop after casting the spell
@@ -438,10 +438,8 @@ ringOfPeace:Callback(function(spell)
     awful.triggers.loop(function(trigger)
         -- If the current trigger's ID is not in the spellIds table, skip to the next trigger.
         if not valueExists(spellIds, trigger.id) then return end
-
         -- If the trigger's ID is in the spellIds table, continue processing this trigger.
         -- At this point, you can perform any desired actions with the detected trigger.
-
         -- Retrieve the x, y, and z coordinates of the trigger's position.
         local x, y, z = trigger.position()
         -- Perform desired actions based on the trigger's ID
