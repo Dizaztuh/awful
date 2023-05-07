@@ -36,20 +36,6 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
--- Callback for Detox ability
-detox:Callback(function(spell)
-    -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit has a debuff from the cleanseTable
-        for _, debuffName in ipairs(cleanseSpells) do
-            if friend.debuff(debuffName) then
-                -- If so, cast Detox on the friendly unit to cleanse the debuff
-                detox:Cast(friend)
-                return true -- exit the loop
-            end
-        end
-    end)
-end)
 
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
