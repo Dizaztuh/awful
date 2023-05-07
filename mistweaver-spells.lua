@@ -220,7 +220,6 @@ revival:Callback(function(spell)
         if friend.hp < 33 then
             -- Cast Revival
             return revival:Cast(friend)
-            awful.alert("Casted Revival", 115310)
         end
     end)
 end)
@@ -232,7 +231,6 @@ restoral:Callback(function(spell)
         if friend.hp < 33 then
             -- Cast Revival
             return restoral:Cast(friend)
-            awful.alert("Casted Restoral", 388615)
         end
     end)
 end)
@@ -249,7 +247,6 @@ sphereofHope:Callback(function(spell)
             end
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
             sphereofHope:Cast(friend)
-            awful.alert("Casted Sphere of Hope on Friendly", 410777)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
 
@@ -268,7 +265,6 @@ sphereofDespair:Callback(function (spell)
         -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
         if not target.debuff(411038) then
             sphereofDespair:Cast(target)
-            awful.alert("Casted Sphere of Despair on Target", 410777)
             -- Update the lastCastTimeDespair variable
             lastCastTimeDespair = GetTime()
         end
@@ -295,29 +291,28 @@ envelopingMist:Callback(function(spell)
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         envelopingMist:Cast(lowestHpFriend)
-        awful.alert("Casted Enveloping Mist on Friendly", 124682)  
     end
 end)
 
 
 faelineStomp:Callback(function (spell)
+    awful.alert("Casted Faeline Stomp to Rebuff", 388193) 
     if not player.buff (388026) then
-        faelineStomp:Cast(target)
-        awful.alert("Casted Faeline Stomp to Rebuff", 388193)     
+        faelineStomp:Cast(target)    
     end
 end)
 
 fortifyingBrew:Callback(function(spell)
+    awful.alert("Casted Fortifying Brew! Gettin' REKT!", 115203)
     if player.hp <= 40 then
-        fortifyingBrew:Cast(player)
-        awful.alert("Casted Fortifying Brew! Gettin' REKT!", 115203)      
+        fortifyingBrew:Cast(player)      
     end
 end)
 
 healingElixir:Callback(function(spell)
+    awful.alert("Casted Healing Elixir", 122281) 
     if player.hp <= 55 then
         healingElixir:Cast(player)
-        awful.alert("Casted Healing Elixir", 122281) 
     end
 end)
 
@@ -325,11 +320,11 @@ end)
 local badStuff = {"Mindgames"}
 
 diffuseMagic:Callback(function(spell)
+    awful.alert("Casted Diffuse Magic", 122783) 
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
-        awful.alert("Casted Diffuse Magic", 122783) 
     end
 end)
 
@@ -343,20 +338,18 @@ legSweep:Callback(function(spell)
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
             return legSweep:Cast(target)
-            awful.alert("Casted Leg Sweep", 119381) 
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
             return legSweep:Cast(target)
-            awful.alert("Casted Leg Sweep to Peel!", 119381) 
         end
     end
 
     -- Add the new condition for Leg Sweep
     awful.fgroup.loop(function(friend)
+        awful.alert("Casted Leg Sweep to Peel!", 119381) 
         -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
         if playersInRange >= 1 and friend.hp <= 40 then
             return legSweep:Cast(target)
-            awful.alert("Casted Leg Sweep to Peel!", 119381) 
         end
     end)
 end)
@@ -364,15 +357,15 @@ end)
 
 
 dampenHarm:Callback(function(spell)
+    awful.alert("Casted Dampen Harm", 122278) 
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
-        awful.alert("Casted Dampen Harm", 122278) 
     end
 end)
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback(function(spell)
-    -- Loop through all friendly units
+    awful.alert("Casted Life Cocoon", 116849) 
     awful.fgroup.loop(function(friend)
         -- If the friend is not in combat, their hp is above 50%, or they are out of the range of Life Cocoon, we skip them
         -- This ensures that we only try to cast Life Cocoon on friends who are in combat, have less than 50% hp, and are within the range of Life Cocoon
@@ -382,17 +375,16 @@ lifeCocoon:Callback(function(spell)
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
-        awful.alert("Casted Life Cocoon", 116849) 
     end)
 end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
+    awful.alert("Casted Paralysis on Enemy Healer", 115078) 
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
-        awful.alert("Casted Paralysis on Enemy Healer", 115078) 
     elseif target.enemyHealer and target.hp < 40 then
         local closestEnemy, closestDistance = nil, math.huge
 
@@ -406,11 +398,10 @@ paralyze:Callback(function(spell)
                 closestDistance = distance
             end
         end)
-
+        awful.alert("Casted Paralysis on Closest Enemy!", 115078) 
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
             paralyze:Cast(closestEnemy)
-            awful.alert("Casted Paralysis on Closest Enemy!", 115078) 
         end
     end
 end)
@@ -446,13 +437,13 @@ end)
 
 -- Create a callback for the Touch of Death ability
 touchOfDeath:Callback(function(spell)
+    awful.alert("Casted Touch of Death! RIPERINO!", 322109) 
     -- Loop through all enemies within range, something arbitrary like 10 yards
     awful.enemies.within(10).loop(function(enemy)
         -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
         if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
             -- Cast Touch of Death on the enemy
             touchOfDeath:Cast(enemy)
-            awful.alert("Casted Touch of Death! RIPERINO!", 322109) 
             return true -- exit the loop after casting the spell
         end
     end)
@@ -460,6 +451,7 @@ end)
 
 ringOfPeace:Callback(function(spell)
     awful.triggers.loop(function(trigger)
+        awful.alert("Casted Ring of Peace!", 116844) 
         -- Check if the trigger.id matches any of the desired spell IDs
         if trigger.id == 62618 or
            trigger.id == 196718 or
@@ -470,7 +462,6 @@ ringOfPeace:Callback(function(spell)
             local x, y, z = trigger.position()
             -- Cast Ring of Peace at the trigger's position
             ringOfPeace:AoECast(x, y, z)
-            awful.alert("Casted Ring of Peace!", 116844) 
         end
     end)
 end)
