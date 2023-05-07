@@ -111,6 +111,7 @@ spearHandStrike:Callback(function(spell)
     if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
         spearHandStrike:Cast(target)
+        awful.alert("Interrupted", 116705)    
     end
 end)
 
@@ -124,6 +125,7 @@ detox:Callback(function(spell)
             if friend.debuff(debuffName) then
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
                 detox:Cast(friend)
+                awful.alert("Cleansing", 115450) 
                 detoxCast = true -- Set the flag to true
                 return true -- exit the inner loop
             end
@@ -140,6 +142,7 @@ tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         return tigersLust:Cast(player)
+        awful.alert("Casted Tiger's Lust", 116841) 
     end
 
     -- Loop through all friendly units
@@ -147,6 +150,7 @@ tigersLust:Callback(function(spell)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             return tigersLust:Cast(friend)
+            awful.alert("Casted Tiger's Lust", 116841) 
         end
     end)
 
@@ -155,6 +159,7 @@ tigersLust:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             return tigersLust:Cast(friend)
+            awful.alert("Casted Tiger's Lust", 116841) 
         end
     end)
 end)
@@ -164,6 +169,7 @@ invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         return invokeChiJi:Cast(player)
+        awful.alert("Casted Invoke Chi-Ji", 325197) 
     end
 
     -- Loop through all friendly units
@@ -171,6 +177,7 @@ invokeChiJi:Callback(function(spell)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             return invokeChiJi:Cast(friend)
+            awful.alert("Casted Invoke Chi-Ji", 325197)
         end
     end)
 
@@ -179,6 +186,7 @@ invokeChiJi:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             return invokeChiJi:Cast(friend)
+            awful.alert("Casted Invoke Chi-Ji", 325197)
         end
     end)
 end)
@@ -190,6 +198,7 @@ thunderFocusTea:Callback(function(spell)
     if player.hp <= 75 and thunderFocusTea:Castable() then
         -- If the player's hp is at or below 75%, cast Thunder Focus Tea on the player
         return thunderFocusTea:Cast(player)
+        awful.alert("Casted Thunder Focus Tea", 116680)
     else
         -- Loop through all friendly units to check their hp
         awful.fgroup.loop(function(friend)
@@ -197,6 +206,7 @@ thunderFocusTea:Callback(function(spell)
             if friend.hp <= 75 and thunderFocusTea:Castable() then
                 -- If the friendly unit's hp is at or below 75%, cast Thunder Focus Tea on the player
                 return thunderFocusTea:Cast(player)
+                awful.alert("Casted Thunder Focus Tea", 116680)
             end
         end)
     end
@@ -210,6 +220,7 @@ revival:Callback(function(spell)
         if friend.hp < 33 then
             -- Cast Revival
             return revival:Cast(friend)
+            awful.alert("Casted Revival", 115310)
         end
     end)
 end)
@@ -221,6 +232,7 @@ restoral:Callback(function(spell)
         if friend.hp < 33 then
             -- Cast Revival
             return restoral:Cast(friend)
+            awful.alert("Casted Restoral", 388615)
         end
     end)
 end)
@@ -237,7 +249,7 @@ sphereofHope:Callback(function(spell)
             end
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
             sphereofHope:Cast(friend)
-
+            awful.alert("Casted Sphere of Hope on Friendly", 410777)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
 
@@ -256,7 +268,7 @@ sphereofDespair:Callback(function (spell)
         -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
         if not target.debuff(411038) then
             sphereofDespair:Cast(target)
-
+            awful.alert("Casted Sphere of Despair on Target", 410777)
             -- Update the lastCastTimeDespair variable
             lastCastTimeDespair = GetTime()
         end
@@ -283,6 +295,7 @@ envelopingMist:Callback(function(spell)
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         envelopingMist:Cast(lowestHpFriend)
+        awful.alert("Casted Enveloping Mist on Friendly", 124682)  
     end
 end)
 
@@ -290,18 +303,21 @@ end)
 faelineStomp:Callback(function (spell)
     if not player.buff (388026) then
         faelineStomp:Cast(target)
+        awful.alert("Casted Faeline Stomp to Rebuff", 388193)     
     end
 end)
 
 fortifyingBrew:Callback(function(spell)
     if player.hp <= 40 then
         fortifyingBrew:Cast(player)
+        awful.alert("Casted Fortifying Brew! Gettin' REKT!", 115203)      
     end
 end)
 
 healingElixir:Callback(function(spell)
     if player.hp <= 55 then
         healingElixir:Cast(player)
+        awful.alert("Casted Healing Elixir", 122281) 
     end
 end)
 
@@ -313,6 +329,7 @@ diffuseMagic:Callback(function(spell)
     if player.debuffFrom(badStuff) or player.hp <= 34 then
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
+        awful.alert("Casted Diffuse Magic", 122783) 
     end
 end)
 
@@ -326,17 +343,30 @@ legSweep:Callback(function(spell)
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
             return legSweep:Cast(target)
+            awful.alert("Casted Leg Sweep", 119381) 
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
             return legSweep:Cast(target)
+            awful.alert("Casted Leg Sweep to Peel!", 119381) 
         end
     end
+
+    -- Add the new condition for Leg Sweep
+    awful.fgroup.loop(function(friend)
+        -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
+        if playersInRange >= 1 and friend.hp <= 40 then
+            return legSweep:Cast(target)
+            awful.alert("Casted Leg Sweep to Peel!", 119381) 
+        end
+    end)
 end)
+
 
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
+        awful.alert("Casted Dampen Harm", 122278) 
     end
 end)
 
@@ -352,6 +382,7 @@ lifeCocoon:Callback(function(spell)
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
+        awful.alert("Casted Life Cocoon", 116849) 
     end)
 end)
 
@@ -361,6 +392,7 @@ paralyze:Callback(function(spell)
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
+        awful.alert("Casted Paralysis on Enemy Healer", 115078) 
     elseif target.enemyHealer and target.hp < 40 then
         local closestEnemy, closestDistance = nil, math.huge
 
@@ -378,6 +410,7 @@ paralyze:Callback(function(spell)
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
             paralyze:Cast(closestEnemy)
+            awful.alert("Casted Paralysis on Closest Enemy!", 115078) 
         end
     end
 end)
@@ -416,9 +449,10 @@ touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
     awful.enemies.within(10).loop(function(enemy)
         -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
-        if spell:Castable(enemy) and enemy.hp < 15 then
+        if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
             -- Cast Touch of Death on the enemy
-            spell:Cast(enemy)
+            touchOfDeath:Cast(enemy)
+            awful.alert("Casted Touch of Death! RIPERINO!", 322109) 
             return true -- exit the loop after casting the spell
         end
     end)
@@ -436,6 +470,7 @@ ringOfPeace:Callback(function(spell)
             local x, y, z = trigger.position()
             -- Cast Ring of Peace at the trigger's position
             ringOfPeace:AoECast(x, y, z)
+            awful.alert("Casted Ring of Peace!", 116844) 
         end
     end)
 end)
@@ -467,6 +502,7 @@ function stompTotems()
         if totemList[totem.name] then
             -- If the totem is in the list, cast Tiger Palm on the totem
             tigerPalm:Cast(totem)
+        
         end
     end)
 end
