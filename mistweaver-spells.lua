@@ -332,7 +332,6 @@ legSweep:Callback(function(spell)
 end)
 
 
-
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
@@ -381,12 +380,9 @@ blackoutKick:Callback(function(spell)
         blackoutKick:Cast(target)
         return
     end
-end)
 
--- Callback for Rising Sun Kick
-risingSunKick:Callback(function(spell)
     -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
-    if  risingSunKick.cd == 0 then
+    if risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
     end
