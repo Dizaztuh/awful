@@ -317,18 +317,12 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Get the number of players in range
-    local playersInRange = enemies.around(player, 8)
-    
-    -- Check if the spell is castable on the target, and there are 2 or more players in range
-    if legSweep:Castable(target) and playersInRange >= 2 then
-        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
+    -- Check if the target's hp percentage is at or below 70%, the spell is castable on the target, and the target is in range
+    if target.hp <= 70 and legSweep:Castable(target) then
+        -- If the target's hp is at or below 70%, cast Leg Sweep on the target
         return legSweep:Cast(target)
-    end
-
-    -- Check if the player's HP is below 45% and the spell is castable on the target
-    if player.hp < 45 and legSweep:Castable(target) then
-        -- If the player's HP is below 45%, cast Leg Sweep on the target
+    elseif enemies.around(player, 6) >= 2 and legSweep:Castable(target) then
+        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         return legSweep:Cast(target)
     end
 end)
