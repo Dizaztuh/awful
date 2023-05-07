@@ -363,41 +363,36 @@ paralyze:Callback(function(spell)
     end
 end)
 
-local risingSunKickOffCooldown = false
 
--- Callback for Tiger Palm
-tigerPalm:Callback(function(spell)
-    if risingSunKickOffCooldown then return end
-    
-    if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
-        -- Cast Tiger Palm on the target.
-        tigerPalm:Cast(target)
-        return
-    end
-end)
-
--- Callback for Blackout Kick
-blackoutKick:Callback(function(spell)
-    if risingSunKickOffCooldown then return end
-    
-    if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
-        -- Cast Blackout Kick on the target.
-        blackoutKick:Cast(target)
-        return
-    end
-end)
 
 local risingSunKickOffCooldown = false
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
-    -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
-    if risingSunKick:Castable(target) and risingSunKick.cd == 0 then
-        -- If so, cast Rising Sun Kick on the target.
-        risingSunKick:Cast(target)
-        risingSunKickOffCooldown = true
-    else
-        risingSunKickOffCooldown = false
+    if risingSunKick:Castable(target) then
+        if risingSunKick.cd == 0 then
+            -- If so, cast Rising Sun Kick on the target.
+            risingSunKick:Cast(target)
+            risingSunKickOffCooldown = true
+        else
+            risingSunKickOffCooldown = false
+        end
+    end
+end)
+
+-- Callback for Blackout Kick
+blackoutKick:Callback(function(spell)
+    if not risingSunKickOffCooldown and blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
+        -- Cast Blackout Kick on the target.
+        blackoutKick:Cast(target)
+    end
+end)
+
+-- Callback for Tiger Palm
+tigerPalm:Callback(function(spell)
+    if not risingSunKickOffCooldown and tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
+        -- Cast Tiger Palm on the target.
+        tigerPalm:Cast(target)
     end
 end)
 
@@ -432,7 +427,7 @@ end)
 -- Create a callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
     -- Define a table containing the desired spell IDs.
-    local spellIds = ["62618", "196718", "198838", "98008", "376079"]
+    local spellIds = ["62618", "196718", "198838", "98008", 376079"]
 
     -- Define a function to check if a value exists in a table.
     local function valueExists(tbl, val)
