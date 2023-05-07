@@ -245,31 +245,20 @@ sphereofHope:Callback(function(spell)
 end)
 
 
-local hasCastedDespair = false
+local lastCastTimeDespair = 0
 
-sphereOfDespair:Callback(function (spell)
-    -- Check if the spell has not been cast and the target doesn't have the debuff (411038), and the spell is castable on the target
-    if not hasCastedDespair and not target.debuff(411038) then
-        -- Cast the spell on the target
-        sphereOfDespair:Cast(target)
+sphereofDespair:Callback(function (spell)
+    -- Check if 30 seconds have passed since the last cast
+    if GetTime() - lastCastTimeDespair >= 5 then
+        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+        if not target.debuff(411038) then
+            sphereofDespair:Cast(target)
 
-        -- Set the hasCastedDespair flag to true, indicating that the spell has been cast
-        hasCastedDespair = true
+            -- Update the lastCastTimeDespair variable
+            lastCastTimeDespair = GetTime()
+        end
     end
 end)
-
--- Create an event listener for COMBAT_LOG_EVENT_UNFILTERED
-awful.event.on('COMBAT_LOG_EVENT_UNFILTERED', function(event, ...)
-    -- Parse the combat log event to get the event type and spell ID
-    local eventType, _, _, _, _, _, _, _, _, _, _, spellId = ...
-
-    -- Check if the event type is 'SPELL_AURA_REMOVED' and the spell ID matches the Sphere of Despair (411038)
-    if eventType == 'SPELL_AURA_REMOVED' and spellId == 411038 then
-        -- Reset the hasCastedDespair flag to false, allowing the spell to be cast again
-        hasCastedDespair = false
-    end
-end)
-
 
 
 envelopingMist:Callback(function(spell)
