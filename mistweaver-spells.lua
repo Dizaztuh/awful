@@ -2,7 +2,6 @@ local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 
 local Spell = awful.Spell
-
 awful.Populate({
     tigerPalm = Spell(100780, { damage = "physical" }),
     blackoutKick = Spell(118166, { damage = "physical" }),
@@ -15,11 +14,11 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true, ranged = true }),
     lifeCocoon = Spell(116849, { heal = true, ranged = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(410777, { targeted = true }),
+    sphereofDespair = Spell(410777, { ranged = true, targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
-    paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
+    paralyze = Spell(115078, { stun = true, targeted = true, range = 20 }),
     legSweep = Spell(119381, { stun = true, range = 6 }),
     ringOfPeace = Spell(116844, { cc = true }),
     flyingSerpentKick = Spell(101545),
@@ -27,15 +26,10 @@ awful.Populate({
     dampenHarm = Spell(122278),
     revival = Spell(115310, { heal = true, ranged = true }),
     diffuseMagic = Spell(122783),
-    detox = Spell(115450, { dispel = true }),
-    spearHandStrike = Spell(116705, { interrupt = true }),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, { targeted = true }),
-    thunderFocusTea = Spell(116680),
-    restoral = Spell(388615, { heal = true, ranged = true }),
-    tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
-    invokeChiJi = Spell(325197)
+    sphereofHope = Spell (410777, {heal = true, ranged = true, targeted = true })
 }, mistweaver, getfenv(1))
+
 
 revival:Callback(function(spell)
     -- Loop through all friendly units
@@ -44,17 +38,6 @@ revival:Callback(function(spell)
         if friend.hp < 33 then
             -- Cast Revival
             return revival:Cast(friend)
-        end
-    end)
-end)
-
-restoral:Callback(function(spell)
-    -- Loop through all friendly units
-        awful.fgroup.loop(function(friend)
-        -- Check if the friend's health is below 30%
-        if friend.hp < 33 then
-            -- Cast Revival
-            return restoral:Cast(friend)
         end
     end)
 end)
@@ -71,8 +54,10 @@ sphereofHope:Callback(function(spell)
             end
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
             sphereofHope:Cast(friend)
+
             -- Update the lastCastTime variable
             lastCastTime = GetTime()
+
             -- Exit the loop
             return true
         end)
@@ -80,23 +65,32 @@ sphereofHope:Callback(function(spell)
 end)
 
 
+local lastCastTimeDespair = 0
+
 sphereofDespair:Callback(function (spell)
-    -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-    if not target.debuff(411038) and sphereofDespair:Castable then
-        return sphereofDespair:Cast(target)
+    -- Check if 30 seconds have passed since the last cast
+    if GetTime() - lastCastTimeDespair >= 30 then
+        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+        if not target.debuff(411038) and spell:Castable(target) then
+            sphereofDespair:Cast(target)
+
+            -- Update the lastCastTimeDespair variable
+            lastCastTimeDespair = GetTime()
+        end
     end
 end)
 
-envelopingMist:Callback(function(spell)
+
+envelopingMist:Callback("prio", function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 75% HP
-        if not friend.combat then
+        if not friend.combat or friend.hp > 75 then
             -- If any of the conditions are met, skip this friendly unit
             return
         end
         -- Check if Enveloping Mist's cast time is 0
-        if envelopingMist.castTime == 0 and envelopingMist:Castable then
+        if envelopingMist.castTime == 0 then
             -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
             envelopingMist:Cast(friend)
             return true -- exit the loop
@@ -134,17 +128,16 @@ diffuseMagic:Callback(function(spell)
     end
 end)
 
+
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Check if the target's hp percentage is at or below 70%, the spell is castable on the target, and the target is in range
+    -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
     if target.hp <= 70 and legSweep:Castable(target) then
-        -- If the target's hp is at or below 70%, cast Leg Sweep on the target
-        return legSweep:Cast(target)
-    elseif enemies.around(player, 6) >= 2 and legSweep:Castable(target) then
-        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
-        return legSweep:Cast(target)
+        -- If the target's hp is at or below 40%, cast Leg Sweep on the target
+       return legSweep:Cast(target)
     end
 end)
+
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
@@ -202,10 +195,14 @@ risingSunKick:Callback("prio", function(spell)
     end
 end)
 
-local eventFrame = CreateFrame("Frame")
-eventFrame:RegisterEvent("PLAYER_LOGIN")
-eventFrame:SetScript("OnEvent", function(self, event)
-    if event == "PLAYER_LOGIN" then
-        mistweaver:OnInitialize()
-    end
+touchOfDeath:Callback(function(spell)
+    -- Loop through all enemies within range, something arbitrary like 10 yards
+    awful.enemies.within(10).loop(function(enemy)
+        -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
+        if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
+            -- Cast Touch of Death on the enemy
+            touchOfDeath:Cast(enemy)
+            return true -- exit the loop after casting the spell
+        end
+    end)
 end)
