@@ -133,7 +133,6 @@ invokeChiJi:Callback(function(spell)
     end
 end)
 
-
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
     -- Check if the player's hp is at or below 75% and the spell is castable
@@ -152,7 +151,6 @@ thunderFocusTea:Callback(function(spell)
     end
 end)
 
-
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
     local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
@@ -163,21 +161,6 @@ spearHandStrike:Callback(function(spell)
         -- If so, cast Spear Hand Strike on the target to interrupt it
         spearHandStrike:Cast(target)
     end
-end)
-
--- Callback for Detox ability
-detox:Callback(function(spell)
-    -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit has a debuff from the cleanseTable
-        for _, debuffName in ipairs(cleanseSpells) do
-            if friend.debuff(debuffName) then
-                -- If so, cast Detox on the friendly unit to cleanse the debuff
-                detox:Cast(friend)
-                return true -- exit the loop
-            end
-        end
-    end)
 end)
 
 
