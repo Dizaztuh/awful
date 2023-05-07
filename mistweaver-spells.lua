@@ -182,6 +182,10 @@ end)
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
+        awful.alert({
+            message="Casted Chi-Ji, the Red Crane!", 
+            texture=325197,
+            })
         return invokeChiJi:Cast(player)
     end
 
@@ -189,6 +193,10 @@ invokeChiJi:Callback(function(spell)
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
+            awful.alert({
+                message="Casted Chi-Ji, the Red Crane!", 
+                texture=325197,
+                })
             return invokeChiJi:Cast(friend)
         end
     end)
@@ -197,6 +205,10 @@ invokeChiJi:Callback(function(spell)
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
+            awful.alert({
+                message="Casted Chi-Ji, the Red Crane!", 
+                texture=325197,
+                })
             return invokeChiJi:Cast(friend)
         end
     end)
@@ -207,6 +219,10 @@ end)
 thunderFocusTea:Callback(function(spell)
     -- Check if the player's hp is at or below 75% and the spell is castable
     if player.hp <= 75 and thunderFocusTea:Castable() then
+        awful.alert({
+            message="Casted Thunder Focus Tea!", 
+            texture=116680,
+            })
         -- If the player's hp is at or below 75%, cast Thunder Focus Tea on the player
         return thunderFocusTea:Cast(player)
     else
@@ -214,6 +230,10 @@ thunderFocusTea:Callback(function(spell)
         awful.fgroup.loop(function(friend)
             -- Check if the friendly unit's hp is at or below 75% and the spell is castable
             if friend.hp <= 75 and thunderFocusTea:Castable() then
+                awful.alert({
+                    message="Casted Thunder Focus Tea!", 
+                    texture=116680,
+                    })
                 -- If the friendly unit's hp is at or below 75%, cast Thunder Focus Tea on the player
                 return thunderFocusTea:Cast(player)
             end
@@ -227,6 +247,10 @@ revival:Callback(function(spell)
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
+            awful.alert({
+                message="Casted Revival!", 
+                texture=115310,
+                })
             -- Cast Revival
             return revival:Cast(friend)
         end
@@ -238,6 +262,10 @@ restoral:Callback(function(spell)
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
+            awful.alert({
+                message="Casted Restoral!", 
+                texture=388615,
+                })
             -- Cast Revival
             return restoral:Cast(friend)
         end
@@ -254,6 +282,10 @@ sphereofHope:Callback(function(spell)
             if not friend.combat or friend.hp > 90 or friend.buff(411036) then
                 return
             end
+            awful.alert({
+                message="Casted Sphere of Hope on an Ally!", 
+                texture=388615,
+                })
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
             sphereofHope:Cast(friend)
             -- Update the lastCastTime variable
