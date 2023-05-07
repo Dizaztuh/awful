@@ -391,30 +391,17 @@ risingSunKick:Callback(function(spell)
 end)
 
 
+-- Create a callback for the Touch of Death ability
 touchOfDeath:Callback(function(spell)
-    -- Get the number of enemies within 8 yards and initialize an empty table to store enemies
-    local numOfEnemiesInRange = awful.enemies.around(player, 5)
-    local enemiesInRange = {}
-
-    -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
-    for _, enemy in ipairs(awful.enemies) do
-        if awful.distance(player, enemy) <= 5 then
-            table.insert(enemiesInRange, enemy)
+    -- Loop through all enemies within range, something arbitrary like 10 yards
+    awful.enemies.within(10).loop(function(enemy)
+        -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
+        if spell:Castable(enemy) and enemy.hp < 15 then
+            -- Cast Touch of Death on the enemy
+            spell:Cast(enemy)
+            return true -- exit the loop after casting the spell
         end
-    end
-
-    -- Check if there are any enemies in range
-    if numOfEnemiesInRange > 0 then
-        -- Iterate through the enemiesInRange table
-        for _, enemy in ipairs(enemiesInRange) do
-            -- Check if the spell is castable and the enemy's HP is less than 15%
-            if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
-                -- Cast Touch of Death on the enemy
-                touchOfDeath:Cast(enemy)
-                return true -- exit the loop after casting the spell
-            end
-        end
-    end
+    end)
 end)
 
 -- Create a callback for the ringOfPeace ability
