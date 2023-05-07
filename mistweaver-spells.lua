@@ -286,7 +286,7 @@ end)
 
 
 faelineStomp:Callback(function (spell)
-    if not player.buff (389387, 388026) then
+    if not player.buff (388026) then
         faelineStomp:Cast(target)
     end
 end)
