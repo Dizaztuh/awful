@@ -259,22 +259,28 @@ sphereofDespair:Callback(function (spell)
 end)
 
 
-envelopingMist:Callback("prio", function(spell)
+envelopingMist:Callback(function(spell)
+    -- Initialize a variable to store the friendly unit with the lowest HP
+    local lowestHpFriend = nil
+    local lowestHpPercentage = 100
+
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit is not in combat, has more than 75% HP
-        if not friend.combat then
-            -- If any of the conditions are met, skip this friendly unit
-            return
-        end
-        -- Check if Enveloping Mist's cast time is 0
-        if envelopingMist.castTime == 0 then
-            -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
-            envelopingMist:Cast(friend)
-            return true -- exit the loop
+        -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
+        if friend.hp < lowestHpPercentage then
+            -- Update lowestHpFriend and lowestHpPercentage
+            lowestHpFriend = friend
+            lowestHpPercentage = friend.hp
         end
     end)
+
+    -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
+    if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
+        -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
+        envelopingMist:Cast(lowestHpFriend)
+    end
 end)
+
 
 
 faelineStomp:Callback(function (spell)
