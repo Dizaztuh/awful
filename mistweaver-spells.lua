@@ -368,7 +368,7 @@ end)
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
     -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
-    if risingSunKick:Castable(target) and risingSunKick.cooldown == 0 then
+    if risingSunKick:Castable(target) and risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
     end
