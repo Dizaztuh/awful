@@ -102,36 +102,17 @@ local cleanseTable = {
     ["Psychic Scream"] = true,
 }
 
--- Custom function to get enemies around a unit within a specified radius
-local function getEnemiesAround(unit, radius)
-    local enemiesInRange = {}
-    for _, enemy in ipairs(enemies) do
-        if unit.distanceTo(enemy) <= radius then
-            table.insert(enemiesInRange, enemy)
-        end
-    end
-    return enemiesInRange
-end
-
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
+    local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
-    -- Loop through all enemies within 5 yards of the player
-    for _, enemy in ipairs(getEnemiesAround(player, 5)) do
-        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
-
-        -- Check if the enemy is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
-        if not enemy.castint and enemyCastingSpell and (kickAllTable[enemyCastingSpell] or kickHealsTable[enemyCastingSpell]) and enemy.castPct > randomCastPct then
-            -- If so, cast Spear Hand Strike on the enemy to interrupt it
-            spearHandStrike:Cast(enemy)
-        end
+    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
+    if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
+        -- If so, cast Spear Hand Strike on the target to interrupt it
+        spearHandStrike:Cast(target)
     end
 end)
-
-
-
-
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
@@ -462,7 +443,4 @@ ringOfPeace:Callback(function(spell)
         ringOfPeace:Cast(x, y, z)
     end)
 end)
-
-
-
 
