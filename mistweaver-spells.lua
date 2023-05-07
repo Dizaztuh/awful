@@ -101,55 +101,6 @@ local cleanseSpells = {
     "Polymorph",
 }
 
--- Callback for Tiger's Lust ability
-tigersLust:Callback(function(spell)
-    -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if player.rootRemains > 3 and player.hp < 50 then
-        return tigersLust:Cast(player)
-    end
-
-    -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
-        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if friend.rootRemains > 3 and friend.hp < 50 then
-            return tigersLust:Cast(friend)
-        end
-    end)
-
-    -- Loop through all enemy units
-    awful.fgroup.loop(function(friend)
-        -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if friend.rootRemains > 3 and enemy.hp < 50 then
-            return tigersLust:Cast(friend)
-        end
-    end)
-end)
-
--- Callback for Invoke Chi-Ji, the Red Crane ability
-invokeChiJi:Callback(function(spell)
-    -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if player.rootRemains > 3 and player.hp < 50 then
-        return invokeChiJi:Cast(player)
-    end
-end)
-
--- Create a callback for Thunder Focus Tea
-thunderFocusTea:Callback(function(spell)
-    -- Check if the player's hp is at or below 75% and the spell is castable
-    if player.hp <= 75 and thunderFocusTea:Castable() then
-        -- If the player's hp is at or below 75%, cast Thunder Focus Tea on the player
-        return thunderFocusTea:Cast(player)
-    else
-        -- Loop through all friendly units to check their hp
-        awful.fgroup.loop(function(friend)
-            -- Check if the friendly unit's hp is at or below 75% and the spell is castable
-            if friend.hp <= 75 and thunderFocusTea:Castable() then
-                -- If the friendly unit's hp is at or below 75%, cast Thunder Focus Tea on the player
-                return thunderFocusTea:Cast(player)
-            end
-        end)
-    end
-end)
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
@@ -161,6 +112,21 @@ spearHandStrike:Callback(function(spell)
         -- If so, cast Spear Hand Strike on the target to interrupt it
         spearHandStrike:Cast(target)
     end
+end)
+
+-- Callback for Detox ability
+detox:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friendly unit has a debuff from the cleanseTable
+        for _, debuffName in ipairs(cleanseSpells) do
+            if friend.debuff(debuffName) then
+                -- If so, cast Detox on the friendly unit to cleanse the debuff
+                detox:Cast(friend)
+                return true -- exit the loop
+            end
+        end
+    end)
 end)
 
 
