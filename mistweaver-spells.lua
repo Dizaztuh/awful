@@ -109,12 +109,13 @@ spearHandStrike:Callback(function(spell)
     local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
-    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable
-    if targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
+    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
+    if not obj.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
         spearHandStrike:Cast(target)
     end
 end)
+
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
