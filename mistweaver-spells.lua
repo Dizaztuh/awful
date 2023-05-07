@@ -120,13 +120,29 @@ end)
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
-    local targetCastingSpell = target.Casting -- Get the name of the spell being cast by the target
+    local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
+    local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
     -- Check if the target is casting a spell from the kickAllTable or kickHealsTable
-    if targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) then
+    if targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
         spearHandStrike:Cast(target)
     end
+end)
+
+-- Callback for Detox ability
+detox:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friendly unit has a debuff from the cleanseTable
+        for _, debuffName in ipairs(cleanseTable) do
+            if friend.debuff(debuffName) then
+                -- If so, cast Detox on the friendly unit to cleanse the debuff
+                detox:Cast(friend)
+                return true -- exit the loop
+            end
+        end
+    end)
 end)
 
 
