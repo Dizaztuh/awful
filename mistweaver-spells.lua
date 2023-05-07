@@ -98,6 +98,8 @@ local cleanseTable = {
     "Landslide",
     "Curse of Weakness",
     "Polymorph",
+    "Fear",
+    "Psychic Scream",
 }
 
 -- Callback for Detox ability
