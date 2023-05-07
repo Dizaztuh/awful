@@ -14,11 +14,11 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true, ranged = true }),
     lifeCocoon = Spell(116849, { heal = true, ranged = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(410777, { ranged = true, targeted = true }),
+    sphereofDespair = Spell(410777, { targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
-    paralyze = Spell(115078, { stun = true, targeted = true, range = 20 }),
+    paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
     legSweep = Spell(119381, { stun = true, range = 6 }),
     ringOfPeace = Spell(116844, { cc = true }),
     flyingSerpentKick = Spell(101545),
@@ -26,9 +26,33 @@ awful.Populate({
     dampenHarm = Spell(122278),
     revival = Spell(115310, { heal = true, ranged = true }),
     diffuseMagic = Spell(122783),
+    detox = Spell(115450, { dispel = true }),
+    spearHandStrike = Spell(116705, { interrupt = true }),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, {heal = true, ranged = true, targeted = true })
+    sphereofHope = Spell (410777, { targeted = true }),
+    thunderFocusTea = Spell(116680),
+    restoral = Spell(388615, { heal = true, ranged = true }),
+    tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
+    invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
+
+-- Create a callback for Thunder Focus Tea
+thunderFocusTea:Callback(function(spell)
+    -- Check if the player's hp is at or below 75% and the spell is castable
+    if player.hp <= 75 and thunderFocusTea:Castable() then
+        -- If the player's hp is at or below 75%, cast Thunder Focus Tea on the player
+        return thunderFocusTea:Cast(player)
+    else
+        -- Loop through all friendly units to check their hp
+        awful.fgroup.loop(function(friend)
+            -- Check if the friendly unit's hp is at or below 75% and the spell is castable
+            if friend.hp <= 75 and thunderFocusTea:Castable() then
+                -- If the friendly unit's hp is at or below 75%, cast Thunder Focus Tea on the player
+                return thunderFocusTea:Cast(player)
+            end
+        end)
+    end
+end)
 
 
 revival:Callback(function(spell)
@@ -85,7 +109,7 @@ envelopingMist:Callback("prio", function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit is not in combat, has more than 75% HP
-        if not friend.combat or friend.hp > 75 then
+        if not friend.combat then
             -- If any of the conditions are met, skip this friendly unit
             return
         end
@@ -131,12 +155,16 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Check if the target's hp percentage is at or below 40%, the spell is castable on the target, and the target is in range
+    -- Check if the target's hp percentage is at or below 70%, the spell is castable on the target, and the target is in range
     if target.hp <= 70 and legSweep:Castable(target) then
-        -- If the target's hp is at or below 40%, cast Leg Sweep on the target
-       return legSweep:Cast(target)
+        -- If the target's hp is at or below 70%, cast Leg Sweep on the target
+        return legSweep:Cast(target)
+    elseif enemies.around(player, 6) >= 2 then
+        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
+        return legSweep:Cast(target)
     end
 end)
+
 
 
 dampenHarm:Callback(function(spell)
