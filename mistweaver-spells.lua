@@ -367,21 +367,19 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    if risingSunKick:Castable(target) then
-        risingSunKick:Cast(target)
-    elseif tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
+    if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
+        return
     end
 end)
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function(spell)
-    if risingSunKick:Castable(target) then
-        risingSunKick:Cast(target)
-    elseif blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
+    if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
         blackoutKick:Cast(target)
+        return
     end
 end)
 
@@ -424,7 +422,13 @@ end)
 -- Create a callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
     -- Define a table containing the desired spell IDs.
-    local spellIds = ["62618", "196718", "198838", "98008", 376079"]
+    local spellIds = {
+        ["62618"] = true, 
+        ["196718"] = true, 
+        ["198838"] = true, 
+        ["98008"] = true,
+        ["376079"] = true
+    }
 
     -- Define a function to check if a value exists in a table.
     local function valueExists(tbl, val)
