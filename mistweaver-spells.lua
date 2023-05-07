@@ -148,7 +148,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and enemy.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             return tigersLust:Cast(friend)
         end
     end)
@@ -172,7 +172,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and enemy.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             return invokeChiJi:Cast(friend)
         end
     end)
