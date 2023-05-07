@@ -20,7 +20,7 @@ awful.Populate({
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
     legSweep = Spell(119381, { stun = true, range = 9 }),
-    ringOfPeace = Spell(116844, { ranged = true, range = 40 }),
+    ringOfPeace = Spell(116844, { targeted = false, ranged = true, range = 40 }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
     dampenHarm = Spell(122278),
@@ -31,7 +31,7 @@ awful.Populate({
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, { targeted = true }),
     thunderFocusTea = Spell(116680),
-    restoral = Spell(388615, { heal = true, ranged = true }),
+    restoral = Spell(388615, { heal = true, ranged = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true, ranged = true, range = 30 }),
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
