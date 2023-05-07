@@ -102,25 +102,24 @@ local cleanseTable = {
     ["Psychic Scream"] = true,
 }
 
-
-
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
-    -- Loop through all enemies within 5 yards
-    group.enemy(5, function(enemy)
-        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+    -- Loop through all enemies
+    enemies.around(function(enemy)
+        -- Check if the enemy is within 5 yards
+        if player.distanceTo(enemy) <= 5 then
+            local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
-        -- Check if the enemy is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
-        if not enemy.castint and enemyCastingSpell and (kickAllTable[enemyCastingSpell] or kickHealsTable[enemyCastingSpell]) and enemy.castPct > randomCastPct then
-            -- If so, cast Spear Hand Strike on the enemy to interrupt it
-            spearHandStrike:Cast(enemy)
+            -- Check if the enemy is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
+            if not enemy.castint and enemyCastingSpell and (kickAllTable[enemyCastingSpell] or kickHealsTable[enemyCastingSpell]) and enemy.castPct > randomCastPct then
+                -- If so, cast Spear Hand Strike on the enemy to interrupt it
+                spearHandStrike:Cast(enemy)
+            end
         end
     end)
 end)
-
-
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
