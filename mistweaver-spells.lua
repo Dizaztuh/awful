@@ -323,7 +323,7 @@ dampenHarm:Callback(function(spell)
 end)
 
 -- Create a callback for the Life Cocoon ability
-lifeCocoon:Callback("prio", function(spell)
+lifeCocoon:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- If the friend is not in combat, their hp is above 50%, or they are out of the range of Life Cocoon, we skip them
