@@ -398,13 +398,17 @@ legSweep:Callback(function(spell)
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
-            return legSweep:Cast(target)
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
                 })
+            return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
+            awful.alert({
+                message="Casted Leg Sweep!", 
+                texture=119381,
+                })
             return legSweep:Cast(target)
         end
     end
@@ -413,11 +417,11 @@ legSweep:Callback(function(spell)
     awful.fgroup.loop(function(friend)
         -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
         if playersInRange >= 1 and friend.hp <= 40 then
-            return legSweep:Cast(target)
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
                 })
+            return legSweep:Cast(target)
         end
     end)
 end)
@@ -457,6 +461,10 @@ paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
+        awful.alert({
+            message="Casted Paralysis on Enemy Healer!", 
+            texture=115078,
+            })
         paralyze:Cast(enemyHealer)
     elseif target.enemyHealer and target.hp < 40 then
         local closestEnemy, closestDistance = nil, math.huge
@@ -474,6 +482,10 @@ paralyze:Callback(function(spell)
 
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
+            awful.alert({
+                message="Casted Paralysis on Enemy DPS!", 
+                texture=115078,
+                })
             paralyze:Cast(closestEnemy)
         end
     end
@@ -514,6 +526,10 @@ touchOfDeath:Callback(function(spell)
     awful.enemies.within(10).loop(function(enemy)
         -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
         if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
+            awful.alert({
+                message="Casted Touch of Death!", 
+                texture=322109,
+                })
             -- Cast Touch of Death on the enemy
             touchOfDeath:Cast(enemy)
             return true -- exit the loop after casting the spell
@@ -562,6 +578,10 @@ function stompTotems()
     awful.totems.loop(function(totem)
         -- Check if the totem is in the totemList
         if totemList[totem.name] then
+            awful.alert({
+                message="Stomped a Totem!", 
+                texture=100780,
+                })
             -- If the totem is in the list, cast Tiger Palm on the totem
             tigerPalm:Cast(totem)
         
