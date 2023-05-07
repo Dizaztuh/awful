@@ -403,7 +403,7 @@ touchOfDeath:Callback(function(spell)
 
     -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
     for _, enemy in ipairs(awful.enemies) do
-        if awful.distance(player, enemy) <= 10 then
+        if awful.distance(player, enemy) <= 5 then
             table.insert(enemiesInRange, enemy)
         end
     end
@@ -430,7 +430,8 @@ ringOfPeace:Callback(function(spell)
         ["196718"] = true,
         ["198838"] = true,
         ["98008"] = true,
-        ["376079"] = true
+        ["376079"] = true,
+        ["212182"] = true
     }
 
     -- Define a loop using the Awful framework's "triggers.loop" function to iterate through all active triggers.
@@ -444,7 +445,7 @@ ringOfPeace:Callback(function(spell)
         local x, y, z = trigger.position()
 
         -- Perform desired actions based on the trigger's ID
-        ringOfPeace:AoECast(x, y, z)
+        ringOfPeace:Cast(x, y, z)
     end)
 end)
 
