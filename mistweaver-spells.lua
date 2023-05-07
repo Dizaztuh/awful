@@ -161,6 +161,10 @@ invokeChiJi:Callback(function(spell)
         return invokeChiJi:Cast(player)
     end
 
+    if player.hp < 55 and invokeChiJi:Castable then
+        return invokeChiJi:Cast(player)
+    end
+
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
@@ -362,7 +366,6 @@ paralyze:Callback(function(spell)
         paralyze:Cast(enemyHealer)
     end
 end)
-
 
 
 -- Callback for Tiger Palm
