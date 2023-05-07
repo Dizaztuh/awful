@@ -410,7 +410,7 @@ touchOfDeath:Callback(function(spell)
         -- Iterate through the enemiesInRange table
         for _, enemy in ipairs(enemiesInRange) do
             -- Check if the spell is castable and the enemy's HP is less than 15%
-            if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
+            if touchOfDeath:Castable(enemy) and enemy.hp < 17 then
                 -- Cast Touch of Death on the enemy
                 touchOfDeath:Cast(enemy)
                 return true -- exit the loop after casting the spell
