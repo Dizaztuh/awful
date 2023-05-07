@@ -146,6 +146,13 @@ end)
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
+    if (player.rootRemains > 3 or player.slowed) and target.hp < 60 then
+        awful.alert({
+            message="Casted Tigers Lust!", 
+            texture=116841,
+            })
+        return tigersLust:Cast(player)
+    end
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         awful.alert({
             message="Casted Tigers Lust!", 
