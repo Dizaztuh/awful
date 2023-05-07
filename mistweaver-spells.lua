@@ -2,6 +2,7 @@ local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 
 local Spell = awful.Spell
+
 awful.Populate({
     tigerPalm = Spell(100780, { damage = "physical" }),
     blackoutKick = Spell(118166, { damage = "physical" }),
@@ -70,10 +71,8 @@ sphereofHope:Callback(function(spell)
             end
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
             sphereofHope:Cast(friend)
-
             -- Update the lastCastTime variable
             lastCastTime = GetTime()
-
             -- Exit the loop
             return true
         end)
@@ -97,7 +96,7 @@ envelopingMist:Callback(function(spell)
             return
         end
         -- Check if Enveloping Mist's cast time is 0
-        if envelopingMist.castTime == 0 and envelopingMist.Castable then
+        if envelopingMist.castTime == 0 and envelopingMist:Castable then
             -- If the cooldown is 0, cast Enveloping Mist on the friendly unit
             envelopingMist:Cast(friend)
             return true -- exit the loop
