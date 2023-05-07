@@ -315,8 +315,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 9)
-    
+    local playersInRange = enemies.around(player, 10)   
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
@@ -421,7 +420,7 @@ ringOfPeace:Callback(function(spell)
         -- Retrieve the x, y, and z coordinates of the trigger's position.
         local x, y, z = trigger.position()
         -- Perform desired actions based on the trigger's ID
-        spell:AoECast(x, y, z)
+        ringOfPeace:AoECast(x, y, z)
     end)
 end)
 
