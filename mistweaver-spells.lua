@@ -7,7 +7,7 @@ awful.Populate({
     blackoutKick = Spell(118166, { damage = "physical" }),
     risingSunKick = Spell(107428, { damage = "physical" }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
-    touchOfDeath =   Spell(322109),
+    touchOfDeath =   Spell(322109 { damage = "physical", range = 5 }),
     envelopingMist = Spell(124682, { heal = true, ranged = true, targeted = true }),
     renewingMist = Spell(119611, { heal = true, ranged = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true }),
@@ -396,7 +396,7 @@ end)
 
 touchOfDeath:Callback(function(spell)
     -- Get the number of enemies within 8 yards and initialize an empty table to store enemies
-    local numOfEnemiesInRange = awful.enemies.around(player, 8)
+    local numOfEnemiesInRange = awful.enemies.around(player, 5)
     local enemiesInRange = {}
 
     -- Loop through all enemies in the game, add enemies within 8 yards to the enemiesInRange table
