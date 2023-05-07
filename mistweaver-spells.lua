@@ -225,7 +225,7 @@ restoral:Callback(function(spell)
     end)
 end)
 
-local lastCastTime = 0
+local lastCastTimeHope = 0
 
 sphereofHope:Callback(function(spell)
     -- Check if 30 seconds have passed since the last cast
@@ -239,7 +239,7 @@ sphereofHope:Callback(function(spell)
             sphereofHope:Cast(friend)
 
             -- Update the lastCastTime variable
-            lastCastTime = GetTime()
+            lastCastTimeHope = GetTime()
 
             -- Exit the loop
             return true
