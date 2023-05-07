@@ -36,7 +36,6 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
-
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
@@ -138,10 +137,18 @@ sphereofHope:Callback(function(spell)
 end)
 
 
+local lastCastTimeDespair = 0
+
 sphereofDespair:Callback(function (spell)
-    -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-    if not target.debuff(411038) and sphereofDespair:Castable then
-        return sphereofDespair:Cast(target)
+    -- Check if 30 seconds have passed since the last cast
+    if GetTime() - lastCastTimeDespair >= 30 then
+        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+        if not target.debuff(411038) and spell:Castable(target) then
+            sphereofDespair:Cast(target)
+
+            -- Update the lastCastTimeDespair variable
+            lastCastTimeDespair = GetTime()
+        end
     end
 end)
 
