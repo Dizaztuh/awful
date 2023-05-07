@@ -448,15 +448,15 @@ ringOfPeace:Callback(function(spell)
 
         -- Perform desired actions based on the trigger's ID
         if trigger.id == 62618 then
-            ringOfPeace:Cast(trigger.position)
+            ringOfPeace:Cast(x, y, z)
         elseif trigger.id == 196718 then
-            ringOfPeace:Cast(trigger.position)
+            ringOfPeace:Cast(x, y, z)
         elseif trigger.id == 198838 then
-            ringOfPeace:Cast(trigger.position)
+            ringOfPeace:Cast(x, y, z)
         elseif trigger.id == 198838 then
-            ringOfPeace:Cast(trigger.position)
+            ringOfPeace:Cast(x, y, z)
         elseif trigger.id == 376079 then
-            ringOfPeace:Cast(trigger.position)
+            ringOfPeace:Cast(x, y, z)
         end
     end)
 end)
