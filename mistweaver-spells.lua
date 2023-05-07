@@ -315,14 +315,14 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 8)   
+    local playersInRange = enemies.around(player, 10)   
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
             return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
-        elseif player.hp < 45 then
+        elseif player.hp < 45 and playersInRange ~= 1 then
             return legSweep:Cast(target)
         end
     end
@@ -400,25 +400,23 @@ touchOfDeath:Callback(function(spell)
     end)
 end)
 
-local spellIds = {
-    [62618] = true,
-    [196718] = true,
-    [198838] = true,
-    [98008] = true,
-    [376079] = true
-}
-
--- Callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
-    for spellId, _ in pairs(spellIds) do
-        awful.triggers.loop(spellId, function(trigger)
+    awful.triggers.loop(function(trigger)
+        -- Check if the trigger.id matches any of the desired spell IDs
+        if trigger.id == 62618 or
+           trigger.id == 196718 or
+           trigger.id == 198838 or
+           trigger.id == 98008 or
+           trigger.id == 376079 then
             -- Retrieve the x, y, and z coordinates of the trigger's position.
             local x, y, z = trigger.position()
             -- Cast Ring of Peace at the trigger's position
             ringOfPeace:AoECast(x, y, z)
-        end)
-    end
+        end
+    end)
 end)
+
+
 
 
 
