@@ -363,23 +363,25 @@ paralyze:Callback(function(spell)
     end
 end)
 
-local risingSunKickOffCooldown = false
+
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    if not risingSunKickOffCooldown and player.lastCast ~= tigerPalm.id then
+    if risingSunKick:Castable(target) then
+        risingSunKick:Cast(target)
+    elseif tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
-        return
     end
 end)
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function(spell)
-    if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
+    if risingSunKick:Castable(target) then
+        risingSunKick:Cast(target)
+    elseif blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
         blackoutKick:Cast(target)
-        return
     end
 end)
 
