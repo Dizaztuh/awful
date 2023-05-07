@@ -20,7 +20,7 @@ awful.Populate({
     faelineStomp = Spell(388193, {heal = true, ranged = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
     legSweep = Spell(119381, { stun = true, range = 9 }),
-    ringOfPeace = Spell(116844, {cc = true, ranged = true, range = 40 }),
+    ringOfPeace = Spell(116844, { ranged = true, range = 40 }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
     dampenHarm = Spell(122278),
@@ -431,17 +431,13 @@ ringOfPeace:Callback(function(spell)
     -- Define a loop using the Awful framework's "triggers.loop" function to iterate through all active triggers.
     awful.triggers.loop(function(trigger)
         -- If the current trigger's ID is not in the spellIds table, skip to the next trigger.
-        if spellIds[tostring(trigger.id)] then
-
+        if not spellIds[tostring(trigger.id)] then return end
         -- If the trigger's ID is in the spellIds table, continue processing this trigger.
         -- At this point, you can perform any desired actions with the detected trigger.
         -- Retrieve the x, y, and z coordinates of the trigger's position.
         local x, y, z = trigger.position()
-
         -- Perform desired actions based on the trigger's ID
         ringOfPeace:Cast(x, y, z)
-        return 
-        end
     end)
 end)
 
