@@ -422,47 +422,30 @@ end)
 
 -- Create a callback for the ringOfPeace ability
 ringOfPeace:Callback(function(spell)
-    -- Define a table containing the desired spell IDs.
+    -- Define a dictionary containing the desired spell IDs.
     local spellIds = {
-        ["62618"] = true, 
-        ["196718"] = true, 
-        ["198838"] = true, 
+        ["62618"] = true,
+        ["196718"] = true,
+        ["198838"] = true,
         ["98008"] = true,
         ["376079"] = true
     }
 
-    -- Define a function to check if a value exists in a table.
-    local function valueExists(tbl, val)
-        for _, v in ipairs(tbl) do
-            if v == val then
-                return true
-            end
-        end
-        return false
-    end
-
     -- Define a loop using the Awful framework's "triggers.loop" function to iterate through all active triggers.
     awful.triggers.loop(function(trigger)
         -- If the current trigger's ID is not in the spellIds table, skip to the next trigger.
-        if not valueExists(spellIds, trigger.id) then return end
+        if not spellIds[tostring(trigger.id)] then return end
+
         -- If the trigger's ID is in the spellIds table, continue processing this trigger.
         -- At this point, you can perform any desired actions with the detected trigger.
         -- Retrieve the x, y, and z coordinates of the trigger's position.
         local x, y, z = trigger.position()
+
         -- Perform desired actions based on the trigger's ID
-        if trigger.id == 62618 then
-            ringOfPeace:AoECast(x, y, z)
-        elseif trigger.id == 196718 then
-            ringOfPeace:AoECast(x, y, z)
-        elseif trigger.id == 198838 then
-            ringOfPeace:AoECast(x, y, z)
-        elseif trigger.id == 198838 then
-            ringOfPeace:AoECast(x, y, z)
-        elseif trigger.id == 376079 then
-            ringOfPeace:AoECast(x, y, z)
-        end
+        ringOfPeace:AoECast(x, y, z)
     end)
 end)
+
 
 
 
