@@ -385,23 +385,12 @@ end)
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
     -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
-    if risingSunKick.cd == 0 then
+    if  risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
     end
 end)
 
--- Main function to check for Blackout Kick and Rising Sun Kick conditions
-function main()
-    if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
-        -- Cast Blackout Kick on the target.
-        blackoutKick:Cast(target)
-        return
-    elseif risingSunKick.cd == 0 then
-        -- If Rising Sun Kick is castable on the target and its cooldown is 0, cast it on the target.
-        risingSunKick:Cast(target)
-    end
-end
 
 touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
