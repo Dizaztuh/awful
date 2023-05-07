@@ -36,6 +36,85 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
+local kickAllTable = {
+    "Cyclone",
+    "Chaos Bolt",
+    "Ring of Frost",
+    "Revive Pet",
+    "Mass Dispel",
+    "Summon Water Elemental",
+    "Glacial Spike",
+    "Greater Pyroblast",
+    "Ray of Frost",
+    "Shadowfury",
+    "Schism",
+    "Lightning Lasso",
+    "Cyclotronic Blast",
+    "Focused Energy",
+    "Convoke the Spirits",
+    "Deathborne",
+    "Mindgames",
+    "Repentance",
+    "Summon Demonic Tyrant",
+    "Banish",
+    "Eternity Surge",
+    "Demonfire",
+}
+
+local kickHealsTable = {
+    "Regrowth",
+    "Wild Growth",
+    "Nourish",
+    "Flash of Light",
+    "Holy Light",
+    "Flash Heal",
+    "Heal",
+    "Prayer of Healing",
+    "Prayer of Mending",
+    "Clarity of Will",
+    "Divine Hymn",
+    "Greater Heal",
+    "Penance",
+    "Soothing Mist",
+    "Enveloping Mist",
+    "Vivify",
+    "Chain Heal",
+    "Healing Wave",
+    "Healing Surge",
+    "Healing Rain",
+    "Drain Life",
+    "Dream Breath",
+    "Spiritbloom",
+    "Living Flame",
+}
+
+local cleanseTable = {
+    "Hex",
+    "Mirrors of Torment",
+    "Mindgames",
+    "Sepsis",
+    "Fire Breath",
+    "Curse of Exhaustion",
+    "Landslide",
+    "Curse of Weakness",
+    "Polymorph",
+}
+
+-- Callback for Detox ability
+detox:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friendly unit has a debuff from the cleanseTable
+        for _, debuffName in ipairs(cleanseSpells) do
+            if friend.debuff(debuffName) then
+                -- If so, cast Detox on the friendly unit to cleanse the debuff
+                detox:Cast(friend)
+                return true -- exit the loop
+            end
+        end
+    end)
+end)
+
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
@@ -137,18 +216,10 @@ sphereofHope:Callback(function(spell)
 end)
 
 
-local lastCastTimeDespair = 0
-
 sphereofDespair:Callback(function (spell)
-    -- Check if 30 seconds have passed since the last cast
-    if GetTime() - lastCastTimeDespair >= 30 then
-        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-        if not target.debuff(411038) and spell:Castable(target) then
-            sphereofDespair:Cast(target)
-
-            -- Update the lastCastTimeDespair variable
-            lastCastTimeDespair = GetTime()
-        end
+    -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
+    if not target.debuff(411038) and sphereofDespair:Castable then
+        return sphereofDespair:Cast(target)
     end
 end)
 
