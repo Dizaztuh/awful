@@ -364,6 +364,7 @@ paralyze:Callback(function(spell)
 end)
 
 
+
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
     if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
@@ -388,7 +389,6 @@ risingSunKick:Callback(function(spell)
     if  risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
-        return
     end
 end)
 
