@@ -370,6 +370,7 @@ tigerPalm:Callback(function(spell)
     if not risingSunKickOffCooldown and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
+        return
     end
 end)
 
