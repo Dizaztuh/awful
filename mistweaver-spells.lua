@@ -36,6 +36,54 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
+-- Callback for Tiger's Lust ability
+tigersLust:Callback(function(spell)
+    -- Check if the player is rooted for more than 3 seconds and their health is below 50%
+    if player.rootRemains > 3 and player.hp < 50 then
+        return tigersLust:Cast(player)
+    end
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
+        if friend.rootRemains > 3 and friend.hp < 50 then
+            return tigersLust:Cast(friend)
+        end
+    end)
+
+    -- Loop through all enemy units
+    awful.fgroup.loop(function(friend)
+        -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
+        if friend.rootRemains > 3 and enemy.hp < 50 then
+            return tigersLust:Cast(friend)
+        end
+    end)
+end)
+
+-- Callback for Invoke Chi-Ji, the Red Crane ability
+invokeChiJi:Callback(function(spell)
+    -- Check if the player is rooted for more than 3 seconds and their health is below 50%
+    if player.rootRemains > 3 and player.hp < 50 then
+        return invokeChiJi:Cast(player)
+    end
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
+        if friend.rootRemains > 3 and friend.hp < 50 then
+            return invokeChiJi:Cast(friend)
+        end
+    end)
+
+    -- Loop through all enemy units
+    awful.enemies.loop(function(friend)
+        -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
+        if friend.rootRemains > 3 and enemy.hp < 50 then
+            return invokeChiJi:Cast(friend)
+        end
+    end)
+end)
+
 
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
