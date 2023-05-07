@@ -408,23 +408,23 @@ end)
 ringOfPeace:Callback(function(spell)
     -- Define a dictionary containing the desired spell IDs
     local spellIds = {
-        ["62618"] = true,
-        ["196718"] = true,
-        ["198838"] = true,
-        ["98008"] = true,
-        ["376079"] = true,
-        ["212182"] = true
+        [62618] = true,
+        [196718] = true,
+        [198838] = true,
+        [98008] = true,
+        [376079] = true,
+        [212182] = true
     }
     -- Define a loop using the Awful framework's "triggers.loop" function to iterate through all active triggers.
     awful.triggers.loop(function(trigger)
         -- If the current trigger's ID is not in the spellIds table, skip to the next trigger.
-        if not spellIds[tostring(trigger.id)] then return end
+        if not spellIds[(trigger.id)] then return end
         -- If the trigger's ID is in the spellIds table, continue processing this trigger.
         -- At this point, you can perform any desired actions with the detected trigger.
         -- Retrieve the x, y, and z coordinates of the trigger's position.
         local x, y, z = trigger.position()
         -- Perform desired actions based on the trigger's ID
-        ringOfPeace:Cast(x, y, z)
+        ringOfPeace:AoECast(x, y, z)
     end)
 end)
 
