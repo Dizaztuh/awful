@@ -27,7 +27,7 @@ awful.Populate({
     revival = Spell(115310, { heal = true, ranged = true }),
     diffuseMagic = Spell(122783),
     detox = Spell(115450, { dispel = true }),
-    spearHandStrike = Spell(116705, { interrupt = true }),
+    spearHandStrike = Spell(116705),
     healingElixir = Spell(122281, { heal = true }),
     sphereofHope = Spell (410777, { targeted = true }),
     thunderFocusTea = Spell(116680),
@@ -366,12 +366,14 @@ blackoutKick:Callback(function(spell)
 end)
 
 -- Callback for Rising Sun Kick
-risingSunKick:Callback("prio", function(spell)
-    if risingSunKick:Castable(target) then
+risingSunKick:Callback(function(spell)
+    -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
+    if risingSunKick:Castable(target) and risingSunKick.cooldown == 0 then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
     end
 end)
+
 
 touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
