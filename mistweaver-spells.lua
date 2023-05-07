@@ -361,7 +361,7 @@ paralyze:Callback(function(spell)
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
-    elseif target.guid = enemyHealer.guid and target.hp < 40 then
+    elseif target.enemyHealer and target.hp < 40 then
         local closestEnemy, closestDistance = nil, math.huge
 
         -- Loop through all enemies within 20 yards
