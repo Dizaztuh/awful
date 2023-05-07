@@ -131,14 +131,14 @@ end)
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if player.rootRemains > 3 and player.hp < 50 then
+    if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         return tigersLust:Cast(player)
     end
 
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if friend.rootRemains > 3 and friend.hp < 50 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             return tigersLust:Cast(friend)
         end
     end)
@@ -146,7 +146,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if friend.rootRemains > 3 and enemy.hp < 50 then
+        if (friend.rootRemains > 3 or player.slowed) and enemy.hp < 60 then
             return tigersLust:Cast(friend)
         end
     end)
@@ -155,14 +155,14 @@ end)
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if player.rootRemains > 3 and player.hp < 50 then
+    if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         return invokeChiJi:Cast(player)
     end
 
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if friend.rootRemains > 3 and friend.hp < 50 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             return invokeChiJi:Cast(friend)
         end
     end)
@@ -170,7 +170,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if friend.rootRemains > 3 and enemy.hp < 50 then
+        if (friend.rootRemains > 3 or player.slowed) and enemy.hp < 60 then
             return invokeChiJi:Cast(friend)
         end
     end)
