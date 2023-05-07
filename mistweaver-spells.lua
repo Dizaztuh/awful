@@ -363,16 +363,12 @@ paralyze:Callback(function(spell)
     end
 end)
 
-
+local risingSunKickOffCooldown = false
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    -- Check if Rising Sun Kick's cooldown property exists and is equal to 0
-    if risingSunKick.cd and risingSunKick.cd == 0 then
-        -- If Rising Sun Kick is off cooldown, do not cast Tiger Palm and return from the function.
-        return
-    end
-
+    if risingSunKickOffCooldown then return end
+    
     if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
         tigerPalm:Cast(target)
@@ -380,9 +376,10 @@ tigerPalm:Callback(function(spell)
     end
 end)
 
-
 -- Callback for Blackout Kick
 blackoutKick:Callback(function(spell)
+    if risingSunKickOffCooldown then return end
+    
     if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
         blackoutKick:Cast(target)
@@ -390,14 +387,20 @@ blackoutKick:Callback(function(spell)
     end
 end)
 
+local risingSunKickOffCooldown = false
+
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
     -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
-    if  risingSunKick.cd == 0 then
+    if risingSunKick:Castable(target) and risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
         risingSunKick:Cast(target)
+        risingSunKickOffCooldown = true
+    else
+        risingSunKickOffCooldown = false
     end
 end)
+
 
 
 touchOfDeath:Callback(function(spell)
