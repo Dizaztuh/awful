@@ -489,6 +489,10 @@ paralyze:Callback(function(spell)
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
+        awful.alert({
+            message="Paralysis on Enemy Healer!", 
+            texture=115078,
+            })
     end
 end)
 
