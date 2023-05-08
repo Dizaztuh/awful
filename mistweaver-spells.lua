@@ -14,7 +14,7 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(410777, range = 40),
+    sphereofDespair = Spell(410777),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
@@ -29,7 +29,7 @@ awful.Populate({
     detox = Spell(115450),
     spearHandStrike = Spell(116705),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777, range = 40),
+    sphereofHope = Spell (410777),
     thunderFocusTea = Spell(116680),
     restoral = Spell(388615, { heal = true, ranged = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true, range = 30 }),
@@ -395,6 +395,7 @@ diffuseMagic:Callback(function(spell)
         diffuseMagic:Cast(player)
     end
 end)
+
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
@@ -409,7 +410,6 @@ legSweep:Callback(function(spell)
             return legSweep:Cast(target)
         end
     end
-
     -- Add the new condition for Leg Sweep
     awful.fgroup.loop(function(friend)
         -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
@@ -528,36 +528,6 @@ touchOfDeath:Callback(function(spell)
     end)
 end)
 
-ringOfPeace:Callback(function(spell)
-    awful.triggers.track(function(trigger, uptime)
-        -- If the player is in combat
-        if player.combat then
-            -- Check if the trigger.id matches any of the desired spell IDs
-            if trigger.id == 62618 or
-                trigger.id == 196718 or
-                trigger.id == 198838 or
-                trigger.id == 98008 or
-                trigger.id == 376079 then
-                -- Retrieve the x, y, and z coordinates of the trigger's position.
-                local x, y, z = trigger.position()
-                -- If the coordinates are valid
-                if x and y and z then
-                    -- Check if the trigger's creator is a friendly unit, if so, return
-                    if trigger.creator.friend then return end
-                    -- Check if the player has Line of Sight to the trigger's position, if not, return
-                    if not player.losCoordsLiteral(x, y, z) then return end
-                    -- Cast Ring of Peace at the trigger's position
-                    if ringOfPeace:AoECast(x, y, z) then
-                        -- Stop further processing and return true
-                        return true
-                    end
-                end
-            end
-        end
-    end)
-end)
-
-
 -- Define a table with totem names and their respective IDs
 local totemList = {
     ["Capacitor Totem"] = 59547,
@@ -589,6 +559,7 @@ function stompTotems()
                 })
             -- If the totem is in the list, cast Tiger Palm on the totem
             tigerPalm:Cast(totem)
+            blackoutKick:Cast(totem)
         end
     end)
 end
