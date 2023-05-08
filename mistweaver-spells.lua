@@ -240,7 +240,7 @@ detox:Callback(function(spell)
                     texture=115450,
                 })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
-                detox:Cast(friend)
+                spell:Cast(friend)
                 return true -- exit the loop
             end
         end
@@ -256,14 +256,14 @@ tigersLust:Callback(function(spell)
             message="Casted Tigers Lust!", 
             texture=116841,
             })
-        return tigersLust:Cast(player)
+        return spell:Cast(player)
     end
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         awful.alert({
             message="Casted Tigers Lust on self!", 
             texture=116841,
             })
-        return tigersLust:Cast(player)
+        return spell:Cast(player)
     end
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
@@ -273,7 +273,7 @@ tigersLust:Callback(function(spell)
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
-            return tigersLust:Cast(friend)
+            return spell:Cast(friend)
         end
     end)
 
@@ -285,7 +285,7 @@ tigersLust:Callback(function(spell)
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
-            return tigersLust:Cast(friend)
+            return spell:Cast(friend)
         end
     end)
 end)
@@ -298,7 +298,7 @@ invokeChiJi:Callback(function(spell)
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
             })
-        return invokeChiJi:Cast(player)
+        return spell:Cast(player)
     end
 
     -- Loop through all friendly units
@@ -309,7 +309,7 @@ invokeChiJi:Callback(function(spell)
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
-            return invokeChiJi:Cast(friend)
+            return spell:Cast(friend)
         end
     end)
 
@@ -321,7 +321,7 @@ invokeChiJi:Callback(function(spell)
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
-            return invokeChiJi:Cast(friend)
+            return spell:Cast(friend)
         end
     end)
 end)
@@ -336,7 +336,7 @@ thunderFocusTea:Callback(function(spell)
             texture=116680,
             })
         -- If the player's hp is at or below 75%, cast Thunder Focus Tea on the player
-        return thunderFocusTea:Cast(player)
+        return spell:Cast(player)
     else
         -- Loop through all friendly units to check their hp
         awful.fgroup.loop(function(friend)
@@ -347,7 +347,7 @@ thunderFocusTea:Callback(function(spell)
                     texture=116680,
                     })
                 -- If the friendly unit's hp is at or below 75%, cast Thunder Focus Tea on the player
-                return thunderFocusTea:Cast(player)
+                return spell:Cast(player)
             end
         end)
     end
@@ -364,7 +364,7 @@ revival:Callback(function(spell)
                 texture=115310,
                 })
             -- Cast Revival
-            return revival:Cast(friend)
+            return spell:Cast(friend)
         end
     end)
 end)
@@ -379,7 +379,7 @@ restoral:Callback(function(spell)
                 texture=388615,
                 })
             -- Cast Revival
-            return restoral:Cast(friend)
+            return spell:Cast(friend)
         end
     end)
 end)
@@ -395,7 +395,7 @@ sphereofHope:Callback(function(spell)
                 return
             end
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
-            sphereofHope:Cast(friend)
+            spell:Cast(friend)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
             awful.alert({
@@ -428,6 +428,7 @@ sphereofDespair:Callback(function(spell)
 
         if lowestHpEnemy and sphereofDespair:Cast(lowestHpEnemy) then
             lastCastTimeDespair = GetTime()
+            spell:Cast(enemy)
             awful.alert({
                 message = "Casted Sphere of Despair on: " .. lowestHpEnemy.name,
                 texture = 410777,
@@ -459,7 +460,7 @@ envelopingMist:Callback(function(spell)
             texture=124682,
             })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
-        envelopingMist:Cast(lowestHpFriend)
+        spell:Cast(lowestHpFriend)
     end
 end)
 
@@ -470,7 +471,7 @@ faelineStomp:Callback(function (spell)
             message="Casted Faeline Stomp to Rebuff Teachings!", 
             texture=388193,
             })
-        faelineStomp:Cast(target)    
+        spell:Cast(target)    
     end
 end)
 
@@ -480,7 +481,7 @@ fortifyingBrew:Callback(function(spell)
             message="Casted Fortifying Brew! Gettin fk'n Rekt!", 
             texture=115203,
             })
-        fortifyingBrew:Cast(player)      
+        spell:Cast(player)      
     end
 end)
 
@@ -490,7 +491,7 @@ healingElixir:Callback(function(spell)
             message="Casted Healing Elixir!", 
             texture=122281,
             })
-        healingElixir:Cast(player)
+        spell:Cast(player)
     end
 end)
 
@@ -505,7 +506,7 @@ diffuseMagic:Callback(function(spell)
             texture=122783,
             })
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        diffuseMagic:Cast(player)
+        spell:Cast(player)
     end
 end)
 
@@ -546,7 +547,7 @@ dampenHarm:Callback(function(spell)
             message="Casted Dampen Harm!", 
             texture=122278,
             })
-        dampenHarm:Cast(player) -- cast Dampen Harm on the player
+        spell:Cast(player) -- cast Dampen Harm on the player
     end
 end)
 
@@ -564,7 +565,7 @@ lifeCocoon:Callback(function(spell)
             texture=116849,
             })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
-        return lifeCocoon:Cast(friend)
+        return spell:Cast(friend)
     end)
 end)
 
@@ -573,7 +574,7 @@ paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
-        paralyze:Cast(enemyHealer)
+        spell:Cast(enemyHealer)
         awful.alert({
             message="Paralysis on Enemy Healer!", 
             texture=115078,
@@ -586,7 +587,7 @@ end)
 tigerPalm:Callback(function(spell)
     if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
         -- Cast Tiger Palm on the target.
-        tigerPalm:Cast(target)
+        spell:Cast(target)
         return
     end
 end)
@@ -595,7 +596,7 @@ end)
 blackoutKick:Callback(function(spell)
     if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
-        blackoutKick:Cast(target)
+        spell:Cast(target)
         return
     end
 end)
@@ -605,7 +606,7 @@ risingSunKick:Callback(function(spell)
     -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
     if  risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
-        risingSunKick:Cast(target)
+        spell:Cast(target)
     end
 end)
 
@@ -648,7 +649,7 @@ awful.triggers.track(function(trigger, uptime)
             if uptime < 0.4 or uptime > 2.1 then return end
             if trigger.creator.friend then return end  
             if not player.losCoordsLiteral(x, y, z) then return end
-            if ringOfPeace:AoECast({x,y,z}) then
+            if spell:AoECast({x,y,z}) then
                 awful.alert("Ring of Peace Dropped!", 116844)
                 return true
             end
