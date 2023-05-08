@@ -488,33 +488,7 @@ paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
-        awful.alert({
-            message="Casted Paralysis on Enemy Healer!", 
-            texture=115078,
-            })
         paralyze:Cast(enemyHealer)
-    elseif target.enemyHealer and target.hp < 40 then
-        local closestEnemy, closestDistance = nil, math.huge
-
-        -- Loop through all enemies within 20 yards
-        awful.enemies.around(player, 20, function(enemy)
-            local distance = enemy.distance
-
-            -- Find the closest enemy
-            if distance < closestDistance then
-                closestEnemy = enemy
-                closestDistance = distance
-            end
-        end)
-
-        -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
-        if closestEnemy and paralyze:Castable(closestEnemy) then
-            awful.alert({
-                message="Casted Paralysis on: "..enemy.name, 
-                texture=115078,
-                })
-            paralyze:Cast(closestEnemy)
-        end
     end
 end)
 
