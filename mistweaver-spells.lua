@@ -419,7 +419,7 @@ legSweep:Callback(function(spell)
         -- Cast Leg Sweep if a friendly unit below 40% HP has an enemy within range
         local friendInRange = false
         awful.fgroup.loop(function(friend)
-            if friend.hp < 40 and awful.enemies.around(friend, legSweep.range) >= 1 then
+            if friend.hp < 40 and awful.enemies.around(friend, 8) >= 1 then
                 friendInRange = true
                 return true -- exit the loop
             end
@@ -430,10 +430,10 @@ legSweep:Callback(function(spell)
         end
 
         -- Cast Leg Sweep if enemyHealer is in range and a nearby enemy's HP is below 50%
-        if enemyHealer and enemyHealer.distance <= legSweep.range then
+        if enemyHealer and enemyHealer.distance <= spell.range then
             local lowHpEnemyInRange = false
             awful.enemies.loop(function(enemy)
-                if enemy.hp < 50 and enemy.distance <= legSweep.range then
+                if enemy.hp < 50 and enemy.distance <= spell.range then
                     lowHpEnemyInRange = true
                     return true -- exit the loop
                 end
@@ -445,7 +445,6 @@ legSweep:Callback(function(spell)
         end
     end
 end)
-
 
 
 
