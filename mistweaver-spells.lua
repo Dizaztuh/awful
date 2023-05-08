@@ -42,7 +42,7 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
-local BurstCDS = {
+BurstCDS = {
     [255647] = true, -- The Hunt
     [323547] = true, -- Essence Break
     -- Feral Frenzy (ID not found)
