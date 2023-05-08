@@ -396,56 +396,48 @@ diffuseMagic:Callback(function(spell)
     end
 end)
 
-
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Check if the spell is castable on the target
-    if legSweep:Castable(target) then
-        -- Define a helper function to count enemies around the player within Leg Sweep's range
-        local function enemiesInRange()
-            return awful.enemies.around(player, 8)
-        end
+    -- Use the Awful framework to loop through enemies around the player within a range of 8 yards
+    local enemiesInRange = awful.enemies.around(player, 8)
 
-        -- Cast Leg Sweep if player HP is below 45%
-        if player.hp < 45 then
-            return legSweep:Cast(target)
-        end
-
-        -- Cast Leg Sweep if at least 2 enemies are in range
-        if enemiesInRange() >= 2 then
-            return legSweep:Cast(target)
-        end
-
-        -- Cast Leg Sweep if a friendly unit below 40% HP has an enemy within range
-        local friendInRange = false
+    -- Define a function to check if a friend with low HP is within range of an enemy
+    local function lowHpFriendInRange()
+        local foundLowHpFriend = false
         awful.fgroup.loop(function(friend)
-            if friend.hp < 40 and awful.enemies.around(friend, 8) >= 1 then
-                friendInRange = true
-                return true -- exit the loop
+            if friend.hp < 40 then
+                foundLowHpFriend = awful.enemies.around(friend, 8) >= 1
             end
         end)
+        return foundLowHpFriend
+    end
 
-        if friendInRange then
-            return legSweep:Cast(target)
-        end
-
-        -- Cast Leg Sweep if enemyHealer is in range and a nearby enemy's HP is below 50%
-        if enemyHealer and enemyHealer.distance <= spell.range then
-            local lowHpEnemyInRange = false
-            awful.enemies.loop(function(enemy)
-                if enemy.hp < 50 and enemy.distance <= spell.range then
-                    lowHpEnemyInRange = true
-                    return true -- exit the loop
-                end
-            end)
-
-            if lowHpEnemyInRange then
-                return legSweep:Cast(target)
-            end
+    -- Check if the spell is castable on the target
+    if legSweep:Castable(target) then
+        -- If the player's HP is below 45%, cast Leg Sweep on the target
+        if player.hp < 45 then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
+        -- If there are 2 or more enemies around the player within a range of 8 yards, cast Leg Sweep on the target
+        elseif enemiesInRange > 1 then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
+        -- If a friend is below 40% HP and there's at least one enemy in range, cast Leg Sweep on the target
+        elseif lowHpFriendInRange() then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
         end
     end
 end)
-
 
 
 dampenHarm:Callback(function(spell)
