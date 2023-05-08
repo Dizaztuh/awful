@@ -418,21 +418,29 @@ legSweep:Callback(function(spell)
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
-            return legSweep:Cast(target)
+            legSweep:Cast(target)
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
-                })
+            })
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
+            legSweep:Cast(target)
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
-                })
-            return legSweep:Cast(target)
+            })
+        -- If the target's HP is below 40%, cast Leg Sweep on the target
+        elseif target.hp < 40 then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep on low HP target!", 
+                texture=119381,
+            })
         end
     end
 end)
+
 
 
 
