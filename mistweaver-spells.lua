@@ -118,28 +118,33 @@ spearHandStrike:Callback(function(spell)
     end
 end)
 
+-- Function to check if the friendly unit has a debuff from the cleanseTable and cast Detox if needed
+local function checkAndCastDetox(friend)
+    for _, debuffName in ipairs(cleanseTable) do
+        if friend.debuff(debuffName) then
+            awful.alert({
+                message="Cast Detox!",
+                texture=115450,
+            })
+            detox:Cast(friend)
+            return true
+        end
+    end
+    return false
+end
+
 -- Callback for Detox ability
 detox:Callback(function(spell)
-    local detoxCast = false -- Flag variable to track if Detox has been cast
     -- Loop through all friendly units
+    local detoxCast = false
     awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit has a debuff from the cleanseTable
-        for _, debuffName in ipairs(cleanseTable) do
-            if friend.debuff(debuffName) then
-                awful.alert({
-                    message="Cast Detox!", 
-                    texture=115450,
-                    })
-                -- If so, cast Detox on the friendly unit to cleanse the debuff
-                detox:Cast(friend)
-                detoxCast = true -- Set the flag to true
-                return true -- exit the inner loop
-            end
+        if not detoxCast then
+            detoxCast = checkAndCastDetox(friend)
         end
-        -- Exit the outer loop if Detox was cast
         return detoxCast
     end)
 end)
+
 
 
 
