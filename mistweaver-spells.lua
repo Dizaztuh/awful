@@ -286,7 +286,7 @@ sphereofHope:Callback(function(spell)
     if GetTime() - lastCastTimeHope >= 5 then
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-            if not friend.combat or friend.hp > 90 or friend.buff(411036) and target.dist < spell.range then
+            if not friend.combat or friend.hp > 90 or friend.buff(411036) then
                 return
             end
             awful.alert({
@@ -311,7 +311,7 @@ sphereofDespair:Callback(function (spell)
     -- Check if 30 seconds have passed since the last cast
     if GetTime() - lastCastTimeDespair >= 5 then
         -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-        if not target.debuff(411038) and target.dist < spell.range then
+        if not target.debuff(411038) then
             awful.alert({
                 message="Casted Sphere of Despair on Target!", 
                 texture=410777,
@@ -399,26 +399,53 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Get the number of players in range
-    local playersInRange = enemies.around(player, 8)   
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
-        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
-        if playersInRange > 1 and target.dist < spell.range then
-            awful.alert({
-                message="Casted Leg Sweep!", 
-                texture=119381,
-                })
-            return legSweep:Cast(target)
-        -- If the player's HP is below 45%, cast Leg Sweep on the target
-        elseif player.hp < 45 and playersInRange <= 1 and target.dist < spell.range then
-            awful.alert({
-                message="Casted Leg Sweep!", 
-                texture=119381,
-                })
+        -- Define a helper function to count enemies around the player within Leg Sweep's range
+        local function enemiesInRange()
+            return awful.enemies.around(player, legSweep.range)
+        end
+
+        -- Cast Leg Sweep if player HP is below 45%
+        if player.hp < 45 then
             return legSweep:Cast(target)
         end
+
+        -- Cast Leg Sweep if at least 2 enemies are in range
+        if enemiesInRange() >= 2 then
+            return legSweep:Cast(target)
+        end
+
+        -- Cast Leg Sweep if a friendly unit below 40% HP has an enemy within range
+        local friendInRange = false
+        awful.fgroup.loop(function(friend)
+            if friend.hp < 40 and awful.enemies.around(friend, legSweep.range) >= 1 then
+                friendInRange = true
+                return true -- exit the loop
+            end
+        end)
+
+        if friendInRange then
+            return legSweep:Cast(target)
+        end
+
+        -- Cast Leg Sweep if enemyHealer is in range and a nearby enemy's HP is below 50%
+        if enemyHealer and enemyHealer.distance <= legSweep.range then
+            local lowHpEnemyInRange = false
+            awful.enemies.loop(function(enemy)
+                if enemy.hp < 50 and enemy.distance <= legSweep.range then
+                    lowHpEnemyInRange = true
+                    return true -- exit the loop
+                end
+            end)
+
+            if lowHpEnemyInRange then
+                return legSweep:Cast(target)
+            end
+        end
     end
+end)
+
 
     -- Add the new condition for Leg Sweep
     awful.fgroup.loop(function(friend)
