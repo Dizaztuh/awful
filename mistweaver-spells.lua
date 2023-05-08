@@ -310,32 +310,23 @@ end)
 
 local lastCastTimeDespair = 0
 
--- Define a function to find the enemy with the lowest HP
-local function findLowestHpEnemy(enemies)
-    local lowestHpEnemy = nil
-    local lowestHp = math.huge
-
-    for _, enemy in ipairs(enemies) do
-        local currentHp = enemy.health.current
-
-        if currentHp < lowestHp and not enemy.debuff(411038) then
-            lowestHp = currentHp
-            lowestHpEnemy = enemy
-        end
-    end
-
-    return lowestHpEnemy
-end
-
 sphereofDespair:Callback(function(spell)
-    if GetTime() - lastCastTimeDespair >= 15 then
-        local enemies = awful.scan.targets()
-        local lowestHpEnemy = findLowestHpEnemy(enemies)
+    if GetTime() - lastCastTimeDespair >= 10 then
+        local lowestHpEnemy = nil
+        local lowestHp = math.huge
 
-        if lowestHpEnemy then
-            sphereofDespair:Cast(lowestHpEnemy)
+        enemies.loop(function(enemy)
+            if not enemy.debuff(411038) then
+                local currentHp = enemy.health.current
+                if currentHp < lowestHp then
+                    lowestHp = currentHp
+                    lowestHpEnemy = enemy
+                end
+            end
+        end)
+
+        if lowestHpEnemy and sphereofDespair:Cast(lowestHpEnemy) then
             lastCastTimeDespair = GetTime()
-
             awful.alert({
                 message = "Casted Sphere of Despair on: " .. lowestHpEnemy.name,
                 texture = 410777,
