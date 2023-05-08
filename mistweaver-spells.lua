@@ -648,7 +648,7 @@ awful.triggers.track(function(trigger, uptime)
             if uptime < 0.4 or uptime > 2.1 then return end
             if trigger.creator.friend then return end  
             if not player.losCoordsLiteral(x, y, z) then return end
-            if ringOfPeace:AoECast(x,y,z) then
+            if ringOfPeace:AoECast({x,y,z}) then
                 awful.alert("Ring of Peace Dropped!", 116844)
                 return true
             end
