@@ -408,30 +408,30 @@ legSweep:Callback(function(spell)
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
-            return legSweep:Cast(target)
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
                 })
+            return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
-            return legSweep:Cast(target)
             if totemList[totem.name] then
                 awful.alert({
                     message="Casted Leg Sweep!", 
                     texture=119381,
                     })
+            return legSweep:Cast(target)
         end
     end
     -- Add the new condition for Leg Sweep
     awful.fgroup.loop(function(friend)
         -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
         if playersInRange >= 1 and friend.hp <= 40 then
-            return legSweep:Cast(target)
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
                 })
+            return legSweep:Cast(target)
         end
     end)
 end)
@@ -564,7 +564,7 @@ ringOfPeace:Callback(function(spell)
                     -- Cast Ring of Peace at the trigger's position
                     if ringOfPeace:AoECast(x, y, z) then
                         awful.alert({
-                            message = "Ring of Peace!",
+                            message = "Casted Ring of Peace!",
                             texture = spell.id,
                             duration = 2.3,
                         })
