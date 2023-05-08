@@ -395,7 +395,48 @@ diffuseMagic:Callback(function(spell)
         diffuseMagic:Cast(player)
     end
 end)
+-- Create a callback for the Leg Sweep ability
+legSweep:Callback(function(spell)
+    -- Use the Awful framework to loop through enemies around the player within a range of 8 yards
+    local enemiesInRange = awful.enemies.around(player, 8)
 
+    -- Define a function to check if a friend with low HP is within range of an enemy
+    local function lowHpFriendInRange()
+        local foundLowHpFriend = false
+        awful.fgroup.loop(function(friend)
+            if friend.hp < 40 then
+                foundLowHpFriend = awful.enemies.around(friend, 8) >= 1
+            end
+        end)
+        return foundLowHpFriend
+    end
+
+    -- Check if the spell is castable on the target
+    if legSweep:Castable(target) then
+        -- If the player's HP is below 45%, cast Leg Sweep on the target
+        if player.hp < 45 then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
+        -- If there are 2 or more enemies around the player within a range of 8 yards, cast Leg Sweep on the target
+        elseif enemiesInRange > 1 then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
+        -- If a friend is below 40% HP and there's at least one enemy in range, cast Leg Sweep on the target
+        elseif lowHpFriendInRange() then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
+        end
+    end
+end)
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
@@ -523,24 +564,16 @@ ringOfPeace:Callback(function(spell)
                     if trigger.creator.friend then return end
                     -- Check if the player has Line of Sight to the trigger's position, if not, return
                     if not player.losCoordsLiteral(x, y, z) then return end
-                    -- Check if there's at least one enemy around the trigger's position within a specified range (e.g., 5 yards)
-                    if enemies.around(trigger, 5) >= 1 then
-                        -- Cast Ring of Peace at the trigger's position
-                        if ringOfPeace:AoECast(x, y, z) then
-                            awful.alert({
-                                message="Casted Ring of Peace on an enemy CD!", 
-                                texture=116844,
-                                })
-                            -- Stop further processing and return true
-                            return true
-                        end
+                    -- Cast Ring of Peace at the trigger's position
+                    if ringOfPeace:AoECast(x, y, z) then
+                        -- Stop further processing and return true
+                        return true
                     end
                 end
             end
         end
     end)
 end)
-
 
 
 -- Define a table with totem names and their respective IDs
