@@ -523,12 +523,7 @@ touchOfDeath:Callback(function(spell)
     end)
 end)
 
-ringofpeace = NewSpell(116844, {
-    effect = "magic",
-    diameter = 15,
-    offsetMin = 0,
-    offsetMax = 5,
-}),
+
 
 ringOfPeace:Callback(function(spell)
     awful.triggers.track(function(trigger, uptime)
