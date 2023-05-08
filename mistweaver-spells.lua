@@ -119,7 +119,7 @@ spearHandStrike:Callback(function(spell)
     if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
         awful.alert({
-            message="Cast Interrupted!", 
+            message="Cast Interrupted: "..target.name,
             texture=116705,
             })
         spearHandStrike:Cast(target)   
@@ -134,7 +134,7 @@ detox:Callback(function(spell)
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
                 awful.alert({
-                    message="Cleansing an Ally!",
+                    message="Cleansing our boy: "friend.name,
                     texture=115450,
                 })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
