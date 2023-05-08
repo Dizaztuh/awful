@@ -153,19 +153,65 @@ local cleanseTable = {
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
-    local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
-    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
-    if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
-        -- If so, cast Spear Hand Strike on the target to interrupt it
-        awful.alert({
-            message="Cast Interrupted: "..target.name,
-            texture=116705,
-            })
-        spearHandStrike:Cast(target)   
-    end
+    enemies.loop(function(enemy)
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+
+        -- Check if there's an enemy within 5 yards and casting a spell from the kickHealsTable, and not immune to interrupts
+        if enemy.distance <= 5 and enemyCastingSpell and kickHealsTable[enemyCastingSpell] and enemy.castint then
+            -- Check if any friend within 40 yards has health below 50%
+            local shouldInterrupt = false
+            friends.loop(function(friend)
+                if friend.distance <= 40 and friend.hp < 50 then
+                    shouldInterrupt = true
+                end
+            end)
+
+            -- If the conditions are met, cast Spear Hand Strike on the enemy to interrupt it
+            if shouldInterrupt and enemy.castPct > randomCastPct then
+                awful.alert({
+                    message="Cast Interrupted: "..enemy.name,
+                    texture=116705,
+                })
+                spearHandStrike:Cast(enemy)
+            end
+        end
+
+        -- Check if there's an enemy within 5 yards and casting a spell from the kickCCTable, and not immune to interrupts
+        if enemy.distance <= 5 and enemyCastingSpell and kickCCTable[enemyCastingSpell] and enemy.castint then
+            -- Check if any friend within 40 yards has health below 50%
+            local shouldInterrupt = false
+            friends.loop(function(friend)
+                if friend.distance <= 40 and friend.hp < 50 then
+                    shouldInterrupt = true
+                end
+            end)
+
+            -- If the conditions are met, cast Spear Hand Strike on the enemy to interrupt it
+            if shouldInterrupt and enemy.castPct > randomCastPct then
+                awful.alert({
+                    message="Cast Interrupted: "..enemy.name,
+                    texture=116705,
+                })
+                spearHandStrike:Cast(enemy)
+            end
+        end
+
+        -- Check if there's an enemy within 5 yards and casting a spell from the kickCCTable, not immune to interrupts, and casting the spell on the player
+        if enemy.distance <= 5 and enemyCastingSpell and kickCCTable[enemyCastingSpell] and enemy.castint and enemy.castTarget.isUnit(player) then
+            -- If the conditions are met, cast Spear Hand Strike on the enemy to interrupt it
+            if enemy.castPct > randomCastPct then
+                awful.alert({
+                    message="Cast Interrupted: "..enemy.name,
+                    texture=116705,
+                })
+                spearHandStrike:Cast(enemy)
+            end
+        end
+    end)
 end)
+
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
