@@ -526,7 +526,6 @@ risingSunKick:Callback(function(spell)
     end
 end)
 
-
 -- Create a callback for the Touch of Death ability
 touchOfDeath:Callback(function(spell)
     -- Loop through all enemies within range, something arbitrary like 10 yards
@@ -562,19 +561,24 @@ ringOfPeace:Callback(function(spell)
                     if trigger.creator.friend then return end
                     -- Check if the player has Line of Sight to the trigger's position, if not, return
                     if not player.losCoordsLiteral(x, y, z) then return end
-                    -- Cast Ring of Peace at the trigger's position
-                    if ringOfPeace:AoECast(x, y, z) then
-                        awful.alert({
-                            message="Casted Ring of Peace on an enemy CD!", 
-                            texture=116844,
-                            })
-                        return true
+                    -- Check if there's at least one enemy around the trigger's position within a specified range (e.g., 5 yards)
+                    if enemies.around(trigger, 5) >= 1 then
+                        -- Cast Ring of Peace at the trigger's position
+                        if ringOfPeace:AoECast(x, y, z) then
+                            awful.alert({
+                                message="Casted Ring of Peace on an enemy CD!", 
+                                texture=116844,
+                                })
+                            -- Stop further processing and return true
+                            return true
+                        end
                     end
                 end
             end
         end
     end)
 end)
+
 
 
 -- Define a table with totem names and their respective IDs
