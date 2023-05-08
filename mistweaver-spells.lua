@@ -272,10 +272,6 @@ sphereofHope:Callback(function(spell)
             if not friend.combat or friend.hp > 90 or friend.buff(411036) then
                 return
             end
-            awful.alert({
-                message="Casted Sphere of Hope on: ", 
-                texture=388615,
-                })
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
             sphereofHope:Cast(friend)
             -- Update the lastCastTime variable
@@ -298,7 +294,6 @@ sphereofDespair:Callback(function (spell)
             -- Update the lastCastTimeDespair variable
             lastCastTimeDespair = GetTime()
             -- Show the alert after successfully casting the spell
-
         end
     end
 end)
@@ -324,40 +319,24 @@ envelopingMist:Callback(function(spell)
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         envelopingMist:Cast(lowestHpFriend)
-        awful.alert({
-            message="Casted Instant Enveloping Mist on: ", 
-            texture=124682,
-            })
     end
 end)
 
 
 faelineStomp:Callback(function (spell)
     if not player.buff (388026) then
-        faelineStomp:Cast(target)
-        awful.alert({
-            message="Casted Faeline Stomp on: "..target.name, 
-            texture=388193,
-            })    
+        faelineStomp:Cast(target)  
     end
 end)
 
 fortifyingBrew:Callback(function(spell)
     if player.hp <= 40 then
-        awful.alert({
-            message="Casted Fortifying Brew! Gettin fk'n Rekt!", 
-            texture=115203,
-            })
         fortifyingBrew:Cast(player)      
     end
 end)
 
 healingElixir:Callback(function(spell)
     if player.hp <= 55 then
-        awful.alert({
-            message="Casted Healing Elixir!", 
-            texture=122281,
-            })
         healingElixir:Cast(player)
     end
 end)
@@ -368,10 +347,6 @@ local badStuff = {"Mindgames"}
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
-        awful.alert({
-            message="Casted Diffuse Magic! Punch SOMETHING!", 
-            texture=122783,
-            })
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
     end
@@ -404,10 +379,6 @@ end)
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
-        awful.alert({
-            message="Casted Dampen Harm!", 
-            texture=122278,
-            })
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
 end)
@@ -421,10 +392,6 @@ lifeCocoon:Callback(function(spell)
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
-        awful.alert({
-            message="Casted Life Cocoon on: ", 
-            texture=116849,
-            })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
     end)
@@ -436,10 +403,6 @@ paralyze:Callback(function(spell)
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
-        awful.alert({
-            message="Casted Paralysis on Enemy Healer",
-            texture=115078,
-            })
     elseif target.enemyHealer and target.hp < 40 then
         local closestEnemy, closestDistance = nil, math.huge
 
@@ -456,10 +419,6 @@ paralyze:Callback(function(spell)
 
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
-            awful.alert({
-                message="Casted Paralysis on: ",
-                texture=115078,
-                })
             paralyze:Cast(closestEnemy)
         end
     end
