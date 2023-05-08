@@ -511,22 +511,6 @@ risingSunKick:Callback(function(spell)
     end
 end)
 
--- Create a callback for the Touch of Death ability
-touchOfDeath:Callback(function(spell)
-    -- Loop through all enemies within range, something arbitrary like 10 yards
-    awful.enemies.within(10).loop(function(enemy)
-        -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
-        if touchOfDeath:Castable(enemy) and enemy.hp < 15 then
-            awful.alert({
-                message="Casted Touch of Death!", 
-                texture=322109,
-                })
-            -- Cast Touch of Death on the enemy
-            touchOfDeath:Cast(enemy)
-            return true -- exit the loop after casting the spell
-        end
-    end)
-end)
 
 -- Define a table with totem names and their respective IDs
 local totemList = {
