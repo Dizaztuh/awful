@@ -100,6 +100,8 @@ local cleanseTable = {
     ["Polymorph"] = true,
     ["Fear"] = true,
     ["Psychic Scream"] = true,
+    ["Hammer of Justice"] = true,
+    ["Sleep Walk"] = true
 }
 
 -- Callback for Spear Hand Strike ability
@@ -520,6 +522,13 @@ touchOfDeath:Callback(function(spell)
         end
     end)
 end)
+
+ringofpeace = NewSpell(116844, {
+    effect = "magic",
+    diameter = 15,
+    offsetMin = 0,
+    offsetMax = 5,
+}),
 
 ringOfPeace:Callback(function(spell)
     awful.triggers.track(function(trigger, uptime)
