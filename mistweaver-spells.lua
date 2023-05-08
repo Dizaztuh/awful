@@ -134,7 +134,7 @@ detox:Callback(function(spell)
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
                 awful.alert({
-                    message="Cleansing an Ally!",
+                    message="Cleansing our boy: "..friend.name,
                     texture=115450,
                 })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
@@ -168,7 +168,7 @@ tigersLust:Callback(function(spell)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             awful.alert({
-                message="Casted Tigers Lust!", 
+                message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
             return tigersLust:Cast(friend)
@@ -180,7 +180,7 @@ tigersLust:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
-                message="Casted Tigers Lust!", 
+                message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
             return tigersLust:Cast(friend)
@@ -297,7 +297,7 @@ sphereofHope:Callback(function(spell)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
             awful.alert({
-                message="Casted Sphere of Hope on an Ally!", 
+                message="Casted Sphere of Hope on: "..friend.name, 
                 texture=388615,
                 })
             -- Exit the loop
@@ -319,7 +319,7 @@ sphereofDespair:Callback(function (spell)
             lastCastTimeDespair = GetTime()
             -- Show the alert after successfully casting the spell
             awful.alert({
-                message="Casted Sphere of Despair on Target!", 
+                message="Casted Sphere of Despair on: "..target.name, 
                 texture=410777,
             })
         end
