@@ -441,9 +441,6 @@ legSweep:Callback(function(spell)
     end
 end)
 
-
-
-
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
         awful.alert({
