@@ -544,7 +544,12 @@ ringOfPeace:Callback(function(spell)
                     -- Check if the player has Line of Sight to the trigger's position, if not, return
                     if not player.losCoordsLiteral(x, y, z) then return end
                     -- Cast Ring of Peace at the trigger's position
-                    if ringOfPeace:AoECast({x, y, z}) then
+                    if ringOfPeace:AoECast(x, y, z) then
+                        awful.alert({
+                            message = "Ring of Peace on enemy CD!",
+                            texture = spell.id,
+                            duration = 2.3,
+                        })
                         -- Stop further processing and return true
                         return true
                     end
