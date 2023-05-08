@@ -42,6 +42,46 @@ awful.Populate({
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
+BurstCDS = {
+    [255647] = true, -- The Hunt
+    [323547] = true, -- Essence Break
+    -- Feral Frenzy (ID not found)
+    [102560] = true, -- Incarnation: Chosen of Elune
+    [102543] = true, -- Incarnation: Avatar of Ashamane
+    [19574] = true, -- Bestial Wrath
+    [288613] = true, -- Trueshot
+    [190319] = true, -- Combustion
+    -- Arcane Surge (ID not found)
+    [137639] = true, -- Storm, Earth, and Fire
+    [152173] = true, -- Serenity
+    [304971] = true, -- Divine Toll
+    [216331] = true, -- Avenging Crusader
+    [31884] = true, -- Avenging Wrath
+    [280711] = true, -- Dark Ascension
+    [228260] = true, -- Void Eruption
+    [185313] = true, -- Shadow Dance
+    -- Deathmark (ID not found)
+    [191634] = true, -- Stormkeeper
+    [2825] = true, -- Bloodlust
+    [265187] = true, -- Summon Demonic Tyrant
+    [267217] = true, -- Nether Portal
+    [107574] = true, -- Avatar
+    [262161] = true, -- Warbreaker
+}
+
+local kickCCTable = {
+    ["Cyclone"] = true,
+    ["Ring of Frost"] = true,
+    ["Shadowfury"] = true,
+    ["Repentance"] = true,
+    ["Lightning Lasso"] = true,
+    ["Hex"] = true,
+    ["Fear"] = true,
+    ["Polymorph"] = true,
+    ["Mind Control"] = true
+
+}
+
 local kickAllTable = {
     ["Cyclone"] = true,
     ["Chaos Bolt"] = true,
@@ -336,8 +376,6 @@ sphereofDespair:Callback(function(spell)
 end)
 
 
-
-
 envelopingMist:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
@@ -530,6 +568,11 @@ ROPDROP = {
 [198838] = true,
 [98008] = true,
 [376079] = true
+[107574] = true, -- Avatar
+[262161] = true, -- Warbreaker
+[31884] = true, -- Avenging Wrath
+[216331] = true, -- Avenging Crusader
+[255647] = true, -- The Hunt
 }
 
 ringOfPeace:Callback(function(spell)
