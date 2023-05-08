@@ -403,7 +403,7 @@ legSweep:Callback(function(spell)
     if legSweep:Castable(target) then
         -- Define a helper function to count enemies around the player within Leg Sweep's range
         local function enemiesInRange()
-            return awful.enemies.around(player, legSweep.range)
+            return awful.enemies.around(player, 8)
         end
 
         -- Cast Leg Sweep if player HP is below 45%
