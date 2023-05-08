@@ -14,7 +14,7 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40 }),
-    sphereofDespair = Spell(410777),
+    sphereofDespair = Spell(410777, range = 40),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
@@ -29,7 +29,7 @@ awful.Populate({
     detox = Spell(115450),
     spearHandStrike = Spell(116705),
     healingElixir = Spell(122281, { heal = true }),
-    sphereofHope = Spell (410777),
+    sphereofHope = Spell (410777, range = 40),
     thunderFocusTea = Spell(116680),
     restoral = Spell(388615, { heal = true, ranged = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true, range = 30 }),
@@ -286,7 +286,7 @@ sphereofHope:Callback(function(spell)
     if GetTime() - lastCastTimeHope >= 5 then
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-            if not friend.combat or friend.hp > 90 or friend.buff(411036) then
+            if not friend.combat or friend.hp > 90 or friend.buff(411036) and target.dist < spell.range then
                 return
             end
             awful.alert({
@@ -311,7 +311,7 @@ sphereofDespair:Callback(function (spell)
     -- Check if 30 seconds have passed since the last cast
     if GetTime() - lastCastTimeDespair >= 5 then
         -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-        if not target.debuff(411038) then
+        if not target.debuff(411038) and target.dist < spell.range then
             awful.alert({
                 message="Casted Sphere of Despair on Target!", 
                 texture=410777,
