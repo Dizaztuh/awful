@@ -412,43 +412,24 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Use the Awful framework to loop through enemies around the player within a range of 8 yards
-    local enemiesInRange = awful.enemies.around(player, 8)
-
-    -- Define a function to check if a friend with low HP is within range of an enemy
-    local function lowHpFriendInRange()
-        local foundLowHpFriend = false
-        awful.friends.loop(function(friend)
-            if friend.hp < 40 then
-                foundLowHpFriend = awful.friends.around(player, 8) >= 1
-            end
-        end)
-        return foundLowHpFriend
-    end
-
+    -- Get the number of players in range
+    local playersInRange = enemies.around(player, 8)   
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
+        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
+        if playersInRange > 1 then
+            return legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!", 
+                texture=119381,
+                })
         -- If the player's HP is below 45%, cast Leg Sweep on the target
-        if player.hp < 45 then
-            legSweep:Cast(target)
+        elseif player.hp < 45 and playersInRange <= 1 then
             awful.alert({
-                message="Casted Leg Sweep!",
+                message="Casted Leg Sweep!", 
                 texture=119381,
-            })
-        -- If there are 2 or more enemies around the player within a range of 8 yards, cast Leg Sweep on the target
-        elseif enemiesInRange > 1 then
-            legSweep:Cast(target)
-            awful.alert({
-                message="Casted Leg Sweep!",
-                texture=119381,
-            })
-        -- If a friend is below 40% HP and there's at least one enemy in range, cast Leg Sweep on the target
-        elseif lowHpFriendInRange() then
-            legSweep:Cast(target)
-            awful.alert({
-                message="Casted Leg Sweep!",
-                texture=119381,
-            })
+                })
+            return legSweep:Cast(target)
         end
     end
 end)
