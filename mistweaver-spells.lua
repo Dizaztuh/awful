@@ -257,7 +257,7 @@ end)
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
+    if (player.rootRemains > 3 or player.slowed) and player.hp < 80 then
         awful.alert({
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
@@ -268,7 +268,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 80 then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
@@ -280,7 +280,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 80 then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
@@ -449,7 +449,7 @@ fortifyingBrew:Callback(function(spell)
 end)
 
 healingElixir:Callback(function(spell)
-    if player.hp <= 55 then
+    if player.hp <= 75 then
         awful.alert({
             message="Casted Healing Elixir!", 
             texture=122281,
