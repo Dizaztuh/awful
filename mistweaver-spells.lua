@@ -606,7 +606,7 @@ function stompTotems()
             blackoutKick:Cast(totem)
             if totemList[totem.name] then
                 awful.alert({
-                    message="Stomped a: "..totem.name, 
+                    message="Stomped a totem!", 
                     texture=100780,
                     })
         end
