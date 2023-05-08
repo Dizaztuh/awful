@@ -19,7 +19,7 @@ awful.Populate({
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
-    legSweep = Spell(119381, { effect = "physical", stun = true }),
+    legSweep = Spell(119381, { effect = "physical", stun = true, cc = true, range = 8 }),
     ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, alwaysFace = true, }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true }),
@@ -404,14 +404,14 @@ legSweep:Callback(function(spell)
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
-        if playersInRange > 1 then
+        if playersInRange > 1 and target.dist < spell.range then
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
                 })
             return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
-        elseif player.hp < 45 and playersInRange <= 1 then
+        elseif player.hp < 45 and playersInRange <= 1 and target.dist < spell.range then
             awful.alert({
                 message="Casted Leg Sweep!", 
                 texture=119381,
