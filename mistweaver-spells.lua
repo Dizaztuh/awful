@@ -346,7 +346,7 @@ envelopingMist:Callback(function(spell)
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
         awful.alert({
-            message="Casted Instant Enveloping Mist on: "..lowestHpfriend.name, 
+            message="Casted Instant Enveloping Mist on: "..friend.name, 
             texture=124682,
             })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
