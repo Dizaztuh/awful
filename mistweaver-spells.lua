@@ -345,23 +345,23 @@ envelopingMist:Callback(function(spell)
 
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
-        awful.alert({
-            message="Casted Instant Enveloping Mist on an Ally!", 
-            texture=124682,
-            })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         envelopingMist:Cast(lowestHpFriend)
+        awful.alert({
+            message="Casted Instant Enveloping Mist on: "..friend.name, 
+            texture=124682,
+            })
     end
 end)
 
 
 faelineStomp:Callback(function (spell)
     if not player.buff (388026) then
+        faelineStomp:Cast(target)
         awful.alert({
-            message="Casted Faeline Stomp to Rebuff Teachings!", 
+            message="Casted Faeline Stomp on: "..target.name, 
             texture=388193,
-            })
-        faelineStomp:Cast(target)    
+            })    
     end
 end)
 
@@ -444,7 +444,7 @@ lifeCocoon:Callback(function(spell)
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
         awful.alert({
-            message="Casted Life Cocoon on an Ally!", 
+            message="Casted Life Cocoon on: "..friend.name, 
             texture=116849,
             })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
@@ -457,11 +457,11 @@ paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
+        paralyze:Cast(enemyHealer)
         awful.alert({
-            message="Casted Paralysis on Enemy Healer!", 
+            message="Casted Paralysis on: "..enemy.name,
             texture=115078,
             })
-        paralyze:Cast(enemyHealer)
     elseif target.enemyHealer and target.hp < 40 then
         local closestEnemy, closestDistance = nil, math.huge
 
@@ -479,7 +479,7 @@ paralyze:Callback(function(spell)
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
             awful.alert({
-                message="Casted Paralysis on Enemy DPS!", 
+                message="Casted Paralysis on: "..enemy.name,
                 texture=115078,
                 })
             paralyze:Cast(closestEnemy)
@@ -530,7 +530,6 @@ touchOfDeath:Callback(function(spell)
 end)
 
 
-
 ringOfPeace:Callback(function(spell)
     awful.triggers.track(function(trigger, uptime)
         -- If the player is in combat
@@ -552,7 +551,7 @@ ringOfPeace:Callback(function(spell)
                     -- Cast Ring of Peace at the trigger's position
                     if ringOfPeace:AoECast(x, y, z) then
                         awful.alert({
-                            message = "Ring of Peace on enemy CD!",
+                            message = "Ring of Peace on:"..trigger.name,
                             texture = spell.id,
                             duration = 2.3,
                         })
@@ -589,14 +588,14 @@ local totemList = {
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Check if the totem is in the totemList
-        if totemList[totem.name] then
-            awful.alert({
-                message="Stomped a Totem!", 
-                texture=100780,
-                })
             -- If the totem is in the list, cast Tiger Palm on the totem
             tigerPalm:Cast(totem)
             blackoutKick:Cast(totem)
+            if totemList[totem.name] then
+                awful.alert({
+                    message="Stomped a: "..totem.name, 
+                    texture=100780,
+                    })
         end
     end)
 end
