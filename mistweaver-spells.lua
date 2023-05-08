@@ -461,7 +461,7 @@ paralyze:Callback(function(spell)
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
         awful.alert({
-            message="Casted Paralysis on: "..enemy.name,
+            message="Casted Paralysis on Enemy Healer",
             texture=115078,
             })
     elseif target.enemyHealer and target.hp < 40 then
@@ -595,7 +595,7 @@ function stompTotems()
             blackoutKick:Cast(totem)
             if totemList[totem.name] then
                 awful.alert({
-                    message="Stomped a totem!", 
+                    message="Stomped a totem: "..totem.name, 
                     texture=100780,
                     })
         end
