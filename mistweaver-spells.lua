@@ -447,19 +447,6 @@ legSweep:Callback(function(spell)
 end)
 
 
-    -- Add the new condition for Leg Sweep
-    awful.fgroup.loop(function(friend)
-        -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
-        if playersInRange >= 1 and friend.hp <= 40 then
-            awful.alert({
-                message="Casted Leg Sweep!", 
-                texture=119381,
-                })
-            return legSweep:Cast(target)
-        end
-    end)
-end)
-
 
 
 dampenHarm:Callback(function(spell)
