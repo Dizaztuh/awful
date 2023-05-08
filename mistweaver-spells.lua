@@ -520,7 +520,7 @@ touchOfDeath:Callback(function(spell)
         if enemy.hp <= 15 then
             if spell:Cast(enemy) then
                 return awful.alert({
-                    message = "Touch of Death below 15%: "..enemy.spec,
+                    message = "Touch of Death below 15%: "..enemy.name,
                     texture = spell.id,
                     duration = 2.3,
                 })
