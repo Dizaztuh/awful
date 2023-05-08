@@ -134,7 +134,7 @@ detox:Callback(function(spell)
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
                 awful.alert({
-                    message="Cleansing our boy: "..friend.name,
+                    message="Cleansing our boy: ",
                     texture=115450,
                 })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
@@ -168,7 +168,7 @@ tigersLust:Callback(function(spell)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             awful.alert({
-                message="Casted Tigers Lust on: "..friend.name, 
+                message="Casted Tigers Lust on: ", 
                 texture=116841,
                 })
             return tigersLust:Cast(friend)
@@ -180,7 +180,7 @@ tigersLust:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
-                message="Casted Tigers Lust on: "..friend.name, 
+                message="Casted Tigers Lust on: ", 
                 texture=116841,
                 })
             return tigersLust:Cast(friend)
@@ -293,7 +293,7 @@ sphereofHope:Callback(function(spell)
                 return
             end
             awful.alert({
-                message="Casted Sphere of Hope on: "..friend.name, 
+                message="Casted Sphere of Hope on: ", 
                 texture=388615,
                 })
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
@@ -349,7 +349,7 @@ envelopingMist:Callback(function(spell)
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         envelopingMist:Cast(lowestHpFriend)
         awful.alert({
-            message="Casted Instant Enveloping Mist on: "..friend.name, 
+            message="Casted Instant Enveloping Mist on: ", 
             texture=124682,
             })
     end
@@ -446,7 +446,7 @@ lifeCocoon:Callback(function(spell)
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
         awful.alert({
-            message="Casted Life Cocoon on: "..friend.name, 
+            message="Casted Life Cocoon on: ", 
             texture=116849,
             })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
@@ -481,7 +481,7 @@ paralyze:Callback(function(spell)
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
             awful.alert({
-                message="Casted Paralysis on: "..enemy.name,
+                message="Casted Paralysis on: ",
                 texture=115078,
                 })
             paralyze:Cast(closestEnemy)
@@ -522,7 +522,7 @@ touchOfDeath:Callback(function(spell)
         if enemy.hp <= 15 then
             if spell:Cast(enemy) then
                 return awful.alert({
-                    message = "Touch of Death below 15%: "..enemy.name,
+                    message = "Touch of Death below 15%: ",
                     texture = spell.id,
                     duration = 2.3,
                 })
