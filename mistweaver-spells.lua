@@ -193,7 +193,7 @@ invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         awful.alert({
-            message="Casted Chi-Ji, the Red Crane for self!", 
+            message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
             })
         return invokeChiJi:Cast(player)
@@ -204,7 +204,7 @@ invokeChiJi:Callback(function(spell)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             awful.alert({
-                message="Casted Chi-Ji, the Red Crane to Freedom: "..friend.name, 
+                message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
             return invokeChiJi:Cast(friend)
@@ -216,7 +216,7 @@ invokeChiJi:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
-                message="Casted Chi-Ji, the Red Crane to Freedom: "..friend.name, 
+                message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
             return invokeChiJi:Cast(friend)
@@ -346,7 +346,7 @@ envelopingMist:Callback(function(spell)
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
         awful.alert({
-            message="Casted Instant Enveloping Mist on: "..friend.name, 
+            message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
             texture=124682,
             })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
