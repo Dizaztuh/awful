@@ -545,20 +545,37 @@ touchOfDeath:Callback(function(spell)
 end)
 
 ringOfPeace:Callback(function(spell)
-    awful.triggers.loop(function(trigger)
-        -- Check if the trigger.id matches any of the desired spell IDs
-        if trigger.id == 62618 or
-           trigger.id == 196718 or
-           trigger.id == 198838 or
-           trigger.id == 98008 or
-           trigger.id == 376079 then
-            -- Retrieve the x, y, and z coordinates of the trigger's position.
-            local x, y, z = trigger.position()
-            -- Cast Ring of Peace at the trigger's position
-            ringOfPeace:AoECast({x, y, z})
+    awful.triggers.track(function(trigger, uptime)
+        -- If the player is in combat
+        if player.combat then
+            -- Check if the trigger.id matches any of the desired spell IDs
+            if trigger.id == 62618 or
+                trigger.id == 196718 or
+                trigger.id == 198838 or
+                trigger.id == 98008 or
+                trigger.id == 376079 then
+                -- Retrieve the x, y, and z coordinates of the trigger's position.
+                local x, y, z = trigger.position()
+                -- If the coordinates are valid
+                if x and y and z then
+                    -- Check if the trigger's creator is a friendly unit, if so, return
+                    if trigger.creator.friend then return end
+                    -- Check if the player has Line of Sight to the trigger's position, if not, return
+                    if not player.losCoordsLiteral(x, y, z) then return end
+                    -- Cast Ring of Peace at the trigger's position
+                    if ringOfPeace:AoECast(x, y, z) then
+                        awful.alert({
+                            message="Casted Ring of Peace on an enemy CD!", 
+                            texture=116844,
+                            })
+                        return true
+                    end
+                end
+            end
         end
     end)
 end)
+
 
 -- Define a table with totem names and their respective IDs
 local totemList = {
