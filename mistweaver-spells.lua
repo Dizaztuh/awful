@@ -418,9 +418,9 @@ legSweep:Callback(function(spell)
     -- Define a function to check if a friend with low HP is within range of an enemy
     local function lowHpFriendInRange()
         local foundLowHpFriend = false
-        awful.fgroup.loop(function(friend)
+        awful.friends.loop(function(friend)
             if friend.hp < 40 then
-                foundLowHpFriend = awful.enemies.around(friend, 8) >= 1
+                foundLowHpFriend = awful.friends.around(player, 8) >= 1
             end
         end)
         return foundLowHpFriend
