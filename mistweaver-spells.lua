@@ -19,7 +19,7 @@ awful.Populate({
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
-    legSweep = Spell(119381, { effect = "physical", stun = true, cc = true, range = 8 }),
+    legSweep = Spell(119381, { effect = "physical", stun = true }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
         diameter = 15,
