@@ -19,7 +19,7 @@ awful.Populate({
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
-    legSweep = Spell(119381, { effect = "physical", stun = true, cc = true, range = 8 }),
+    legSweep = Spell(119381, { effect = "physical", stun = true, range = 8 }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
         diameter = 15,
@@ -310,22 +310,40 @@ end)
 
 local lastCastTimeDespair = 0
 
-sphereofDespair:Callback(function (spell)
-    -- Check if 30 seconds have passed since the last cast
-    if GetTime() - lastCastTimeDespair >= 5 then
-        -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
-        if not target.debuff(411038) then
-            sphereofDespair:Cast(target)
-            -- Update the lastCastTimeDespair variable
+-- Define a function to find the enemy with the lowest HP
+local function findLowestHpEnemy(enemies)
+    local lowestHpEnemy = nil
+    local lowestHp = math.huge
+
+    for _, enemy in ipairs(enemies) do
+        local currentHp = enemy.health.current
+
+        if currentHp < lowestHp and not enemy.debuff(411038) then
+            lowestHp = currentHp
+            lowestHpEnemy = enemy
+        end
+    end
+
+    return lowestHpEnemy
+end
+
+sphereofDespair:Callback(function(spell)
+    if GetTime() - lastCastTimeDespair >= 15 then
+        local enemies = awful.scan.targets()
+        local lowestHpEnemy = findLowestHpEnemy(enemies)
+
+        if lowestHpEnemy then
+            sphereofDespair:Cast(lowestHpEnemy)
             lastCastTimeDespair = GetTime()
-            -- Show the alert after successfully casting the spell
+
             awful.alert({
-                message="Casted Sphere of Despair on: "..target.name, 
-                texture=410777,
+                message = "Casted Sphere of Despair on: " .. lowestHpEnemy.name,
+                texture = 410777,
             })
         end
     end
 end)
+
 
 
 
@@ -403,26 +421,47 @@ end)
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Get the number of players in range
-    local playersInRange = enemies.around(player, 6)   
+    -- Use the Awful framework to loop through enemies around the player within a range of 8 yards
+    local enemiesInRange = awful.enemies.around(player, 8)
+
+    -- Define a function to check if a friend with low HP is within range of an enemy
+    local function lowHpFriendInRange()
+        local foundLowHpFriend = false
+        awful.fgroup.loop(function(friend)
+            if friend.hp < 40 then
+                foundLowHpFriend = awful.enemies.around(friend, 8) >= 1
+            end
+        end)
+        return foundLowHpFriend
+    end
+
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
-        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
-        if playersInRange > 1 then
-            return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
-        elseif player.hp < 45 and playersInRange <= 1 then
-            return legSweep:Cast(target)
+        if player.hp < 45 then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
+        -- If there are 2 or more enemies around the player within a range of 8 yards, cast Leg Sweep on the target
+        elseif enemiesInRange > 1 then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
+        -- If a friend is below 40% HP and there's at least one enemy in range, cast Leg Sweep on the target
+        elseif lowHpFriendInRange() then
+            legSweep:Cast(target)
+            awful.alert({
+                message="Casted Leg Sweep!",
+                texture=119381,
+            })
         end
     end
-    -- Add the new condition for Leg Sweep
-    awful.fgroup.loop(function(friend)
-        -- Check if at least 1 enemy is within range and friend's HP is 40% or lower
-        if playersInRange >= 1 and friend.hp <= 40 then
-            return legSweep:Cast(target)
-        end
-    end)
 end)
+
 
 
 dampenHarm:Callback(function(spell)
