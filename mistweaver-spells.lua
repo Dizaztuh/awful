@@ -134,7 +134,7 @@ detox:Callback(function(spell)
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
                 awful.alert({
-                    message="Cleansing our boy: "friend.name,
+                    message="Cleansing our boy: "..friend.name,
                     texture=115450,
                 })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
@@ -158,7 +158,7 @@ tigersLust:Callback(function(spell)
     end
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         awful.alert({
-            message="Casted Tigers Lust!", 
+            message="Casted Tigers Lust on self!", 
             texture=116841,
             })
         return tigersLust:Cast(player)
@@ -168,7 +168,7 @@ tigersLust:Callback(function(spell)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             awful.alert({
-                message="Casted Tigers Lust!", 
+                message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
             return tigersLust:Cast(friend)
@@ -180,7 +180,7 @@ tigersLust:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
-                message="Casted Tigers Lust!", 
+                message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
             return tigersLust:Cast(friend)
@@ -193,7 +193,7 @@ invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         awful.alert({
-            message="Casted Chi-Ji, the Red Crane!", 
+            message="Casted Chi-Ji, the Red Crane for self!", 
             texture=325197,
             })
         return invokeChiJi:Cast(player)
@@ -204,7 +204,7 @@ invokeChiJi:Callback(function(spell)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             awful.alert({
-                message="Casted Chi-Ji, the Red Crane!", 
+                message="Casted Chi-Ji, the Red Crane to Freedom: "..friend.name, 
                 texture=325197,
                 })
             return invokeChiJi:Cast(friend)
@@ -216,7 +216,7 @@ invokeChiJi:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
-                message="Casted Chi-Ji, the Red Crane!", 
+                message="Casted Chi-Ji, the Red Crane to Freedom: "..friend.name, 
                 texture=325197,
                 })
             return invokeChiJi:Cast(friend)
@@ -258,7 +258,7 @@ revival:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
             awful.alert({
-                message="Casted Revival!", 
+                message="Casted Revival so this guy don't die: "..friend.name, 
                 texture=115310,
                 })
             -- Cast Revival
@@ -273,7 +273,7 @@ restoral:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
             awful.alert({
-                message="Casted Restoral!", 
+                message="Casted Restoral so this guy don't guy: "..friend.name, 
                 texture=388615,
                 })
             -- Cast Revival
@@ -297,7 +297,7 @@ sphereofHope:Callback(function(spell)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
             awful.alert({
-                message="Casted Sphere of Hope on an Ally!", 
+                message="Casted Sphere of Hope on: "..friend.name, 
                 texture=388615,
                 })
             -- Exit the loop
@@ -319,7 +319,7 @@ sphereofDespair:Callback(function (spell)
             lastCastTimeDespair = GetTime()
             -- Show the alert after successfully casting the spell
             awful.alert({
-                message="Casted Sphere of Despair on Target!", 
+                message="Casted Sphere of Despair on: "..target.name, 
                 texture=410777,
             })
         end
@@ -346,7 +346,7 @@ envelopingMist:Callback(function(spell)
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
         awful.alert({
-            message="Casted Instant Enveloping Mist on an Ally!", 
+            message="Casted Instant Enveloping Mist on: "..lowestHpfriend.name, 
             texture=124682,
             })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
