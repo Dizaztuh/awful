@@ -151,6 +151,42 @@ local cleanseTable = {
     ["Sleep Walk"] = true
 }
 
+-- Define a table with totem names and their respective IDs
+local totemList = {
+    ["Capacitor Totem"] = 59547,
+    ["Tremor Totem"] = 8143,
+    ["Earthbind Totem"] = 2484,
+    ["Spirit Link Totem"] = 98008,
+    ["Grounding Totem"] = 8177,
+    ["Skyfury Totem"] = 204330,
+    ["Counterstrike Totem"] = 204331,
+    ["Psyfiend"] = 108366,
+    ["Windfury Totem"] = 8512,
+    ["Fel Obelisk"] = 255774,
+    ["Static Totem"] = 301624,
+    ["Void Tendril"] = 115422,
+    ["War Banner"] = 246366,
+    ["Earthgrab Totem"] = 51485,
+    ["Healing Tide Totem"] = 108280,
+    ["Static Field Totem"] = 281902
+}
+
+-- Stomp totems function
+function stompTotems()
+    awful.totems.loop(function(totem)
+        -- Check if the totem is in the totemList
+        if totemList[totem.name] then
+            awful.alert({
+                message="Stomped a "..totem.name,  
+                texture=100780,
+                })
+            -- If the totem is in the list, cast Tiger Palm on the totem
+            tigerPalm:Cast(totem)
+            blackoutKick:Cast(totem)
+        end
+    end)
+end
+
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80)
@@ -620,39 +656,3 @@ awful.triggers.track(function(trigger, uptime)
     end
   end)
 end)
-
--- Define a table with totem names and their respective IDs
-local totemList = {
-    ["Capacitor Totem"] = 59547,
-    ["Tremor Totem"] = 8143,
-    ["Earthbind Totem"] = 2484,
-    ["Spirit Link Totem"] = 98008,
-    ["Grounding Totem"] = 8177,
-    ["Skyfury Totem"] = 204330,
-    ["Counterstrike Totem"] = 204331,
-    ["Psyfiend"] = 108366,
-    ["Windfury Totem"] = 8512,
-    ["Fel Obelisk"] = 255774,
-    ["Static Totem"] = 301624,
-    ["Void Tendril"] = 115422,
-    ["War Banner"] = 246366,
-    ["Earthgrab Totem"] = 51485,
-    ["Healing Tide Totem"] = 108280,
-    ["Static Field Totem"] = 281902
-}
-
--- Stomp totems function
-function stompTotems()
-    awful.totems.loop(function(totem)
-        -- Check if the totem is in the totemList
-        if totemList[totem.name] then
-            awful.alert({
-                message="Stomped a "..totem.name,  
-                texture=100780,
-                })
-            -- If the totem is in the list, cast Tiger Palm on the totem
-            tigerPalm:Cast(totem)
-            blackoutKick:Cast(totem)
-        end
-    end)
-end
