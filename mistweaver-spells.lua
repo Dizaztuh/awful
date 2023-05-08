@@ -107,6 +107,7 @@ local cleanseTable = {
     ["Fear"] = true,
     ["Psychic Scream"] = true,
     ["Hammer of Justice"] = true,
+    ["Freezing Trap"] = true,
     ["Sleep Walk"] = true
 }
 
