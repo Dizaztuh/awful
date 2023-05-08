@@ -403,7 +403,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 10)   
+    local playersInRange = enemies.around(player, 6)   
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
@@ -444,7 +444,7 @@ lifeCocoon:Callback(function(spell)
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
         awful.alert({
-            message="Casted Life Cocoon on an Ally!", 
+            message="Casted Life Cocoon on: "..friend.name, 
             texture=116849,
             })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
@@ -458,7 +458,7 @@ paralyze:Callback(function(spell)
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         awful.alert({
-            message="Casted Paralysis on Enemy Healer!", 
+            message="Casted Paralysis on: "..enemy.name, 
             texture=115078,
             })
         paralyze:Cast(enemyHealer)
