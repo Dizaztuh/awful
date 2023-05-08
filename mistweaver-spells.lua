@@ -118,10 +118,6 @@ spearHandStrike:Callback(function(spell)
     -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
     if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
-        awful.alert({
-            message="Cast Interrupted!", 
-            texture=116705,
-            })
         spearHandStrike:Cast(target)   
     end
 end)
@@ -133,10 +129,6 @@ detox:Callback(function(spell)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
-                awful.alert({
-                    message="Cleansing our boy: ",
-                    texture=115450,
-                })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
                 detox:Cast(friend)
                 return true -- exit the loop
@@ -150,27 +142,15 @@ end)
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and target.hp < 60 then
-        awful.alert({
-            message="Casted Tigers Lust!", 
-            texture=116841,
-            })
         return tigersLust:Cast(player)
     end
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
-        awful.alert({
-            message="Casted Tigers Lust!", 
-            texture=116841,
-            })
         return tigersLust:Cast(player)
     end
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
-            awful.alert({
-                message="Casted Tigers Lust on: ", 
-                texture=116841,
-                })
             return tigersLust:Cast(friend)
         end
     end)
@@ -314,10 +294,6 @@ sphereofDespair:Callback(function (spell)
     if GetTime() - lastCastTimeDespair >= 5 then
         -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
         if not target.debuff(411038) then
-            awful.alert({
-                message="Casted Sphere of Despair on: "..target.name, 
-                texture=410777,
-            })
             sphereofDespair:Cast(target)
             -- Update the lastCastTimeDespair variable
             lastCastTimeDespair = GetTime()
