@@ -564,7 +564,7 @@ ringOfPeace:Callback(function(spell)
                     -- Cast Ring of Peace at the trigger's position
                     if ringOfPeace:AoECast(x, y, z) then
                         awful.alert({
-                            message = "Ring of Peace on:"..trigger.name,
+                            message = "Ring of Peace!",
                             texture = spell.id,
                             duration = 2.3,
                         })
