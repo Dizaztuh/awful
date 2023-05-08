@@ -138,9 +138,6 @@ detox:Callback(function(spell)
 end)
 
 
-
-
-
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
