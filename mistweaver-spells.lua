@@ -317,7 +317,7 @@ sphereofDespair:Callback(function(spell)
 
         enemies.loop(function(enemy)
             if not enemy.debuff(411038) then
-                local currentHp = enemy.hp.current
+                local currentHp = enemy.hp
                 if currentHp < lowestHp then
                     lowestHp = currentHp
                     lowestHpEnemy = enemy
