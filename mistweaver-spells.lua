@@ -258,7 +258,7 @@ revival:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
             awful.alert({
-                message="Casted Revival so this guy don't die: "..friend.name, 
+                message="Casted Revival!",
                 texture=115310,
                 })
             -- Cast Revival
@@ -273,7 +273,7 @@ restoral:Callback(function(spell)
         -- Check if the friend's health is below 30%
         if friend.hp < 33 then
             awful.alert({
-                message="Casted Restoral so this guy don't guy: "..friend.name, 
+                message="Casted Restoral!", 
                 texture=388615,
                 })
             -- Cast Revival
