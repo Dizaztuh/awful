@@ -1,3 +1,4 @@
+@ -1,604 +1,604 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 
@@ -19,8 +20,8 @@ awful.Populate({
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
-    legSweep = Spell(119381, { effect = "physical", stun = true }),
-    ringofPeace = Spell(116844, {
+    legSweep = Spell(119381, { effect = "physical", stun = true, cc = true, range = 8 }),
+    ringOfPeace = Spell(116844, {
         effect = "magic",
         diameter = 15,
         offsetMin = 0,
@@ -118,6 +119,10 @@ spearHandStrike:Callback(function(spell)
     -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
     if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
         -- If so, cast Spear Hand Strike on the target to interrupt it
+        awful.alert({
+            message="Cast Interrupted!", 
+            texture=116705,
+            })
         spearHandStrike:Cast(target)   
     end
 end)
@@ -129,6 +134,10 @@ detox:Callback(function(spell)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
+                awful.alert({
+                    message="Cleansing an Ally!",
+                    texture=115450,
+                })
                 -- If so, cast Detox on the friendly unit to cleanse the debuff
                 detox:Cast(friend)
                 return true -- exit the loop
@@ -142,15 +151,27 @@ end)
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
     if (player.rootRemains > 3 or player.slowed) and target.hp < 60 then
+        awful.alert({
+            message="Casted Tigers Lust!", 
+            texture=116841,
+            })
         return tigersLust:Cast(player)
     end
     if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
+        awful.alert({
+            message="Casted Tigers Lust!", 
+            texture=116841,
+            })
         return tigersLust:Cast(player)
     end
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
+            awful.alert({
+                message="Casted Tigers Lust!", 
+                texture=116841,
+                })
             return tigersLust:Cast(friend)
         end
     end)
@@ -160,7 +181,7 @@ tigersLust:Callback(function(spell)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
-                message="Casted Tigers Lust on: ", 
+                message="Casted Tigers Lust!", 
                 texture=116841,
                 })
             return tigersLust:Cast(friend)
@@ -276,6 +297,10 @@ sphereofHope:Callback(function(spell)
             sphereofHope:Cast(friend)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
+            awful.alert({
+                message="Casted Sphere of Hope on an Ally!", 
+                texture=388615,
+                })
             -- Exit the loop
             return true
         end)
@@ -294,6 +319,10 @@ sphereofDespair:Callback(function (spell)
             -- Update the lastCastTimeDespair variable
             lastCastTimeDespair = GetTime()
             -- Show the alert after successfully casting the spell
+            awful.alert({
+                message="Casted Sphere of Despair on Target!", 
+                texture=410777,
+            })
         end
     end
 end)
@@ -317,6 +346,10 @@ envelopingMist:Callback(function(spell)
 
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if envelopingMist.castTime == 0 and lowestHpFriend ~= nil then
+        awful.alert({
+            message="Casted Instant Enveloping Mist on an Ally!", 
+            texture=124682,
+            })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         envelopingMist:Cast(lowestHpFriend)
     end
@@ -325,18 +358,30 @@ end)
 
 faelineStomp:Callback(function (spell)
     if not player.buff (388026) then
-        faelineStomp:Cast(target)  
+        awful.alert({
+            message="Casted Faeline Stomp to Rebuff Teachings!", 
+            texture=388193,
+            })
+        faelineStomp:Cast(target)    
     end
 end)
 
 fortifyingBrew:Callback(function(spell)
     if player.hp <= 40 then
+        awful.alert({
+            message="Casted Fortifying Brew! Gettin fk'n Rekt!", 
+            texture=115203,
+            })
         fortifyingBrew:Cast(player)      
     end
 end)
 
 healingElixir:Callback(function(spell)
     if player.hp <= 55 then
+        awful.alert({
+            message="Casted Healing Elixir!", 
+            texture=122281,
+            })
         healingElixir:Cast(player)
     end
 end)
@@ -347,6 +392,10 @@ local badStuff = {"Mindgames"}
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
+        awful.alert({
+            message="Casted Diffuse Magic! Punch SOMETHING!", 
+            texture=122783,
+            })
         -- If the player has the bad debuff, cast Diffuse Magic on the player
         diffuseMagic:Cast(player)
     end
@@ -355,7 +404,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 6)   
+    local playersInRange = enemies.around(player, 10)   
     -- Check if the spell is castable on the target
     if legSweep:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
@@ -363,7 +412,6 @@ legSweep:Callback(function(spell)
             return legSweep:Cast(target)
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
-            if totemList[totem.name] then
             return legSweep:Cast(target)
         end
     end
@@ -379,6 +427,10 @@ end)
 
 dampenHarm:Callback(function(spell)
     if player.hp <= 65 then -- check if the player's hp is at or below 60%
+        awful.alert({
+            message="Casted Dampen Harm!", 
+            texture=122278,
+            })
         dampenHarm:Cast(player) -- cast Dampen Harm on the player
     end
 end)
@@ -392,6 +444,10 @@ lifeCocoon:Callback(function(spell)
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 50 or friend.distance > lifeCocoon.range then return end
+        awful.alert({
+            message="Casted Life Cocoon on an Ally!", 
+            texture=116849,
+            })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
         return lifeCocoon:Cast(friend)
     end)
@@ -402,6 +458,10 @@ paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
     if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
+        awful.alert({
+            message="Casted Paralysis on Enemy Healer!", 
+            texture=115078,
+            })
         paralyze:Cast(enemyHealer)
     elseif target.enemyHealer and target.hp < 40 then
         local closestEnemy, closestDistance = nil, math.huge
@@ -419,6 +479,10 @@ paralyze:Callback(function(spell)
 
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
+            awful.alert({
+                message="Casted Paralysis on Enemy DPS!", 
+                texture=115078,
+                })
             paralyze:Cast(closestEnemy)
         end
     end
@@ -457,7 +521,8 @@ touchOfDeath:Callback(function(spell)
         if enemy.hp <= 15 then
             if spell:Cast(enemy) then
                 return awful.alert({
-                    message = "Touch of Death below 15%: ",
+                    message = "Touch of Death below 15%: "..enemy.spec,
+                    message = "Touch of Death below 15%: "..enemy.name,
                     texture = spell.id,
                     duration = 2.3,
                 })
@@ -465,6 +530,7 @@ touchOfDeath:Callback(function(spell)
         end
     end)
 end)
+
 
 
 ringOfPeace:Callback(function(spell)
@@ -488,7 +554,7 @@ ringOfPeace:Callback(function(spell)
                     -- Cast Ring of Peace at the trigger's position
                     if ringOfPeace:AoECast(x, y, z) then
                         awful.alert({
-                            message = "Casted Ring of Peace!",
+                            message = "Ring of Peace on enemy CD!",
                             texture = spell.id,
                             duration = 2.3,
                         })
@@ -525,15 +591,14 @@ local totemList = {
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Check if the totem is in the totemList
+        if totemList[totem.name] then
+            awful.alert({
+                message="Stomped a Totem!", 
+                texture=100780,
+                })
             -- If the totem is in the list, cast Tiger Palm on the totem
             tigerPalm:Cast(totem)
             blackoutKick:Cast(totem)
-            if totemList[totem.name] then
-                awful.alert({
-                    message="Stomped a totem: "..totem.name, 
-                    texture=100780,
-                    })
         end
     end)
 end
-
