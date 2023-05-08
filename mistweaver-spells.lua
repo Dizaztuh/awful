@@ -479,7 +479,7 @@ paralyze:Callback(function(spell)
         -- If a valid closest enemy is found and Paralyze can be cast on the enemy, cast Paralyze
         if closestEnemy and paralyze:Castable(closestEnemy) then
             awful.alert({
-                message="Casted Paralysis on Enemy DPS!", 
+                message="Casted Paralysis on: "..enemy.name, 
                 texture=115078,
                 })
             paralyze:Cast(closestEnemy)
@@ -520,7 +520,6 @@ touchOfDeath:Callback(function(spell)
         if enemy.hp <= 15 then
             if spell:Cast(enemy) then
                 return awful.alert({
-                    message = "Touch of Death below 15%: "..enemy.spec,
                     message = "Touch of Death below 15%: "..enemy.name,
                     texture = spell.id,
                     duration = 2.3,
@@ -592,7 +591,7 @@ function stompTotems()
         -- Check if the totem is in the totemList
         if totemList[totem.name] then
             awful.alert({
-                message="Stomped a Totem!", 
+                message="Stomped a "..totem.name,  
                 texture=100780,
                 })
             -- If the totem is in the list, cast Tiger Palm on the totem
