@@ -19,7 +19,7 @@ awful.Populate({
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
-    legSweep = Spell(119381, { stun = true, range = 8 }),
+    legSweep = Spell(119381, { stun = true }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
         diameter = 15,
@@ -187,7 +187,6 @@ function stompTotems()
     end)
 end
 
--- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80)
 
@@ -198,11 +197,19 @@ spearHandStrike:Callback(function(spell)
             local shouldInterrupt = false
 
             if kickHealsTable[enemyCastingSpell] then
-
-                    if enemyHealer.distanceTo(player) >= 5 and enemy.hp < 50 then
+                enemies.loop(function(enemy)
+                    if enemy.distance <= 40 and enemy.hp < 50 then
                         shouldInterrupt = true
                     end
-
+                end)
+                
+                if shouldInterrupt and enemy.castPct > randomCastPct then
+                    awful.alert({
+                        message="Cast Interrupted: "..enemy.name,
+                        texture=116705,
+                    })
+                    spell:Cast(enemy)
+                end
             elseif kickCCTable[enemyCastingSpell] then
                 friends.loop(function(friend)
                     if friend.distance <= 40 and friend.hp < 50 then
@@ -210,21 +217,26 @@ spearHandStrike:Callback(function(spell)
                     end
                 end)
 
-                if enemy.castTarget.isUnit(player) then
-                    shouldInterrupt = true
+                if shouldInterrupt and enemy.castPct > randomCastPct then
+                    awful.alert({
+                        message="Cast Interrupted: "..enemy.name,
+                        texture=116705,
+                    })
+                    spell:Cast(enemy)
                 end
-            end
 
-            if shouldInterrupt and enemy.castPct > randomCastPct then
-                awful.alert({
-                    message="Cast Interrupted: "..enemy.name,
-                    texture=116705,
-                })
-                spearHandStrike:Cast(enemy)
+                if enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct then
+                    awful.alert({
+                        message="Cast Interrupted: "..enemy.name,
+                        texture=116705,
+                    })
+                    spell:Cast(enemy)
+                end
             end
         end
     end)
 end)
+
 
 
 
@@ -513,7 +525,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 8)   
+    local playersInRange = enemies.around(player, 6)   
     -- Check if the spell is castable on the target
     if spell:Castable(target) then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
