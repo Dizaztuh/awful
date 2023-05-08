@@ -284,15 +284,14 @@ sphereofHope:Callback(function(spell)
             if not friend.combat or friend.hp > 90 or friend.buff(411036) then
                 return
             end
-            awful.alert({
-                message="Casted Sphere of Hope on an Ally!", 
-                texture=388615,
-                })
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
             sphereofHope:Cast(friend)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
-
+            awful.alert({
+                message="Casted Sphere of Hope on an Ally!", 
+                texture=388615,
+                })
             -- Exit the loop
             return true
         end)
@@ -307,16 +306,18 @@ sphereofDespair:Callback(function (spell)
     if GetTime() - lastCastTimeDespair >= 5 then
         -- Check if the target doesn't have the debuff (411038) and the spell is castable on the target
         if not target.debuff(411038) then
-            awful.alert({
-                message="Casted Sphere of Despair on Target!", 
-                texture=410777,
-                })
             sphereofDespair:Cast(target)
             -- Update the lastCastTimeDespair variable
             lastCastTimeDespair = GetTime()
+            -- Show the alert after successfully casting the spell
+            awful.alert({
+                message="Casted Sphere of Despair on Target!", 
+                texture=410777,
+            })
         end
     end
 end)
+
 
 
 envelopingMist:Callback(function(spell)
