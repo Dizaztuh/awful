@@ -233,14 +233,16 @@ spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
     local function isEnemyLowHealth()
-        for _, enemy in ipairs(enemies.around(player, 40)) do
+        local lowHealthFound = false
+        awful.enemies.loop(function(enemy)
             if enemy.hp < 50 then
-                return true
+                lowHealthFound = true
+                return true -- break the loop once a low health enemy is found
             end
-        end
-        return false
+        end)
+        return lowHealthFound
     end
-
+    
     -- Loop through all enemies
     enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
