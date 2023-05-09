@@ -26,7 +26,7 @@ awful.Populate({
         offsetMin = 0,
         offsetMax = 5,
     }),
-    ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, ignoreFacing = true, range = 40 }),
+    ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, AlwaysFace = true, range = 40 }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true, ignoreCasting = true }),
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
@@ -68,6 +68,44 @@ BurstCDS = {
     [107574] = true, -- Avatar
     [262161] = true, -- Warbreaker
 }
+
+ROPDROP = {
+    [62618] = true, -- Barrier
+    [740] = true, -- Tranquility
+    [198838] = true,
+    [98008] = true,
+    [376079] = true,
+    [107574] = true, -- Avatar
+    [262161] = true, -- Warbreaker
+    [31884] = true, -- Avenging Wrath
+    [216331] = true, -- Avenging Crusader
+    [255647] = true, -- The Hunt
+    [196718] = true, -- Darkness
+    [76577] = true, -- Smokebomb
+    [359053] = true, -- Smokebomb
+    [145629] = true, -- Amz
+    [165775] = true, -- Amz
+    [51052] = true, -- Amz
+    }
+    
+    awful.triggers.track(function(trigger, uptime)
+        if player.combat then
+            local id = trigger.id
+            if not id then return end
+            local reacts = ROPDROP[id]
+            if not reacts then return end
+            local x, y, z = trigger.position()
+            if x and y and z then
+                if uptime < 0.4 or uptime > 2.1 then return end
+                if trigger.creator.friend then return end  
+                if not player.losCoordsLiteral(x, y, z) then return end
+                if ringOfPeace:AoECast(x,y,z) then
+                    awful.alert("Ring of Peace Dropped!", 116844)
+                    return true
+                end
+            end
+        end
+      end)
 
 local kickCCTable = {
     ["Cyclone"] = true,
@@ -189,21 +227,26 @@ function stompTotems()
 end
 
 
-      -- Callback for Spear Hand Strike ability
+-- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
-    local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
-    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
-    if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
-        -- If so, cast Spear Hand Strike on the target to interrupt it
-        awful.alert({
-            message="Cast Interrupted: "..target.name,
-            texture=116705,
+    -- Loop through all enemies
+    enemies.loop(function(enemy)
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+
+        -- Check if the enemy is within 5 yards, casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
+        if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and (kickAllTable[enemyCastingSpell] or kickHealsTable[enemyCastingSpell]) and enemy.castPct > randomCastPct then
+            -- If so, cast Spear Hand Strike on the enemy to interrupt it
+            awful.alert({
+                message="Cast Interrupted: "..enemy.name,
+                texture=116705,
             })
-        spearHandStrike:Cast(target)   
-    end
+            spearHandStrike:Cast(enemy)
+        end
+    end)
 end)
+
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
