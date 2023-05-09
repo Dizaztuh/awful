@@ -203,7 +203,7 @@ spearHandStrike:Callback(function(spell)
                     end
                 end)
                 
-                if shouldInterrupt and enemy.castPct > randomCastPct enemy.castint then
+                if shouldInterrupt and enemy.castPct > randomCastPct and enemy.castint then
                     awful.alert({
                         message="Cast Interrupted: "..enemy.name,
                         texture=116705,
@@ -217,7 +217,7 @@ spearHandStrike:Callback(function(spell)
                     end
                 end)
 
-                if shouldInterrupt and enemy.castPct > randomCastPct enemy.castint then
+                if shouldInterrupt and enemy.castPct > randomCastPct and enemy.castint then
                     awful.alert({
                         message="Cast Interrupted: "..enemy.name,
                         texture=116705,
@@ -225,7 +225,7 @@ spearHandStrike:Callback(function(spell)
                     spell:Cast(enemy)
                 end
 
-                if enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct enemy.castint then
+                if enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct and enemy.castint then
                     awful.alert({
                         message="Cast Interrupted: "..enemy.name,
                         texture=116705,
