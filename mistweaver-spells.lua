@@ -13,7 +13,7 @@ awful.Populate({
     soothingMist = Spell(115175, { heal = true, targeted = true }),
     essenceFont = Spell(191837, { heal = true, targeted = false }),
     chiWave = Spell(115098, { heal = true }),
-    lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40, ignoreCasting = true }),
+    lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40, ignoreCasting = true, ignoreFacing = true }),
     sphereofDespair = Spell(410777, { targeted = true, ignoreFacing = true, range = 40 }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
