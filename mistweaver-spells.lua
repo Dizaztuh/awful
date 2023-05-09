@@ -32,7 +32,7 @@ awful.Populate({
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
     revival = Spell(115310, { heal = true }),
     diffuseMagic = Spell(122783, { ignoreCasting = true }),
-    detox = Spell(115450, { targeted = true, range = 40 }),
+    detox = Spell(115450, { targeted = true }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
     sphereofHope = Spell (410777, { targeted = true, range = 40, ignoreFacing = true}),
@@ -225,6 +225,21 @@ local ROPDROP = {
         end
       end)
 
+      -- Callback for Spear Hand Strike ability
+spearHandStrike:Callback(function(spell)
+    local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
+    local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
+
+    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
+    if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
+        -- If so, cast Spear Hand Strike on the target to interrupt it
+        awful.alert({
+            message="Cast Interrupted: "..target.name,
+            texture=116705,
+            })
+        spearHandStrike:Cast(target)   
+    end
+end)
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
