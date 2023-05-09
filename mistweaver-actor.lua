@@ -8,6 +8,7 @@ print("Sisterfister Loaded and ready to fist!")
 mistweaver:Init(function()
     -- Check if there is an enemy target
     if target.enemy then
+        awful.triggers
         risingSunKick()
         faelineStomp()
         tigerPalm()
@@ -16,7 +17,6 @@ mistweaver:Init(function()
         legSweep()
         paralyze()
         stompTotems()
-        ringOfPeace()
         spearHandStrike()
         envelopingMist()
         sphereofDespair()
