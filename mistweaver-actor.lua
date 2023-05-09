@@ -33,7 +33,7 @@ mistweaver:Init(function()
         diffuseMagic()
     end
 
-    local ROPDROP = {
+        ROPDROP = {
         [62618] = true,
         [740] = true,
         [196718] = true,
