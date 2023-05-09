@@ -661,7 +661,7 @@ end)
 
 touchOfDeath:Callback(function(spell)
     enemies.loop(function(enemy)
-        if enemy.hp <= 17 then
+        if enemy.hp <= 19 then
             if spell:Cast(enemy) then
                 return awful.alert({
                     message = "Touch of Death below 15%: "..enemy.name,
