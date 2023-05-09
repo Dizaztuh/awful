@@ -18,7 +18,7 @@ awful.Populate({
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
-    paralyze = Spell(115078, { stun = true, targeted = true, range = 25 }),
+    paralyze = Spell(115078, { stun = true, targeted = true, range = 25, ignoreFacing = true }),
     legSweep = Spell(119381, { targeted = false, stun = true }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
@@ -26,7 +26,7 @@ awful.Populate({
         offsetMin = 0,
         offsetMax = 5,
     }),
-    ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, alwaysFace = true }),
+    ringOfPeace = Spell(116844, { targeted = false, ignoreCasting = true, ignoreChanneling = true, alwaysFace = true, range = 40 }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true, ignoreCasting = true }),
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
