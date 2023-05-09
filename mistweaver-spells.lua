@@ -190,19 +190,44 @@ end
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
-    local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
-    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
-    if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
-        -- If so, cast Spear Hand Strike on the target to interrupt it
-        awful.alert({
-            message="Cast Interrupted: "..target.name,
-            texture=116705,
+    local interruptibleEnemy
+    enemies.loop(function(enemy)
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+
+        -- Check if there's an enemy within 5 yards and casting a spell from the kickHealsTable or kickCCTable, and not immune to interrupts
+        if enemy.distance <= 5 and enemyCastingSpell and (kickHealsTable[enemyCastingSpell] or kickCCTable[enemyCastingSpell]) and enemy.castint then
+            interruptibleEnemy = enemy
+            return "break"
+        end
+    end)
+
+    if interruptibleEnemy then
+        local enemyCastingSpell = interruptibleEnemy.casting
+        local shouldInterrupt = false
+
+        if kickHealsTable[enemyCastingSpell] then
+            enemies.loop(function(enemy)
+                if enemies.distance <= 40 and friend.hp < 50 then
+                    shouldInterrupt = true
+                    return "break"
+                end
+            end)
+        elseif kickCCTable[enemyCastingSpell] and interruptibleEnemy.castTarget.isUnit(player) then
+            shouldInterrupt = true
+        end
+
+        if shouldInterrupt and interruptibleEnemy.castPct > randomCastPct then
+            awful.alert({
+                message="Cast Interrupted: "..interruptibleEnemy.name,
+                texture=116705,
             })
-        spearHandStrike:Cast(target)   
+            spell:Cast(interruptibleEnemy)
+        end
     end
 end)
+
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
