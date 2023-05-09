@@ -276,8 +276,6 @@ spearHandStrike:Callback(function(spell)
 end)
 
 
-
-
 -- Callback for Detox ability
 detox:Callback(function(spell)
     -- Loop through all friendly units
@@ -285,17 +283,23 @@ detox:Callback(function(spell)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
-                awful.alert({
-                    message="Cleansing our boy: "..friend.name,
-                    texture=115450,
-                })
-                -- If so, cast Detox on the friendly unit to cleanse the debuff
-                spell:Cast(friend)
+                -- Attempt to cast Detox on the friendly unit to cleanse the debuff
+                local castResult = spell:Cast(friend)
+                
+                -- If the casting was successful, show the alert
+                if castResult then
+                    awful.alert({
+                        message="Cleansing our boy: "..friend.name,
+                        texture=115450,
+                    })
+                end
+                
                 return true -- exit the loop
             end
         end
     end)
 end)
+
 
 
 -- Callback for Tiger's Lust ability
