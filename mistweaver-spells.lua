@@ -3,22 +3,22 @@ local mistweaver = project.monk.mistweaver
 local player = awful.Player
 local Spell = awful.Spell
 awful.Populate({
-    tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, range = 5 }),
+    tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true }),
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
     risingSunKick = Spell(107428, { damage = "physical", targeted = false, ranged = true, range = 5 }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
-    touchOfDeath = Spell(322109, { targeted = true, damage = "physical", range = 5 }),
+    touchOfDeath = Spell(322109, { targeted = true, damage = "physical" }),
     envelopingMist = Spell(124682, { heal = true, targeted = true }),
     renewingMist = Spell(119611, { heal = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
     essenceFont = Spell(191837, { heal = true, targeted = false }),
     chiWave = Spell(115098, { heal = true }),
-    lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40, ignoreCasting = true, ignoreFacing = true }),
-    sphereofDespair = Spell(410777, { targeted = true, range = 40 }),
+    lifeCocoon = Spell(116849, { heal = true, targeted = true, ignoreCasting = true, ignoreFacing = true }),
+    sphereofDespair = Spell(410777, { targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
-    paralyze = Spell(115078, { stun = true, targeted = true, range = 25, ignoreFacing = true }),
+    paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
     legSweep = Spell(119381, { targeted = false, stun = true }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
@@ -35,10 +35,10 @@ awful.Populate({
     detox = Spell(115450, { targeted = true, range = 40, alwaysFace = true }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
-    sphereofHope = Spell (410777, { targeted = true, range = 40 }),
+    sphereofHope = Spell (410777, { targeted = true }),
     thunderFocusTea = Spell(116680,  { ignoreCasting = true }),
     restoral = Spell(388615, { heal = true, ranged = true, ignoreControl = true }),
-    tigersLust = Spell(116841, { targeted = true, range = 30 }),
+    tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
 
@@ -236,7 +236,7 @@ spearHandStrike:Callback(function(spell)
     local function isEnemyLowHealth()
         local lowHealthFound = false
         awful.enemies.loop(function(enemy)
-            if enemy.hp < 50 then
+            if enemy.hp < 70 then
                 lowHealthFound = true
                 return true -- break the loop once a low health enemy is found
             end
@@ -250,7 +250,7 @@ spearHandStrike:Callback(function(spell)
 
         -- Check if the enemy is within 5 yards, casting a spell from the kickHealsTable, and not immune to interrupts
         if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickHealsTable[enemyCastingSpell] and enemy.castPct > randomCastPct then
-            -- Check if any enemy within 40 yards has health below 50%
+            -- Check if any enemy within 40 yards has health below 70%
             if isEnemyLowHealth() then
                 awful.alert({
                     message="Cast Interrupted: "..enemy.name,
@@ -528,6 +528,32 @@ envelopingMist:Callback(function(spell)
             texture=124682,
             })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
+        spell:Cast(lowestHpFriend)
+    end
+end)
+
+renewingMist:Callback(function(spell)
+    -- Initialize a variable to store the friendly unit with the lowest HP
+    local lowestHpFriend = nil
+    local lowestHpPercentage = 100
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
+        if friend.hp < lowestHpPercentage then
+            -- Update lowestHpFriend and lowestHpPercentage
+            lowestHpFriend = friend
+            lowestHpPercentage = friend.hp
+        end
+    end)
+
+    -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
+    if renewingMist.castTime == 0 and lowestHpFriend ~= nil then
+        awful.alert({
+            message="Casted Instant Renewing Mist Instant Proc on Lowest HP Ally!", 
+            texture=115151,
+            })
+        -- If the cooldown is 0, cast Renewing Mist on the friendly unit with the lowest HP
         spell:Cast(lowestHpFriend)
     end
 end)
