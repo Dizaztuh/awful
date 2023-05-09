@@ -88,7 +88,7 @@ local ROPDROP = {
     [51052] = true, -- Amz
     }
 
-onUpdate(function()
+awful.onUpdate(function()
     awful.triggers.track(function(trigger, uptime)
         if player.combat then
             local id = trigger.id
