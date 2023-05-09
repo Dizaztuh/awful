@@ -14,7 +14,7 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true, targeted = false }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, range = 40, ignoreCasting = true }),
-    sphereofDespair = Spell(410777, { targeted = true }),
+    sphereofDespair = Spell(410777, { targeted = true, ignoreFacing = true, range = 40 }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     faelineStomp = Spell(388193, {heal = true}),
@@ -35,7 +35,7 @@ awful.Populate({
     detox = Spell(115450, { targeted = true }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
-    sphereofHope = Spell (410777, { targeted = true }),
+    sphereofHope = Spell (410777, { targeted = true }, range = 40, ignoreFacing = true),
     thunderFocusTea = Spell(116680,  { ignoreCasting = true }),
     restoral = Spell(388615, { heal = true, ranged = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true, range = 30 }),
@@ -537,6 +537,7 @@ legSweep:Callback(function(spell)
             awful.alert({
                 message="Casted Leg Sweep on low HP target!", 
                 texture=119381,
+            
             })
         end
     end
