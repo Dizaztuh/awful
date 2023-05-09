@@ -239,8 +239,6 @@ spearHandStrike:Callback(function(spell)
 end)
 
 
-
-
 -- Callback for Detox ability
 detox:Callback(function(spell)
     -- Loop through all friendly units
