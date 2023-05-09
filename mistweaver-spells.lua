@@ -232,30 +232,47 @@ end
 spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
+    local function isEnemyLowHealth()
+        for _, enemy in ipairs(enemies.around(player, 40)) do
+            if enemy.hp < 50 then
+                return true
+            end
+        end
+        return false
+    end
+
     -- Loop through all enemies
-    awful.enemies.loop(function(enemy)
+    enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
         -- Check if the enemy is within 5 yards, casting a spell from the kickHealsTable, and not immune to interrupts
         if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickHealsTable[enemyCastingSpell] and enemy.castPct > randomCastPct then
-            
             -- Check if any enemy within 40 yards has health below 50%
-            local shouldInterrupt = false
-            if enemies.around(player, 40, function(enemy) return enemy.hp < 50 end) > 0 then
-                shouldInterrupt = true
-            end
-
-            -- If the conditions are met, cast Spear Hand Strike on the enemy to interrupt it
-            if shouldInterrupt then
+            if isEnemyLowHealth() then
                 awful.alert({
                     message="Cast Interrupted: "..enemy.name,
                     texture=116705,
                 })
-                spell:Cast(enemy)
+                spearHandStrike:Cast(enemy)
             end
         end
     end)
+
+    -- Loop through all enemies again for the kickCCTable condition
+    enemies.loop(function(enemy)
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+
+        -- Check if the enemy is within 5 yards, casting a spell from the kickCCTable, not immune to interrupts, and targeting the player
+        if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickCCTable[enemyCastingSpell] and enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct then
+            awful.alert({
+                message="Cast Interrupted: "..enemy.name,
+                texture=116705,
+            })
+            spearHandStrike:Cast(enemy)
+        end
+    end)
 end)
+
 
 
 
