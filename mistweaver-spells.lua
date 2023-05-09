@@ -187,7 +187,44 @@ function stompTotems()
         end
     end)
 end
-
+local ROPDROP = {
+    [62618] = true, -- Barrier
+    [740] = true, -- Tranquility
+    [198838] = true,
+    [98008] = true,
+    [376079] = true,
+    [107574] = true, -- Avatar
+    [262161] = true, -- Warbreaker
+    [31884] = true, -- Avenging Wrath
+    [216331] = true, -- Avenging Crusader
+    [255647] = true, -- The Hunt
+    [196718] = true, -- Darkness
+    [76577] = true, -- Smokebomb
+    [359053] = true, -- Smokebomb
+    [145629] = true, -- Amz
+    [165775] = true, -- Amz
+    [51052] = true, -- Amz
+    }
+    
+    awful.triggers.track(function(trigger, uptime)
+        if player.combat then
+            local id = trigger.id
+            if not id then return end
+            local reacts = ROPDROP[id]
+            if not reacts then return end
+            local x, y, z = trigger.position()
+            if x and y and z then
+                if uptime < 0.4 or uptime > 1 then return end
+                if trigger.creator.friend then return end  
+                if not player.losCoordsLiteral(x, y, z) then return end
+                if ringOfPeace:AoECast(x,y,z) then
+                    awful.alert("Ring of Peace Dropped!", 116844)
+                    return true
+                end
+            end
+        end
+      end)
+      
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
@@ -199,7 +236,7 @@ spearHandStrike:Callback(function(spell)
         -- Check if there's an enemy within 5 yards and casting a spell from the kickHealsTable or kickCCTable, and not immune to interrupts
         if enemy.distance <= 5 and enemyCastingSpell and (kickHealsTable[enemyCastingSpell] or kickCCTable[enemyCastingSpell]) and enemy.castint then
             interruptibleEnemy = enemy
-            return "break"
+            return
         end
     end)
 
@@ -211,7 +248,7 @@ spearHandStrike:Callback(function(spell)
             enemies.loop(function(enemy)
                 if enemies.distance <= 40 and friend.hp < 50 then
                     shouldInterrupt = true
-                    return "break"
+                    return
                 end
             end)
         elseif kickCCTable[enemyCastingSpell] and interruptibleEnemy.castTarget.isUnit(player) then
