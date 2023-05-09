@@ -272,6 +272,7 @@ spearHandStrike:Callback(function(spell)
             spell:Cast(enemy)
         end
     end)
+end)
 
     awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
