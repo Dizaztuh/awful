@@ -187,55 +187,8 @@ function stompTotems()
     end)
 end
 
-spearHandStrike:Callback(function(spell)
-    local randomCastPct = math.random(60, 80)
 
-    enemies.loop(function(enemy)
-        local enemyCastingSpell = enemy.casting
 
-        if enemy.distance <= 5 and enemyCastingSpell then
-            local shouldInterrupt = false
-
-            if kickHealsTable[enemyCastingSpell] then
-                enemies.loop(function(enemy)
-                    if enemy.hp < 50 then
-                        shouldInterrupt = true
-                    end
-                end)
-                
-                if shouldInterrupt and enemy.castPct > randomCastPct and enemy.castint then
-                    awful.alert({
-                        message="Cast Interrupted: "..enemy.name,
-                        texture=116705,
-                    })
-                    spell:Cast(enemy)
-                end
-            elseif kickCCTable[enemyCastingSpell] then
-                friends.loop(function(friend)
-                    if friend.hp < 50 then
-                        shouldInterrupt = true
-                    end
-                end)
-
-                if shouldInterrupt and enemy.castPct > randomCastPct and enemy.castint then
-                    awful.alert({
-                        message="Cast Interrupted: "..enemy.name,
-                        texture=116705,
-                    })
-                    spell:Cast(enemy)
-                end
-
-                if enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct and enemy.castint then
-                    awful.alert({
-                        message="Cast Interrupted: "..enemy.name,
-                        texture=116705,
-                    })
-                    spell:Cast(enemy)
-                end
-            end
-        end
-    end)
-end)
 
 
 
@@ -243,7 +196,7 @@ end)
 -- Callback for Detox ability
 detox:Callback(function(spell)
     -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
+    awful.friends.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
             if friend.debuff(debuffName) then
