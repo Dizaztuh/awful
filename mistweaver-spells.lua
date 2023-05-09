@@ -331,7 +331,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
