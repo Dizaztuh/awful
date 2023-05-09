@@ -193,17 +193,17 @@ spearHandStrike:Callback(function(spell)
     enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting
 
-        if enemy.distance <= 5 and enemyCastingSpell and enemy.castint then
+        if enemy.distance <= 5 and enemyCastingSpell then
             local shouldInterrupt = false
 
-            if kickHealsTable[enemyCastingSpell] then
+            if kickHealsTable[enemyCastingSpell] and enemy.castint then
                 enemies.loop(function(enemy)
                     if enemy.distance <= 40 and enemy.hp < 50 then
                         shouldInterrupt = true
                     end
                 end)
                 
-                if shouldInterrupt and enemy.castPct > randomCastPct then
+                if shouldInterrupt and enemy.castPct > randomCastPct enemy.castint then
                     awful.alert({
                         message="Cast Interrupted: "..enemy.name,
                         texture=116705,
@@ -217,7 +217,7 @@ spearHandStrike:Callback(function(spell)
                     end
                 end)
 
-                if shouldInterrupt and enemy.castPct > randomCastPct then
+                if shouldInterrupt and enemy.castPct > randomCastPct enemy.castint then
                     awful.alert({
                         message="Cast Interrupted: "..enemy.name,
                         texture=116705,
@@ -225,7 +225,7 @@ spearHandStrike:Callback(function(spell)
                     spell:Cast(enemy)
                 end
 
-                if enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct then
+                if enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct enemy.castint then
                     awful.alert({
                         message="Cast Interrupted: "..enemy.name,
                         texture=116705,
