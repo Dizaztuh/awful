@@ -235,17 +235,27 @@ spearHandStrike:Callback(function(spell)
     enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
-        -- Check if the enemy is within 5 yards, casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
-        if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and (kickAllTable[enemyCastingSpell] or kickHealsTable[enemyCastingSpell]) and enemy.castPct > randomCastPct then
-            -- If so, cast Spear Hand Strike on the enemy to interrupt it
-            awful.alert({
-                message="Cast Interrupted: "..enemy.name,
-                texture=116705,
-            })
-            spearHandStrike:Cast(enemy)
+        -- Check if the enemy is within 5 yards, casting a spell from the kickHealsTable, and not immune to interrupts
+        if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickHealsTable[enemyCastingSpell] and enemy.castPct > randomCastPct then
+            
+            -- Check if any enemy within 40 yards has health below 50%
+            local shouldInterrupt = false
+            if enemies.around(player, 40, function(enemy) return enemy.hp < 50 end) > 0 then
+                shouldInterrupt = true
+            end
+
+            -- If the conditions are met, cast Spear Hand Strike on the enemy to interrupt it
+            if shouldInterrupt then
+                awful.alert({
+                    message="Cast Interrupted: "..enemy.name,
+                    texture=116705,
+                })
+                spearHandStrike:Cast(enemy)
+            end
         end
     end)
 end)
+
 
 
 -- Callback for Detox ability
