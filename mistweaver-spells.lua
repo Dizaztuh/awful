@@ -214,13 +214,13 @@ local totemList = {
 -- Stomp totems function
 function stompTotems()
     awful.totems.loop(function(totem)
-        -- Check if the totem is in the totemList
-        if totemList[totem.name] then
+        -- Check if the totem is in the totemList and within 5 yards
+        if totemList[totem.name] and player.distanceTo(totem) <= 5 then
             awful.alert({
                 message="Stomped a "..totem.name,  
                 texture=100780,
                 })
-            -- If the totem is in the list, cast Tiger Palm on the totem
+            -- If the totem is in the list and within range, cast Tiger Palm and Blackout Kick on the totem
             tigerPalm:Cast(totem)
             blackoutKick:Cast(totem)
         end
