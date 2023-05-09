@@ -178,7 +178,6 @@ local cleanseTable = {
     ["Mirrors of Torment"] = true,
     ["Mindgames"] = true,
     ["Sepsis"] = true,
-    ["Fire Breath"] = true,
     ["Curse of Exhaustion"] = true,
     ["Landslide"] = true,
     ["Curse of Weakness"] = true,
@@ -273,6 +272,18 @@ spearHandStrike:Callback(function(spell)
             spell:Cast(enemy)
         end
     end)
+
+    awful.enemies.loop(function(enemy)
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+
+        -- Check if the enemy is within 5 yards, casting a spell from the kickCCTable, not immune to interrupts, and targeting the player
+        if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickAllTable[enemyCastingSpell] and enemy.castPct > randomCastPct then
+            awful.alert({
+                message="Cast Interrupted: "..enemy.name,
+                texture=116705,
+            })
+            spell:Cast(enemy)
+        end
 end)
 
 
