@@ -152,7 +152,7 @@ local cleanseTable = {
 }
 
 
-ROPDROP = {
+local ROPDROP = {
     [62618] = true,
     [196718] = true,
     [198838] = true,
