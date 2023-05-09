@@ -7,7 +7,7 @@ awful.Populate({
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
     risingSunKick = Spell(107428, { damage = "physical", targeted = false, ranged = true, range = 5 }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
-    touchOfDeath =   Spell(322109, {targeted = true, effect = "physical"}),
+    touchOfDeath =   Spell(322109, {targeted = true, damage = "physical"}),
     envelopingMist = Spell(124682, { heal = true, targeted = true }),
     renewingMist = Spell(119611, { heal = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
@@ -624,7 +624,7 @@ end)
 
 touchOfDeath:Callback(function(spell)
     enemies.loop(function(enemy)
-        if enemy.hp <= 15 then
+        if enemy.hp <= 17 then
             if spell:Cast(enemy) then
                 return awful.alert({
                     message = "Touch of Death below 15%: "..enemy.name,
@@ -649,7 +649,6 @@ ROPDROP = {
 [255647] = true, -- The Hunt
 }
 
-ringOfPeace:Callback(function(spell)
 awful.triggers.track(function(trigger, uptime)
     if player.combat then
         local id = trigger.id
@@ -661,11 +660,10 @@ awful.triggers.track(function(trigger, uptime)
             if uptime < 0.4 or uptime > 2.1 then return end
             if trigger.creator.friend then return end  
             if not player.losCoordsLiteral(x, y, z) then return end
-            if spell:AoECast(x,y,z) then
+            if ringOfPeace:AoECast(x,y,z) then
                 awful.alert("Ring of Peace Dropped!", 116844)
                 return true
             end
         end
     end
   end)
-end)
