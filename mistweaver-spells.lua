@@ -69,7 +69,7 @@ BurstCDS = {
     [262161] = true, -- Warbreaker
 }
 
-ROPDROP = {
+local ROPDROP = {
     [62618] = true, -- Barrier
     [740] = true, -- Tranquility
     [198838] = true,
@@ -116,6 +116,7 @@ local kickCCTable = {
     ["Hex"] = true,
     ["Fear"] = true,
     ["Polymorph"] = true,
+    ["Repentance"] = True,
     ["Mind Control"] = true
 
 }
@@ -232,7 +233,7 @@ spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
     -- Loop through all enemies
-    enemies.loop(function(enemy)
+    awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
         -- Check if the enemy is within 5 yards, casting a spell from the kickHealsTable, and not immune to interrupts
