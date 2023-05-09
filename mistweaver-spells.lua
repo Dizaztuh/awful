@@ -118,7 +118,7 @@ local kickCCTable = {
     ["Hex"] = true,
     ["Fear"] = true,
     ["Polymorph"] = true,
-    ["Repentance"] = True,
+    ["Repentance"] = true,
     ["Mind Control"] = true
 
 }
