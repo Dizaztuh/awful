@@ -190,6 +190,7 @@ end
 
 
 
+
 -- Callback for Detox ability
 detox:Callback(function(spell)
     -- Loop through all friendly units
@@ -468,7 +469,7 @@ diffuseMagic:Callback(function(spell)
             texture=122783,
             })
         -- If the player has the bad debuff, cast Diffuse Magic on the player
-        spell:Cast(player)
+        spell:Cast()
     end
 end)
 
