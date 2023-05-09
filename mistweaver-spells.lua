@@ -244,7 +244,7 @@ spearHandStrike:Callback(function(spell)
     end
     
     -- Loop through all enemies
-    enemies.loop(function(enemy)
+    awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
         -- Check if the enemy is within 5 yards, casting a spell from the kickHealsTable, and not immune to interrupts
@@ -261,7 +261,7 @@ spearHandStrike:Callback(function(spell)
     end)
 
     -- Loop through all enemies again for the kickCCTable condition
-    enemies.loop(function(enemy)
+    awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
         -- Check if the enemy is within 5 yards, casting a spell from the kickCCTable, not immune to interrupts, and targeting the player
