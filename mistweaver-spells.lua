@@ -187,7 +187,8 @@ function stompTotems()
         end
     end)
 end
-local ROPDROP = {
+
+ ROPDROP = {
     [62618] = true, -- Barrier
     [740] = true, -- Tranquility
     [198838] = true,
