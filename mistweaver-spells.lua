@@ -171,38 +171,7 @@ local totemList = {
     ["Static Field Totem"] = 281902
 }
 
-ROPDROP = {
-    [62618] = true,
-    [196718] = true,
-    [198838] = true,
-    [98008] = true,
-    [376079] = true,
-    [107574] = true, -- Avatar
-    [262161] = true, -- Warbreaker
-    [31884] = true, -- Avenging Wrath
-    [216331] = true, -- Avenging Crusader
-    [255647] = true, -- The Hunt
-    }
-    
-    ringOfPeace:Callback(function(spell)
-        awful.triggers.track(function(trigger, uptime)
-            if player.combat then
-                local id = trigger.id
-                if not id then return end
-                local reacts = ROPDROP[id]
-                if not reacts then return end
-                local x, y, z = trigger.position()
-                if x and y and z then
-                    if uptime < 0.4 or uptime > 2.1 then return end
-                    if trigger.creator.friend then return end  
-                    if not player.losCoordsLiteral(x, y, z) then return end
-                    if spell:AoECast(x,y,z) then
-                        awful.alert("Ring of Peace Dropped!", 116844)
-                        return true
-                    end
-                end
-            end)
-          end)
+
 
 -- Stomp totems function
 function stompTotems()
