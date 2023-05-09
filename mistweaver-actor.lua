@@ -33,10 +33,9 @@ mistweaver:Init(function()
         diffuseMagic()
     end
 
-        ROPDROP = {
-        [62618] = true,
-        [740] = true,
-        [196718] = true,
+       local ROPDROP = {
+        [62618] = true, -- Barrier
+        [740] = true, -- Tranquility
         [198838] = true,
         [98008] = true,
         [376079] = true,
@@ -45,6 +44,12 @@ mistweaver:Init(function()
         [31884] = true, -- Avenging Wrath
         [216331] = true, -- Avenging Crusader
         [255647] = true, -- The Hunt
+        [196718] = true, -- Darkness
+        [76577] = true, -- Smokebomb
+        [359053] = true, -- Smokebomb
+        [145629] = true, -- Amz
+        [165775] = true, -- Amz
+        [51052] = true, -- Amz
         }
         
         awful.triggers.track(function(trigger, uptime)
@@ -55,7 +60,7 @@ mistweaver:Init(function()
                 if not reacts then return end
                 local x, y, z = trigger.position()
                 if x and y and z then
-                    if uptime < 0.4 or uptime > 2.1 then return end
+                    if uptime < 0.4 or uptime > 1 then return end
                     if trigger.creator.friend then return end  
                     if not player.losCoordsLiteral(x, y, z) then return end
                     if ringOfPeace:AoECast(x,y,z) then
