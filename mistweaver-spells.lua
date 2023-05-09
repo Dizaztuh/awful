@@ -88,6 +88,7 @@ local ROPDROP = {
     [51052] = true, -- Amz
     }
 
+onUpdate(function()
     awful.triggers.track(function(trigger, uptime)
         if player.combat then
             local id = trigger.id
@@ -99,13 +100,14 @@ local ROPDROP = {
                 if uptime < 0.4 or uptime > 2.1 then return end
                 if trigger.creator.friend then return end  
                 if not player.losCoordsLiteral(x, y, z) then return end
-                if ringOfPeace:AoECast(x,y,z) then
+                if spell:AoECast(x,y,z) then
                     awful.alert("Ring of Peace Dropped!", 116844)
                     return true
                 end
             end
         end
-      end)
+    end)
+end)
 
 local kickCCTable = {
     ["Cyclone"] = true,
