@@ -151,25 +151,6 @@ local cleanseTable = {
     ["Sleep Walk"] = true
 }
 
--- Define a table with totem names and their respective IDs
-local totemList = {
-    ["Capacitor Totem"] = 59547,
-    ["Tremor Totem"] = 8143,
-    ["Earthbind Totem"] = 2484,
-    ["Spirit Link Totem"] = 98008,
-    ["Grounding Totem"] = 8177,
-    ["Skyfury Totem"] = 204330,
-    ["Counterstrike Totem"] = 204331,
-    ["Psyfiend"] = 108366,
-    ["Windfury Totem"] = 8512,
-    ["Fel Obelisk"] = 255774,
-    ["Static Totem"] = 301624,
-    ["Void Tendril"] = 115422,
-    ["War Banner"] = 246366,
-    ["Earthgrab Totem"] = 51485,
-    ["Healing Tide Totem"] = 108280,
-    ["Static Field Totem"] = 281902
-}
 
 local ROPDROP = {
     [62618] = true,
@@ -205,6 +186,26 @@ local ROPDROP = {
       end)
     end)
 
+    -- Define a table with totem names and their respective IDs
+local totemList = {
+    ["Capacitor Totem"] = 59547,
+    ["Tremor Totem"] = 8143,
+    ["Earthbind Totem"] = 2484,
+    ["Spirit Link Totem"] = 98008,
+    ["Grounding Totem"] = 8177,
+    ["Skyfury Totem"] = 204330,
+    ["Counterstrike Totem"] = 204331,
+    ["Psyfiend"] = 108366,
+    ["Windfury Totem"] = 8512,
+    ["Fel Obelisk"] = 255774,
+    ["Static Totem"] = 301624,
+    ["Void Tendril"] = 115422,
+    ["War Banner"] = 246366,
+    ["Earthgrab Totem"] = 51485,
+    ["Healing Tide Totem"] = 108280,
+    ["Static Field Totem"] = 281902
+}
+
 -- Stomp totems function
 function stompTotems()
     awful.totems.loop(function(totem)
@@ -220,6 +221,22 @@ function stompTotems()
         end
     end)
 end
+
+-- Callback for Spear Hand Strike ability
+spearHandStrike:Callback(function(spell)
+    local targetCastingSpell = target.casting -- Get the name of the spell being cast by the target
+    local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
+
+    -- Check if the target is casting a spell from the kickAllTable or kickHealsTable, and not immune to interrupts
+    if not target.castint and targetCastingSpell and (kickAllTable[targetCastingSpell] or kickHealsTable[targetCastingSpell]) and target.castPct > randomCastPct then
+        -- If so, cast Spear Hand Strike on the target to interrupt it
+        awful.alert({
+            message="Cast Interrupted: "..target.name,
+            texture=116705,
+            })
+        spearHandStrike:Cast(target)   
+    end
+end)
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
