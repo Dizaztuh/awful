@@ -214,7 +214,7 @@ spearHandStrike:Callback(function(spell)
                     return "break"
                 end
             end)
-        elseif kickCCTable[enemyCastingSpell] and interruptibleEnemy.castTarget.isUnit(player) then
+        elseif kickCCTable[enemyCastingSpell] and interruptibleEnemy.castTarget(player) then
             shouldInterrupt = true
         end
 
