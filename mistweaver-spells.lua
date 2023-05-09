@@ -196,7 +196,7 @@ spearHandStrike:Callback(function(spell)
         if enemy.distance <= 5 and enemyCastingSpell then
             local shouldInterrupt = false
 
-            if kickHealsTable[enemyCastingSpell] and enemy.castint then
+            if kickHealsTable[enemyCastingSpell] then
                 enemies.loop(function(enemy)
                     if enemy.distance <= 40 and enemy.hp < 50 then
                         shouldInterrupt = true
