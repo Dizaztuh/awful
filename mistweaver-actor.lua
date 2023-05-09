@@ -32,9 +32,10 @@ mistweaver:Init(function()
         fortifyingBrew()
         diffuseMagic()
     end
-    
+
     local ROPDROP = {
         [62618] = true,
+        [740] = true,
         [196718] = true,
         [198838] = true,
         [98008] = true,
