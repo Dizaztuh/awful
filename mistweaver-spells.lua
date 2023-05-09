@@ -26,7 +26,7 @@ awful.Populate({
         offsetMin = 0,
         offsetMax = 5,
     }),
-    ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, AlwaysFace = true, range = 40 }),
+    ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, AlwaysFace = true }),
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true, ignoreCasting = true }),
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
