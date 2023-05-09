@@ -294,10 +294,10 @@ end)
 -- Callback for Detox ability
 detox:Callback(function(spell)
     -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
+    awful.friends.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffName) then
+            if friend.debuff(debuffName) and friend.ccRemains < 3 then
                 -- Attempt to cast Detox on the friendly unit to cleanse the debuff
                 local castResult = spell:Cast(friend)
                 
@@ -668,7 +668,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
-    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
+    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) andenemyHealer.ccRemains < awful.buffer + awful.latency and enemyHealer.incapDR >= 0.25 and not (player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         spell:Cast(enemyHealer)
         awful.alert({
@@ -707,15 +707,18 @@ risingSunKick:Callback(function(spell)
 end)
 
 touchOfDeath:Callback(function(spell)
-    enemies.loop(function(enemy)
-        if enemy.hp <= 19 then
-            if spell:Cast(enemy) then
-                return awful.alert({
-                    message = "Touch of Death below 15%: "..enemy.name,
-                    texture = spell.id,
-                    duration = 2.3,
-                })
-            end
+    -- Loop through all enemies within range, something arbitrary like 10 yards
+    awful.enemies.within(10).loop(function(enemy)
+        -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
+        if spell:Castable(enemy) and enemy.hp < 15 then
+            -- Cast Touch of Death on the enemy
+            spell:Cast(enemy)
+            awful.alert({
+                message = "Touch of Death below 15%: "..enemy.name,
+                texture = spell.id,
+                duration = 2.3,
+            })
+            return true -- exit the loop after casting the spell
         end
     end)
 end)
