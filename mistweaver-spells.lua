@@ -32,7 +32,7 @@ awful.Populate({
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
     revival = Spell(115310, { heal = true }),
     diffuseMagic = Spell(122783, { ignoreCasting = true }),
-    detox = Spell(115450, { targeted = true }),
+    detox = Spell(115450, { targeted = true, range = 40 }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
     sphereofHope = Spell (410777, { targeted = true, range = 40, ignoreFacing = true}),
@@ -224,13 +224,14 @@ local ROPDROP = {
             end
         end
       end)
-      
+
+
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
     local randomCastPct = math.random(60, 80) -- Generate a random number between 60 and 80
 
     local interruptibleEnemy
-    enemies.loop(function(enemy)
+    awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
         -- Check if there's an enemy within 5 yards and casting a spell from the kickHealsTable or kickCCTable, and not immune to interrupts
@@ -245,8 +246,8 @@ spearHandStrike:Callback(function(spell)
         local shouldInterrupt = false
 
         if kickHealsTable[enemyCastingSpell] then
-            enemies.loop(function(enemy)
-                if enemies.distance <= 40 and friend.hp < 50 then
+            awful.enemies.loop(function(enemy)
+                if enemyHealer.distance <= 5 and enemy.hp < 50 then
                     shouldInterrupt = true
                     return
                 end
@@ -260,7 +261,7 @@ spearHandStrike:Callback(function(spell)
                 message="Cast Interrupted: "..interruptibleEnemy.name,
                 texture=116705,
             })
-            spell:Cast(interruptibleEnemy)
+            spearHandStrike:Cast(interruptibleEnemy)
         end
     end
 end)
