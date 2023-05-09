@@ -32,7 +32,7 @@ awful.Populate({
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
     revival = Spell(115310, { heal = true }),
     diffuseMagic = Spell(122783, { ignoreCasting = true }),
-    detox = Spell(115450, { targeted = true }),
+    detox = Spell(115450, { targeted = true, range = 40, alwaysFace = true }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
     sphereofHope = Spell (410777, { targeted = true, range = 40, ignoreFacing = true}),
@@ -253,7 +253,7 @@ spearHandStrike:Callback(function(spell)
                     message="Cast Interrupted: "..enemy.name,
                     texture=116705,
                 })
-                spearHandStrike:Cast(enemy)
+                spell:Cast(enemy)
             end
         end
     end)
@@ -268,7 +268,7 @@ spearHandStrike:Callback(function(spell)
                 message="Cast Interrupted: "..enemy.name,
                 texture=116705,
             })
-            spearHandStrike:Cast(enemy)
+            spell:Cast(enemy)
         end
     end)
 end)
