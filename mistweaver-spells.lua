@@ -9,7 +9,7 @@ awful.Populate({
     spinningCraneKick = Spell(101546, { damage = "physical" }),
     touchOfDeath = Spell(322109, { targeted = true, damage = "physical" }),
     envelopingMist = Spell(124682, { heal = true, targeted = true }),
-    renewingMist = Spell(119611, { heal = true, targeted = true }),
+    renewingMist = Spell(115151, { heal = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
     essenceFont = Spell(191837, { heal = true, targeted = false }),
     chiWave = Spell(115098, { heal = true }),
@@ -209,7 +209,8 @@ local totemList = {
     ["War Banner"] = 246366,
     ["Earthgrab Totem"] = 51485,
     ["Healing Tide Totem"] = 108280,
-    ["Static Field Totem"] = 281902
+    ["Static Field Totem"] = 281902,
+    ["Fel Obelisk"] = 353601
 }
 
 -- Stomp totems function
