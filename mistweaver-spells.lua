@@ -251,7 +251,7 @@ spearHandStrike:Callback(function(spell)
                     message="Cast Interrupted: "..enemy.name,
                     texture=116705,
                 })
-                spearHandStrike:Cast(enemy)
+                spell:Cast(enemy)
             end
         end
     end)
