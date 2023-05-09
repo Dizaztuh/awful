@@ -4,6 +4,25 @@ local mistweaver = project.monk.mistweaver
 
 print("Sisterfister Loaded and ready to fist!")
 
+local ROPDROP = {
+    [62618] = true, -- Barrier
+    [740] = true, -- Tranquility
+    [198838] = true,
+    [98008] = true,
+    [376079] = true,
+    [107574] = true, -- Avatar
+    [262161] = true, -- Warbreaker
+    [31884] = true, -- Avenging Wrath
+    [216331] = true, -- Avenging Crusader
+    [255647] = true, -- The Hunt
+    [196718] = true, -- Darkness
+    [76577] = true, -- Smokebomb
+    [359053] = true, -- Smokebomb
+    [145629] = true, -- Amz
+    [165775] = true, -- Amz
+    [51052] = true, -- Amz
+    }
+
 -- Initialize the mistweaver monk profile
 mistweaver:Init(function()
     -- Check if there is an enemy target
