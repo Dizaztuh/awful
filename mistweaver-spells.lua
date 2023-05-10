@@ -322,7 +322,19 @@ tigersLust:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
+        if (player.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
+            awful.alert({
+                message="Casted Tigers Lust on: "..friend.name, 
+                texture=116841,
+                })
+            return spell:Cast(friend)
+        end
+    end)
+
+    -- Loop through all friendly units
+    awful.friends.loop(function(friend)
+        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
+        if (friend.rootRemains > 3 or friend.slowed) and friend.target.hp < 60 then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
@@ -334,7 +346,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
+        if (friend.rootRemains > 3 or friend.slowed) and friend.hp < 60 then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
@@ -347,7 +359,7 @@ end)
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 75%
-    if (player.rootRemains > 3 or player.slowed) and player.hp < 75 then
+    if (player.rootRemains > 3 or player.slowed) and target.hp < 70 then
         awful.alert({
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
@@ -358,7 +370,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 80 or friend.hp < 80 and target.distance > 5 then
+        if (player.rootRemains > 3 or player.slowed) and friend.hp < 70 or friend.hp < 70 and target.distance > 5 then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
@@ -370,7 +382,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 80 or friend.hp < 80 and target.distance > 5 then
+        if (friend.rootRemains > 3 or friend.slowed) and friend.target.hp < 70 or friend.hp < 70 and target.distance > 5 then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
