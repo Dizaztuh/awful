@@ -156,19 +156,18 @@ local kickHealsTable = {
 }
 
 local cleanseTable = {
-    ["Hex"] = true,
-    ["Mirrors of Torment"] = true,
-    ["Mindgames"] = true,
-    ["Sepsis"] = true,
-    ["Curse of Exhaustion"] = true,
-    ["Landslide"] = true,
-    ["Curse of Weakness"] = true,
-    ["Polymorph"] = true,
-    ["Fear"] = true,
-    ["Psychic Scream"] = true,
-    ["Hammer of Justice"] = true,
-    ["Freezing Trap"] = true,
-    ["Sleep Walk"] = true
+    ["Hex"] = 51514,
+    ["Mindgames"] = 375901,
+    ["Sepsis"] = 385408,
+    ["Curse of Exhaustion"] = 334275,
+    ["Landslide"] = 358385,
+    ["Curse of Weakness"] = 702,
+    ["Polymorph"] = 118,
+    ["Fear"] = 5782,
+    ["Psychic Scream"] = 8122,
+    ["Hammer of Justice"] = 853,
+    ["Freezing Trap"] = 187650,
+    ["Sleep Walk"] = 360806
 }
 
 
