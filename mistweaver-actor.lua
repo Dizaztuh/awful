@@ -12,11 +12,11 @@ mistweaver:Init(function()
         risingSunKick()
     -- Check if there is an enemy target
     if target.enemy then
-        sphereofDespair()
-        sphereofHope()
         faelineStomp()
         tigerPalm()
         blackoutKick()
+        sphereofDespair()
+        sphereofHope()
         legSweep()
         paralyze()
         spearHandStrike()
