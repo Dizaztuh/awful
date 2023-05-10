@@ -462,7 +462,7 @@ local lastCastTimeHope = 0
 
 sphereofHope:Callback(function(spell)
     -- Check if 30 seconds have passed since the last cast
-    if GetTime() - lastCastTimeHope >= 10 then
+    if GetTime() - lastCastTimeHope >= 15 then
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
             if not friend.combat or friend.hp > 90 or friend.buff(411036) then
