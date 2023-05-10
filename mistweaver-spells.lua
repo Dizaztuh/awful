@@ -745,12 +745,12 @@ function castOnClosestEnemy()
         if closestEnemy and minDistance <= 5 then
             if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
                 -- Cast Tiger Palm on the target.
-                spell:Cast(target)
+                tigerPalm:Cast(target)
                 return
             end
             if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
                 -- Cast Blackout Kick on the target.
-                spell:Cast(target)
+                blackoutKick:Cast(target)
                 return
             end
         end
