@@ -697,10 +697,8 @@ end)
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
     -- Check if Rising Sun Kick is castable on the target and its cooldown is 0
-    if  risingSunKick.cd == 0 then
         -- If so, cast Rising Sun Kick on the target.
         spell:Cast(target)
-    end
 end)
 
 touchOfDeath:Callback(function(spell)
@@ -714,3 +712,42 @@ touchOfDeath:Callback(function(spell)
         })
     end)
 end)
+
+function castOnClosestEnemy()
+    -- Check if your target is more than 5 yards away
+    if target.distance > 5 then
+        local closestEnemy = nil
+        local minDistance = math.huge
+
+        -- Loop through all enemies
+        awful.enemies.loop(function(enemy)
+            -- Check if the enemy is closer than the current closest enemy
+            if enemy.distance < minDistance then
+                closestEnemy = enemy
+                minDistance = enemy.distance
+            end
+        end)
+
+        -- Cast Tiger Palm and Blackout Kick on the closest enemy if within 5 yards
+        if closestEnemy and minDistance <= 5 then
+            tigerPalm:Cast(closestEnemy)
+            blackoutKick:Cast(closestEnemy)
+        end
+
+        -- Loop through all pets
+        awful.pets.loop(function(pet)
+            -- Check if the pet is closer than the current closest pet
+            if pet.distance < minDistance then
+                closestEnemy = pet
+                minDistance = pet.distance
+            end
+        end)
+
+        -- Cast Tiger Palm and Blackout Kick on the closest pet if within 5 yards
+        if closestEnemy and minDistance <= 5 then
+            tigerPalm:Cast(closestEnemy)
+            blackoutKick:Cast(closestEnemy)
+        end
+    end
+end
+
