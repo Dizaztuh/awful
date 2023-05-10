@@ -31,7 +31,7 @@ awful.Populate({
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true, ignoreCasting = true }),
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
-    revival = Spell(115310, { heal = true }),
+    revival = Spell(115310, { heal = true, ignoreFacing = true }),
     diffuseMagic = Spell(122783, { ignoreCasting = true }),
     detox = Spell(115450, { targeted = true, range = 40, alwaysFace = true }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
@@ -289,7 +289,7 @@ detox:Callback(function(spell)
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffName) and friend.ccRemains < 3 or friend.debuffRemains < 3 then
+            if friend.debuff(debuffName) and friend.ccRemains < 3 or friend.debuffRemains(debuffName) < 3 then
                 -- Attempt to cast Detox on the friendly unit to cleanse the debuff
                 local castResult = spell:Cast(friend)
                 
@@ -300,7 +300,6 @@ detox:Callback(function(spell)
                         texture=115450,
                     })
                 end
-                
                 return true -- exit the loop
             end
         end
