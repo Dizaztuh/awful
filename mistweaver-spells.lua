@@ -715,7 +715,7 @@ end)
 
 function castOnClosestEnemy()
     -- Check if your target is more than 5 yards away
-    if target.distance > 5 then
+    if player.target.distance > 5 then
         local closestEnemy = nil
         local minDistance = math.huge
 
