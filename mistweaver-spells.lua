@@ -152,7 +152,7 @@ local kickHealsTable = {
     ["Healing Rain"] = true,
     ["Dream Breath"] = true,
     ["Spiritbloom"] = true,
-    ["Living Flame"] = true,
+    ["Living Flame"] = true
 }
 
 local cleanseTable = {
@@ -286,10 +286,10 @@ end)
 -- Callback for Detox ability
 detox:Callback(function(spell)
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffName) and friend.ccRemains < 3 then
+            if friend.debuff(debuffName) and friend.ccRemains < 3 or friend.debuffRemains < 3 then
                 -- Attempt to cast Detox on the friendly unit to cleanse the debuff
                 local castResult = spell:Cast(friend)
                 
@@ -311,7 +311,7 @@ end)
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rootRemains > 3 or player.slowed) and target.hp < 80 and target.distance > 5 then
+    if (player.rootRemains > 3 or player.slowed) and target.hp < 80 then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
@@ -320,7 +320,7 @@ tigersLust:Callback(function(spell)
     end
 
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (player.rootRemains > 3 or player.slowed) and friend.target.hp < 80 then
             awful.alert({
@@ -332,7 +332,7 @@ tigersLust:Callback(function(spell)
     end)
 
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or friend.slowed) and friend.target.hp < 80 then
             awful.alert({
@@ -344,7 +344,7 @@ tigersLust:Callback(function(spell)
     end)
 
     -- Loop through all enemy units
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or friend.slowed) and friend.hp < 60 then
             awful.alert({
@@ -376,7 +376,7 @@ invokeChiJi:Callback(function(spell)
     end
 
     -- Loop through all friendly units
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
         if (player.rootRemains > 3 or player.slowed) and friend.hp < 70 or friend.hp < 70 and player.target.distance > 5 then
             awful.alert({
@@ -388,7 +388,7 @@ invokeChiJi:Callback(function(spell)
     end)
 
     -- Loop through all enemy units
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
         if (friend.rootRemains > 3 or friend.slowed) and friend.target.hp < 70 or friend.hp < 70 and friend.target.distance > 5 then
             awful.alert({
