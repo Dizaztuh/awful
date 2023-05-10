@@ -743,14 +743,14 @@ function castOnClosestEnemy()
 
         -- Cast Tiger Palm and Blackout Kick on the closest enemy if within 5 yards
         if closestEnemy and minDistance <= 5 then
-            if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
+            if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
                 -- Cast Tiger Palm on the target.
-                tigerPalm:Cast(target)
+                tigerPalm:Cast(closestEnemy)
                 return
             end
-            if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
+            if blackoutKick:Castable(closestEnemy) and player.lastCast == tigerPalm.id then
                 -- Cast Blackout Kick on the target.
-                blackoutKick:Cast(target)
+                blackoutKick:Cast(closestEnemy)
                 return
             end
         end
@@ -766,8 +766,16 @@ function castOnClosestEnemy()
 
         -- Cast Tiger Palm and Blackout Kick on the closest pet if within 5 yards
         if closestEnemy and minDistance <= 5 then
-            tigerPalm:Cast(closestEnemy)
-            blackoutKick:Cast(closestEnemy)
+            if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
+                -- Cast Tiger Palm on the target.
+                tigerPalm:Cast(closestEnemy)
+                return
+            end
+            if blackoutKick:Castable(closestEnemy) and player.lastCast == tigerPalm.id then
+                -- Cast Blackout Kick on the target.
+                blackoutKick:Cast(closestEnemy)
+                return
+            end
             risingSunKick:Cast(closestEnemy)
         end
     end
