@@ -156,20 +156,19 @@ local kickHealsTable = {
 }
 
 local cleanseTable = {
-    ["Hex"] = 51514,
-    ["Mindgames"] = 375901,
-    ["Sepsis"] = 385408,
-    ["Curse of Exhaustion"] = 334275,
-    ["Landslide"] = 358385,
-    ["Curse of Weakness"] = 702,
-    ["Polymorph"] = 118,
-    ["Fear"] = 5782,
-    ["Psychic Scream"] = 8122,
-    ["Hammer of Justice"] = 853,
-    ["Freezing Trap"] = 187650,
-    ["Sleep Walk"] = 360806
+    [51514] = true, -- Hex
+    [375901] = true, -- Mindgames
+    [385408] = true, -- Sepsis
+    [334275] = true, -- Exhaustion
+    [358385] = true, -- Landslide
+    [702] = true, -- Weakness
+    [118] = true, -- Polymorph
+    [5782] = true, -- Fear
+    [8122] = true, -- Psychic Scream
+    [853] = true, -- Hoj
+    [187650] = true, -- Trap
+    [360806] = true -- Sleep Walk
 }
-
 
     -- Define a table with totem names and their respective IDs
 local totemList = {
@@ -309,7 +308,7 @@ end)
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rootRemains > 3 or player.slowed) and target.hp < 60 then
+    if (player.rootRemains > 3 or player.slowed) and target.hp < 70 then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
@@ -317,7 +316,7 @@ tigersLust:Callback(function(spell)
         return tigersLust:Cast(player)
     end
 
-    if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
+    if (player.rootRemains > 3 or player.slowed) and player.hp < 70 then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
@@ -328,7 +327,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 70 then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
@@ -340,7 +339,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 70 then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
