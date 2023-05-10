@@ -17,6 +17,7 @@ awful.Populate({
     sphereofDespair = Spell(410777, { targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
+    disable = Spell(343731),
     faelineStomp = Spell(388193, {heal = true}),
     paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
     legSweep = Spell(119381, { targeted = false, stun = true }),
@@ -208,6 +209,18 @@ function stompTotems()
     end)
 end
 
+-- Callback for Disable ability
+disable:Callback(function(spell)
+    -- Check if the target does not have the Disable debuff
+    if not target.debuff("Disable") then
+        awful.alert({
+            message="Applying Disable on "..target.name,
+            texture=116095,
+        })
+        -- If the target doesn't have the Disable debuff, cast Disable on the target
+        spell:Cast(target)
+    end
+end)
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
