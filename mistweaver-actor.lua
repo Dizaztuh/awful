@@ -6,6 +6,7 @@ print("Sisterfister Loaded and ready to fist!")
 
 -- Initialize the mistweaver monk profile
 mistweaver:Init(function()
+    if not player.mounted then
         touchOfDeath()
         castOnClosestEnemy()
         stompTotems()
@@ -34,5 +35,6 @@ mistweaver:Init(function()
         dampenHarm()
         fortifyingBrew()
         diffuseMagic()
+        end
     end
 end)
