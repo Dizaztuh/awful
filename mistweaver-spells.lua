@@ -714,6 +714,24 @@ touchOfDeath:Callback(function(spell)
 end)
 
 function castOnClosestEnemy()
+    -- Callback for Tiger Palm
+local tigerPalmz:Callback(function(spell)
+    if tigerPalmz:Castable(target) and player.lastCast ~= tigerPalm.id then
+        -- Cast Tiger Palm on the target.
+        spell:Cast(target)
+        return
+    end
+end)
+
+-- Callback for Blackout Kick
+local blackoutKickz:Callback(function(spell)
+    if blackoutKickz:Castable(target) and player.lastCast == tigerPalm.id then
+        -- Cast Blackout Kick on the target.
+        spell:Cast(target)
+        return
+    end
+end)
+
     -- Check if you have a target and your target is more than 5 yards away
     if player.target and player.target.distance and player.target.distance > 5 then
         local closestEnemy = nil
@@ -730,8 +748,8 @@ function castOnClosestEnemy()
 
         -- Cast Tiger Palm and Blackout Kick on the closest enemy if within 5 yards
         if closestEnemy and minDistance <= 5 then
-            tigerPalm:Cast(closestEnemy)
-            blackoutKick:Cast(closestEnemy)
+            tigerPalmz:Cast(closestEnemy)
+            blackoutKickz:Cast(closestEnemy)
         end
 
         -- Loop through all pets
@@ -745,8 +763,8 @@ function castOnClosestEnemy()
 
         -- Cast Tiger Palm and Blackout Kick on the closest pet if within 5 yards
         if closestEnemy and minDistance <= 5 then
-            tigerPalm:Cast(closestEnemy)
-            blackoutKick:Cast(closestEnemy)
+            tigerPalmz:Cast(closestEnemy)
+            blackoutKickz:Cast(closestEnemy)
         end
     end
 end
