@@ -6,9 +6,9 @@ print("Sisterfister Loaded and ready to fist!")
 
 -- Initialize the mistweaver monk profile
 mistweaver:Init(function()
+        touchOfDeath()
     -- Check if there is an enemy target
     if target.enemy then
-        touchOfDeath()
         risingSunKick()
         faelineStomp()
         tigerPalm()
