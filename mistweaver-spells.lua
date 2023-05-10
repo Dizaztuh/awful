@@ -38,7 +38,7 @@ awful.Populate({
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
     sphereofHope = Spell (410777, { targeted = true }),
     thunderFocusTea = Spell(116680,  { ignoreCasting = true }),
-    restoral = Spell(388615, { heal = true, ignoreControl = true }),
+    restoral = Spell(388615, { heal = true, ignoreControl = true, ignoreFacing = true }),
     tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
@@ -125,7 +125,8 @@ local kickAllTable = {
     ["Summon Demonic Tyrant"] = true,
     ["Banish"] = true,
     ["Eternity Surge"] = true,
-    ["Demonfire"] = true,
+    ["Drain Life"] = true,
+    ["Demonfire"] = true
 }
 
 local kickHealsTable = {
@@ -149,7 +150,6 @@ local kickHealsTable = {
     ["Healing Wave"] = true,
     ["Healing Surge"] = true,
     ["Healing Rain"] = true,
-    ["Drain Life"] = true,
     ["Dream Breath"] = true,
     ["Spiritbloom"] = true,
     ["Living Flame"] = true,
