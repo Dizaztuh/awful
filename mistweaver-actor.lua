@@ -9,12 +9,12 @@ mistweaver:Init(function()
         touchOfDeath()
         castOnClosestEnemy()
         stompTotems()
-        risingSunKick()
     -- Check if there is an enemy target
     if target.enemy then
         faelineStomp()
         tigerPalm()
         blackoutKick()
+        risingSunKick()
         legSweep()
         paralyze()
         spearHandStrike()
