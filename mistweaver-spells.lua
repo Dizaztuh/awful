@@ -679,18 +679,13 @@ risingSunKick:Callback(function(spell)
 end)
 
 touchOfDeath:Callback(function(spell)
-    -- Loop through all enemies within range, something arbitrary like 10 yards
-    awful.enemies.within(10).loop(function(enemy)
-        -- Check if spell is Castable and enemy hp is less than 15%  - LESS THAN due to the spell tooltip being "under 15% health"
-        if spell:Castable(enemy) and enemy.hp < 15 then
-            -- Cast Touch of Death on the enemy
-            spell:Cast(enemy)
-            awful.alert({
-                message = "Touch of Death below 15%: "..enemy.name,
-                texture = spell.id,
-                duration = 2.3,
-            })
-            return true -- exit the loop after casting the spell
-        end
+    enemies.loop(function(enemy)
+        if not spell:Castable(enemy) then return end 
+        spell:Cast(enemy)
+        return awful.alert({
+            message = "Show us on the doll where he touched you: "..enemy.spec,
+            texture = spell.id,
+            duration = 4.3,
+        })
     end)
 end)
