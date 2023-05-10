@@ -714,8 +714,8 @@ touchOfDeath:Callback(function(spell)
 end)
 
 function castOnClosestEnemy()
-    -- Check if your target is more than 5 yards away
-    if player.target.distance > 5 then
+    -- Check if you have a target and your target is more than 5 yards away
+    if player.target and player.target.distance and player.target.distance > 5 then
         local closestEnemy = nil
         local minDistance = math.huge
 
@@ -750,4 +750,5 @@ function castOnClosestEnemy()
         end
     end
 end
+
 
