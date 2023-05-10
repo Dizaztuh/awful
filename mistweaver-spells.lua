@@ -311,91 +311,79 @@ end)
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rootRemains > 3 or player.slowed) and target.hp < 80 then
+    if (player.rootRemains > 3 or player.slowed) and target.hp < 60 then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
             })
-        return spell:Cast(player)
+        return tigersLust:Cast(player)
+    end
+
+    if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
+        awful.alert({
+            message="Casted Tigers Lust!", 
+            texture=116841,
+            })
+        return tigersLust:Cast(player)
     end
 
     -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
+    awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (player.rootRemains > 3 or player.slowed) and friend.target.hp < 80 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
-            return spell:Cast(friend)
-        end
-    end)
-
-    -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
-        -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or friend.slowed) and friend.target.hp < 80 then
-            awful.alert({
-                message="Casted Tigers Lust on: "..friend.name, 
-                texture=116841,
-                })
-            return spell:Cast(friend)
+            return tigersLust:Cast(friend)
         end
     end)
 
     -- Loop through all enemy units
-    awful.fgroup.loop(function(friend)
+    awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or friend.slowed) and friend.hp < 60 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
                 })
-            return spell:Cast(friend)
+            return tigersLust:Cast(friend)
         end
     end)
 end)
 
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
-    -- Check if the player is rooted for more than 3 seconds and their health is below 75%
-    if (player.rootRemains > 3 or player.slowed) and player.target.hp < 70 then
+    -- Check if the player is rooted for more than 3 seconds and their health is below 50%
+    if (player.rootRemains > 3 or player.slowed) and player.hp < 60 then
         awful.alert({
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
             })
-        return spell:Cast(player)
-    end
-
-    if (player.rootRemains > 3 or player.slowed) and player.hp < 70 then
-        awful.alert({
-            message="Casted Chi-Ji, the Red Crane!", 
-            texture=325197,
-            })
-        return spell:Cast(player)
+        return invokeChiJi:Cast(player)
     end
 
     -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
+    awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (player.rootRemains > 3 or player.slowed) and friend.hp < 70 or friend.hp < 70 and player.target.distance > 5 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.hp < 60 then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
-            return spell:Cast(friend)
+            return invokeChiJi:Cast(friend)
         end
     end)
 
     -- Loop through all enemy units
-    awful.fgroup.loop(function(friend)
+    awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 or friend.slowed) and friend.target.hp < 70 or friend.hp < 70 and friend.target.distance > 5 then
+        if (friend.rootRemains > 3 or player.slowed) and friend.target.hp < 60 then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
-            return spell:Cast(friend)
+            return invokeChiJi:Cast(friend)
         end
     end)
 end)
@@ -756,8 +744,16 @@ function castOnClosestEnemy()
 
         -- Cast Tiger Palm and Blackout Kick on the closest enemy if within 5 yards
         if closestEnemy and minDistance <= 5 then
-            tigerPalm:Cast(closestEnemy)
-            blackoutKick:Cast(closestEnemy)
+            if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
+                -- Cast Tiger Palm on the target.
+                spell:Cast(target)
+                return
+            end
+            if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
+                -- Cast Blackout Kick on the target.
+                spell:Cast(target)
+                return
+            end
         end
 
         -- Loop through all pets
