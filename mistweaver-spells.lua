@@ -765,6 +765,7 @@ function castOnClosestEnemy()
         if closestEnemy and minDistance <= 5 then
             tigerPalm:Cast(closestEnemy)
             blackoutKick:Cast(closestEnemy)
+            risingSunKick:Cast(closestEnemy)
         end
     end
 end
