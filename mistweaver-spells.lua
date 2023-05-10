@@ -748,8 +748,8 @@ function castOnClosestEnemy()
 
         -- Cast Tiger Palm and Blackout Kick on the closest enemy if within 5 yards
         if closestEnemy and minDistance <= 5 then
-            tigerPalmz(tigerPalm)
-            blackoutKickz(blackoutKick)
+            tigerPalm:Cast(closestEnemy)
+            blackoutKick:Cast(closestEnemy)
         end
 
         -- Loop through all pets
@@ -763,11 +763,12 @@ function castOnClosestEnemy()
 
         -- Cast Tiger Palm and Blackout Kick on the closest pet if within 5 yards
         if closestEnemy and minDistance <= 5 then
-            tigerPalmz(tigerPalm)
-            blackoutKickz(blackoutKick)
+            tigerPalm:Cast(closestEnemy)
+            blackoutKick:Cast(closestEnemy)
         end
     end
 end
+
 
 
 
