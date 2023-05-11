@@ -71,9 +71,7 @@ BurstCDS = {
 }
 
 local ROPDROP = {
-    [62618] = true, -- Barrier
     [740] = true, -- Tranquility
-    [198838] = true, -- Earthen
     [376079] = true, -- Spear of Bastion
     [107574] = true, -- Avatar
     [262161] = true, -- Warbreaker
@@ -189,6 +187,7 @@ local totemList = {
     ["Static Field Totem"] = 281902,
     ["Fel Obelisk"] = 353601
 }
+
 
 -- Callback for Ring of Peace
 ringOfPeace:Callback(function(spell)
