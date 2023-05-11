@@ -174,8 +174,8 @@ local totemList = {
 }
 
 local enemyBuffTable = {
-    [62618] = true, -- Power Word: Barrier
-    [198838] = true, -- Earthen Wall
+    ["Power Word: Barrier"] = 62618, -- Power Word: Barrier
+    ["Earthen Wall"] = 198838, -- Earthen Wall
 }
 
 local ROPDROP = {
@@ -216,7 +216,7 @@ ringOfPeace:Callback(function(spell)
 
         -- Check if the enemy has a buff from the enemyBuffTable
         for spellID, _ in pairs(enemyBuffTable) do
-            if enemy.buff(spellID) then
+            if enemy.buff(spellName) then
                 -- Get the enemy's position
                 local x, y, z = enemy.position()
                 if not player.losCoordsLiteral(x, y, z) then return end
