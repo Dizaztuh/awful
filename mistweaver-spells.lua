@@ -189,6 +189,7 @@ local totemList = {
 }
 
 
+
 -- Callback for Ring of Peace
 ringOfPeace:Callback(function(spell)
     -- Loop through all enemies
