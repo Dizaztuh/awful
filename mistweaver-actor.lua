@@ -41,11 +41,6 @@ local enemyBuffTable = {
     [62618] = true, -- Barrier
     [198838] = true, -- Earthen
 }
--- Sample buff table with spell IDs
-local enemyBuffTable = {
-    [98765] = true, -- Power Word: Barrier
-    [54321] = true, -- Earthen Wall
-}
 
 local function eventHandler(self, event, ...)
     if event == "COMBAT_LOG_EVENT_UNFILTERED" then
