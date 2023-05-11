@@ -173,6 +173,11 @@ local totemList = {
     ["Fel Obelisk"] = 353601
 }
 
+local enemyBuffTable = {
+    [62618] = true, -- Power Word: Barrier
+    [198838] = true, -- Earthen Wall
+}
+
 local ROPDROP = {
     [740] = true, -- Tranquility
     [376079] = true, -- Spear of Bastion
@@ -188,7 +193,7 @@ local ROPDROP = {
     [165775] = true, -- Amz
     [51052] = true, -- Amz
     }
-    
+
 ringOfPeace:Callback(function(spell)
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
