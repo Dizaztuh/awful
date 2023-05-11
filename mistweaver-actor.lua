@@ -8,6 +8,7 @@ print("Sisterfister Loaded and ready to fist!")
 mistweaver:Init(function()
     if not player.mounted then
         touchOfDeath()
+        risingSunKick()
     -- Check if there is an enemy target
     if target.enemy then
         sphereofDespair()
@@ -15,7 +16,6 @@ mistweaver:Init(function()
         faelineStomp()
         tigerPalm()
         blackoutKick()
-        risingSunKick()
         castOnClosestEnemy()
         stompTotems()
         spearHandStrike()
