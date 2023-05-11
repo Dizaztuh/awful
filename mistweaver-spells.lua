@@ -38,7 +38,7 @@ awful.Populate({
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
     sphereofHope = Spell (410777, { targeted = true }),
     thunderFocusTea = Spell(116680,  { ignoreCasting = true }),
-    restoral = Spell(388615, { heal = true, ignoreControl = true, ignoreFacing = true }),
+    restoral = Spell(388615, { heal = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197)
 }, mistweaver, getfenv(1))
