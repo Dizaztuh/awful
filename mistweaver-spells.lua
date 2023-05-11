@@ -200,7 +200,7 @@ ringOfPeace:Callback(function(spell)
             if enemy.used(spellID, 1) then
                 -- Get the enemy's position
                 local x, y, z = enemy.position()
-
+                if not player.losCoordsLiteral(x, y, z) then return end
                 -- If the enemy's position is available, cast Ring of Peace at that position
                 if x and y and z then
                     awful.alert({
@@ -213,7 +213,6 @@ ringOfPeace:Callback(function(spell)
         end
     end)
 end)
-
 
 -- Stomp totems function
 function stompTotems()
