@@ -197,7 +197,7 @@ ringOfPeace:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the ROPDROP table
         for spellID, _ in pairs(ROPDROP) do
-            if enemy.used(spellID, 1) then
+            if enemy.used(spellID, spellName, 1) then
                 -- Get the enemy's position
                 local x, y, z = enemy.position()
                 if not player.losCoordsLiteral(x, y, z) then return end
