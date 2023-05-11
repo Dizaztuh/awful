@@ -41,9 +41,8 @@ local enemyBuffTable = {
     [62618] = true, -- Barrier
     [198838] = true, -- Earthen
 }
-
--- Register the event with a callback function
-awful.events.register("COMBAT_LOG_EVENT_UNFILTERED", function(_, event, _, sourceGUID, _, _, destGUID, _, _, _, _, spellID)
+-- Add the event with a callback function
+awful.events.add("COMBAT_LOG_EVENT_UNFILTERED", function(_, event, _, sourceGUID, _, _, destGUID, _, _, _, _, spellID)
     -- Check if the event is SPELL_AURA_APPLIED
     if event == "SPELL_AURA_APPLIED" then
         -- Check if the spell is in the enemyBuffTable
@@ -65,7 +64,6 @@ awful.events.register("COMBAT_LOG_EVENT_UNFILTERED", function(_, event, _, sourc
         end
     end
 end)
-
         end
     end
 end)
