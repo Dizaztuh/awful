@@ -189,6 +189,33 @@ local totemList = {
 }
 
 
+local enemyBuffTable = {
+    [62618] = true, -- Power Word: Barrier
+    [198838] = true, -- Earthen Wall
+}
+
+ringOfPeacez:Callback(function(spell)
+    -- Loop through all enemies
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy has a buff from the enemyBuffTable
+        for spellID, _ in pairs(enemyBuffTable) do
+            if enemy.buff(spellID) then
+                -- Get the enemy's position
+                local x, y, z = enemy.position()
+                if not player.losCoordsLiteral(x, y, z) then return end
+                -- If the enemy's position is available, cast Ring of Peace at that position
+                if x and y and z then
+                    awful.alert({
+                        message="Casting Ring of Peace on " .. enemy.name,
+                        texture=116844,
+                    })
+                    ringOfPeace:AoECast(x, y, z)
+                end
+            end
+        end
+    end)
+end)
+
 
 -- Callback for Ring of Peace
 ringOfPeace:Callback(function(spell)
