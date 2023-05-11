@@ -191,6 +191,30 @@ local totemList = {
     ["Fel Obelisk"] = 353601
 }
 
+-- Callback for Ring of Peace
+ringOfPeace:Callback(function(spell)
+    -- Loop through all enemies
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy used a spell from the ROPDROP table
+        for spellID, _ in pairs(ROPDROP) do
+            if enemy.used(spellID, 1) then
+                -- Get the enemy's position
+                local x, y, z = enemy.position()
+
+                -- If the enemy's position is available, cast Ring of Peace at that position
+                if x and y and z then
+                    awful.alert({
+                        message="Casting Ring of Peace on " .. enemy.name,
+                        texture=116844,
+                    })
+                    ringOfPeace:AoECast(x, y, z)
+                end
+            end
+        end
+    end)
+end)
+
+
 -- Stomp totems function
 function stompTotems()
     awful.totems.loop(function(totem)
