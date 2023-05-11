@@ -31,7 +31,7 @@ awful.Populate({
     flyingSerpentKick = Spell(101545),
     fortifyingBrew = Spell(115203, { heal = true, ignoreCasting = true }),
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
-    revival = Spell(115310, { heal = true, ignoreFacing = true }),
+    revival = Spell(115310, { heal = true, }),
     diffuseMagic = Spell(122783, { ignoreCasting = true }),
     detox = Spell(115450, { targeted = true, range = 40, alwaysFace = true }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
