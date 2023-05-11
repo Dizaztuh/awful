@@ -9,6 +9,7 @@ mistweaver:Init(function()
     if not player.mounted then
         touchOfDeath()
         risingSunKick()
+        ringOfPeace()
     -- Check if there is an enemy target
     if target.enemy then
         sphereofDespair()
