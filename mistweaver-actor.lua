@@ -10,7 +10,6 @@ mistweaver:Init(function()
         touchOfDeath()
         risingSunKick()
         ringOfPeace()
-        ringOfPeacez()
         -- Check if there is an enemy target
         if target.enemy then
             sphereofDespair()
