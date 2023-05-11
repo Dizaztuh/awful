@@ -472,7 +472,7 @@ sphereofHope:Callback(function(spell)
     if GetTime() - lastCastTimeHope >= 10 then
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-            if not friend.combat or friend.hp > 80 or friend.buff(411036) then
+            if not friend.combat or friend.hp > 90 or friend.buff(411036) then
                 return
             end
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
