@@ -338,7 +338,7 @@ tigersLust:Callback(function(spell)
         return tigersLust:Cast(player)
     end
 
-    if (player.rootRemains > 3 and player.hp < 70) then
+    if (player.rootRemains > 3 and player.hp < 85) then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
@@ -349,7 +349,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 and friend.hp < 70) then
+        if (friend.rootRemains > 3 and friend.hp < 85) then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
@@ -361,7 +361,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 and friend.target.hp < 70) then
+        if (friend.rootRemains > 3 and friend.target.hp < 85) then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
