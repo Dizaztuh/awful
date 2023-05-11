@@ -165,9 +165,8 @@ local cleanseTable = {
     [5782] = true, -- Fear
     [8122] = true, -- Psychic Scream
     [853] = true, -- Hoj
-    [187650] = true, -- Trap
-    [360806] = true, -- Sleep Walk
-    [187650] = true -- Freezing Trap
+    [187650] = true, -- Freezing Trap
+    [360806] = true -- Sleep Walk
 }
 
     -- Define a table with totem names and their respective IDs
@@ -327,7 +326,7 @@ end)
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rootRemains > 3 and target.hp < 85 or player.slowed and target.hp < 70) then
+    if (player.rootRemains > 3 and target.hp < 80 or player.slowed and target.hp < 85) then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
@@ -371,7 +370,7 @@ end)
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rootRemains > 3 or player.slowed and player.hp < 70) then
+    if (player.rootRemains > 3 or player.slowed and player.hp < 80) then
         awful.alert({
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
@@ -382,7 +381,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 and friend.hp < 70) then
+        if (friend.rootRemains > 3 and friend.hp < 80) then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
@@ -394,7 +393,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 and target.hp < 70) then
+        if (friend.rootRemains > 3 and target.hp < 80) then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
