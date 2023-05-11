@@ -658,7 +658,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
-    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and enemyHealer.ccRemains < awful.buffer + awful.latency and enemyHealer.incapDR >= 0.25 and not (player.target.guid == enemyHealer.guid) then
+    if (target.hp < 70 and paralyze:Castable(enemyHealer) and enemyHealer.incapDR >= 0.25 and not player.target.guid == enemyHealer.guid) then
         -- If the conditions are met, cast Paralyze on the enemy healer
         spell:Cast(enemyHealer)
         awful.alert({
