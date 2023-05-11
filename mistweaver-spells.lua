@@ -391,7 +391,7 @@ end)
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rootRemains > 3 or player.slowed and player.hp < 80) then
+    if (player.rootRemains > 3 or player.slowed and target.hp < 80) then
         awful.alert({
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
