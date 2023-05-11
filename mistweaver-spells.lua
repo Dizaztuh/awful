@@ -166,7 +166,8 @@ local cleanseTable = {
     [8122] = true, -- Psychic Scream
     [853] = true, -- Hoj
     [187650] = true, -- Trap
-    [360806] = true -- Sleep Walk
+    [360806] = true, -- Sleep Walk
+    [187650] = true -- Freezing Trap
 }
 
     -- Define a table with totem names and their respective IDs
