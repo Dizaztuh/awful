@@ -188,12 +188,6 @@ local totemList = {
     ["Fel Obelisk"] = 353601
 }
 
-
-local enemyBuffTable = {
-    [62618] = true, -- Power Word: Barrier
-    [198838] = true, -- Earthen Wall
-}
-
 ringOfPeace:Callback(function(spell)
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
@@ -253,7 +247,7 @@ end
 -- Callback for Disable ability
 disable:Callback(function(spell)
     -- Check if the target does not have the Disable debuff
-    if not target.debuff("Disable") and disable:Castable then
+    if not target.debuff("Disable") then
         awful.alert({
             message="Applying Disable on "..target.name,
             texture=116095,
