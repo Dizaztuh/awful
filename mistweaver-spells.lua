@@ -70,21 +70,6 @@ BurstCDS = {
     [262161] = true, -- Warbreaker
 }
 
-local ROPDROP = {
-    [740] = true, -- Tranquility
-    [376079] = true, -- Spear of Bastion
-    [107574] = true, -- Avatar
-    [262161] = true, -- Warbreaker
-    [31884] = true, -- Avenging Wrath
-    [216331] = true, -- Avenging Crusader
-    [255647] = true, -- The Hunt
-    [196718] = true, -- Darkness
-    [212182] = true, -- Smokebomb
-    [359053] = true, -- Smokebomb
-    [145629] = true, -- Amz
-    [165775] = true, -- Amz
-    [51052] = true, -- Amz
-    }
 
 local kickCCTable = {
     ["Cyclone"] = true,
@@ -188,6 +173,22 @@ local totemList = {
     ["Fel Obelisk"] = 353601
 }
 
+local ROPDROP = {
+    [740] = true, -- Tranquility
+    [376079] = true, -- Spear of Bastion
+    [107574] = true, -- Avatar
+    [262161] = true, -- Warbreaker
+    [31884] = true, -- Avenging Wrath
+    [216331] = true, -- Avenging Crusader
+    [255647] = true, -- The Hunt
+    [196718] = true, -- Darkness
+    [212182] = true, -- Smokebomb
+    [359053] = true, -- Smokebomb
+    [145629] = true, -- Amz
+    [165775] = true, -- Amz
+    [51052] = true, -- Amz
+    }
+    
 ringOfPeace:Callback(function(spell)
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
