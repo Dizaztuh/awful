@@ -36,13 +36,14 @@ mistweaver:Init(function()
         dampenHarm()
         fortifyingBrew()
         diffuseMagic()
-        -- Sample buff table with spell IDs
+
 local enemyBuffTable = {
     [62618] = true, -- Barrier
     [198838] = true, -- Earthen
 }
 
-awful.onEvent("COMBAT_LOG_EVENT_UNFILTERED", function(event, _, sourceGUID, _, _, _, destGUID, _, _, _, _, spellID)
+-- Register the event with a callback function
+awful.events.register("COMBAT_LOG_EVENT_UNFILTERED", function(_, event, _, sourceGUID, _, _, destGUID, _, _, _, _, spellID)
     -- Check if the event is SPELL_AURA_APPLIED
     if event == "SPELL_AURA_APPLIED" then
         -- Check if the spell is in the enemyBuffTable
@@ -64,6 +65,7 @@ awful.onEvent("COMBAT_LOG_EVENT_UNFILTERED", function(event, _, sourceGUID, _, _
         end
     end
 end)
+
         end
     end
 end)
