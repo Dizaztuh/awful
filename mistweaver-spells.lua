@@ -650,7 +650,7 @@ legSweep:Callback(function(spell)
 end)
 
 dampenHarm:Callback(function(spell)
-    if player.hp <= 65 then -- check if the player's hp is at or below 60%
+    if player.hp <= 70 then -- check if the player's hp is at or below 60%
         awful.alert({
             message="Casted Dampen Harm!", 
             texture=122278,
@@ -726,24 +726,6 @@ touchOfDeath:Callback(function(spell)
             duration = 4.3,
         })
     end)
-end)
-
--- Callback for Tiger Palm
-local tigerPalmz = tigerPalm:Callback(function(spell)
-    if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
-        -- Cast Tiger Palm on the target.
-        spell:Cast(target)
-        return
-    end
-end)
-
--- Callback for Blackout Kick
-local blackoutKickz = blackoutKick:Callback(function(spell)
-    if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
-        -- Cast Blackout Kick on the target.
-        spell:Cast(target)
-        return
-    end
 end)
 
 function castOnClosestEnemy()
