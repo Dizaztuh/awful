@@ -309,7 +309,7 @@ detox:Callback(function(spell)
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffName, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffName) and friend.ccRemains < 3 or friend.debuff(debuffName) and friend.debuffRemains < 3 then
+            if friend.debuff(debuffName) then
                 -- Attempt to cast Detox on the friendly unit to cleanse the debuff
                 local castResult = spell:Cast(friend)
                 
