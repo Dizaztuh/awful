@@ -581,13 +581,13 @@ healingElixir:Callback(function(spell)
 end)
 
 -- Define an array of debuffs that we want to check for
-local badStuff = {"Mindgames"}
+local badStuff = {"Mindgames", "Soul Rot"}
 
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
         awful.alert({
-            message="Casted Diffuse Magic! Punch SOMETHING!", 
+            message="Casted Diffuse Magic!", 
             texture=122783,
             })
         -- If the player has the bad debuff, cast Diffuse Magic on the player
