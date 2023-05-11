@@ -247,7 +247,7 @@ end
 -- Callback for Disable ability
 disable:Callback(function(spell)
     -- Check if the target does not have the Disable debuff
-    if not target.debuff("Disable") disable:Castable then
+    if not target.debuff("Disable") and disable:Castable then
         awful.alert({
             message="Applying Disable on "..target.name,
             texture=116095,
