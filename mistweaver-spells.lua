@@ -308,18 +308,14 @@ detox:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
-        for debuffName, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffName) then
-                -- Attempt to cast Detox on the friendly unit to cleanse the debuff
-                local castResult = spell:Cast(friend)
-                
-                -- If the casting was successful, show the alert
-                if castResult then
-                    awful.alert({
-                        message="Cleansing our boy: "..friend.name,
-                        texture=115450,
-                    })
-                end
+        for debuffID, _ in pairs(cleanseTable) do
+            if friend.debuff(debuffID) then
+                awful.alert({
+                    message="Cleansing: "..friend.name,
+                    texture=115450,
+                })
+                -- If so, cast Detox on the friendly unit to cleanse the debuff
+                spell:Cast(friend)
                 return true -- exit the loop
             end
         end
@@ -338,7 +334,7 @@ tigersLust:Callback(function(spell)
         return tigersLust:Cast(player)
     end
 
-    if (player.rootRemains > 3 and player.hp < 85) then
+    if (player.rootRemains > 3 and player.hp < 80) then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
@@ -361,7 +357,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 and friend.target.hp < 85) then
+        if (friend.rootRemains > 3 and target.hp < 85) then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
@@ -397,7 +393,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rootRemains > 3 and friend.target.hp < 70) then
+        if (friend.rootRemains > 3 and target.hp < 70) then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
