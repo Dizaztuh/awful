@@ -603,7 +603,7 @@ healingElixir:Callback(function(spell)
 end)
 
 -- Define an array of debuffs that we want to check for
-local badStuff = {"Mindgames", "Soul Rot"}
+local badStuff = {"Mindgames", "Soul Rot", "Touch of Karma"}
 
 diffuseMagic:Callback(function(spell)
     -- Check if the player has any of the debuffs listed in the "badStuff" array
