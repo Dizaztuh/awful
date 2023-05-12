@@ -138,18 +138,18 @@ local kickHealsTable = {
 }
 
 local cleanseTable = {
-    [51514] = true, -- Hex
-    [375901] = true, -- Mindgames
-    [385408] = true, -- Sepsis
-    [334275] = true, -- Exhaustion
-    [358385] = true, -- Landslide
-    [702] = true, -- Weakness
-    [118] = true, -- Polymorph
-    [5782] = true, -- Fear
-    [8122] = true, -- Psychic Scream
-    [853] = true, -- Hoj
-    [187650] = true, -- Freezing Trap
-    [360806] = true -- Sleep Walk
+    ["Hex"] = 51514, -- Hex
+    ["Mindgames"] = 375901, -- Mindgames
+    ["Sepsis"] = 385408, -- Sepsis
+    ["Curse of Exhaustion"] = 334275, -- Exhaustion
+    ["Landslide"] = 358385, -- Landslide
+    ["Curse of Weakness"] = 702, -- Weakness
+    ["Polymorph"] = 118, -- Polymorph
+    ["Fear"] = 5782, -- Fear
+    ["Psychic Scream"] = 8122, -- Psychic Scream
+    ["Hammer of Justice"] = 853, -- Hoj
+    ["Freezing Trap"] = 187650, -- Freezing Trap
+    ["Sleep Walk"] = 360806 -- Sleep Walk
 }
 
     -- Define a table with totem names and their respective IDs
@@ -174,8 +174,8 @@ local totemList = {
 }
 
 local enemyBuffTable = {
-    ["Power Word: Barrier"] = 62618, -- Power Word: Barrier
-    ["Earthen Wall"] = 198838, -- Earthen Wall
+    [62618] = true, -- Power Word: Barrier
+    [198838] = true, -- Earthen Wall
 }
 
 local ROPDROP = {
@@ -216,7 +216,7 @@ ringOfPeace:Callback(function(spell)
 
         -- Check if the enemy has a buff from the enemyBuffTable
         for spellID, _ in pairs(enemyBuffTable) do
-            if enemy.buff(spellName) then
+            if enemy.buff(spellID) then
                 -- Get the enemy's position
                 local x, y, z = enemy.position()
                 if not player.losCoordsLiteral(x, y, z) then return end
