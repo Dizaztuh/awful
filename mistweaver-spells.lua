@@ -435,7 +435,7 @@ invokeChiJi:Callback(function(spell)
     -- First condition: Check if any enemy cast any spells from the BurstCDS table
     awful.enemies.loop(function(enemy)
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID) then
+            if enemy.used(spellID, spellName) then
                 awful.alert({
                     message="Casted Chi-Ji, the Red Crane!",
                     texture=325197,
@@ -448,7 +448,7 @@ invokeChiJi:Callback(function(spell)
     -- Second condition: Check if friends cast any spells from the BurstCDS table
     awful.friends.loop(function(friend)
         for spellID, _ in pairs(BurstCDS) do
-            if friend.used(spellID) then
+            if friend.used(spellID, spellName) then
                 awful.alert({
                     message="Casted Chi-Ji, the Red Crane!",
                     texture=325197,
