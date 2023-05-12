@@ -399,7 +399,7 @@ end)
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rooted and player.rootRemains > 3 and target.hp < 70 or player.slowed and target.hp < 70) then
+    if (player.rooted and player.rootRemains > 3 and target.hp < 70 or target.hp < 70 and target.distance < 5) then
         awful.alert({
             message="Casted Tigers Lust!", 
             texture=116841,
@@ -418,7 +418,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rooted and friend.rootRemains > 3 and friend.hp < 70) then
+        if (friend.rooted and friend.rootRemains > 3 and friend.target.distance < 5) then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
@@ -443,7 +443,7 @@ end)
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
     -- Check if the player is rooted for more than 3 seconds and their health is below 50%
-    if (player.rooted and player.rootRemains > 3 or player.slowed and target.hp < 80) then
+    if (player.rooted and player.rootRemains > 3 or player.slowed and target.hp < 70) then
         awful.alert({
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
@@ -451,7 +451,7 @@ invokeChiJi:Callback(function(spell)
         return invokeChiJi:Cast(player)
     end
 
-    if (player.rooted and player.rootRemains > 3 or player.slowed and player.hp < 80) then
+    if (player.rooted and player.rootRemains > 3 or player.slowed and player.hp < 70) then
         awful.alert({
             message="Casted Chi-Ji, the Red Crane!", 
             texture=325197,
@@ -462,25 +462,37 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rooted and friend.rootRemains > 3 and friend.hp < 80) then
+        if (friend.rooted and friend.rootRemains > 3 and friend.hp < 70) then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
-            return invokeChiJi:Cast(friend)
+            return invokeChiJi:Cast(player)
         end
     end)
 
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rooted and friend.rootRemains > 3 and friend.target.hp < 80) then
+        if (friend.rooted and friend.rootRemains > 3 and friend.target.hp < 70) then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
                 })
-            return invokeChiJi:Cast(friend)
+            return invokeChiJi:Cast(player)
         end
+    
+    -- Loop through all enemy units
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy used a spell from the BurstCDS table
+        for spellID, _ in pairs(BurstCDS) do
+            if enemy.used(spellID) then
+                awful.alert({
+                    message="Casted Chi-Ji, the Red Crane!", 
+                    texture=325197,
+                })
+                return invokeChiJi:Cast(player)
+            end
     end)
 end)
 
