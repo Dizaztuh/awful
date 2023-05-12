@@ -18,7 +18,7 @@ awful.Populate({
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     disable = Spell(343731),
-    faelineStomp = Spell(388193, {heal = true}),
+    faelineStomp = Spell(388193, {heal = true, alwaysFace = true }),
     paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
     legSweep = Spell(119381, { targeted = false, stun = true }),
     ringOfPeace = Spell(116844, {
@@ -635,9 +635,18 @@ renewingMist:Callback(function(spell)
     end
 end)
 
+essenceFont:Callback(function (spell)
+    if not player.buff (388026, 389387) and not faelineStomp:Castable then
+        awful.alert({
+            message="Casted Faeline Stomp to Rebuff Teachings!", 
+            texture=388193,
+            })
+        spell:Cast(target)    
+    end
+end)
 
 faelineStomp:Callback(function (spell)
-    if not player.buff (388026) then
+    if not player.buff (388026, 389387) then
         awful.alert({
             message="Casted Faeline Stomp to Rebuff Teachings!", 
             texture=388193,
