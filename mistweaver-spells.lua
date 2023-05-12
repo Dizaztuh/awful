@@ -667,19 +667,33 @@ healingElixir:Callback(function(spell)
 end)
 
 -- Define an array of debuffs that we want to check for
-local badStuff = {"Mindgames", "Soul Rot", "Touch of Karma"}
-
 diffuseMagic:Callback(function(spell)
+    -- Loop through all enemy units
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy used a spell from the BurstCDS table
+        for spellID, _ in pairs(BurstCDS) do
+            if enemy.used(spellID) and enemy.target == player then
+                awful.alert({
+                    message="Casted Diffuse Magic due to enemy burst!",
+                    texture=122783,
+                })
+                spell:Cast(player) -- cast Diffuse Magic on the player
+                break -- exit the loop once the condition is met
+            end
+        end
+    end)
+
     -- Check if the player has any of the debuffs listed in the "badStuff" array
     if player.debuffFrom(badStuff) or player.hp <= 34 then
         awful.alert({
-            message="Casted Diffuse Magic!", 
+            message="Casted Diffuse Magic!",
             texture=122783,
-            })
-        -- If the player has the bad debuff, cast Diffuse Magic on the player
+        })
+        -- If the player has the bad debuff or their health is at or below 34%, cast Diffuse Magic on the player
         spell:Cast(player)
     end
 end)
+
 
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
@@ -714,19 +728,11 @@ legSweep:Callback(function(spell)
 end)
 
 dampenHarm:Callback(function(spell)
-    if player.hp <= 70 then -- check if the player's hp is at or below 70%
-        awful.alert({
-            message="Casted Dampen Harm!", 
-            texture=122278,
-            })
-        spell:Cast(player) -- cast Dampen Harm on the player
-    end
-
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID, spellName) and enemy.target == player then
+            if enemy.used(spellID) and enemy.target == player then
                 awful.alert({
                     message="Casted Dampen Harm due to enemy burst!",
                     texture=122278,
@@ -736,7 +742,17 @@ dampenHarm:Callback(function(spell)
             end
         end
     end)
+
+    if player.hp <= 45 and not (player.buff(122783) or player.buff(243435)) then
+        -- check if the player's hp is at or below 45% and player does not have Diffuse Magic or Fortifying Brew buffs
+        awful.alert({
+            message="Casted Dampen Harm at low health!",
+            texture=122278,
+        })
+        spell:Cast(player) -- cast Dampen Harm on the player
+    end
 end)
+
 
 
 -- Create a callback for the Life Cocoon ability
