@@ -401,22 +401,22 @@ end)
 tigersLust:Callback(function(spell)
 
     -- First condition: Check if player is rooted and root remains >= 3
-    if player.rooted and player.rootRemains >= 3 then
+    if player.rootRemains >= 3 then
         awful.alert({
             message="Casted Tiger's Lust on Player!",
             texture=324406,
         })
-        return tigersLust:Cast(player)
+        return spell:Cast(player)
     end
 
     -- Second condition: Check if friend is rooted and root remains >= 3 using friends loop
     awful.friends.loop(function(friend)
-        if friend.rooted and friend.rootRemains >= 3 then
+        if friend.rootRemains >= 3 then
             awful.alert({
                 message="Casted Tiger's Lust on " .. friend.name,
                 texture=324406,
             })
-            return tigersLust:Cast(friend)
+            return spell:Cast(friend)
         end
     end)
 end)
@@ -432,7 +432,7 @@ invokeChiJi:Callback(function(spell)
                     message="Casted Chi-Ji, the Red Crane!",
                     texture=325197,
                 })
-                return invokeChiJi:Cast(player)
+                return spell:Cast(player)
             end
         end
     end)
@@ -445,7 +445,7 @@ invokeChiJi:Callback(function(spell)
                     message="Casted Chi-Ji, the Red Crane!",
                     texture=325197,
                 })
-                return invokeChiJi:Cast(player)
+                return spell:Cast(player)
             end
         end
     end)
@@ -457,7 +457,7 @@ invokeChiJi:Callback(function(spell)
                 message="Casted Chi-Ji, the Red Crane!",
                 texture=325197,
             })
-            return invokeChiJi:Cast(player)
+            return spell:Cast(player)
         end
     end)
 
