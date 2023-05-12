@@ -636,7 +636,7 @@ renewingMist:Callback(function(spell)
 end)
 
 essenceFont:Callback(function (spell)
-    if not player.buff (388026, 389387) and not faelineStomp:Castable then
+    if not player.buff (388026) and not faelineStomp:Castable then
         awful.alert({
             message="Casted Faeline Stomp to Rebuff Teachings!", 
             texture=388193,
@@ -646,7 +646,7 @@ essenceFont:Callback(function (spell)
 end)
 
 faelineStomp:Callback(function (spell)
-    if not player.buff (388026) then
+    if not player.buff (389387) then
         awful.alert({
             message="Casted Faeline Stomp to Rebuff Teachings!", 
             texture=388193,
