@@ -140,18 +140,18 @@ local kickHealsTable = {
 }
 
 local cleanseTable = {
-    ["Hex"] = true, -- 51514, -- Hex
-    ["Mindgames"] = true, -- 375901, -- Mindgames
-    ["Sepsis"] = true, -- 385408, -- Sepsis
-    ["Curse of Exhaustion"] = true, -- 334275, -- Exhaustion
-    ["Landslide"] = true, -- 358385, -- Landslide
-    ["Curse of Weakness"] = true, -- 702, -- Weakness
-    ["Polymorph"] = true, -- 118, -- Polymorph
-    ["Fear"] = true, -- 5782, -- Fear
-    ["Psychic Scream"] = true, -- 8122, -- Psychic Scream
-    ["Hammer of Justice"] = true, -- 853, -- Hoj
-    ["Freezing Trap"] = true, -- 187650, -- Freezing Trap
-    ["Sleep Walk"] = true -- 360806 -- Sleep Walk
+    ["Hex"] = 51514, -- 51514, -- Hex
+    ["Mindgames"] = 375901, -- 375901, -- Mindgames
+    ["Sepsis"] = 385408, -- 385408, -- Sepsis
+    ["Curse of Exhaustion"] = 334275, -- 334275, -- Exhaustion
+    ["Landslide"] = 358385, -- 358385, -- Landslide
+    ["Curse of Weakness"] = 702, -- 702, -- Weakness
+    ["Polymorph"] = 118, -- 118, -- Polymorph
+    ["Fear"] = 5782, -- 5782, -- Fear
+    ["Psychic Scream"] = 8122, -- 8122, -- Psychic Scream
+    ["Hammer of Justice"] = 853, -- 853, -- Hoj
+    ["Freezing Trap"] = 187650, -- 187650, -- Freezing Trap
+    ["Sleep Walk"] = 360806 -- 360806 -- Sleep Walk
 }
 
     -- Define a table with totem names and their respective IDs
