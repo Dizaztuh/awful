@@ -673,7 +673,7 @@ fortifyingBrew:Callback(function(spell)
         })
         -- If the player's health is at or below 40%, cast Fortifying Brew on the player
         spell:Cast(player)
-    end
+    end)
 end)
 
 
