@@ -40,7 +40,8 @@ awful.Populate({
     thunderFocusTea = Spell(116680,  { ignoreCasting = true }),
     restoral = Spell(388615, { heal = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true }),
-    invokeChiJi = Spell(325197)
+    invokeChiJi = Spell(325197),
+    grappleWeapon = Spell (233759, { targeted = true })
 }, mistweaver, getfenv(1))
 
 BurstCDS = {
@@ -66,17 +67,6 @@ BurstCDS = {
     [2825] = true, -- Bloodlust
     [265187] = true, -- Summon Demonic Tyrant
     [267217] = true, -- Nether Portal
-    [107574] = true, -- Avatar
-    [262161] = true, -- Warbreaker
-}
-
-DisarmTable = {
-    
-    [19574] = true, -- Bestial Wrath
-    [288613] = true, -- Trueshot
-    [31884] = true, -- Avenging Wrath
-    [185313] = true, -- Shadow Dance
-    [2825] = true, -- Bloodlust
     [107574] = true, -- Avatar
     [262161] = true, -- Warbreaker
 }
@@ -267,7 +257,34 @@ local ROPDROP = {
         end)
     end)
     
+-- Define the DisarmTable
+local DisarmTable = {
+    [19574] = true, -- Bestial Wrath
+    [288613] = true, -- Trueshot
+    [31884] = true, -- Avenging Wrath
+    [185313] = true, -- Shadow Dance
+    [2825] = true, -- Bloodlust
+    [107574] = true, -- Avatar
+    [262161] = true -- Warbreaker
+}
 
+-- Create a callback for grappleWeapon
+grappleWeapon:Callback(function(spell)
+    -- Loop through all enemies
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy used a spell from the DisarmTable
+        for spellID, _ in pairs(DisarmTable) do
+            if enemy.used(spellID) then
+                -- Cast grappleWeapon on the enemy
+                awful.alert({
+                    message="Disarming " .. enemy.name,
+                    texture=233759, -- Change to the appropriate texture ID for grappleWeapon
+                })
+                grappleWeapon:Cast(enemy)
+            end
+        end
+    end)
+end)
 
 -- Stomp totems function
 function stompTotems()
