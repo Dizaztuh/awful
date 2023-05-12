@@ -33,7 +33,7 @@ awful.Populate({
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
     revival = Spell(115310, { heal = true, }),
     diffuseMagic = Spell(122783, { ignoreCasting = true }),
-    detox = Spell(115450, { targeted = true, range = 40, alwaysFace = true }),
+    detox = Spell(115450, { targeted = true }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
     sphereofHope = Spell (410777, { targeted = true }),
@@ -378,7 +378,7 @@ tigersLust:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rooted and friend.rootRemains > 3 and target.hp < 70) then
+        if (friend.rooted and friend.rootRemains > 3 and friend.target.hp < 70) then
             awful.alert({
                 message="Casted Tigers Lust on: "..friend.name, 
                 texture=116841,
@@ -422,7 +422,7 @@ invokeChiJi:Callback(function(spell)
     -- Loop through all enemy units
     awful.friends.loop(function(friend)
         -- Check if the enemy is rooted for more than 3 seconds and their health is below 50%
-        if (friend.rooted and friend.rootRemains > 3 and target.hp < 80) then
+        if (friend.rooted and friend.rootRemains > 3 and friend.target.hp < 80) then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!", 
                 texture=325197,
