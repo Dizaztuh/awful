@@ -503,7 +503,7 @@ revival:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
-        if friend.hp < 35 then
+        if friend.hp <= 35 then
             awful.alert({
                 message="Casted Revival!",
                 texture=115310,
@@ -518,7 +518,7 @@ restoral:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
-        if friend.hp < 35 then
+        if friend.hp <= 35 then
             awful.alert({
                 message="Casted Restoral!", 
                 texture=388615,
@@ -714,14 +714,30 @@ legSweep:Callback(function(spell)
 end)
 
 dampenHarm:Callback(function(spell)
-    if player.hp <= 70 then -- check if the player's hp is at or below 60%
+    if player.hp <= 70 then -- check if the player's hp is at or below 70%
         awful.alert({
             message="Casted Dampen Harm!", 
             texture=122278,
             })
         spell:Cast(player) -- cast Dampen Harm on the player
     end
+
+    -- Loop through all enemy units
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy used a spell from the BurstCDS table
+        for spellID, _ in pairs(BurstCDS) do
+            if enemy.used(spellID, spellName) and enemy.target == player then
+                awful.alert({
+                    message="Casted Dampen Harm due to enemy burst!",
+                    texture=122278,
+                })
+                spell:Cast(player) -- cast Dampen Harm on the player
+                break -- exit the loop once the condition is met
+            end
+        end
+    end)
 end)
+
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback(function(spell)
