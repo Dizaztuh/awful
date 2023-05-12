@@ -493,9 +493,9 @@ invokeChiJi:Callback(function(spell)
                 })
                 return invokeChiJi:Cast(player)
             end
+        end)
     end)
 end)
-
 
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
