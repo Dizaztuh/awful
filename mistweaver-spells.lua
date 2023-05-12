@@ -647,14 +647,35 @@ faelineStomp:Callback(function (spell)
 end)
 
 fortifyingBrew:Callback(function(spell)
+    -- Loop through all enemy units
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy used a spell from the BurstCDS table
+        for spellID, _ in pairs(BurstCDS) do
+            if enemy.used(spellID, spellName) and enemy.target == player then
+                -- Check if the player doesn't have Dampen Harm or Diffuse Magic buff
+                if not (player.buff(122278) or player.buff(122783)) then
+                    awful.alert({
+                        message="Casted Fortifying Brew due to enemy burst!",
+                        texture=115203,
+                    })
+                    spell:Cast(player) -- cast Fortifying Brew on the player
+                    break -- exit the loop once the condition is met
+                end
+            end
+        end
+    end)
+
+    -- Check if the player's health is at or below 40%
     if player.hp <= 40 then
         awful.alert({
-            message="Casted Fortifying Brew! Gettin fk'n Rekt!", 
+            message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
-            })
-        spell:Cast(player)      
+        })
+        -- If the player's health is at or below 40%, cast Fortifying Brew on the player
+        spell:Cast(player)
     end
 end)
+
 
 healingElixir:Callback(function(spell)
     if player.hp <= 75 then
@@ -666,19 +687,21 @@ healingElixir:Callback(function(spell)
     end
 end)
 
--- Define an array of debuffs that we want to check for
 diffuseMagic:Callback(function(spell)
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID) and enemy.target == player then
-                awful.alert({
-                    message="Casted Diffuse Magic due to enemy burst!",
-                    texture=122783,
-                })
-                spell:Cast(player) -- cast Diffuse Magic on the player
-                break -- exit the loop once the condition is met
+            if enemy.used(spellID, spellName) and enemy.target == player then
+                -- Check if the player doesn't have Dampen Harm or Fortifying Brew buff
+                if not (player.buff(122278) or player.buff(115203)) then
+                    awful.alert({
+                        message="Casted Diffuse Magic due to enemy burst!",
+                        texture=122783,
+                    })
+                    spell:Cast(player) -- cast Diffuse Magic on the player
+                    break -- exit the loop once the condition is met
+                end
             end
         end
     end)
@@ -693,6 +716,7 @@ diffuseMagic:Callback(function(spell)
         spell:Cast(player)
     end
 end)
+
 
 
 -- Create a callback for the Leg Sweep ability
