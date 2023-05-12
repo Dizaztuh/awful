@@ -47,27 +47,29 @@ awful.Populate({
 BurstCDS = {
     [255647] = true, -- The Hunt
     [323547] = true, -- Essence Break
-    -- Feral Frenzy (ID not found)
+    [274837] = true,-- Feral Frenzy (ID not found)
     [102560] = true, -- Incarnation: Chosen of Elune
     [102543] = true, -- Incarnation: Avatar of Ashamane
     [19574] = true, -- Bestial Wrath
     [288613] = true, -- Trueshot
     [190319] = true, -- Combustion
-    -- Arcane Surge (ID not found)
     [137639] = true, -- Storm, Earth, and Fire
     [152173] = true, -- Serenity
+    [123904] = true, -- Invoke Xuen
     [304971] = true, -- Divine Toll
     [216331] = true, -- Avenging Crusader
     [31884] = true, -- Avenging Wrath
     [280711] = true, -- Dark Ascension
     [228260] = true, -- Void Eruption
     [185313] = true, -- Shadow Dance
-    -- Deathmark (ID not found)
+    [360194] = true, -- Deathmark (ID not found)
     [191634] = true, -- Stormkeeper
-    [2825] = true, -- Bloodlust
+    [204361] = true, -- Bloodlust
     [265187] = true, -- Summon Demonic Tyrant
     [267217] = true, -- Nether Portal
     [107574] = true, -- Avatar
+    [315443] = true, -- Abomination Limb
+    [12472] = true, -- Icy Veins
     [262161] = true, -- Warbreaker
 }
 
@@ -417,7 +419,6 @@ tigersLust:Callback(function(spell)
             return tigersLust:Cast(friend)
         end
     end)
-
 end)
 
 -- Callback for Invoke Chi-Ji, the Red Crane ability
@@ -451,7 +452,7 @@ invokeChiJi:Callback(function(spell)
 
     -- Third condition: Check friend.hp and if anyone is below 70 and player.target > 5
     awful.fgroup.loop(function(friend)
-        if friend.hp < 70 and player.target.distance > 5 then
+        if friend.hp < 70 then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!",
                 texture=325197,
