@@ -401,7 +401,15 @@ end)
 tigersLust:Callback(function(spell)
 
     -- First condition: Check if player is rooted and root remains >= 3
-    if player.rootRemains >= 3 then
+    if player.rooted and player.rootRemains >= 3 then
+        awful.alert({
+            message="Casted Tiger's Lust on Player!",
+            texture=324406,
+        })
+        return spell:Cast(player)
+    end
+
+    if player.slowed and target.distance > 5 then
         awful.alert({
             message="Casted Tiger's Lust on Player!",
             texture=324406,
@@ -411,7 +419,7 @@ tigersLust:Callback(function(spell)
 
     -- Second condition: Check if friend is rooted and root remains >= 3 using friends loop
     awful.friends.loop(function(friend)
-        if friend.rootRemains >= 3 then
+        if friend.rooted and friend.rootRemains >= 3 then
             awful.alert({
                 message="Casted Tiger's Lust on " .. friend.name,
                 texture=324406,
