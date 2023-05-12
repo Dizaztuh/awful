@@ -666,7 +666,7 @@ fortifyingBrew:Callback(function(spell)
     end)
 
     -- Check if the player's health is at or below 40%
-    if player.hp <= 40 then
+    if player.hp <= 40 and not (player.buff(122278) or player.buff(122783) then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
