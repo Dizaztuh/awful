@@ -864,12 +864,6 @@ function castOnClosestEnemy()
         local closestEnemy = nil
         local minDistance = math.huge
 
-        awful.enemies.loop(function(enemy)
-            -- Check if the enemy is immune to physical damage
-            if enemy.immunePhysicalDamage then
-                return
-            end
-
         -- Loop through all enemies
         awful.enemies.loop(function(enemy)
             -- Check if the enemy is closer than the current closest enemy
@@ -915,7 +909,7 @@ function castOnClosestEnemy()
                 return
             end
             risingSunKick:Cast(closestEnemy)
-        end)
+        end
     end
 end
 
