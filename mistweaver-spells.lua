@@ -864,28 +864,61 @@ function castOnClosestEnemy()
         local closestEnemy = nil
         local minDistance = math.huge
 
+        awful.enemies.loop(function(enemy)
+            -- Check if the enemy is immune to physical damage
+            if enemy.immunePhysicalDamage then
+                return
+            end
+
         -- Loop through all enemies
         awful.enemies.loop(function(enemy)
-            -- Check if the enemy is closer than the current closest enemy and not immune to physical damage
-            if enemy.distance < minDistance and not enemy.immunePhysicalDamage then
+            -- Check if the enemy is closer than the current closest enemy
+            if enemy.distance < minDistance then
                 closestEnemy = enemy
                 minDistance = enemy.distance
             end
         end)
 
         -- Cast Tiger Palm and Blackout Kick on the closest enemy if within 5 yards
-        -- Other conditions remain unchanged
+        if closestEnemy and minDistance <= 5 then
+            if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
+                -- Cast Tiger Palm on the target.
+                tigerPalm:Cast(closestEnemy)
+                return
+            end
+            if blackoutKick:Castable(closestEnemy) and player.lastCast == tigerPalm.id then
+                -- Cast Blackout Kick on the target.
+                blackoutKick:Cast(closestEnemy)
+                return
+            end
+        end
 
         -- Loop through all pets
         awful.pets.loop(function(pet)
-            -- Check if the pet is closer than the current closest pet and not immune to physical damage
-            if pet.distance < minDistance and not pet.immunePhysicalDamage then
+            -- Check if the pet is closer than the current closest pet
+            if pet.distance < minDistance then
                 closestEnemy = pet
                 minDistance = pet.distance
             end
         end)
 
         -- Cast Tiger Palm and Blackout Kick on the closest pet if within 5 yards
-        -- Other conditions remain unchanged
+        if closestEnemy and minDistance <= 5 then
+            if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
+                -- Cast Tiger Palm on the target.
+                tigerPalm:Cast(closestEnemy)
+                return
+            end
+            if blackoutKick:Castable(closestEnemy) and player.lastCast == tigerPalm.id then
+                -- Cast Blackout Kick on the target.
+                blackoutKick:Cast(closestEnemy)
+                return
+            end
+            risingSunKick:Cast(closestEnemy)
+        end)
     end
 end
+
+
+
+
