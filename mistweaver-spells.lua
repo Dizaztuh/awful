@@ -392,8 +392,8 @@ detox:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
-        for debuffName, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffName) then
+        for debuffID, _ in pairs(cleanseTable) do
+            if friend.debuff(debuffID) then
                 awful.alert({
                     message="Cleansing: "..friend.name,
                     texture=115450,
