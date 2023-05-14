@@ -306,8 +306,16 @@ end
 
 -- Callback for Disable ability
 disable:Callback(function(spell)
-    -- Check if the target does not have the Disable debuff
-    if not target.debuff("Disable") and disable:Castable() then
+    -- Check if any friend is below 70% HP
+    local shouldCastDisable = false
+    awful.fgroup.loop(function(friend)
+        if friend.hp < 70 then
+            shouldCastDisable = true
+        end
+    end)
+
+    -- Check if the target does not have the Disable debuff and shouldCastDisable is true
+    if not target.debuff("Disable") and disable:Castable() and shouldCastDisable then
         awful.alert({
             message="Applying Disable on "..target.name,
             texture=116095,
@@ -316,6 +324,7 @@ disable:Callback(function(spell)
         spell:Cast(target)
     end
 end)
+
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
