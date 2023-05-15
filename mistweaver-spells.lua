@@ -11,7 +11,7 @@ awful.Populate({
     envelopingMist = Spell(124682, { heal = true, targeted = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
-    essenceFont = Spell(191837, { heal = true, targeted = false }),
+    essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, ignoreCasting = true, ignoreFacing = true }),
     sphereofDespair = Spell(410777, { targeted = true }),
@@ -647,7 +647,7 @@ end)
 
 
 faelineStomp:Callback(function (spell)
-    if not player.buff (388026) or (389387) then
+    if not player.buff (389387) then
         awful.alert({
             message="Casted Faeline Stomp to Rebuff Teachings!", 
             texture=388193,
