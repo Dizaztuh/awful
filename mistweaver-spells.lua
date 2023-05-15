@@ -140,18 +140,18 @@ local kickHealsTable = {
 }
 
 local cleanseTable = {
-    ["Hex"] = 51514, -- 51514, -- Hex
-    ["Mindgames"] = 375901, -- 375901, -- Mindgames
-    ["Sepsis"] = 385408, -- 385408, -- Sepsis
-    ["Curse of Exhaustion"] = 334275, -- 334275, -- Exhaustion
-    ["Landslide"] = 358385, -- 358385, -- Landslide
-    ["Curse of Weakness"] = 702, -- 702, -- Weakness
-    ["Polymorph"] = 118, -- 118, -- Polymorph
-    ["Fear"] = 5782, -- 5782, -- Fear
-    ["Psychic Scream"] = 8122, -- 8122, -- Psychic Scream
-    ["Hammer of Justice"] = 853, -- 853, -- Hoj
-    ["Freezing Trap"] = 187650, -- 187650, -- Freezing Trap
-    ["Sleep Walk"] = 360806 -- 360806 -- Sleep Walk
+    [51514] = true, -- Hex
+    [375901] = true, -- Mindgames
+    [385408] = true, -- Sepsis
+    [334275] = true, -- Curse of Exhaustion
+    [358385] = true, -- Landslide
+    [702] = true, -- Curse of Weakness
+    [118] = true, -- Polymorph
+    [5782] = true, -- Fear
+    [8122] = true, -- Psychic Scream
+    [853] = true, -- Hammer of Justice
+    [187650] = true, -- Freezing Trap
+    [360806] = true, -- Sleep Walk
 }
 
     -- Define a table with totem names and their respective IDs
@@ -392,8 +392,8 @@ detox:Callback(function(spell)
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
-        for debuffName, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffName) then
+        for debuffID, _ in pairs(cleanseTable) do
+            if friend.debuff(debuffID) then
                 awful.alert({
                     message="Cleansing: "..friend.name,
                     texture=115450,
