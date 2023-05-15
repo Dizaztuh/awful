@@ -69,7 +69,7 @@ BurstCDS = {
     [107574] = true, -- Avatar
     [315443] = true, -- Abomination Limb
     [12472] = true, -- Icy Veins
-    [262161] = true, -- Warbreaker
+    [262161] = true -- Warbreaker
 }
 
 local kickCCTable = {
@@ -150,7 +150,7 @@ local cleanseTable = {
     [8122] = true, -- Psychic Scream
     [853] = true, -- Hammer of Justice
     [187650] = true, -- Freezing Trap
-    [360806] = true, -- Sleep Walk
+    [360806] = true -- Sleep Walk
 }
 
     -- Define a table with totem names and their respective IDs
@@ -850,8 +850,6 @@ paralyze:Callback(function(spell)
     end
 end)
 
-
-
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
     if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
@@ -943,8 +941,3 @@ function castOnClosestEnemy()
         end
     end
 end
-
-
-
-
-
