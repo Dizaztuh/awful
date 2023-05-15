@@ -711,6 +711,8 @@ healingElixir:Callback(function(spell)
     end
 end)
 
+local badStuff = {"Mindgames", "Soul Rot", "Touch of Karma"}
+
 diffuseMagic:Callback(function(spell)
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
