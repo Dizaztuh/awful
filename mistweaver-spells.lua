@@ -647,12 +647,12 @@ end)
 
 
 faelineStomp:Callback(function (spell)
-    if not player.buff (389387) then
+    if not player.buff (388026) or (389387) then
         awful.alert({
             message="Casted Faeline Stomp to Rebuff Teachings!", 
             texture=388193,
             })
-        spell:Cast(target)    
+        spell:Cast(target)
     end
 end)
 
