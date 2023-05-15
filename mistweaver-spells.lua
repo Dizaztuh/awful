@@ -656,6 +656,20 @@ faelineStomp:Callback(function (spell)
     end
 end)
 
+-- Create a callback for the Essence Font ability
+essenceFont:Callback(function(spell)
+    -- Check if Faeline Stomp is not castable and the player doesn't have buff 388026 (Faeline Harmony)
+    if not faelineStomp:Castable() and not player.buff(388026) then
+        awful.alert({
+            message="Casting Essence Font!",
+            texture=191837,
+        })
+        -- If the conditions are met, cast Essence Font
+        spell:Cast(player)
+    end
+end)
+
+
 fortifyingBrew:Callback(function(spell)
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
