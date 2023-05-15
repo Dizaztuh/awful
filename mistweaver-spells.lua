@@ -17,9 +17,9 @@ awful.Populate({
     sphereofDespair = Spell(410777, { targeted = true }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
-    disable = Spell(343731, { targeted = true, cc = true }),
+    disable = Spell(343731, { targeted = true, cc = true, ranged = false }),
     faelineStomp = Spell(388193, { heal = true, alwaysFace = true }),
-    paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
+    paralyze = Spell(115078, { cc = true, targeted = true, ignoreFacing = true }),
     legSweep = Spell(119381, { targeted = false, stun = true }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
@@ -47,7 +47,7 @@ awful.Populate({
 BurstCDS = {
     [255647] = true, -- The Hunt
     [323547] = true, -- Essence Break
-    [274837] = true,-- Feral Frenzy (ID not found)
+    [274837] = true,-- Feral Frenzy
     [102560] = true, -- Incarnation: Chosen of Elune
     [102543] = true, -- Incarnation: Avatar of Ashamane
     [19574] = true, -- Bestial Wrath
@@ -56,13 +56,11 @@ BurstCDS = {
     [137639] = true, -- Storm, Earth, and Fire
     [152173] = true, -- Serenity
     [123904] = true, -- Invoke Xuen
-    [304971] = true, -- Divine Toll
-    [216331] = true, -- Avenging Crusader
     [31884] = true, -- Avenging Wrath
     [280711] = true, -- Dark Ascension
     [228260] = true, -- Void Eruption
     [185313] = true, -- Shadow Dance
-    [360194] = true, -- Deathmark (ID not found)
+    [360194] = true, -- Deathmark
     [191634] = true, -- Stormkeeper
     [204361] = true, -- Bloodlust
     [265187] = true, -- Summon Demonic Tyrant
@@ -126,7 +124,7 @@ local kickHealsTable = {
     ["Clarity of Will"] = true,
     ["Divine Hymn"] = true,
     ["Greater Heal"] = true,
-    ["Penance"] = true,
+    ["Pennance"] = true,
     ["Soothing Mist"] = true,
     ["Enveloping Mist"] = true,
     ["Vivify"] = true,
@@ -151,7 +149,7 @@ local cleanseTable = {
     [8122] = true, -- Psychic Scream
     [853] = true, -- Hammer of Justice
     [187650] = true, -- Freezing Trap
-    [360806] = true, -- Sleep Walk
+    [360806] = true -- Sleep Walk
 }
 
     -- Define a table with totem names and their respective IDs
@@ -186,7 +184,6 @@ local ROPDROP = {
     [107574] = true, -- Avatar
     [262161] = true, -- Warbreaker
     [31884] = true, -- Avenging Wrath
-    [216331] = true, -- Avenging Crusader
     [255647] = true, -- The Hunt
     [196718] = true, -- Darkness
     [212182] = true, -- Smokebomb
@@ -194,7 +191,6 @@ local ROPDROP = {
     [145629] = true, -- Amz
     [165775] = true, -- Amz
     [51052] = true -- Amz
-
     }
 
     ringOfPeace:Callback(function(spell)
@@ -269,6 +265,7 @@ local DisarmTable = {
     [2825] = true, -- Bloodlust
     [107574] = true, -- Avatar
     [262161] = true -- Warbreaker
+    [216331] = true -- Avenging Crusader
 }
 
 -- Create a callback for grappleWeapon
@@ -277,13 +274,13 @@ grappleWeapon:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the DisarmTable
         for spellID, _ in pairs(DisarmTable) do
-            if enemy.used(spellID) then
+            if enemy.used(spellID, spellName) then
                 -- Cast grappleWeapon on the enemy
                 awful.alert({
                     message="Disarming " .. enemy.name,
                     texture=233759, -- Change to the appropriate texture ID for grappleWeapon
                 })
-                grappleWeapon:Cast(enemy)
+                spell:Cast(enemy)
             end
         end
     end)
@@ -325,7 +322,6 @@ disable:Callback(function(spell)
         spell:Cast(target)
     end
 end)
-
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
@@ -386,7 +382,6 @@ spearHandStrike:Callback(function(spell)
         end
     end)
 end)
-
 
 -- Callback for Detox ability
 detox:Callback(function(spell)
@@ -481,7 +476,6 @@ invokeChiJi:Callback(function(spell)
 
 end)
 
-
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
     -- Check if the player's hp is at or below 75% and the spell is castable
@@ -507,7 +501,6 @@ thunderFocusTea:Callback(function(spell)
         end)
     end
 end)
-
 
 revival:Callback(function(spell)
     -- Loop through all friendly units
@@ -563,7 +556,6 @@ sphereofHope:Callback(function(spell)
     end
 end)
 
-
 local lastCastTimeDespair = 0
 
 sphereofDespair:Callback(function(spell)
@@ -591,7 +583,6 @@ sphereofDespair:Callback(function(spell)
         end
     end
 end)
-
 
 envelopingMist:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
@@ -645,7 +636,6 @@ renewingMist:Callback(function(spell)
     end
 end)
 
-
 faelineStomp:Callback(function (spell)
     if not player.buff (389387) then
         awful.alert({
@@ -668,7 +658,6 @@ essenceFont:Callback(function(spell)
         spell:Cast(player)
     end
 end)
-
 
 fortifyingBrew:Callback(function(spell)
     -- Loop through all enemy units
@@ -699,8 +688,6 @@ fortifyingBrew:Callback(function(spell)
         spell:Cast(player)
     end
 end)
-
-
 
 healingElixir:Callback(function(spell)
     if player.hp <= 75 then
@@ -742,12 +729,10 @@ diffuseMagic:Callback(function(spell)
     end
 end)
 
-
-
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 6)   
+    local playersInRange = enemies.around(player, 8)   
     -- Check if the spell is castable on the target
     if spell:Castable() then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
@@ -781,7 +766,7 @@ dampenHarm:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID) and enemy.target == player then
+            if enemy.used(spellID, spellName) and enemy.target == player then
                 awful.alert({
                     message="Casted Dampen Harm due to enemy burst!",
                     texture=122278,
@@ -801,8 +786,6 @@ dampenHarm:Callback(function(spell)
         spell:Cast(player) -- cast Dampen Harm on the player
     end
 end)
-
-
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback(function(spell)
@@ -850,8 +833,6 @@ paralyze:Callback(function(spell)
         end)
     end
 end)
-
-
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
@@ -944,8 +925,3 @@ function castOnClosestEnemy()
         end
     end
 end
-
-
-
-
-
