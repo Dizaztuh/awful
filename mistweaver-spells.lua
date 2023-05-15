@@ -57,7 +57,6 @@ BurstCDS = {
     [152173] = true, -- Serenity
     [123904] = true, -- Invoke Xuen
     [304971] = true, -- Divine Toll
-    [216331] = true, -- Avenging Crusader
     [31884] = true, -- Avenging Wrath
     [280711] = true, -- Dark Ascension
     [228260] = true, -- Void Eruption
@@ -177,7 +176,7 @@ local totemList = {
 
 local enemyBuffTable = {
     ["Power Word: Barrier"] = 62618, -- Power Word: Barrier
-    ["Earthen Wall"] = 198838, -- Earthen Wall
+    ["Earthen Wall"] = 198838 -- Earthen Wall
 }
 
 local ROPDROP = {
@@ -186,7 +185,6 @@ local ROPDROP = {
     [107574] = true, -- Avatar
     [262161] = true, -- Warbreaker
     [31884] = true, -- Avenging Wrath
-    [216331] = true, -- Avenging Crusader
     [255647] = true, -- The Hunt
     [196718] = true, -- Darkness
     [212182] = true, -- Smokebomb
@@ -268,7 +266,8 @@ local DisarmTable = {
     [185313] = true, -- Shadow Dance
     [2825] = true, -- Bloodlust
     [107574] = true, -- Avatar
-    [262161] = true -- Warbreaker
+    [262161] = true, -- Warbreaker
+    [216331] = true -- Avenging Crusader
 }
 
 -- Create a callback for grappleWeapon
@@ -277,7 +276,7 @@ grappleWeapon:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the DisarmTable
         for spellID, _ in pairs(DisarmTable) do
-            if enemy.used(spellID) then
+            if enemy.used(spellID, spellName) then
                 -- Cast grappleWeapon on the enemy
                 awful.alert({
                     message="Disarming " .. enemy.name,
@@ -781,7 +780,7 @@ dampenHarm:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID) and enemy.target == player then
+            if enemy.used(spellID, spellName) and enemy.target == player then
                 awful.alert({
                     message="Casted Dampen Harm due to enemy burst!",
                     texture=122278,
