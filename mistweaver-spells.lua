@@ -743,8 +743,6 @@ diffuseMagic:Callback(function(spell)
     end
 end)
 
-
-
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
@@ -802,8 +800,6 @@ dampenHarm:Callback(function(spell)
         spell:Cast(player) -- cast Dampen Harm on the player
     end
 end)
-
-
 
 -- Create a callback for the Life Cocoon ability
 lifeCocoon:Callback(function(spell)
