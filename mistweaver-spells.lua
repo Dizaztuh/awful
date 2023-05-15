@@ -375,7 +375,7 @@ spearHandStrike:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
-        -- Check if the enemy is within 5 yards, casting a spell from the kickCCTable, not immune to interrupts, and targeting the player
+        -- Check if the enemy is within 5 yards, casting a spell from the kickAllTable, not immune to interrupts, and targeting the player
         if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickAllTable[enemyCastingSpell] and enemy.castPct > randomCastPct then
             awful.alert({
                 message="Cast Interrupted: "..enemy.name,
@@ -816,9 +816,26 @@ paralyze:Callback(function(spell)
         awful.alert({
             message="Paralysis on Enemy Healer!", 
             texture=115078,
-            })
+        })
+
+    -- Check if any enemy is using a spell from the BurstCDS table and is not the player's target
+    else
+        awful.enemies.loop(function(enemy)
+            for spellID, _ in pairs(BurstCDS) do
+                if enemy.used(spellID, spellName) and not (player.target.guid == enemy.guid) then
+                    awful.alert({
+                        message="Paralysis on:"..enemy.name,
+                        texture=115078,
+                    })
+                    -- If the condition is met, cast Paralyze on the enemy
+                    spell:Cast(enemy)
+                    break -- exit the loop
+                end
+            end
+        end)
     end
 end)
+
 
 
 -- Callback for Tiger Palm
