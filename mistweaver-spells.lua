@@ -306,11 +306,11 @@ end
 
 -- Callback for Disable ability
 disable:Callback(function(spell)
-    -- Check if any friend is below 70% HP
+    -- Check if any friend is below 40% HP
     local shouldCastDisable = false
     awful.fgroup.loop(function(friend)
-        if friend.hp < 70 then
-            shouldCastDisable = true
+        if friend.hp < 40 then
+            shouldCastDisable = false
         end
     end)
 
