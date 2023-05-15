@@ -194,6 +194,7 @@ local ROPDROP = {
     [145629] = true, -- Amz
     [165775] = true, -- Amz
     [51052] = true, -- Amz
+    [116844] = true -- Ring of Peace
     }
 
     ringOfPeace:Callback(function(spell)
