@@ -194,16 +194,7 @@ local ROPDROP = {
     [51052] = true -- Amz
 
     }
-
-    function startMistweaverRoutine()
-        -- Start the combat routine
-        awful.combat.start()
-    end
-    
-    awful.events.load(function()
-        startMistweaverRoutine()
-    end)
-       
+      
 
     ringOfPeace:Callback(function(spell)
         -- Loop through all enemies
