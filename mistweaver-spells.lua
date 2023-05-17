@@ -41,7 +41,7 @@ awful.Populate({
     restoral = Spell(388615, { heal = true, ignoreControl = true }),
     tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197),
-    grappleWeapon = Spell (233759, { targeted = true })
+    grappleWeapon = Spell (233759, { cc = true })
 }, mistweaver, getfenv(1))
 
 BurstCDS = {
