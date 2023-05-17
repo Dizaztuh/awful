@@ -536,7 +536,7 @@ restoral:Callback(function(spell)
                 texture=388615,
                 })
             -- Cast Revival
-            return spell:Cast(friend)
+            return spell:Cast(player)
         end
     end)
 end)
