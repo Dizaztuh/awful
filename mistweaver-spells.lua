@@ -311,7 +311,7 @@ disable:Callback(function(spell)
     local shouldCastDisable = false
     awful.fgroup.loop(function(friend)
         if friend.hp < 40 then
-            shouldCastDisable = false
+            shouldCastDisable = true
         end
     end)
 
