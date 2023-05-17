@@ -408,7 +408,18 @@ detox:Callback(function(spell)
             end
         end
     end)
+
+    -- Check if the player is rooted and Tiger's Lust and Chi-Ji are not castable
+    if player.rooted and not tigersLust:Castable() and not chiji:Castable() then
+        awful.alert({
+            message="Cleansing: "..player.name,
+            texture=115450,
+        })
+        -- If so, cast Detox on the player to cleanse the root
+        spell:Cast(player)
+    end
 end)
+
 
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
