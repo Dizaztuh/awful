@@ -10,9 +10,10 @@ mistweaver:Init(function()
         touchOfDeath()
         risingSunKick()
         ringOfPeace()
+        if player.combat then
         castOnClosestEnemy()
         -- Check if there is an enemy target
-        if target.enemy then
+            if target.enemy then
             sphereofDespair()
             sphereofHope()
             faelineStomp()
@@ -38,6 +39,7 @@ mistweaver:Init(function()
             dampenHarm()
             fortifyingBrew()
             diffuseMagic()
+            end
         end
     end
 end)
