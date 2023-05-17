@@ -283,7 +283,7 @@ grappleWeapon:Callback(function(spell)
                     message="Disarming " .. enemy.name,
                     texture=233759, -- Change to the appropriate texture ID for grappleWeapon
                 })
-                grappleWeapon:Cast(enemy)
+                spell:Cast(enemy)
             end
         end
     end)
