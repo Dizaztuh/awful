@@ -409,7 +409,7 @@ detox:Callback(function(spell)
     end)
 
     -- Check if the player is rooted and Tiger's Lust and Chi-Ji are not castable
-    if player.rooted and not tigersLust:Castable() and not chiji:Castable() then
+    if player.rooted and not tigersLust:Castable() and not invokeChiJi:Castable() then
         awful.alert({
             message="Cleansing: "..player.name,
             texture=115450,
