@@ -57,7 +57,6 @@ BurstCDS = {
     [137639] = true, -- Storm, Earth, and Fire
     [152173] = true, -- Serenity
     [123904] = true, -- Invoke Xuen
-    [304971] = true, -- Divine Toll
     [31884] = true, -- Avenging Wrath
     [280711] = true, -- Dark Ascension
     [228260] = true, -- Void Eruption
