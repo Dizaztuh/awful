@@ -824,34 +824,33 @@ end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
-    local enemyToParalyze = nil
+    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
+    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) then
+        -- If the conditions are met, cast Paralyze on the enemy healer
+        paralyze:Cast(enemyHealer)
+        awful.alert({
+            message="Paralysis on Enemy Healer!", 
+            texture=115078,
+        })
 
-    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 70%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
-    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target.guid == enemyHealer.guid) then
-        enemyToParalyze = enemyHealer
-    end
-
-    -- If enemyToParalyze is still nil, check if any enemy is using a spell from the BurstCDS table and is not the player's target
-    if not enemyToParalyze then
+    -- Check if any enemy is using a spell from the BurstCDS table and is not the player's target
+    else
         awful.enemies.loop(function(enemy)
             for spellID, _ in pairs(BurstCDS) do
-                if enemy.used(spellID, spellName) and not (player.target.guid == enemy.guid) then
-                    enemyToParalyze = enemy
+                if enemy.used(spellID, spellName) and not (player.target == enemy) then
+                    awful.alert({
+                        message="Paralysis on:"..enemy.name,
+                        texture=115078,
+                    })
+                    -- If the condition is met, cast Paralyze on the enemy
+                    spell:Cast(enemy)
                     break -- exit the loop
                 end
             end
         end)
     end
-
-    -- If a valid enemy to paralyze is found, cast Paralyze on that enemy
-    if enemyToParalyze and paralyze:Castable(enemyToParalyze) then
-        paralyze:Cast(enemyToParalyze)
-        awful.alert({
-            message="Paralysis on: " .. enemyToParalyze.name,
-            texture=115078,
-        })
-    end
 end)
+
 
 
 -- Callback for Tiger Palm
