@@ -45,6 +45,7 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 BurstCDS = {
+    [360952] = true, -- Coordinated Assault
     [255647] = true, -- The Hunt
     [323547] = true, -- Essence Break
     [274837] = true,-- Feral Frenzy (ID not found)
@@ -261,6 +262,7 @@ local ROPDROP = {
     
 -- Define the DisarmTable
 local DisarmTable = {
+    [360952] = true, -- Coordinated Assault
     [19574] = true, -- Bestial Wrath
     [288613] = true, -- Trueshot
     [31884] = true, -- Avenging Wrath
