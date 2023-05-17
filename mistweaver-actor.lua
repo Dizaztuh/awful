@@ -1,7 +1,7 @@
 -- Import the necessary modules and get the mistweaver monk profile
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-local healthstone = awful.Item(5512)
+
 print("Sisterfister Loaded and ready to fist!")
 
 -- Initialize the mistweaver monk profile
@@ -31,7 +31,6 @@ mistweaver:Init(function()
             tigersLust()
             detox()
             lifeCocoon()
-            healthstone()
             envelopingMist()
             renewingMist()
             thunderFocusTea()
