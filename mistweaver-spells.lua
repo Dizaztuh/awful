@@ -197,16 +197,6 @@ local ROPDROP = {
     }
 
 
-local healthstone = awful.Item(5512)
--- use method
-if healthstone:Use() then awful.alert("Using Healthstone!") end
--- some update methods
-healthstone:Update(function(item)
-  if not item:Usable then return end
-  if player.hp < 35 then
-    return item:Use() and alert("Used Healthstone!")
-  end
-end)
 
     ringOfPeace:Callback(function(spell)
         -- Loop through all enemies
