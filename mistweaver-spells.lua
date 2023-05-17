@@ -659,15 +659,26 @@ renewingMist:Callback(function(spell)
 end)
 
 
-faelineStomp:Callback(function (spell)
-    if not player.buff (389387) then
-        awful.alert({
-            message="Casted Faeline Stomp to Rebuff Teachings!", 
-            texture=388193,
+faelineStomp:Callback(function(spell)
+    -- Check if the player doesn't have the Teachings buff
+    if not player.buff(389387) then
+        -- Get the target's position
+        local x, y, z = target.position()
+        
+        -- Check if the target is within line of sight
+        if not player.losCoordsLiteral(x, y, z) then return end
+        
+        -- If the target's position is available and within line of sight, cast Faeline Stomp
+        if x and y and z then
+            awful.alert({
+                message="Casted Faeline Stomp to Rebuff Teachings!",
+                texture=388193,
             })
-        spell:Cast(target)
+            spell:Cast(target)
+        end
     end
 end)
+
 
 -- Create a callback for the Essence Font ability
 essenceFont:Callback(function(spell)
