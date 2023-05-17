@@ -727,7 +727,7 @@ end)
 
 
 healingElixir:Callback(function(spell)
-    if player.hp <= 75 then
+    if player.hp <= 65 then
         awful.alert({
             message="Casted Healing Elixir!", 
             texture=122281,
