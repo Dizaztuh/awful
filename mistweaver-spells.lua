@@ -758,7 +758,7 @@ diffuseMagic:Callback(function(spell)
     end)
 
     -- Check if the player has any of the debuffs listed in the "badStuff" array
-    if player.debuff(badStuff) or player.hp <= 34 then
+    if player.debuff(badStuff) or player.hp <= 35 then
         awful.alert({
             message="Casted Diffuse Magic!",
             texture=122783,
