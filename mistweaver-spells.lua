@@ -203,7 +203,7 @@ local ROPDROP = {
     local ringOfPeaceTriggeredTime = 0
     
     ringOfPeace:Callback(function(spell)
-        if awful.time.current() < ringOfPeaceTriggeredTime + ringOfPeaceDelay then
+        if awful.timecurrent() < ringOfPeaceTriggeredTime + ringOfPeaceDelay then
             return
         end
     
@@ -269,7 +269,7 @@ local ROPDROP = {
         end)
     
         -- Set the new trigger time and a random delay between 250 and 350 ms
-        ringOfPeaceTriggeredTime = awful.time.current()
+        ringOfPeaceTriggeredTime = awful.timecurrent()
         ringOfPeaceDelay = math.random(250, 350) / 1000 -- Convert to seconds
     end)
     
