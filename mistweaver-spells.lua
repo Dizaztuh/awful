@@ -2,6 +2,8 @@ local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 local player = awful.Player
 local Spell = awful.Spell
+local healthstone = awful.Item(5512) -- 5512 is the item ID for Healthstone
+
 awful.Populate({
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true }),
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
