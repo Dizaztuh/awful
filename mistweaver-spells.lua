@@ -199,14 +199,7 @@ local ROPDROP = {
 
 
 
-    local ringOfPeaceDelay = 0
-    local ringOfPeaceTriggeredTime = 0
-    
     ringOfPeace:Callback(function(spell)
-        if awful.timecurrent() < ringOfPeaceTriggeredTime + ringOfPeaceDelay then
-            return
-        end
-    
         -- Loop through all enemies
         awful.enemies.loop(function(enemy)
             -- Check if the enemy used a spell from the ROPDROP table
@@ -267,12 +260,7 @@ local ROPDROP = {
                 end)
             end
         end)
-    
-        -- Set the new trigger time and a random delay between 250 and 350 ms
-        ringOfPeaceTriggeredTime = awful.timecurrent()
-        ringOfPeaceDelay = math.random(250, 350) / 1000 -- Convert to seconds
     end)
-    
     
 -- Define the DisarmTable
 local DisarmTable = {
