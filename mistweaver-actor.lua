@@ -2,7 +2,7 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 
-print("Sisterfister Loaded and ready to fist!")
+print("Sisterfister Loaded!")
 
 -- Initialize the mistweaver monk profile
 mistweaver:Init(function()
