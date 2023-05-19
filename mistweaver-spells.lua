@@ -199,68 +199,71 @@ local ROPDROP = {
 
 
 
-    ringOfPeace:Callback(function(spell)
-        -- Loop through all enemies
-        awful.enemies.loop(function(enemy)
-            -- Check if the enemy used a spell from the ROPDROP table
-            for spellID, _ in pairs(ROPDROP) do
-                if enemy.used(spellID, spellName) then
-                    -- Get the enemy's position
-                    local x, y, z = enemy.position()
-                    if not player.losCoordsLiteral(x, y, z) then return end
-                    -- If the enemy's position is available, cast Ring of Peace at that position
-                    if x and y and z then
-                        awful.alert({
-                            message="Casting Ring of Peace on " .. enemy.name,
-                            texture=116844,
-                        })
-                        ringOfPeace:AoECast(x, y, z)
-                    end
+    local ringOfPeaceTriggeredTime = 0
+local delayLowerBound = 0.2 -- 200ms
+local delayUpperBound = 0.4 -- 400ms
+
+ringOfPeace:Callback(function(spell)
+    local currentTime = GetTime()
+
+    -- If the time elapsed since the last cast is less than the delay, return
+    if currentTime - ringOfPeaceTriggeredTime < math.random(delayLowerBound, delayUpperBound) then
+        return
+    end
+
+    -- Otherwise, proceed with the casting actions and update the triggered time
+    awful.enemies.loop(function(enemy)
+        for spellID, _ in pairs(ROPDROP) do
+            if enemy.used(spellID, spellName) then
+                local x, y, z = enemy.position()
+                if not player.losCoordsLiteral(x, y, z) then return end
+                if x and y and z then
+                    awful.alert({
+                        message="Casting Ring of Peace on " .. enemy.name,
+                        texture=116844,
+                    })
+                    ringOfPeace:AoECast(x, y, z)
+                    ringOfPeaceTriggeredTime = currentTime
                 end
             end
-    
-            -- Check if the enemy has a buff from the enemyBuffTable
-            for spellName, _ in pairs(enemyBuffTable) do
-                if enemy.buff(spellName) then
-                    -- Get the enemy's position
-                    local x, y, z = enemy.position()
-                    if not player.losCoordsLiteral(x, y, z) then return end
-                    -- If the enemy's position is available, cast Ring of Peace at that position
-                    if x and y and z then
-                        awful.alert({
-                            message="Casting Ring of Peace on " .. enemy.name,
-                            texture=116844,
-                        })
-                        ringOfPeace:AoECast(x, y, z)
-                    end
+        end
+
+        for spellName, _ in pairs(enemyBuffTable) do
+            if enemy.buff(spellName) then
+                local x, y, z = enemy.position()
+                if not player.losCoordsLiteral(x, y, z) then return end
+                if x and y and z then
+                    awful.alert({
+                        message="Casting Ring of Peace on " .. enemy.name,
+                        texture=116844,
+                    })
+                    ringOfPeace:AoECast(x, y, z)
+                    ringOfPeaceTriggeredTime = currentTime
                 end
             end
-        end)
-    
-        -- Loop through all friendly units
-        awful.friends.loop(function(friend)
-            -- Check if the friend's health is below 40%
-            if friend.hp <= 40 then
-                -- Loop through all enemies
-                awful.enemies.loop(function(enemy)
-                    -- Check if the enemy is in melee range of the friend
-                    if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
-                        -- Get the friend's position
-                        local x, y, z = friend.position()
-                        if not player.losCoordsLiteral(x, y, z) then return end
-                        -- If the friend's position is available, cast Ring of Peace at that position
-                        if x and y and z then
-                            awful.alert({
-                                message="Casting Ring of Peace on " .. friend.name,
-                                texture=116844,
-                            })
-                            ringOfPeace:AoECast(x, y, z)
-                        end
-                    end
-                end)
-            end
-        end)
+        end
     end)
+
+    awful.friends.loop(function(friend)
+        if friend.hp <= 40 then
+            awful.enemies.loop(function(enemy)
+                if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
+                    local x, y, z = friend.position()
+                    if not player.losCoordsLiteral(x, y, z) then return end
+                    if x and y and z then
+                        awful.alert({
+                            message="Casting Ring of Peace on " .. friend.name,
+                            texture=116844,
+                        })
+                        ringOfPeace:AoECast(x, y, z)
+                        ringOfPeaceTriggeredTime = currentTime
+                    end
+                end
+            end)
+        end
+    end)
+end)
+
     
 -- Define the DisarmTable
 local DisarmTable = {
