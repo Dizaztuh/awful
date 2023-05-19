@@ -199,7 +199,7 @@ local ROPDROP = {
 
 
 
-    local ringOfPeaceTriggeredTime = 0
+local ringOfPeaceTriggeredTime = 0
 local delayLowerBound = 0.2 -- 200ms
 local delayUpperBound = 0.4 -- 400ms
 
@@ -531,7 +531,7 @@ revival:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
-        if friend.hp <= 35 then
+        if friend.hp <= 37 then
             awful.alert({
                 message="Casted Revival!",
                 texture=115310,
@@ -546,7 +546,7 @@ restoral:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
-        if friend.hp <= 35 then
+        if friend.hp <= 37 then
             awful.alert({
                 message="Casted Restoral!", 
                 texture=388615,
