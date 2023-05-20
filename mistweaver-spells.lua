@@ -223,7 +223,7 @@ provoke:Callback(function(spell)
                         message="Provoking " .. spell.name,
                         texture=115450,
                     })
-                    spell:Cast(player)
+                    spell:Cast(enemy)
                     return true  -- Exit the loop
                 end
             end
