@@ -218,7 +218,7 @@ provoke:Callback(function(spell)
         for spellID, _ in pairs(provokeTable) do
             if enemy.casting(spellID,spellName) then
                 -- If the enemy is 90% done casting, provoke them
-                if enemy.castPercent() >= 90 then
+                if enemy.castPct() >= 90 then
                     awful.alert({
                         message="Provoking " .. spell.name,
                         texture=115450,
