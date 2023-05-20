@@ -216,7 +216,7 @@ provoke:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
         -- Check if the enemy is casting a spell from the kickCCTable
-        if enemyCastingSpell and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
+        if enemyCastingSpell and target.isPlayer and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
             awful.alert({
                 message="Casting Provoke on " .. enemy.name,
                 texture=116844,
