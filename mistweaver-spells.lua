@@ -216,8 +216,8 @@ local ROPDROP = {
     end)
 
 local ringOfPeaceTriggeredTime = 0
-local delayLowerBound = 0.2 -- 200ms
-local delayUpperBound = 0.4 -- 400ms
+local delayLowerBound = 0.3 -- 300ms
+local delayUpperBound = 0.5 -- 500ms
 
 ringOfPeace:Callback(function(spell)
     local currentTime = GetTime()
@@ -411,6 +411,9 @@ spearHandStrike:Callback(function(spell)
 end)
 
 
+-- Initialize lastCastTime
+local lastCastTime = 0
+
 -- Callback for Detox ability
 detox:Callback(function(spell)
     -- Loop through all friendly units
@@ -418,12 +421,19 @@ detox:Callback(function(spell)
         -- Check if the friendly unit has a debuff from the cleanseTable
         for debuffID, _ in pairs(cleanseTable) do
             if friend.debuff(debuffID) then
-                awful.alert({
-                    message="Cleansing: "..friend.name,
-                    texture=115450,
-                })
-                -- If so, cast Detox on the friendly unit to cleanse the debuff
-                spell:Cast(friend)
+                -- Random delay
+                local delay = math.random(300, 500) / 1000  -- Converts milliseconds to seconds
+
+                -- Only cast if enough time has passed
+                if GetTime() - lastCastTime >= delay then
+                    awful.alert({
+                        message="Cleansing: "..friend.name,
+                        texture=115450,
+                    })
+                    -- If so, cast Detox on the friendly unit to cleanse the debuff
+                    spell:Cast(friend)
+                    lastCastTime = GetTime()  -- Update the last cast time
+                end
                 return true -- exit the loop
             end
         end
@@ -431,14 +441,22 @@ detox:Callback(function(spell)
 
     -- Check if the player is rooted and Tiger's Lust and Chi-Ji are not castable
     if player.rooted and not tigersLust:Castable() and not invokeChiJi:Castable() then
-        awful.alert({
-            message="Cleansing: "..player.name,
-            texture=115450,
-        })
-        -- If so, cast Detox on the player to cleanse the root
-        spell:Cast(player)
+        -- Random delay
+        local delay = math.random(300, 500) / 1000  -- Converts milliseconds to seconds
+
+        -- Only cast if enough time has passed
+        if GetTime() - lastCastTime >= delay then
+            awful.alert({
+                message="Cleansing: "..player.name,
+                texture=115450,
+            })
+            -- If so, cast Detox on the player to cleanse the root
+            spell:Cast(player)
+            lastCastTime = GetTime()  -- Update the last cast time
+        end
     end
 end)
+
 
 
 -- Callback for Tiger's Lust ability
