@@ -111,6 +111,7 @@ local kickAllTable = {
     ["Banish"] = true,
     ["Eternity Surge"] = true,
     ["Drain Life"] = true,
+    ["Void Eruption"] = true,
     ["Demonfire"] = true
 }
 
