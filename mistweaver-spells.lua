@@ -216,14 +216,14 @@ provoke:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy is casting a spell from the provokeTable
         for spellID, _ in pairs(provokeTable) do
-            if enemy.casting(spellID) then
+            if enemy.casting(spellID, spallName) then
                 -- If the enemy is 90% done casting, provoke them
                 if enemy.castPct() >= 90 then
                     awful.alert({
                         message="Provoking " .. spell.name,
                         texture=115450,
                     })
-                    spell:Cast(enemy)
+                    spell:Cast(player)
                     return true  -- Exit the loop
                 end
             end
