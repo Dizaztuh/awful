@@ -210,26 +210,23 @@ local ROPDROP = {
 
     }
 
-    -- Callback for Provoke ability
+-- Callback for Provoke ability
 provoke:Callback(function(spell)
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
-        -- Check if the enemy is casting a spell from the provokeTable
-        for spellID, _ in pairs(provokeTable) do
-            if enemy.casting(spellName) then
-                -- If the enemy is 90% done casting, provoke them
-                if enemy.castPct() >= 90 then
-                    awful.alert({
-                        message="Provoking " .. enemy.name,
-                        texture=115450,
-                    })
-                    spell:Cast(enemy)
-                    return true  -- Exit the loop
-                end
-            end
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+        -- Check if the enemy is casting a spell from the kickCCTable
+        if enemyCastingSpell and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
+            awful.alert({
+                message="Casting Provoke on " .. enemy.name,
+                texture=116844,
+            })
+            -- If so, cast Provoke on the enemy right before their cast ends
+            spell:Cast(enemy)
         end
     end)
 end)
+
 
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
