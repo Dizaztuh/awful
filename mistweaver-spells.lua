@@ -45,6 +45,7 @@ awful.Populate({
     invokeChiJi = Spell(325197),
     bloodFury = Spell(33697),
     grappleWeapon = Spell (233759, { cc = true })
+    provoke = Spell (115546)
 }, mistweaver, getfenv(1))
 
 BurstCDS = {
@@ -79,7 +80,6 @@ local kickCCTable = {
     ["Cyclone"] = true,
     ["Ring of Frost"] = true,
     ["Shadowfury"] = true,
-    ["Repentance"] = true,
     ["Lightning Lasso"] = true,
     ["Hex"] = true,
     ["Fear"] = true,
@@ -142,6 +142,17 @@ local kickHealsTable = {
     ["Living Flame"] = true
 }
 
+local provokeTable = {
+    [51514] = true, -- Hex
+    [118] = true, -- Polymorph
+    [5782] = true, -- Fear
+    [8122] = true, -- Psychic Scream
+    [187650] = true, -- Freezing Trap
+    [360806] = true -- Sleep Walk
+    [20066] = true, -- Repentance
+    [605] = true -- Mind Control
+}
+
 local cleanseTable = {
     [51514] = true, -- Hex
     [375901] = true, -- Mindgames
@@ -198,6 +209,27 @@ local ROPDROP = {
     [51052] = true -- Amz
 
     }
+
+    -- Callback for Provoke ability
+provoke:Callback(function(spell)
+    -- Loop through all enemies
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy is casting a spell from the provokeTable
+        for spellID, _ in pairs(provokeTable) do
+            if enemy.casting(spellID) then
+                -- If the enemy is 90% done casting, provoke them
+                if enemy.castPercent() >= 90 then
+                    awful.alert({
+                        message="Provoking " .. spell.name,
+                        texture=115450,
+                    })
+                    spell:Cast(enemy)
+                    return true  -- Exit the loop
+                end
+            end
+        end
+    end)
+end)
 
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
