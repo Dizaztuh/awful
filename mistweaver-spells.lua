@@ -43,6 +43,7 @@ awful.Populate({
     restoral = Spell(388615, { heal = true, ignoreControl = true, range = 40, ignoreFacing = true }),
     tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197),
+    bloodFury = Spell(33697),
     grappleWeapon = Spell (233759, { cc = true })
 }, mistweaver, getfenv(1))
 
@@ -198,7 +199,21 @@ local ROPDROP = {
 
     }
 
-
+    bloodFury:Callback(function(spell)
+        awful.enemies.loop(function(enemy)
+            for spellID, _ in pairs(BurstCDS) do
+                if enemy.used(spellID, spellName) then
+                    if not bloodFury.cd then
+                        bloodFury:Cast()
+                        awful.alert({
+                            message="Using Blood Fury as enemy used " .. spellID,
+                            texture=33697, -- Replace this with the actual textureID for the alert
+                        })
+                    end
+                end
+            end
+        end)
+    end)
 
 local ringOfPeaceTriggeredTime = 0
 local delayLowerBound = 0.2 -- 200ms
