@@ -148,7 +148,7 @@ local provokeTable = {
     [5782] = true, -- Fear
     [8122] = true, -- Psychic Scream
     [187650] = true, -- Freezing Trap
-    [360806] = true -- Sleep Walk
+    [360806] = true,-- Sleep Walk
     [20066] = true, -- Repentance
     [605] = true -- Mind Control
 }
