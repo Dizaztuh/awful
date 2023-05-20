@@ -44,7 +44,7 @@ awful.Populate({
     tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197),
     bloodFury = Spell(33697),
-    grappleWeapon = Spell (233759, { cc = true })
+    grappleWeapon = Spell (233759, { cc = true }),
     provoke = Spell (115546)
 }, mistweaver, getfenv(1))
 
@@ -210,7 +210,27 @@ local ROPDROP = {
 
     }
 
-1
+    -- Callback for Provoke ability
+provoke:Callback(function(spell)
+    -- Loop through all enemies
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy is casting a spell from the provokeTable
+        for spellID, _ in pairs(provokeTable) do
+            if enemy.casting(spellID) then
+                -- If the enemy is 90% done casting, provoke them
+                if enemy.castPct() >= 90 then
+                    awful.alert({
+                        message="Provoking " .. spell.name,
+                        texture=115450,
+                    })
+                    spell:Cast(enemy)
+                    return true  -- Exit the loop
+                end
+            end
+        end
+    end)
+end)
+
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
             for spellID, _ in pairs(BurstCDS) do
