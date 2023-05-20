@@ -210,6 +210,15 @@ local ROPDROP = {
 
     }
 
+-- Callback for Healthstone ability
+healthstone:Callback(function(spell)
+    -- Check if the player's health is below or equal to 35%
+    if player.hp <= 35 then
+        -- Use Healthstone
+        healthstone:Use()
+    end
+end)
+
 -- Callback for Provoke ability
 provoke:Callback(function(spell)
     -- Loop through all enemies
