@@ -737,7 +737,7 @@ faelineStomp:Callback(function(spell)
         -- If the target's position is available and within line of sight, cast Faeline Stomp
         if x and y and z then
             awful.alert({
-                message="Casted Faeline Stomp to Rebuff Teachings!",
+                message="Casted Faeline Stomp",
                 texture=388193,
             })
             spell:Cast(target)
