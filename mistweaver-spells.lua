@@ -202,12 +202,12 @@ local ROPDROP = {
     }
 
     local provokeTable = {
-        [51514] = true, -- Hex
-        [118] = true, -- Polymorph
-        [5782] = true, -- Fear
-        [360806] = true,-- Sleep Walk
-        [20066] = true, -- Repentance
-        [605] = true -- Mind Control
+        ["Hex"] = true, -- Hex
+        ["Polymorph"] = true, -- Polymorph
+        ["Fear"] = true, -- Fear
+        ["Sleep Walk"] = true,-- Sleep Walk
+        ["Repentance"] = true, -- Repentance
+        ["Mind Control"] = true -- Mind Control
     }
 
 -- Callback for Provoke ability
