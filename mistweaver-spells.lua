@@ -22,7 +22,7 @@ awful.Populate({
     disable = Spell(343731, { targeted = true, cc = true, ranged = false }),
     faelineStomp = Spell(388193, { heal = true, alwaysFace = true }),
     paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
-    legSweep = Spell(119381, {ignoreFacing = true, stun = true }),
+    legSweep = Spell(119381, { ignoreFacing = true, stun = true }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
         diameter = 15,
