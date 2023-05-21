@@ -45,7 +45,7 @@ awful.Populate({
     invokeChiJi = Spell(325197),
     bloodFury = Spell(33697),
     grappleWeapon = Spell (233759, { cc = true }),
-    provoke = Spell (115546)
+    provoke = Spell (115546, { targeted = true })
 }, mistweaver, getfenv(1))
 
 BurstCDS = {
@@ -142,15 +142,6 @@ local kickHealsTable = {
     ["Living Flame"] = true
 }
 
-local provokeTable = {
-    [51514] = true, -- Hex
-    [118] = true, -- Polymorph
-    [5782] = true, -- Fear
-    [360806] = true,-- Sleep Walk
-    [20066] = true, -- Repentance
-    [605] = true -- Mind Control
-}
-
 local cleanseTable = {
     [51514] = true, -- Hex
     [375901] = true, -- Mindgames
@@ -208,6 +199,15 @@ local ROPDROP = {
 
     }
 
+    local provokeTable = {
+        [51514] = true, -- Hex
+        [118] = true, -- Polymorph
+        [5782] = true, -- Fear
+        [360806] = true,-- Sleep Walk
+        [20066] = true, -- Repentance
+        [605] = true -- Mind Control
+    }
+
 -- Callback for Provoke ability
 provoke:Callback(function(spell)
     -- Loop through all enemies
@@ -217,7 +217,7 @@ provoke:Callback(function(spell)
         if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
             awful.alert({
                 message="Casting Provoke on " .. enemy.name,
-                texture=116844,
+                texture=115546,
             })
             -- If so, cast Provoke on the enemy right before their cast ends
             spell:Cast(enemy)
@@ -767,7 +767,7 @@ fortifyingBrew:Callback(function(spell)
         for spellID, _ in pairs(BurstCDS) do
             if enemy.used(spellID, spellName) and enemy.target == player then
                 -- Check if the player doesn't have Dampen Harm or Diffuse Magic buff
-                if not (player.buff(122278) or player.buff(122783)) then
+                if not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
                     awful.alert({
                         message="Casted Fortifying Brew due to enemy burst!",
                         texture=115203,
@@ -780,7 +780,7 @@ fortifyingBrew:Callback(function(spell)
     end)
 
     -- Check if the player's health is at or below 40%
-    if player.hp <= 40 and not (player.buff(122278) or player.buff(122783)) then
+    if player.hp <= 40 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
@@ -789,8 +789,6 @@ fortifyingBrew:Callback(function(spell)
         spell:Cast(player)
     end
 end)
-
-
 
 healingElixir:Callback(function(spell)
     if player.hp <= 65 then
@@ -811,7 +809,7 @@ diffuseMagic:Callback(function(spell)
         for spellID, _ in pairs(BurstCDS) do
             if enemy.used(spellID, spellName) and enemy.target == player then
                 -- Check if the player doesn't have Dampen Harm or Fortifying Brew buff
-                if not (player.buff(122278) or player.buff(115203)) then
+                if not (player.buff(122278) or player.buff(115203) or player.buff(116849)) then
                     awful.alert({
                         message="Casted Diffuse Magic due to enemy burst!",
                         texture=122783,
@@ -882,7 +880,7 @@ dampenHarm:Callback(function(spell)
         end
     end)
 
-    if player.hp <= 45 and not (player.buff(122783) or player.buff(243435)) then
+    if player.hp <= 45 and not (player.buff(122783) or player.buff(243435) or player.buff(116849)) then
         -- check if the player's hp is at or below 45% and player does not have Diffuse Magic or Fortifying Brew buffs
         awful.alert({
             message="Casted Dampen Harm at low health!",
@@ -912,33 +910,16 @@ end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
-    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, and the enemy healer is not the player's target
-    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) then
+    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, the enemy healer is not the player's target, and incapDR is 1
+    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR == 1 then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
         awful.alert({
             message="Paralysis on Enemy Healer!", 
             texture=115078,
         })
-
-    -- Check if any enemy is using a spell from the BurstCDS table and is not the player's target
-    else
-        awful.enemies.loop(function(enemy)
-            for spellID, _ in pairs(BurstCDS) do
-                if enemy.used(spellID, spellName) and not (player.target == enemy) then
-                    awful.alert({
-                        message="Paralysis on:"..enemy.name,
-                        texture=115078,
-                    })
-                    -- If the condition is met, cast Paralyze on the enemy
-                    spell:Cast(enemy)
-                    break -- exit the loop
-                end
-            end
-        end)
     end
 end)
-
 
 
 -- Callback for Tiger Palm
