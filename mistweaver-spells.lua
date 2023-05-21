@@ -35,7 +35,7 @@ awful.Populate({
     dampenHarm = Spell(122278,  { ignoreCasting = true }),
     revival = Spell(115310, { heal = true, ignoreFacing = true, range = 40 }),
     diffuseMagic = Spell(122783, { ignoreCasting = true }),
-    detox = Spell(115450, { targeted = true }),
+    detox = Spell(115450, { targeted = true, range = 40 }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true }),
     sphereofHope = Spell (410777, { targeted = true }),
@@ -48,33 +48,13 @@ awful.Populate({
     provoke = Spell (115546, { targeted = true })
 }, mistweaver, getfenv(1))
 
-BurstCDS = {
-    [406227] = true, -- Deep Breath
-    [360952] = true, -- Coordinated Assault
-    [255647] = true, -- The Hunt
-    [323547] = true, -- Essence Break
-    [274837] = true,-- Feral Frenzy (ID not found)
-    [102560] = true, -- Incarnation: Chosen of Elune
-    [102543] = true, -- Incarnation: Avatar of Ashamane
-    [19574] = true, -- Bestial Wrath
-    [288613] = true, -- Trueshot
-    [190319] = true, -- Combustion
-    [137639] = true, -- Storm, Earth, and Fire
-    [152173] = true, -- Serenity
-    [123904] = true, -- Invoke Xuen
-    [31884] = true, -- Avenging Wrath
-    [280711] = true, -- Dark Ascension
-    [228260] = true, -- Void Eruption
-    [185313] = true, -- Shadow Dance
-    [360194] = true, -- Deathmark (ID not found)
-    [191634] = true, -- Stormkeeper
-    [204361] = true, -- Bloodlust
-    [265187] = true, -- Summon Demonic Tyrant
-    [267217] = true, -- Nether Portal
-    [107574] = true, -- Avatar
-    [315443] = true, -- Abomination Limb
-    [12472] = true, -- Icy Veins
-    [262161] = true -- Warbreaker
+local provokeTable = {
+    ["Hex"] = true, -- Hex
+    ["Polymorph"] = true, -- Polymorph
+    ["Fear"] = true, -- Fear
+    ["Sleep Walk"] = true,-- Sleep Walk
+    ["Repentance"] = true, -- Repentance
+    ["Mind Control"] = true -- Mind Control
 }
 
 local kickCCTable = {
@@ -143,22 +123,6 @@ local kickHealsTable = {
     ["Living Flame"] = true
 }
 
-local cleanseTable = {
-    [51514] = true, -- Hex
-    [375901] = true, -- Mindgames
-    [64695] = true, -- EarthGrab
-    [385408] = true, -- Sepsis
-    [334275] = true, -- Curse of Exhaustion
-    [358385] = true, -- Landslide
-    [702] = true, -- Curse of Weakness
-    [118] = true, -- Polymorph
-    [5782] = true, -- Fear
-    [8122] = true, -- Psychic Scream
-    [853] = true, -- Hammer of Justice
-    [187650] = true, -- Freezing Trap
-    [360806] = true -- Sleep Walk
-}
-
     -- Define a table with totem names and their respective IDs
 local totemList = {
     ["Capacitor Totem"] = 59547,
@@ -198,17 +162,70 @@ local ROPDROP = {
     [145629] = true, -- Amz
     [165775] = true, -- Amz
     [51052] = true -- Amz
-
     }
 
-    local provokeTable = {
-        ["Hex"] = true, -- Hex
-        ["Polymorph"] = true, -- Polymorph
-        ["Fear"] = true, -- Fear
-        ["Sleep Walk"] = true,-- Sleep Walk
-        ["Repentance"] = true, -- Repentance
-        ["Mind Control"] = true -- Mind Control
+    local cleanseTable = {
+    [51514] = true, -- Hex
+    [375901] = true, -- Mindgames
+    [64695] = true, -- EarthGrab
+    [385408] = true, -- Sepsis
+    [334275] = true, -- Curse of Exhaustion
+    [358385] = true, -- Landslide
+    [702] = true, -- Curse of Weakness
+    [118] = true, -- Polymorph
+    [5782] = true, -- Fear
+    [411038] = true, -- Sphere of Despair
+    [8122] = true, -- Psychic Scream
+    [853] = true, -- Hammer of Justice
+    [187650] = true, -- Freezing Trap
+    [360806] = true -- Sleep Walk
     }
+
+    -- Define the DisarmTable
+local DisarmTable = {
+    [384352] = true, -- Doom Winds
+    [121471] = true, -- Shadow Blades
+    [360952] = true, -- Coordinated Assault
+    [19574] = true, -- Bestial Wrath
+    [288613] = true, -- Trueshot
+    [31884] = true, -- Avenging Wrath
+    [185313] = true, -- Shadow Dance
+    [2825] = true, -- Bloodlust
+    [107574] = true, -- Avatar
+    [262161] = true, -- Warbreaker
+    [216331] = true -- Avenging Crusader
+}
+
+BurstCDS = {
+    [384352] = true, -- Doom Winds
+    [121471] = true, -- Shadow Blades
+    [406227] = true, -- Deep Breath
+    [360952] = true, -- Coordinated Assault
+    [255647] = true, -- The Hunt
+    [323547] = true, -- Essence Break
+    [274837] = true,-- Feral Frenzy (ID not found)
+    [102560] = true, -- Incarnation: Chosen of Elune
+    [102543] = true, -- Incarnation: Avatar of Ashamane
+    [19574] = true, -- Bestial Wrath
+    [288613] = true, -- Trueshot
+    [190319] = true, -- Combustion
+    [137639] = true, -- Storm, Earth, and Fire
+    [152173] = true, -- Serenity
+    [123904] = true, -- Invoke Xuen
+    [31884] = true, -- Avenging Wrath
+    [280711] = true, -- Dark Ascension
+    [228260] = true, -- Void Eruption
+    [185313] = true, -- Shadow Dance
+    [360194] = true, -- Deathmark (ID not found)
+    [191634] = true, -- Stormkeeper
+    [204361] = true, -- Bloodlust
+    [265187] = true, -- Summon Demonic Tyrant
+    [267217] = true, -- Nether Portal
+    [107574] = true, -- Avatar
+    [315443] = true, -- Abomination Limb
+    [12472] = true, -- Icy Veins
+    [262161] = true -- Warbreaker
+}
 
 -- Callback for Provoke ability
 provoke:Callback(function(spell)
@@ -226,7 +243,6 @@ provoke:Callback(function(spell)
         end
     end)
 end)
-
 
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
@@ -309,23 +325,7 @@ ringOfPeace:Callback(function(spell)
     end)
 end)
 
-    
--- Define the DisarmTable
-local DisarmTable = {
-    [384352] = true, -- Doom Winds
-    [121471] = true, -- Shadow Blades
-    [360952] = true, -- Coordinated Assault
-    [19574] = true, -- Bestial Wrath
-    [288613] = true, -- Trueshot
-    [31884] = true, -- Avenging Wrath
-    [185313] = true, -- Shadow Dance
-    [2825] = true, -- Bloodlust
-    [107574] = true, -- Avatar
-    [262161] = true, -- Warbreaker
-    [216331] = true -- Avenging Crusader
-}
-
--- Create a callback for grappleWeapon
+    -- Create a callback for grappleWeapon
 grappleWeapon:Callback(function(spell)
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
@@ -372,8 +372,6 @@ disable:Callback(function(spell)
         spell:Cast(target)
     end
 end)
-
-
 
 -- Callback for Spear Hand Strike ability
 spearHandStrike:Callback(function(spell)
@@ -436,11 +434,10 @@ spearHandStrike:Callback(function(spell)
 end)
 
 
--- Initialize lastCastTime
-local lastCastTime = 0
-
 -- Callback for Detox ability
 detox:Callback(function(spell)
+    -- Initialize lastCastTime
+   local lastCastTime = 0
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if the friendly unit has a debuff from the cleanseTable
