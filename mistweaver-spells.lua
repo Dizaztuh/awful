@@ -146,6 +146,7 @@ local kickHealsTable = {
 local cleanseTable = {
     [51514] = true, -- Hex
     [375901] = true, -- Mindgames
+    [64695] = true, -- EarthGrab
     [385408] = true, -- Sepsis
     [334275] = true, -- Curse of Exhaustion
     [358385] = true, -- Landslide
@@ -311,6 +312,8 @@ end)
     
 -- Define the DisarmTable
 local DisarmTable = {
+    [384352] = true, -- Doom Winds
+    [121471] = true, -- Shadow Blades
     [360952] = true, -- Coordinated Assault
     [19574] = true, -- Bestial Wrath
     [288613] = true, -- Trueshot
