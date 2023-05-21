@@ -49,6 +49,7 @@ awful.Populate({
 }, mistweaver, getfenv(1))
 
 BurstCDS = {
+    [406227] = true, -- Deep Breath
     [360952] = true, -- Coordinated Assault
     [255647] = true, -- The Hunt
     [323547] = true, -- Essence Break
