@@ -177,6 +177,35 @@ penance:Callback(function(spell)
     end
 end)
 
+-- Create a callback for the Schism ability
+schism:Callback(function(spell)
+    -- Create variables to store the lowest HP enemy within 40 yards and their HP
+    local lowestHPEnemy = nil
+    local lowestHP = 100  -- Initialize to 100% HP
+
+    -- Loop through all enemies within 40 yards
+    awful.enemies.loop(function(enemy)
+        -- Check if this enemy has lower HP than the current lowest,
+        -- if they have the Purge the Wicked debuff,
+        -- and if Power Word: Shield and Penance are on cooldown
+        if enemy.hp < lowestHP and enemy.debuff(purgeTheWicked.id) and not PwS:Ready() and not penance:Ready() then
+            -- If so, update the enemy with the lowest HP and their HP
+            lowestHPEnemy = enemy
+            lowestHP = enemy.hp
+        end
+    end)
+
+    -- If we found an enemy who meets all the conditions, cast Schism on them
+    if lowestHPEnemy and spell:Castable(lowestHPEnemy) then
+        awful.alert({
+            message="Casting Schism on "..lowestHPEnemy.name,
+            texture=214621,
+        })
+        spell:Cast(lowestHPEnemy)
+    end
+end)
+
+
 
 
 

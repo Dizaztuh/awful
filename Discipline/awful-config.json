@@ -1,0 +1,7 @@
+{
+    "load": [
+        "core.lua",
+        "discipline-actor.lua",
+        "discipline-spells.lua"
+    ]
+}

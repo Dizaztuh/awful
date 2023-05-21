@@ -9,5 +9,6 @@ discipline:Init(function()
     PwShield()
     purgeTheWicked()
     penance()
+    schism()
     end
 end)
