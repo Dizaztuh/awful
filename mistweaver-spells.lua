@@ -929,8 +929,8 @@ blackoutKick:Callback(function(spell)
         spell:Cast(target)
 
         -- Check if Rising Sun Kick is castable after casting Blackout Kick
-        if risingsunKick:Castable(target) then
-            risingsunKick:Cast(target)
+        if risingSunKick:Castable(target) then
+            risingSunKick:Cast(target)
         end
         return
     end
