@@ -835,30 +835,27 @@ legSweep:Callback(function(spell)
     -- Get the number of players in range
     local playersInRange = enemies.around(player, 5)   
     -- Check if the spell is castable on the target
+    local didCastLegSweep = false
     if spell:Castable() then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
             spell:Cast()
-            awful.alert({
-                message="Casted Leg Sweep!", 
-                texture=119381,
-            })
+            didCastLegSweep = true
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
             spell:Cast()
-            awful.alert({
-                message="Casted Leg Sweep!", 
-                texture=119381,
-            })
+            didCastLegSweep = true
         -- If the target's HP is below 40%, cast Leg Sweep on the target
         elseif target.hp < 40 then
             spell:Cast()
-            awful.alert({
-                message="Casted Leg Sweep on low HP target!", 
-                texture=119381,
-            
-            })
+            didCastLegSweep = true
         end
+    end
+    if didCastLegSweep then
+        awful.alert({
+            message="Casted Leg Sweep!", 
+            texture=119381,
+        })
     end
 end)
 
