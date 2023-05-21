@@ -778,7 +778,7 @@ fortifyingBrew:Callback(function(spell)
     end)
 
     -- Check if the player's health is at or below 40%
-    if player.hp <= 40 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
+    if player.hp <= 35 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
@@ -820,7 +820,7 @@ diffuseMagic:Callback(function(spell)
     end)
 
     -- Check if the player has any of the debuffs listed in the "badStuff" array
-    if player.debuff(badStuff) or player.hp <= 35 then
+    if player.debuff(badStuff) or player.hp <= 30 then
         awful.alert({
             message="Casted Diffuse Magic!",
             texture=122783,
@@ -867,7 +867,7 @@ dampenHarm:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID, spellName) and enemy.target == player then
+            if enemy.used(spellID, spellName) and enemy.target == player and not (player.buff(122783) or player.buff(243435) or player.buff(116849)) then
                 awful.alert({
                     message="Casted Dampen Harm due to enemy burst!",
                     texture=122278,
