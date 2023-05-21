@@ -22,7 +22,7 @@ awful.Populate({
     disable = Spell(343731, { targeted = true, cc = true, ranged = false }),
     faelineStomp = Spell(388193, { heal = true, alwaysFace = true }),
     paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
-    legSweep = Spell(119381, { targeted = false, stun = true }),
+    legSweep = Spell(119381, { stun = true }),
     ringOfPeace = Spell(116844, {
         effect = "magic",
         diameter = 15,
@@ -837,7 +837,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 6)   
+    local playersInRange = enemies.around(player, 5)   
     -- Check if the spell is castable on the target
     if spell:Castable() then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
