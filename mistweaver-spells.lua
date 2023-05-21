@@ -923,15 +923,11 @@ tigerPalm:Callback(function(spell)
     end
 end)
 
+-- Callback for Blackout Kick
 blackoutKick:Callback(function(spell)
     if blackoutKick:Castable(target) and player.lastCast == tigerPalm.id then
         -- Cast Blackout Kick on the target.
         spell:Cast(target)
-
-        -- Check if Rising Sun Kick is castable after casting Blackout Kick
-        if risingSunKick:Castable(target) then
-            risingSunKick:Cast(target)
-        end
         return
     end
 end)
