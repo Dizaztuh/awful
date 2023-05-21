@@ -146,8 +146,6 @@ local provokeTable = {
     [51514] = true, -- Hex
     [118] = true, -- Polymorph
     [5782] = true, -- Fear
-    [8122] = true, -- Psychic Scream
-    [187650] = true, -- Freezing Trap
     [360806] = true,-- Sleep Walk
     [20066] = true, -- Repentance
     [605] = true -- Mind Control
@@ -215,7 +213,7 @@ provoke:Callback(function(spell)
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
-        -- Check if the enemy is casting a spell from the kickCCTable
+        -- Check if the enemy is casting a spell from the provokeTable
         if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
             awful.alert({
                 message="Casting Provoke on " .. enemy.name,
@@ -729,7 +727,7 @@ end)
 
 faelineStomp:Callback(function(spell)
     -- Check if the player doesn't have the Teachings buff
-    if not player.buff(389387) then
+    if faelineStomp:Castable then
         -- Get the target's position
         local x, y, z = target.position()
         
