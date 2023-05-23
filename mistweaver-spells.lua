@@ -4,6 +4,7 @@ local player = awful.Player
 local Spell = awful.Spell
 local delayLowerBound = 0.4
 local delayUpperBound = 0.6
+local ringOfPeaceTriggeredTime = 0
 awful.enabled = true
 
 awful.Populate({
@@ -250,7 +251,7 @@ end)
         awful.enemies.loop(function(enemy)
             for spellID, _ in pairs(BurstCDS) do
                 if enemy.buff(spellID, spellName) then
-                    if not bloodFury.cd then
+                    if bloodFury.cd < 1 then
                         bloodFury:Cast()
                         awful.alert({
                             message="Using Blood Fury as enemy used " .. spellID,
@@ -262,9 +263,7 @@ end)
         end)
     end)
 
-local ringOfPeaceTriggeredTime = 0
-local delayLowerBound = 0.3 -- 300ms
-local delayUpperBound = 0.5 -- 500ms
+
 
 ringOfPeace:Callback(function(spell)
     local currentTime = GetTime()
