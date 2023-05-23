@@ -458,15 +458,9 @@ detox:Callback(function(spell)
                         })
                         spell:Cast(friend)
                     end)
-                    -- Once a friend with a debuff from the cleanseTable has been found and Purify has been cast, exit the loop
                     return
                 end
-            end
-        end
-    end)
-end)
-
-    -- Check if the player is rooted and Tiger's Lust and Chi-Ji are not castable
+                    
     if player.rooted and not tigersLust:Castable() and not invokeChiJi:Castable() then
         -- Random delay
         local delay = math.random(300, 500) / 1000  -- Converts milliseconds to seconds
@@ -480,9 +474,15 @@ end)
             -- If so, cast Detox on the player to cleanse the root
             spell:Cast(player)
             lastCastTime = GetTime()  -- Update the last cast time
+                    end
+                end
+            end
         end
-    end
+    end)
 end)
+
+
+
 
 
 
