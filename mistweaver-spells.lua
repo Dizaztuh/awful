@@ -2,7 +2,8 @@ local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 local player = awful.Player
 local Spell = awful.Spell
-local healthstone = awful.Item(5512) -- 5512 is the item ID for Healthstone
+local delayLowerBound = 0.4
+local delayUpperBound = 0.6
 awful.enabled = true
 
 awful.Populate({
@@ -17,10 +18,10 @@ awful.Populate({
     essenceFont = Spell(191837, { heal = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, ignoreCasting = true, ignoreFacing = true }),
-    sphereofDespair = Spell(410777, { targeted = true }),
+    sphereofDespair = Spell(410777, { targeted = true, effect = "magic" }),
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
-    disable = Spell(343731, { targeted = true, cc = true }),
+    disable = Spell(343731, { targeted = true, cc = true, effect = "physical" }),
     faelineStomp = Spell(388193, { heal = true, alwaysFace = true }),
     paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
     legSweep = Spell(119381, { ignoreFacing = true, stun = true }),
@@ -435,32 +436,36 @@ spearHandStrike:Callback(function(spell)
 end)
 
 
--- Callback for Detox ability
+-- Create a callback function for Purify
 detox:Callback(function(spell)
-    -- Initialize lastCastTime
-   local lastCastTime = 0
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
-        -- Check if the friendly unit has a debuff from the cleanseTable
-        for debuffID, _ in pairs(cleanseTable) do
-            if friend.debuff(debuffID) then
-                -- Random delay
-                local delay = math.random(300, 500) / 1000  -- Converts milliseconds to seconds
+        -- Check if the friend has Unstable Affliction or Vampiric Touch debuff
+        if friend.debuff("Unstable Affliction") or friend.debuff("Vampiric Touch") then
+            return -- Skip this friend and move to the next one
+        end
 
-                -- Only cast if enough time has passed
-                if GetTime() - lastCastTime >= delay then
-                    awful.alert({
-                        message="Cleansing: "..friend.name,
-                        texture=115450,
-                    })
-                    -- If so, cast Detox on the friendly unit to cleanse the debuff
-                    spell:Cast(friend)
-                    lastCastTime = GetTime()  -- Update the last cast time
+        -- Loop through each spellID in the cleanseTable
+        for spellID, _ in pairs(cleanseTable) do
+            -- Check if the friend has a debuff with the current spellID
+            if friend.debuff(spellID) then
+                -- If so, check if the spell is castable on the friend
+                if spell:Castable(friend) then
+                    -- If it is, wait for a random time between 0.4 and 0.6 seconds, then send an alert and cast the spell
+                    C_Timer.After(math.random(delayLowerBound, delayUpperBound), function()
+                        awful.alert({
+                            message="Casting Detox on "..friend.name,
+                            texture=527,  -- Please replace with the correct texture ID for Purify
+                        })
+                        spell:Cast(friend)
+                    end)
+                    -- Once a friend with a debuff from the cleanseTable has been found and Purify has been cast, exit the loop
+                    return
                 end
-                return true -- exit the loop
             end
         end
     end)
+end)
 
     -- Check if the player is rooted and Tiger's Lust and Chi-Ji are not castable
     if player.rooted and not tigersLust:Castable() and not invokeChiJi:Castable() then
