@@ -841,16 +841,13 @@ legSweep:Callback(function(spell)
     if spell:Castable() then
         -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
         if playersInRange > 1 then
-            spell:Cast()
-            didCastLegSweep = true
+            didCastLegSweep = spell:Cast()
         -- If the player's HP is below 45%, cast Leg Sweep on the target
         elseif player.hp < 45 and playersInRange <= 1 then
-            spell:Cast()
-            didCastLegSweep = true
+            didCastLegSweep = spell:Cast()
         -- If the target's HP is below 40%, cast Leg Sweep on the target
         elseif target.hp < 40 then
-            spell:Cast()
-            didCastLegSweep = true
+            didCastLegSweep = spell:Cast()
         end
     end
     if didCastLegSweep then
@@ -860,6 +857,7 @@ legSweep:Callback(function(spell)
         })
     end
 end)
+
 
 dampenHarm:Callback(function(spell)
     -- Loop through all enemy units
