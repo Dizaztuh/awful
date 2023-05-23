@@ -248,7 +248,7 @@ end)
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
             for spellID, _ in pairs(BurstCDS) do
-                if enemy.used(spellID, spellName) then
+                if enemy.buff(spellID, spellName) then
                     if not bloodFury.cd then
                         bloodFury:Cast()
                         awful.alert({
@@ -276,7 +276,7 @@ ringOfPeace:Callback(function(spell)
     -- Otherwise, proceed with the casting actions and update the triggered time
     awful.enemies.loop(function(enemy)
         for spellID, _ in pairs(ROPDROP) do
-            if enemy.used(spellID, spellName) then
+            if enemy.buff(spellID, spellName) then
                 local x, y, z = enemy.position()
                 if not player.losCoordsLiteral(x, y, z) then return end
                 if x and y and z then
@@ -332,7 +332,7 @@ grappleWeapon:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the DisarmTable
         for spellID, _ in pairs(DisarmTable) do
-            if enemy.used(spellID, spellName) then
+            if enemy.buff(spellID, spellName) then
                 -- Cast grappleWeapon on the enemy
                 awful.alert({
                     message="Disarming " .. enemy.name,
@@ -520,7 +520,7 @@ invokeChiJi:Callback(function(spell)
     -- First condition: Check if any enemy cast any spells from the BurstCDS table
     awful.enemies.loop(function(enemy)
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID, spellName) then
+            if enemy.buff(spellID) then
                 awful.alert({
                     message="Casted Chi-Ji, the Red Crane!",
                     texture=325197,
@@ -533,7 +533,7 @@ invokeChiJi:Callback(function(spell)
     -- Second condition: Check if friends cast any spells from the BurstCDS table
     awful.friends.loop(function(friend)
         for spellID, _ in pairs(BurstCDS) do
-            if friend.used(spellID, spellName) then
+            if friend.buff(spellID) then
                 awful.alert({
                     message="Casted Chi-Ji, the Red Crane!",
                     texture=325197,
@@ -761,7 +761,7 @@ fortifyingBrew:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID, spellName) and enemy.target == player then
+            if enemy.buff(spellID) and enemy.target == player then
                 -- Check if the player doesn't have Dampen Harm or Diffuse Magic buff
                 if not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
                     awful.alert({
@@ -803,7 +803,7 @@ diffuseMagic:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID, spellName) and enemy.target == player then
+            if enemy.buff(spellID) and enemy.target == player then
                 -- Check if the player doesn't have Dampen Harm or Fortifying Brew buff
                 if not (player.buff(122278) or player.buff(115203) or player.buff(116849)) then
                     awful.alert({
@@ -862,7 +862,7 @@ dampenHarm:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if enemy.used(spellID, spellName) and enemy.target == player and not (player.buff(122783) or player.buff(243435) or player.buff(116849)) then
+            if enemy.buff(spellID) and enemy.target == player and not (player.buff(122783) or player.buff(243435) or player.buff(116849)) then
                 awful.alert({
                     message="Casted Dampen Harm due to enemy burst!",
                     texture=122278,
