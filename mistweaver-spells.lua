@@ -250,6 +250,23 @@ transfer:Callback(function(spell)
 end)
 
 
+-- Callback for Provoke ability
+provoke:Callback(function(spell)
+    -- Loop through all enemies
+    awful.enemies.loop(function(enemy)
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+        -- Check if the enemy is casting a spell from the provokeTable
+        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
+            awful.alert({
+                message="Casting Provoke on " .. enemy.name,
+                texture=115546,
+            })
+            -- If so, cast Provoke on the enemy right before their cast ends
+            spell:Cast(enemy)
+        end
+    end)
+end)
+
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
             for spellID, _ in pairs(BurstCDS) do
