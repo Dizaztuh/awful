@@ -939,7 +939,7 @@ tigerPalm:Callback(function(spell)
         end
     end
 
-    if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
+    if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id and not closestEnemy.buff("Recently Challenged") then
         -- Cast Tiger Palm on the closest enemy.
         spell:Cast(closestEnemy)
         return
