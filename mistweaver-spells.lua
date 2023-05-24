@@ -953,56 +953,36 @@ touchOfDeath:Callback(function(spell)
 end)
 
 function castOnClosestEnemy()
-    -- Check if you have a target and your target is more than 5 yards away
-    if player.target and player.target.distance and player.target.distance > 5 then
-        local closestEnemy = nil
-        local minDistance = math.huge
+    local minDistance = math.huge
+    local closestUnit = nil
 
-        -- Loop through all enemies
-        awful.enemies.loop(function(enemy)
-            -- Check if the enemy is closer than the current closest enemy and not immune to physical damage
-            if enemy.distance < minDistance and not enemy.immunePhysicalDamage then
-                closestEnemy = enemy
-                minDistance = enemy.distance
+    -- Combining the enemies and pets loop into one
+    for _, unit in pairs({awful.enemies, awful.pets}) do
+        unit.loop(function(unit)
+            -- Check if the unit is closer than the current closest unit and not immune to physical damage
+            if unit.distance < minDistance and not unit.immunePhysicalDamage then
+                closestUnit = unit
+                minDistance = unit.distance
             end
         end)
+    end
 
-        -- Cast Tiger Palm and Blackout Kick on the closest enemy if within 5 yards and not immune to physical damage
-        if closestEnemy and minDistance <= 5 then
-            if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
-                -- Cast Tiger Palm on the target.
-                tigerPalm:Cast(closestEnemy)
-                return
-            end
-            if blackoutKick:Castable(closestEnemy) and player.lastCast == tigerPalm.id then
-                -- Cast Blackout Kick on the target.
-                blackoutKick:Cast(closestEnemy)
-                return
-            end
+    -- Cast abilities on the closest unit if within 5 yards and not immune to physical damage
+    if closestUnit and minDistance <= 5 then
+        if risingSunKick:Castable(closestUnit) then
+            -- Prioritize casting Rising Sun Kick when available
+            risingSunKick:Cast(closestUnit)
+            return
         end
-
-        -- Loop through all pets
-        awful.pets.loop(function(pet)
-            -- Check if the pet is closer than the current closest pet and not immune to physical damage
-            if pet.distance < minDistance and not pet.immunePhysicalDamage then
-                closestEnemy = pet
-                minDistance = pet.distance
-            end
-        end)
-
-        -- Cast Tiger Palm and Blackout Kick on the closest pet if within 5 yards and not immune to physical damage
-        if closestEnemy and minDistance <= 5 then
-            if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
-                -- Cast Tiger Palm on the target.
-                tigerPalm:Cast(closestEnemy)
-                return
-            end
-            if blackoutKick:Castable(closestEnemy) and player.lastCast == tigerPalm.id then
-                -- Cast Blackout Kick on the target.
-                blackoutKick:Cast(closestEnemy)
-                return
-            end
-            risingSunKick:Cast(closestEnemy)
+        if player.lastCast == tigerPalm.id and blackoutKick:Castable(closestUnit) then
+            -- Cast Blackout Kick if Tiger Palm was last cast
+            blackoutKick:Cast(closestUnit)
+            return
+        end
+        if tigerPalm:Castable(closestUnit) and player.lastCast ~= tigerPalm.id then
+            -- Cast Tiger Palm only if it wasn't last cast
+            tigerPalm:Cast(closestUnit)
         end
     end
 end
+
