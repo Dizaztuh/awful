@@ -925,7 +925,7 @@ tigerPalm:Callback(function(spell)
     -- If player has Alpha Tiger buff and the buff's remaining time is more than 1 second
     if player.buff("Alpha Tiger") and player.buffRemains("Alpha Tiger") < 1 then
         -- If target has Recently Challenged debuff
-        if target.debuff("Recently Challenged") then
+        if target.buff("Recently Challenged") then
             local minDistance = math.huge
 
             -- Loop through all enemies
