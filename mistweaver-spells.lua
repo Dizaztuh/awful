@@ -250,7 +250,7 @@ end)
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
             for spellID, _ in pairs(BurstCDS) do
-                if enemy.buff(spellID, spellName) then
+                if enemy.buff(spellID) then
                     if bloodFury.cd < 1 then
                         bloodFury:Cast()
                         awful.alert({
@@ -791,7 +791,7 @@ fortifyingBrew:Callback(function(spell)
 end)
 
 healingElixir:Callback(function(spell)
-    if player.hp <= 65 then
+    if player.hp <= 65 and healingElixir.charges > 1 then
         awful.alert({
             message="Casted Healing Elixir!", 
             texture=122281,
@@ -919,12 +919,33 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
-        -- Cast Tiger Palm on the target.
-        spell:Cast(target)
+    -- Define closestEnemy as target for future checks
+    local closestEnemy = target
+
+    -- If player has Alpha Tiger buff and the buff's remaining time is more than 1 second
+    if player.buff("Alpha Tiger") and player.buffRemains("Alpha Tiger") < 1 then
+        -- If target has Recently Challenged debuff
+        if target.debuff("Recently Challenged") then
+            local minDistance = math.huge
+
+            -- Loop through all enemies
+            awful.enemies.loop(function(enemy)
+                -- Check if the enemy is closer than the current closest enemy
+                if enemy.distance < minDistance then
+                    closestEnemy = enemy
+                    minDistance = enemy.distance
+                end
+            end)
+        end
+    end
+
+    if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id then
+        -- Cast Tiger Palm on the closest enemy.
+        spell:Cast(closestEnemy)
         return
     end
 end)
+
 
 -- Callback for Blackout Kick
 blackoutKick:Callback(function(spell)
