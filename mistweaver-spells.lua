@@ -8,6 +8,7 @@ local ringOfPeaceTriggeredTime = 0
 awful.enabled = true
 
 awful.Populate({
+    transfer = Spell(119996)
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true }),
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
     risingSunKick = Spell(107428, { damage = "physical", targeted = false, ranged = true, range = 5 }),
@@ -229,6 +230,25 @@ BurstCDS = {
     [12472] = true, -- Icy Veins
     [262161] = true -- Warbreaker
 }
+
+-- Callback for Transfer
+transfer:Callback(function(spell)
+    -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
+    if player.hp <= 60 and player.stunned and spell:Castable() and player.HasTalent(353584) then
+        -- Cast Transfer
+        spell:Cast()
+        -- Check if player has the Eminence talent
+        if player.HasTalent(394110) then
+            -- Add a random delay between 1 and 3 seconds before casting Transfer again
+            awful.timer(function()
+                if spell:Castable() then
+                    spell:Cast()
+                end
+            end, math.random(1, 2))
+        end
+    end
+end)
+
 
 -- Callback for Provoke ability
 provoke:Callback(function(spell)
