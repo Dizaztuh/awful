@@ -13,11 +13,11 @@ mistweaver:Init(function()
         -- Check if there is an enemy target
             if target.enemy then
             faelineStomp()
-            sphereofDespair()
-            sphereofHope()
             risingSunKick()
             tigerPalm()
             blackoutKick()
+            sphereofDespair()
+            sphereofHope()
             stompTotems()
             spearHandStrike()
             grappleWeapon()
