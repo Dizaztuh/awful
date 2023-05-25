@@ -7,11 +7,9 @@ print("Sisterfister Loaded!")
 -- Initialize the mistweaver monk profile
 mistweaver:Init(function()
     if not player.mounted and target.enemy then
-        touchOfDeath()
-        ringOfPeace()
-        castOnClosestEnemy()
-        -- Check if there is an enemy target
-            if target.enemy then
+            touchOfDeath()
+            ringOfPeace()
+            castOnClosestEnemy()
             faelineStomp()
             risingSunKick()
             tigerPalm()
@@ -39,7 +37,7 @@ mistweaver:Init(function()
             dampenHarm()
             fortifyingBrew()
             diffuseMagic()
-        end
+
     end
 end)
 
