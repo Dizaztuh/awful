@@ -747,15 +747,7 @@ end)
 
 faelineStomp:Callback(function(spell)
     -- Check if the player doesn't have the Teachings buff
-    if faelineStomp.cd < 1 then
-        -- Get the target's position
-        local x, y, z = target.position()
-        
-        -- Check if the target is within line of sight
-        if not player.losCoordsLiteral(x, y, z) then return end
-        
-        -- If the target's position is available and within line of sight, cast Faeline Stomp
-        if x and y and z then
+    if faelineStomp.cd < 1 and not player.buff(388026) or player.buff(389387) then
             awful.alert({
                 message="Casted Faeline Stomp",
                 texture=388193,
