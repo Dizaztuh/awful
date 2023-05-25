@@ -252,11 +252,13 @@ end)
 
 -- Callback for Provoke ability
 provoke:Callback(function(spell)
+    -- Assume you've defined spearHandStrike elsewhere
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
         -- Check if the enemy is casting a spell from the provokeTable
-        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
+        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
+        and (not spearHandStrike:Castable(enemy) or enemy.distance > 5) then
             awful.alert({
                 message="Casting Provoke on " .. enemy.name,
                 texture=115546,
@@ -266,6 +268,7 @@ provoke:Callback(function(spell)
         end
     end)
 end)
+
 
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
