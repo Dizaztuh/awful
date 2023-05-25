@@ -747,7 +747,7 @@ end)
 
 faelineStomp:Callback(function(spell)
     -- Check if the player doesn't have the Teachings buff
-    if faelineStomp:Castable() and not player.buff(388026) or not player.buff(389387) then
+    if faelineStomp:Castable(target) and not player.buff(388026) or not player.buff(389387) then
             awful.alert({
                 message="Casted Faeline Stomp",
                 texture=388193,
