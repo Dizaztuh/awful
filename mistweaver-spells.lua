@@ -24,7 +24,7 @@ awful.Populate({
     roll = Spell(109132),
     chiTorpedo = Spell(119582),
     disable = Spell(343731, { targeted = true, cc = true, effect = "physical", ignoreMoving = true }),
-    faelineStomp = Spell(388193, { heal = true, alwaysFace = true }),
+    faelineStomp = Spell(388193, { heal = true, alwaysFace = true, ignoreMoving = true }),
     paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
     legSweep = Spell(119381, { ignoreFacing = true, stun = true, ignoreMoving = true }),
     ringOfPeace = Spell(116844, {
