@@ -753,7 +753,6 @@ faelineStomp:Callback(function(spell)
                 texture=388193,
             })
             spell:Cast(target)
-        end
     end
 end)
 
