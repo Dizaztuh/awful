@@ -860,7 +860,7 @@ legSweep:Callback(function(spell)
         elseif player.hp < 45 and playersInRange <= 1 then
             didCastLegSweep = spell:Cast()
         -- If the target's HP is below 40%, cast Leg Sweep on the target
-        elseif target.hp < 40 then
+        elseif target.hp < 50 then
             didCastLegSweep = spell:Cast()
         end
     end
