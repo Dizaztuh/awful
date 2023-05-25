@@ -17,7 +17,7 @@ awful.Populate({
     envelopingMist = Spell(124682, { heal = true, targeted = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
-    essenceFont = Spell(191837, { heal = true, channelled = true, ignoreMoving = true }),
+    essenceFont = Spell(191837, { heal = true, ignoreMoving = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, ignoreCasting = true, ignoreFacing = true }),
     sphereofDespair = Spell(410777, { targeted = true, effect = "magic" }),
@@ -846,7 +846,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 5)   
+    local playersInRange = enemies.around(player, 6)   
     -- Check if the spell is castable on the target
     local didCastLegSweep = false
     if spell:Castable() then
@@ -868,7 +868,6 @@ legSweep:Callback(function(spell)
         })
     end
 end)
-
 
 dampenHarm:Callback(function(spell)
     -- Loop through all enemy units
@@ -948,7 +947,7 @@ tigerPalm:Callback(function(spell)
         end
     end
 
-    if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id and not closestEnemy.buff("Recently Challenged") then
+    if tigerPalm:Castable(closestEnemy) and player.lastCast ~= tigerPalm.id and not closestEnemy.buff("Recently Challenged") and not closestEnemy.bcc then
         -- Cast Tiger Palm on the closest enemy.
         spell:Cast(closestEnemy)
         return
@@ -990,7 +989,7 @@ function castOnClosestEnemy()
     for _, unit in pairs({awful.enemies, awful.pets}) do
         unit.loop(function(unit)
             -- Check if the unit is closer than the current closest unit and not immune to physical damage
-            if unit.distance < minDistance and not unit.immunePhysicalDamage then
+            if unit.distance < minDistance and not unit.immunePhysicalDamage and not unit.bcc then
                 closestUnit = unit
                 minDistance = unit.distance
             end
