@@ -24,7 +24,7 @@ print("Sisterfister Loaded!")
 
 -- Initialize the mistweaver monk profile
 mistweaver:Init(function()
-    if player.buff("Arena Preparation") or player.buff ("Drink") then return end
+    if player.buff("Arena Preparation") or player.buff("Drink") then return end
     if not player.mounted and (ARENA or BATTLEGROUND or DUNGEON or RAID) then
             touchOfDeath()
             ringOfPeace()
