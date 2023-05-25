@@ -13,9 +13,9 @@ mistweaver:Init(function()
         provoke()
         -- Check if there is an enemy target
             if target.enemy then
+            faelineStomp()
             sphereofDespair()
             sphereofHope()
-            faelineStomp()
             risingSunKick()
             tigerPalm()
             blackoutKick()
