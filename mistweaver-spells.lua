@@ -13,7 +13,7 @@ awful.Populate({
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
     risingSunKick = Spell(107428, { damage = "physical", targeted = false, ranged = true, range = 5 }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
-    touchOfDeath = Spell(322109, { targeted = true, damage = "physical" }),
+    touchOfDeath = Spell(322109, { targeted = true, damage = "physical", ignoreMoving = true }),
     envelopingMist = Spell(124682, { heal = true, targeted = true, ignoreMoving = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
