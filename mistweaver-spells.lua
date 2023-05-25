@@ -17,7 +17,7 @@ awful.Populate({
     envelopingMist = Spell(124682, { heal = true, targeted = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
-    essenceFont = Spell(191837, { heal = true, ignoreMoving = true }),
+    essenceFont = Spell(191837, { heal = true, ignoreMoving = true, ignoreFacing = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, ignoreCasting = true, ignoreFacing = true }),
     sphereofDespair = Spell(410777, { targeted = true, effect = "magic" }),
