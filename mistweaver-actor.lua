@@ -1,16 +1,24 @@
 -- Import the necessary modules and get the mistweaver monk profile
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-local type = awful.instanceType2
-PVP = type == "pvp" or type == "arena"
-PVE = type == "party" or type == "raid" or type == "scenario" or type == "none"
-INSTANCE = type == "party" or type == "raid" or type == "scenario"
-BATTLEGROUND = type == "pvp"
-ARENA = type == "arena"
-DUNGEON = type == "party"
-RAID = type == "raid"
-SCENARIO = type == "scenario"
-WORLD = type == "none"
+local function updateInstanceType()
+    local _, instanceType = IsInInstance()
+    PVP = instanceType == "pvp" or instanceType == "arena"
+    PVE = instanceType == "party" or instanceType == "raid" or instanceType == "scenario" or instanceType == "none"
+    INSTANCE = instanceType == "party" or instanceType == "raid" or instanceType == "scenario"
+    BATTLEGROUND = instanceType == "pvp"
+    ARENA = instanceType == "arena"
+    DUNGEON = instanceType == "party"
+    RAID = instanceType == "raid"
+    SCENARIO = instanceType == "scenario"
+    WORLD = instanceType == "none"
+end
+
+awful.onEvent(function(_, event)
+    if event == "PLAYER_ENTERING_WORLD" then
+        updateInstanceType()
+    end
+end)
 
 print("Sisterfister Loaded!")
 
