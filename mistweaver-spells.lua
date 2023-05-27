@@ -260,7 +260,7 @@ provoke:Callback(function(spell)
         if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
         and (not spearHandStrike:Castable(enemy) or enemy.distance > 5) then
             awful.alert({
-                message="Casting Provoke on "..enemy.name,
+                message="Casting Provoke",
                 texture=115546,
             })
             -- If so, cast Provoke on the enemy right before their cast ends
