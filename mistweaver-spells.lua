@@ -373,7 +373,7 @@ function stompTotems()
         -- Check if the totem is in the totemList and within 5 yards
         if totemList[totem.name] and player.distanceTo(totem) <= 5 then
             awful.alert({
-                message="Stomped a "..totem.name,  
+                message="Stomped a totem.",  
                 texture=100780,
                 })
             -- If the totem is in the list and within range, cast Tiger Palm and Blackout Kick on the totem
@@ -476,7 +476,7 @@ detox:Callback(function(spell)
                     -- If it is, wait for a random time between 0.4 and 0.6 seconds, then send an alert and cast the spell
                     C_Timer.After(math.random(delayLowerBound, delayUpperBound), function()
                         awful.alert({
-                            message="Casting Detox on "..friend.name,
+                            message="Casting Detox",
                             texture=527,  -- Please replace with the correct texture ID for Purify
                         })
                         spell:Cast(friend)
@@ -491,7 +491,7 @@ detox:Callback(function(spell)
         -- Only cast if enough time has passed
         if GetTime() - lastCastTime >= delay then
             awful.alert({
-                message="Cleansing: "..player.name,
+                message="Cleansing",
                 texture=115450,
             })
             -- If so, cast Detox on the player to cleanse the root
@@ -515,7 +515,7 @@ tigersLust:Callback(function(spell)
     -- First condition: Check if player is rooted and root remains >= 3
     if player.rooted and player.rootRemains >= 3 then
         awful.alert({
-            message="Casted Tiger's Lust on Player!",
+            message="Casted Tiger's Lust!",
             texture=324406,
         })
         return spell:Cast(player)
@@ -523,7 +523,7 @@ tigersLust:Callback(function(spell)
 
     if player.slowed and target.distance > 5 then
         awful.alert({
-            message="Casted Tiger's Lust on Player!",
+            message="Casted Tiger's Lust!",
             texture=324406,
         })
         return spell:Cast(player)
@@ -533,7 +533,7 @@ tigersLust:Callback(function(spell)
     awful.friends.loop(function(friend)
         if friend.rooted and friend.rootRemains >= 3 then
             awful.alert({
-                message="Casted Tiger's Lust on "..friend.name,
+                message="Casted Tiger's Lust!",
                 texture=324406,
             })
             return spell:Cast(friend)
@@ -656,7 +656,7 @@ sphereofHope:Callback(function(spell)
             -- Update the lastCastTime variable
             lastCastTimeHope = GetTime()
             awful.alert({
-                message="Casted Sphere of Hope on: "..friend.name, 
+                message="Casted Sphere of Hope", 
                 texture=388615,
                 })
             -- Exit the loop
@@ -916,7 +916,7 @@ lifeCocoon:Callback(function(spell)
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
         if not friend.combat or friend.hp > 40 or friend.distance > lifeCocoon.range then return end
         awful.alert({
-            message="Casted Life Cocoon on: "..friend.name, 
+            message="Casted Life Cocoon", 
             texture=116849,
             })
         -- If the friend meets the conditions (in combat, hp < 50%, and within range), cast Life Cocoon on them
