@@ -260,7 +260,7 @@ provoke:Callback(function(spell)
         if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
         and (not spearHandStrike:Castable(enemy) or enemy.distance > 5) then
             awful.alert({
-                message="Casting Provoke on " .. enemy.name,
+                message="Casting Provoke on "..enemy.name,
                 texture=115546,
             })
             -- If so, cast Provoke on the enemy right before their cast ends
@@ -277,7 +277,7 @@ end)
                     if bloodFury.cd < 1 then
                         bloodFury:Cast()
                         awful.alert({
-                            message="Using Blood Fury as enemy used " .. spellID,
+                            message="Using Blood Fury as enemy used "..spellID,
                             texture=33697, -- Replace this with the actual textureID for the alert
                         })
                     end
@@ -304,7 +304,7 @@ ringOfPeace:Callback(function(spell)
                 if not player.losCoordsLiteral(x, y, z) then return end
                 if x and y and z then
                     awful.alert({
-                        message="Casting Ring of Peace on " .. enemy.name,
+                        message="Casting Ring of Peace on "..enemy.name,
                         texture=116844,
                     })
                     ringOfPeace:AoECast(x, y, z)
@@ -319,7 +319,7 @@ ringOfPeace:Callback(function(spell)
                 if not player.losCoordsLiteral(x, y, z) then return end
                 if x and y and z then
                     awful.alert({
-                        message="Casting Ring of Peace on " .. enemy.name,
+                        message="Casting Ring of Peace on "..enemy.name,
                         texture=116844,
                     })
                     ringOfPeace:AoECast(x, y, z)
@@ -337,7 +337,7 @@ ringOfPeace:Callback(function(spell)
                     if not player.losCoordsLiteral(x, y, z) then return end
                     if x and y and z then
                         awful.alert({
-                            message="Casting Ring of Peace on " .. friend.name,
+                            message="Casting Ring of Peace on "..friend.name,
                             texture=116844,
                         })
                         ringOfPeace:AoECast(x, y, z)
@@ -358,7 +358,7 @@ grappleWeapon:Callback(function(spell)
             if enemy.buff(spellID, spellName) then
                 -- Cast grappleWeapon on the enemy
                 awful.alert({
-                    message="Disarming " .. enemy.name,
+                    message="Disarming "..enemy.name,
                     texture=233759, -- Change to the appropriate texture ID for grappleWeapon
                 })
                 spell:Cast(enemy)
@@ -533,7 +533,7 @@ tigersLust:Callback(function(spell)
     awful.friends.loop(function(friend)
         if friend.rooted and friend.rootRemains >= 3 then
             awful.alert({
-                message="Casted Tiger's Lust on " .. friend.name,
+                message="Casted Tiger's Lust on "..friend.name,
                 texture=324406,
             })
             return spell:Cast(friend)
