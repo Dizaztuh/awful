@@ -337,7 +337,7 @@ ringOfPeace:Callback(function(spell)
                     if not player.losCoordsLiteral(x, y, z) then return end
                     if x and y and z then
                         awful.alert({
-                            message="Casting Ring of Peace on "..friend.name,
+                            message="Casting Ring of Peace",
                             texture=116844,
                         })
                         ringOfPeace:AoECast(x, y, z)
