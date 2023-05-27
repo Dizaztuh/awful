@@ -304,7 +304,7 @@ ringOfPeace:Callback(function(spell)
                 if not player.losCoordsLiteral(x, y, z) then return end
                 if x and y and z then
                     awful.alert({
-                        message="Casting Ring of Peace on "..enemy.name,
+                        message="Casting Ring of Peace",
                         texture=116844,
                     })
                     ringOfPeace:AoECast(x, y, z)
@@ -319,7 +319,7 @@ ringOfPeace:Callback(function(spell)
                 if not player.losCoordsLiteral(x, y, z) then return end
                 if x and y and z then
                     awful.alert({
-                        message="Casting Ring of Peace on "..enemy.name,
+                        message="Casting Ring of Peace",
                         texture=116844,
                     })
                     ringOfPeace:AoECast(x, y, z)
@@ -987,7 +987,7 @@ touchOfDeath:Callback(function(spell)
         if not spell:Castable(enemy) then return end 
         spell:Cast(enemy)
         return awful.alert({
-            message = "Show us on the doll where he touched you ",
+            message = "Show us on the doll where he touched you",
             texture = spell.id,
             duration = 4.3,
         })
