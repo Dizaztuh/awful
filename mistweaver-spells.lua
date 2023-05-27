@@ -277,7 +277,7 @@ end)
                     if bloodFury.cd < 1 then
                         bloodFury:Cast()
                         awful.alert({
-                            message="Using Blood Fury as enemy used "..spellID,
+                            message="Using Blood Fury",
                             texture=33697, -- Replace this with the actual textureID for the alert
                         })
                     end
@@ -753,10 +753,8 @@ faelineStomp:Callback(function(spell)
     if not player.buff(389387) then
         -- Get the target's position
         local x, y, z = target.position()
-        
         -- Check if the target is within line of sight
         if not player.losCoordsLiteral(x, y, z) then return end
-        
         -- If the target's position is available and within line of sight, cast Faeline Stomp
         if x and y and z then
             awful.alert({
