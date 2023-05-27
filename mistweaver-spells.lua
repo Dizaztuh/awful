@@ -358,7 +358,7 @@ grappleWeapon:Callback(function(spell)
             if enemy.buff(spellID, spellName) then
                 -- Cast grappleWeapon on the enemy
                 awful.alert({
-                    message="Disarming "..enemy.name,
+                    message="Casted Disarm ",
                     texture=233759, -- Change to the appropriate texture ID for grappleWeapon
                 })
                 spell:Cast(enemy)
@@ -389,7 +389,7 @@ disable:Callback(function(spell)
     -- is not immune to physical effects, and Disable is castable
     if not target.debuff(116095) and not target.immunePhysical and disable:Castable() then
         awful.alert({
-            message="Applying Disable on "..target.name,
+            message="Applying Disable ",
             texture=116095,
         })
         -- If the target doesn't have the Disable debuff, cast Disable on the target
@@ -421,7 +421,7 @@ spearHandStrike:Callback(function(spell)
             -- Check if any enemy within 40 yards has health below 70%
             if isEnemyLowHealth() then
                 awful.alert({
-                    message="Cast Interrupted: "..enemy.name,
+                    message="Cast Interrupted",
                     texture=116705,
                 })
                 spell:Cast(enemy)
@@ -436,7 +436,7 @@ spearHandStrike:Callback(function(spell)
         -- Check if the enemy is within 5 yards, casting a spell from the kickCCTable, not immune to interrupts, and targeting the player
         if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickCCTable[enemyCastingSpell] and enemy.castTarget.isUnit(player) and enemy.castPct > randomCastPct then
             awful.alert({
-                message="Cast Interrupted: "..enemy.name,
+                message="Cast Interrupted",
                 texture=116705,
             })
             spell:Cast(enemy)
@@ -449,7 +449,7 @@ spearHandStrike:Callback(function(spell)
         -- Check if the enemy is within 5 yards, casting a spell from the kickAllTable, not immune to interrupts, and targeting the player
         if enemy.distance <= 5 and not enemy.castint and enemyCastingSpell and kickAllTable[enemyCastingSpell] and enemy.castPct > randomCastPct then
             awful.alert({
-                message="Cast Interrupted: "..enemy.name,
+                message="Cast Interrupted",
                 texture=116705,
             })
             spell:Cast(enemy)
