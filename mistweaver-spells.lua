@@ -987,7 +987,7 @@ touchOfDeath:Callback(function(spell)
         if not spell:Castable(enemy) then return end 
         spell:Cast(enemy)
         return awful.alert({
-            message = "Show us on the doll where he touched you: "..enemy.name,
+            message = "Show us on the doll where he touched you ",
             texture = spell.id,
             duration = 4.3,
         })
