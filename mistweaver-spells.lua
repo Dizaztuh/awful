@@ -687,7 +687,7 @@ sphereofDespair:Callback(function(spell)
             lastCastTimeDespair = GetTime()
             spell:Cast(enemy)
             awful.alert({
-                message = "Casted Sphere of Despair on: " .. lowestHpEnemy.name,
+                message = "Casted Sphere of Despair",
                 texture = 410777,
             })
         end
