@@ -616,7 +616,7 @@ revival:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
-        if friend.hp <= 37 then
+        if friend.hp <= settings.revival then
             awful.alert({
                 message="Casted Revival!",
                 texture=115310,
@@ -631,7 +631,7 @@ restoral:Callback(function(spell)
     -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
         -- Check if the friend's health is below 30%
-        if friend.hp <= 37 then
+        if friend.hp <= settings.restoral then
             awful.alert({
                 message="Casted Restoral!", 
                 texture=388615,
@@ -649,7 +649,7 @@ sphereofHope:Callback(function(spell)
     if GetTime() - lastCastTimeHope >= 15 then
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
-            if not friend.combat or friend.hp > 90 or friend.buff(411036) then
+            if not friend.combat or friend.hp > settings.soh or friend.buff(411036) then
                 return
             end
             -- If the friend meets the conditions (in combat, hp < 75%, and within range), cast Sphere of Hope on them
