@@ -76,7 +76,6 @@ defensive:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, defau
 defensive:Slider({text = "Fortifying Brew", var = "fBrew", min = 0, max = 100, step = 1, default = 40, valueType = "%", tooltip = "Fortifying Brew triggered at % HP. (Will trade on enemy Burst!)"})
 defensive:Slider({text = "Transfer Juke", var = "transferJuke", min = 0, max = 100, step = 1, default = 60, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
 defensive:Slider({text = "Ring of Peace Friend", var = "ringPeace", min = 0, max = 100, step = 1, default = 40, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
-defensive:Checkbox({text = "Ring of Peace", var = "rop", default = true, tooltip = "Enable or Disable Ring of Peace on enemy burst."})
 
 -- Healing tab
 local healing = gui:Tab("Healing")
