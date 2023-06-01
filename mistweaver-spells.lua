@@ -368,8 +368,6 @@ function stompTotems()
     end)
 end
 
-
-
 -- Callback for Disable ability
 disable:Callback(function(spell)
     -- Check if the target does not have the Disable debuff, 
