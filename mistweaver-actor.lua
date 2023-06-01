@@ -29,18 +29,17 @@ mistweaver:Init(function()
     if player.buff("Arena Preparation") or player.buff("Drink") then return end
     if not player.mounted and (ARENA or BATTLEGROUND or DUNGEON or RAID or player.combat) then
             touchOfDeath()
+            if player.hasTalent(287503) then
             if settings.rop then
             ringOfPeace()
             end
             if settings.aa then
             castOnClosestEnemy()
             end
-            if player.hasTalent(287503) then
             faelineStomp()
             risingSunKick()
             tigerPalm()
             blackoutKick()
-            end
             sphereofDespair()
             sphereofHope()
             if settings.ts then
@@ -70,7 +69,8 @@ mistweaver:Init(function()
             dampenHarm()
             fortifyingBrew()
             diffuseMagic()
-
+        end
+        
     end
 end)
 

@@ -10,13 +10,14 @@ awful.enabled = true
 
 awful.Populate({
     transfer = Spell(119996),
+    summonJadeSerpant = Spell(115313)
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, ignoreMoving = true }),
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
     risingSunKick = Spell(107428, { damage = "physical", targeted = false, ranged = true, range = 5 }),
     spinningCraneKick = Spell(101546, { damage = "physical" }),
     touchOfDeath = Spell(322109, { targeted = true, damage = "physical", ignoreMoving = true }),
     envelopingMist = Spell(124682, { heal = true, targeted = true, ignoreMoving = true }),
-    renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true }),
+    renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
     essenceFont = Spell(191837, { heal = true, ignoreMoving = true, ignoreFacing = true }),
     chiWave = Spell(115098, { heal = true }),
