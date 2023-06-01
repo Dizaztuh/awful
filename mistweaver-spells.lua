@@ -915,7 +915,7 @@ lifeCocoon:Callback(function(spell)
         -- friend.dist provides the distance to the friend
         -- lifeCocoon.range provides the range of the Life Cocoon spell
         -- Comparing these values, we can determine if the friend is within range for the Life Cocoon spell
-        if not friend.combat or friend.hp > 40 or friend.distance > lifeCocoon.range then return end
+        if not friend.combat or friend.hp > settings.lc or friend.distance > lifeCocoon.range then return end
         awful.alert({
             message="Casted Life Cocoon", 
             texture=116849,
