@@ -372,7 +372,7 @@ end)
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Check if the totem is in the totemList and within 5 yards
-        if totemList[totem.name] and player.distanceTo(totem) <= 5 then
+        if totem.id or settings.totemstomp[totem.id] and player.distanceTo(totem) <= 5 then
             awful.alert({
                 message="Stomped a totem.",  
                 texture=100780,
