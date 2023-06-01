@@ -208,7 +208,7 @@ BurstCDS = {
 -- Callback for Transfer
 transfer:Callback(function(spell)
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
-    if player.hp <= settings.transfer and player.stunned and spell:Castable() and player.HasTalent(353584) then
+    if player.hp <= settings.transferJuke and player.stunned and spell:Castable() and player.HasTalent(353584) then
         -- Cast Transfer
         spell:Cast()
         -- Check if player has the Eminence talent
