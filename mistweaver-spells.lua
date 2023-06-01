@@ -544,7 +544,7 @@ end)
 
 -- Callback for Invoke Chi-Ji, the Red Crane ability
 invokeChiJi:Callback(function(spell)
-
+    if settings.cje then
     -- First condition: Check if any enemy cast any spells from the BurstCDS table
     awful.enemies.loop(function(enemy)
         for spellID, _ in pairs(BurstCDS) do
@@ -557,7 +557,9 @@ invokeChiJi:Callback(function(spell)
             end
         end
     end)
+end
 
+if settings.cjf then
     -- Second condition: Check if friends cast any spells from the BurstCDS table
     awful.friends.loop(function(friend)
         for spellID, _ in pairs(BurstCDS) do
@@ -570,7 +572,7 @@ invokeChiJi:Callback(function(spell)
             end
         end
     end)
-
+end
     -- Third condition: Check friend.hp and if anyone is below 70 and player.target > 5
     awful.fgroup.loop(function(friend)
         if friend.hp < settings.chiji then
