@@ -67,7 +67,7 @@ offensive:Checkbox({text = "Chi-Ji on Friendly Burst", var = "cjf", default = tr
 -- Defensive tab
 local defensive = gui:Tab("Defensive")
 defensive:Slider({text = "Dampen Harm", var = "dh", min = 0, max = 100, default = 44, valueType = "%", tooltip = "Dampen Harm triggered at % HP."})
---defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Life Cocoon triggered at % HP."})
+defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Life Cocoon triggered at % HP."})
 --defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 30, valueType = "%", tooltip = "Diffuse Magic triggered at % HP. (Will normally save for Mindgames etc.)"})
 --defensive:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
 --defensive:Slider({text = "Fortifying Brew", var = "fb", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Fortifying Brew triggered at % HP. (Will trade on enemy Burst!)"})
