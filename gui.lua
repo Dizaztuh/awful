@@ -84,7 +84,7 @@ healing:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default
 if player.hasTalent(287503) then
 healing:Checkbox({text = "Renewing Mist", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
 healing:Checkbox({text = "Enveloping Mist", var = "em", default = true, tooltip = "Enable/Disable Auto Instant Proc Enveloping Mists."})
-else
+elseif
 healing:Slider({text = "Renewing Mists", var = "renewing", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Renewing Mists at % HP"})
 healing:Slider({text = "Enveloping Mists", var = "enveloping", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Enveloping Mists at % HP"})
 end
