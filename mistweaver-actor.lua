@@ -1,7 +1,7 @@
 -- Import the necessary modules and get the mistweaver monk profile
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
-local settings = project.settings
+settings = project.settings
 local function updateInstanceType()
     local _, instanceType = IsInInstance()
     PVP = instanceType == "pvp" or instanceType == "arena"
