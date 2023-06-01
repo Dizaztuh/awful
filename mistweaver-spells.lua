@@ -232,21 +232,32 @@ end)
 
 -- Callback for Provoke ability
 provoke:Callback(function(spell)
-    -- Assume you've defined spearHandStrike elsewhere
+    -- Define a variable to store the closest enemy with a DPS role
+    local closestDpsEnemy = nil
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
-        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+        -- Check if the enemy has a DPS role (either melee or ranged)
+        if enemy.role == "melee" or enemy.role == "ranged" then
+            -- If this is the first DPS enemy we've found or if this enemy is closer than the current closest one
+            if not closestDpsEnemy or enemy.distance < closestDpsEnemy.distance then
+                closestDpsEnemy = enemy
+            end
+        end
+    end)
+    -- If we've found a closest DPS enemy
+    if closestDpsEnemy then
+        local enemyCastingSpell = closestDpsEnemy.casting -- Get the name of the spell being cast by the enemy
         -- Check if the enemy is casting a spell from the provokeTable
-        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
-        and (not spearHandStrike:Castable(enemy) or enemy.distance > 5) then
+        if enemyCastingSpell and closestDpsEnemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and closestDpsEnemy.castRemains < 0.5 
+        and (not spearHandStrike:Castable(closestDpsEnemy) or closestDpsEnemy.distance > 5) then
             awful.alert({
                 message="Casting Provoke",
                 texture=115546,
             })
-            -- If so, cast Provoke on the enemy right before their cast ends
-            spell:Cast(enemy)
+            -- If so, cast Provoke on the closestDpsEnemy right before their cast ends
+            spell:Cast(closestDpsEnemy)
         end
-    end)
+    end
 end)
 
 
