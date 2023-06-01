@@ -5,6 +5,7 @@ local Spell = awful.Spell
 local delayLowerBound = 0.4
 local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
+local settings = project.settings
 awful.enabled = true
 
 awful.Populate({
@@ -234,7 +235,7 @@ BurstCDS = {
 -- Callback for Transfer
 transfer:Callback(function(spell)
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
-    if player.hp <= 60 and player.stunned and spell:Castable() and player.HasTalent(353584) then
+    if player.hp <= settings.xfer and player.stunned and spell:Castable() and player.HasTalent(353584) then
         -- Cast Transfer
         spell:Cast()
         -- Check if player has the Eminence talent
@@ -330,7 +331,7 @@ ringOfPeace:Callback(function(spell)
     end)
 
     awful.friends.loop(function(friend)
-        if friend.hp <= 40 then
+        if friend.hp <= settings.lc then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
@@ -572,7 +573,7 @@ invokeChiJi:Callback(function(spell)
 
     -- Third condition: Check friend.hp and if anyone is below 70 and player.target > 5
     awful.fgroup.loop(function(friend)
-        if friend.hp < 70 then
+        if friend.hp < settings.chiji then
             awful.alert({
                 message="Casted Chi-Ji, the Red Crane!",
                 texture=325197,
@@ -587,7 +588,7 @@ end)
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
     -- Check if the player's hp is at or below 75% and the spell is castable
-    if player.hp <= 75 and thunderFocusTea:Castable() then
+    if player.hp <= settings.tft and thunderFocusTea:Castable() then
         awful.alert({
             message="Casted Thunder Focus Tea!", 
             texture=116680,
@@ -802,7 +803,7 @@ fortifyingBrew:Callback(function(spell)
     end)
 
     -- Check if the player's health is at or below 40%
-    if player.hp <= 35 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
+    if player.hp <= settings.fb and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
@@ -813,7 +814,7 @@ fortifyingBrew:Callback(function(spell)
 end)
 
 healingElixir:Callback(function(spell)
-    if player.hp <= 65 and healingElixir.charges > 1 then
+    if player.hp <= settings.he and healingElixir.charges > 1 then
         awful.alert({
             message="Casted Healing Elixir!", 
             texture=122281,
@@ -844,7 +845,7 @@ diffuseMagic:Callback(function(spell)
     end)
 
     -- Check if the player has any of the debuffs listed in the "badStuff" array
-    if player.debuff(badStuff) or player.hp <= 30 then
+    if player.debuff(badStuff) or player.hp <= settings.dm then
         awful.alert({
             message="Casted Diffuse Magic!",
             texture=122783,
@@ -896,7 +897,7 @@ dampenHarm:Callback(function(spell)
         end
     end)
 
-    if player.hp <= 45 and not (player.buff(122783) or player.buff(243435) or player.buff(116849)) then
+    if player.hp <= settings.dh and not (player.buff(122783) or player.buff(243435) or player.buff(116849)) then
         -- check if the player's hp is at or below 45% and player does not have Diffuse Magic or Fortifying Brew buffs
         awful.alert({
             message="Casted Dampen Harm at low health!",
