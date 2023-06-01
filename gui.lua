@@ -77,7 +77,9 @@ defensive:Slider({text = "Fortifying Brew", var = "fBrew", min = 0, max = 100, d
 defensive:Slider({text = "Transfer Juke", var = "transferJuke", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
 defensive:Slider({text = "Ring of Peace", var = "ringPeace", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
 defensive:Checkbox({text = "Ring of Peace", var = "rop", default = true, tooltip = "Enable/Disable Ring of Peace on enemy burst."})
-
+print("Fortifying Brew value: ", settings.fBrew)
+print("Transfer Juke value: ", settings.transferJuke)
+print("Ring of Peace value: ", settings.ringPeace)
 
 -- Healing tab
 local healing = gui:Tab("Healing")
