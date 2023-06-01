@@ -12,6 +12,7 @@ local lightGreen = {144, 238, 144, 1}
 local gui, settings, cmd = awful.UI:New("gladdyui", {
     title = "Gladdy SisterFister",
     show = true,
+    sidebar = true,
     colors = {
         title = darkGreen,           -- Title color is dark green
         primary = silver,            -- Primary text color is silver
