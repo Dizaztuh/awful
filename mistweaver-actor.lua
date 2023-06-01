@@ -35,7 +35,7 @@ mistweaver:Init(function()
             if settings.aa then
             castOnClosestEnemy()
             end
-            if player.hasTalent(388779) then
+            if player.hasTalent(287503) then
             faelineStomp()
             risingSunKick()
             tigerPalm()
