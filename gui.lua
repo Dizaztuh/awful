@@ -70,7 +70,7 @@ defensive:Slider({text = "Dampen Harm", var = "dh", min = 0, max = 100, default 
 defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Life Cocoon triggered at % HP."})
 defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 30, valueType = "%", tooltip = "Diffuse Magic triggered at % HP. (Will normally save for Mindgames etc.)"})
 defensive:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
---defensive:Slider({text = "Fortifying Brew", var = "fb", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Fortifying Brew triggered at % HP. (Will trade on enemy Burst!)"})
+defensive:Slider({text = "Fortifying Brew", var = "fb", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Fortifying Brew triggered at % HP. (Will trade on enemy Burst!)"})
 --defensive:Slider({text = "Transfer Juke", var = "xfer", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
 --defensive:Slider({text = "Ring of Peace", var = "rophp", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
 defensive:Checkbox({text = "Ring of Peace", var = "rop", default = true, tooltip = "Enable/Disable Ring of Peace on enemy burst."})
