@@ -56,31 +56,31 @@ end
 
 -- Offensive tab
 local offensive = gui:Tab("Offensive")
-offensive:Slider({text = "Spear Hand Strike", var = "spear", min = 0, max = 100, default = 69, valueType = "%", tooltip = "Use Spear Hand Strike on heals when enemy at % HP."})
-offensive:Slider({text = "Thunder Focus Tea", var = "tft", min = 0, max = 100, default = 74, valueType = "%", tooltip = "Use Thunder Focus Tea at % HP."})
-offensive:Slider({text = "Invoke Chi-Ji", var = "chiji", min = 0, max = 100, default = 69, valueType = "%", tooltip = "Use Chi-Ji when teammate at % HP."})
-offensive:Slider({text = "Paralysis", var = "para", min = 0, max = 100, default = 69, valueType = "%", tooltip = "Use Paralysis on healer if target at % HP and FULL DR."})
+offensive:Slider({text = "Spear Hand Strike", var = "spear", min = 0, max = 100, default = 69, tooltip = "Use Spear Hand Strike on heals when enemy at % HP."})
+offensive:Slider({text = "Thunder Focus Tea", var = "tft", min = 0, max = 100, default = 74, tooltip = "Use Thunder Focus Tea at % HP."})
+offensive:Slider({text = "Invoke Chi-Ji", var = "chiji", min = 0, max = 100, default = 69, tooltip = "Use Chi-Ji when teammate at % HP."})
+offensive:Slider({text = "Paralysis", var = "para", min = 0, max = 100, default = 69, tooltip = "Use Paralysis on healer if target at % HP and FULL DR."})
 offensive:Checkbox({text = "Chi-Ji on Enemy Burst", var = "cje", default = true, tooltip = "Enable/Disable Chi-Ji on enemy burst."})
 offensive:Checkbox({text = "Chi-Ji on Friendly Burst", var = "cjf", default = true, tooltip = "Enable/Disable Chi-Ji on friendly burst."})
 
 
 -- Defensive tab
 local defensive = gui:Tab("Defensive")
-defensive:Slider({text = "Dampen Harm", var = "dh", min = 0, max = 100, default = 44, valueType = "%", tooltip = "Dampen Harm triggered at % HP."})
-defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Life Cocoon triggered at % HP."})
-defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 29, valueType = "%", tooltip = "Diffuse Magic triggered at % HP. (Will normally save for Mindgames etc.)"})
-defensive:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 64, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
-defensive:Slider({text = "Fortifying Brew", var = "fb", min = 0, max = 100, default = 34, valueType = "%", tooltip = "Fortifying Brew triggered at % HP. (Will trade on enemy Burst!)"})
-defensive:Slider({text = "Transfer Juke", var = "xfer", min = 0, max = 100, default = 59, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
-defensive:Slider({text = "Ring of Peace", var = "rophp", min = 0, max = 100, default = 39, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
+defensive:Slider({text = "Dampen Harm", var = "dh", min = 0, max = 100, default = 44, tooltip = "Dampen Harm triggered at % HP."})
+defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, tooltip = "Life Cocoon triggered at % HP."})
+defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 30, tooltip = "Diffuse Magic triggered at % HP. (Will normally save for Mindgames etc.)"})
+defensive:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, tooltip = "Healing Elixir triggered at % HP."})
+defensive:Slider({text = "Fortifying Brew", var = "fb", min = 0, max = 100, default = 35, tooltip = "Fortifying Brew triggered at % HP. (Will trade on enemy Burst!)"})
+defensive:Slider({text = "Transfer Juke", var = "xfer", min = 0, max = 100, default = 60, tooltip = "Transfer Juke triggered on stun at % HP."})
+defensive:Slider({text = "Ring of Peace", var = "rophp", min = 0, max = 100, default = 40, tooltip = "Ring of Peace trigger on friendly at % HP."})
 defensive:Checkbox({text = "Ring of Peace", var = "rop", default = true, tooltip = "Enable/Disable Ring of Peace on enemy burst."})
 
 
 -- Healing tab
 local healing = gui:Tab("Healing")
-healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Sphere of Hope ally at % HP. (Limited 15 second timer check.)"})
-healing:Slider({text = "Restoral", var = "restoral", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP.)"})
-healing:Slider({text = "Revival", var = "revival", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP.)"})
+healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, default = 90, tooltip = "Sphere of Hope ally at % HP. (Limited 15 second timer check.)"})
+healing:Slider({text = "Restoral", var = "restoral", min = 0, max = 100, default = 37, tooltip = "Restoral at friend % HP.)"})
+healing:Slider({text = "Revival", var = "revival", min = 0, max = 100, default = 37, tooltip = "Restoral at friend % HP.)"})
 healing:Checkbox({text = "Renewing Mist", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
 healing:Checkbox({text = "Enveloping Mist", var = "em", default = true, tooltip = "Enable/Disable Auto Instant Proc Enveloping Mists."})
 
@@ -89,7 +89,7 @@ local misc = gui:Tab("Misc")
 misc:Dropdown({
     var = "totemStomp",
     multi = true,
-    tooltip = "Choose the totems you want to stomp.",
+   tooltip = "Choose the totems you want to stomp.",
     options = options,
     placeholder = "Select totems",
     header = "Totems to stomp:",
