@@ -128,27 +128,6 @@ local kickHealsTable = {
     ["Living Flame"] = true
 }
 
-    -- Define a table with totem names and their respective IDs
-local totemList = {
-    ["Capacitor Totem"] = 59547,
-    ["Tremor Totem"] = 8143,
-    ["Earthbind Totem"] = 2484,
-    ["Spirit Link Totem"] = 98008,
-    ["Grounding Totem"] = 8177,
-    ["Skyfury Totem"] = 204330,
-    ["Counterstrike Totem"] = 204331,
-    ["Psyfiend"] = 108366,
-    ["Windfury Totem"] = 8512,
-    ["Fel Obelisk"] = 255774,
-    ["Static Totem"] = 301624,
-    ["Void Tendril"] = 115422,
-    ["War Banner"] = 246366,
-    ["Earthgrab Totem"] = 51485,
-    ["Healing Tide Totem"] = 108280,
-    ["Static Field Totem"] = 281902,
-    ["Fel Obelisk"] = 353601
-}
-
 local enemyBuffTable = {
     ["Power Word: Barrier"] = 62618, -- Power Word: Barrier
     ["Earthen Wall"] = 198838 -- Earthen Wall
@@ -371,8 +350,8 @@ end)
 -- Stomp totems function
 function stompTotems()
     awful.totems.loop(function(totem)
-        -- Check if the totem is in the totemList and within 5 yards
-        if totem.id or settings.totemstomp[totem.id] and player.distanceTo(totem) <= 5 then
+        -- Check if the totem is not in the totemList or is not within 5 yards
+        if not totem.id or not settings.totemstomp[totem.id] or player.distanceTo(totem) > 5 then return end
             awful.alert({
                 message="Stomped a totem.",  
                 texture=100780,
@@ -383,6 +362,7 @@ function stompTotems()
         end
     end)
 end
+
 
 -- Callback for Disable ability
 disable:Callback(function(spell)
