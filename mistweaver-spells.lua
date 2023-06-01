@@ -5,7 +5,7 @@ local Spell = awful.Spell
 local delayLowerBound = 0.4
 local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
-settings = project.settings
+local settings = project.settings
 awful.enabled = true
 
 awful.Populate({
