@@ -95,6 +95,6 @@ misc:Dropdown({
     header = "Totems to stomp:",
     default = default
 })
-misc:Checkbox({text = "Closest Traget Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
+misc:Checkbox({text = "Closest Target Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
 misc:Checkbox({text = "Totem Stomp", var = "ts", default = true, tooltip = "Enable/Disable Totem Stomping."})
