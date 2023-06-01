@@ -767,6 +767,7 @@ end)
 
 
 fortifyingBrew:Callback(function(spell)
+    local settings = project.settings
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
