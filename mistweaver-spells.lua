@@ -391,7 +391,7 @@ spearHandStrike:Callback(function(spell)
     local function isEnemyLowHealth()
         local lowHealthFound = false
         awful.enemies.loop(function(enemy)
-            if enemy.hp < 70 then
+            if enemy.hp < settings.spear then
                 lowHealthFound = true
                 return true -- break the loop once a low health enemy is found
             end

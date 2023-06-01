@@ -56,6 +56,7 @@ end
 
 -- Offensive tab
 local offensive = gui:Tab("Offensive")
+offensive:Slider({text = "Spear Hand Strike", var = "spear", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Use Spear Hand Strike on heals when enemy at % HP."})
 offensive:Slider({text = "Thunder Focus Tea", var = "tft", min = 0, max = 100, default = 75, valueType = "%", tooltip = "Use Thunder Focus Tea at % HP."})
 offensive:Slider({text = "Invoke Chi-Ji", var = "chiji", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Use Chi-Ji when teammate at % HP."})
 offensive:Checkbox({text = "Chi-Ji on Enemy Burst", var = "cje", default = true, tooltip = "Enable/Disable Chi-Ji on enemy burst."})
