@@ -208,7 +208,7 @@ BurstCDS = {
 -- Callback for Transfer
 transfer:Callback(function(spell)
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
-    if player.hp <= settings.xfer and player.stunned and spell:Castable() and player.HasTalent(353584) then
+    if player.hp <= settings.transfer and player.stunned and spell:Castable() and player.HasTalent(353584) then
         -- Cast Transfer
         spell:Cast()
         -- Check if player has the Eminence talent
@@ -316,7 +316,7 @@ ringOfPeace:Callback(function(spell)
     end)
 
     awful.friends.loop(function(friend)
-        if friend.hp <= settings.rophp then
+        if friend.hp <= settings.ring then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
@@ -786,7 +786,7 @@ fortifyingBrew:Callback(function(spell)
     end)
 
     -- Check if the player's health is at or below 40%
-    if player.hp <= settings.fb and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
+    if player.hp <= settings.fBrew and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
