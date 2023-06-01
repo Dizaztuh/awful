@@ -1,5 +1,4 @@
 local Unlocker, awful, project = ...
-settings = project.settings
 local mistweaver = project.monk.mistweaver
 local player = awful.Player
 local Spell = awful.Spell
@@ -7,7 +6,7 @@ local delayLowerBound = 0.4
 local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
 awful.enabled = true
-
+settings = project.settings
 awful.Populate({
     transfer = Spell(119996),
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, ignoreMoving = true }),
