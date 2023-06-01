@@ -39,9 +39,6 @@ defensive:Slider({text = "Fortifying Brew", var = "fb", min = 0, max = 100, defa
 defensive:Slider({text = "Transfer Juke", var = "xfer", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
 defensive:Checkbox({text = "Ring of Peace", var = "rop", default = true, tooltip = "Enable/Disable Ring of Peace on enemy burst."})
 
-
-
-
 -- Healing tab
 local healing = gui:Tab("Healing")
 healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Sphere of Hope ally at % HP.)"})
@@ -49,7 +46,6 @@ healing:Slider({text = "Restoral", var = "restoral", min = 0, max = 100, default
 healing:Slider({text = "Revival", var = "revival", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP.)"})
 healing:Checkbox({text = "Renewing Mist", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
 healing:Checkbox({text = "Enveloping Mist", var = "em", default = true, tooltip = "Enable/Disable Auto Instant Proc Enveloping Mists."})
-
 
 -- Misc tab
 local misc = gui:Tab("Misc")
