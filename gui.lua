@@ -11,8 +11,8 @@ local lightGreen = {144, 238, 144, 1}
 -- Create GUI
 local gui, settings, cmd = awful.UI:New("gladdyui", {
     title = "Gladdy SisterFister",
-    width = 350,
-    height = 225,
+    width = 360,
+    height = 250,
     scale = 1.0,
     show = true,
     sidebar = true,
