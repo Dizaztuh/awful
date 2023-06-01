@@ -75,8 +75,6 @@ defensive:Slider({text = "Ring of Peace", var = "ringPeace", min = 0, max = 100,
 defensive:Slider({text = "Dampen Harm", var = "dh", min = 0, max = 100, default = 44, valueType = "%", tooltip = "Dampen Harm triggered at % HP."})
 defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Life Cocoon triggered at % HP."})
 defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 30, valueType = "%", tooltip = "Diffuse Magic triggered at % HP. (Will normally save for Mindgames etc.)"})
-defensive:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
-
 
 -- Healing tab
 local healing = gui:Tab("Healing")
@@ -85,7 +83,7 @@ healing:Slider({text = "Restoral", var = "restoral", min = 0, max = 100, default
 healing:Slider({text = "Revival", var = "revival", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP.)"})
 healing:Checkbox({text = "Renewing Mist", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
 healing:Checkbox({text = "Enveloping Mist", var = "em", default = true, tooltip = "Enable/Disable Auto Instant Proc Enveloping Mists."})
-
+healing:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
 -- Misc tab
 local misc = gui:Tab("Misc")
 misc:Dropdown({
