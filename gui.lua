@@ -1,5 +1,4 @@
 local Unlocker, awful, project = ...
-local player = awful.player
 
 -- RGB color scheme
 local black = {0, 0, 0, 1}
