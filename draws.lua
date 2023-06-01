@@ -1,5 +1,5 @@
 local Unlocker, awful, project = ...
-local discipline = project.priest.discipline
+local mistweaver = project.monk.mistweaver
 local Draw = awful.Draw
 local player = awful.player
 settings = project.settings
