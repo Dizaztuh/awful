@@ -29,7 +29,6 @@ mistweaver:Init(function()
     if player.buff("Arena Preparation") or player.buff("Drink") then return end
     if not player.mounted and (ARENA or BATTLEGROUND or DUNGEON or RAID or player.combat) then
             touchOfDeath()
-
             if settings.rop then
             ringOfPeace()
             end

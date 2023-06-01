@@ -10,7 +10,7 @@ awful.enabled = true
 
 awful.Populate({
     transfer = Spell(119996),
-    summonJadeSerpant = Spell(115313)
+    summonJadeSerpant = Spell(115313),
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, ignoreMoving = true }),
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
     risingSunKick = Spell(107428, { damage = "physical", targeted = false, ranged = true, range = 5 }),
