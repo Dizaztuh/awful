@@ -314,9 +314,9 @@ ringOfPeace:Callback(function(spell)
             end
         end
     end)
-
+local ringofPeaces = settings.ringofPeaces
     awful.friends.loop(function(friend)
-        if friend.hp <= settings.ringofPeaces then
+        if friend.hp <= ringofPeaces then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
