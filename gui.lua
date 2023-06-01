@@ -73,7 +73,7 @@ defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default 
 defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 30, valueType = "%", tooltip = "Diffuse Magic triggered at % HP."})
 defensive:Slider({text = "Transfer", var = "transferJuke", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
 --defensive:Slider({text = "Fortifying Brew", var = "fortifyingBrews", min = 0, max = 100, default = 35, valueType = "%", tooltip = "Fortifying Brew triggered at % HP."})
---defensive:Slider({text = "Ring of Peace", var = "ringofPeaces", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
+--defensive:Slider({text = "RoP", var = "ringofPeaces", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
 
 -- Healing tab
 local healing = gui:Tab("Healing")
