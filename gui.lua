@@ -66,7 +66,6 @@ offensive:Slider({text = "Paralysis", var = "para", min = 0, max = 100, default 
 offensive:Checkbox({text = "Chi-Ji on Enemy Burst", var = "cje", default = true, tooltip = "Enable/Disable Chi-Ji on enemy burst."})
 offensive:Checkbox({text = "Chi-Ji on Friendly Burst", var = "cjf", default = true, tooltip = "Enable/Disable Chi-Ji on friendly burst."})
 
-
 -- Defensive tab
 local defensive = gui:Tab("Defensive")
 defensive:Slider({text = "Fortifying Brew", var = "fortBrew", min = 0, max = 100, step = 1, default = 40, valueType = "%", tooltip = "Fortifying Brew triggered at % HP. (Will trade on enemy Burst!)"})
@@ -75,6 +74,7 @@ defensive:Slider({text = "Dampen Harm", var = "dh", min = 0, max = 100, default 
 defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Life Cocoon triggered at % HP."})
 defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 30, valueType = "%", tooltip = "Diffuse Magic triggered at % HP. (Will normally save for Mindgames etc.)"})
 defensive:Slider({text = "Transfer", var = "transferJuke", min = 0, max = 100, step = 1, default = 60, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
+
 -- Healing tab
 local healing = gui:Tab("Healing")
 healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Sphere of Hope ally at % HP. (Limited 15 second timer check.)"})
