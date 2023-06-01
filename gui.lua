@@ -17,7 +17,7 @@ local gui, settings, cmd = awful.UI:New("gladdyui", {
         title = darkGreen,           -- Title color is dark green
         primary = silver,            -- Primary text color is silver
         accent = lightGreen,         -- Accent color is light green
-        background = darkGrey,       -- Background color is dark grey
+        background = dark,       -- Background color is dark grey
         tertiary = silver,           -- Tertiary color is silver     
     }
 })
