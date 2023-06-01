@@ -27,7 +27,9 @@ project.settings = settings
 -- Offensive tab
 local offensive = gui:Tab("Offensive")
 offensive:Slider({text = "Thunder Focus Tea", var = "tft", min = 0, max = 100, default = 75, valueType = "%", tooltip = "Use Thunder Focus Tea at % HP."})
-offensive:Slider({text = "Invoke Chi-Ji", var = "chiji", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Use Chi-Ji when teammate at % HP. (Will use on enemy burst as well)"})
+offensive:Slider({text = "Invoke Chi-Ji", var = "chiji", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Use Chi-Ji when teammate at % HP."})
+offensive:Checkbox({text = "Chi-Ji on Enemy Burst", var = "cje", default = true, tooltip = "Enable/Disable Chi-Ji on enemy burst."})
+offensive:Checkbox({text = "Chi-Ji on Friendly Burst", var = "cjf", default = true, tooltip = "Enable/Disable Chi-Ji on friendly burst."})
 
 -- Defensive tab
 local defensive = gui:Tab("Defensive")
@@ -41,7 +43,7 @@ defensive:Checkbox({text = "Ring of Peace", var = "rop", default = true, tooltip
 
 -- Healing tab
 local healing = gui:Tab("Healing")
-healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Sphere of Hope ally at % HP.)"})
+healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Sphere of Hope ally at % HP. (Limited 15 second timer check.)"})
 healing:Slider({text = "Restoral", var = "restoral", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP.)"})
 healing:Slider({text = "Revival", var = "revival", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP.)"})
 healing:Checkbox({text = "Renewing Mist", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
