@@ -5,7 +5,7 @@ local Spell = awful.Spell
 local delayLowerBound = 0.4
 local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
-local settings = project.settings
+settings = project.settings
 awful.enabled = true
 
 awful.Populate({
@@ -767,7 +767,6 @@ end)
 
 
 fortifyingBrew:Callback(function(spell)
-    local settings = project.settings
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the BurstCDS table
