@@ -5,20 +5,22 @@ local Unlocker, awful, project = ...
 local black = {0, 0, 0, 1}
 local darkGrey = {45, 49, 55, 1}
 local silver = {192, 192, 192, 1}
-local red = {255, 0, 0, 1}
+local darkGreen = {0, 100, 0, 1}
+local lightGreen = {144, 238, 144, 1}
 
 -- Create GUI
 local gui, settings, cmd = awful.UI:New("gladdyui", {
     title = "Gladdy SisterFister",
     show = true,
     colors = {
-        title = green,               -- Title color is red
+        title = darkGreen,           -- Title color is dark green
         primary = silver,            -- Primary text color is silver
-        accent = green,                -- Accent color is red
-        background = darkGrey,          -- Background color is black
-        tertiary = silver,         -- Tertiary color is dark grey      
+        accent = lightGreen,         -- Accent color is light green
+        background = darkGrey,       -- Background color is dark grey
+        tertiary = silver,           -- Tertiary color is silver     
     }
 })
+
 
 project.settings = settings
 
