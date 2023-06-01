@@ -24,6 +24,36 @@ local gui, settings, cmd = awful.UI:New("gladdyui", {
 
 project.settings = settings
 
+-- Totem list for totem stomping
+local totemList = {
+    ["Capacitor Totem"] = 59547,
+    ["Tremor Totem"] = 8143,
+    ["Earthbind Totem"] = 2484,
+    ["Spirit Link Totem"] = 98008,
+    ["Grounding Totem"] = 8177,
+    ["Skyfury Totem"] = 204330,
+    ["Counterstrike Totem"] = 204331,
+    ["Psyfiend"] = 108366,
+    ["Windfury Totem"] = 8512,
+    ["Fel Obelisk"] = 255774,
+    ["Static Totem"] = 301624,
+    ["Void Tendril"] = 115422,
+    ["War Banner"] = 246366,
+    ["Earthgrab Totem"] = 51485,
+    ["Healing Tide Totem"] = 108280,
+    ["Static Field Totem"] = 281902,
+    ["Fel Obelisk"] = 353601
+}
+
+-- Convert your totem list into the required format for the options array and get the default list
+local options = {}
+local default = {}
+for totemName, totemID in pairs(totemList) do
+    table.insert(options, { label = totemName, value = totemID })
+    table.insert(default, totemID)
+end
+
+
 -- Offensive tab
 local offensive = gui:Tab("Offensive")
 offensive:Slider({text = "Thunder Focus Tea", var = "tft", min = 0, max = 100, default = 75, valueType = "%", tooltip = "Use Thunder Focus Tea at % HP."})
@@ -54,3 +84,12 @@ local misc = gui:Tab("Misc")
 misc:Checkbox({text = "Closest Traget Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
 misc:Checkbox({text = "Totem Stomp", var = "ts", default = true, tooltip = "Enable/Disable Totem Stomping."})
+misc:Dropdown({
+    var = "totemStompSelection",
+    multi = true,
+    tooltip = "Choose the totems you want to stomp.",
+    options = options,
+    placeholder = "Select totems",
+    header = "Totems to stomp:",
+    default = default
+})
