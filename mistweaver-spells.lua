@@ -316,7 +316,7 @@ ringOfPeace:Callback(function(spell)
     end)
 
     awful.friends.loop(function(friend)
-        if friend.hp <= 40 then
+        if friend.hp <= settings.rophp then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
@@ -341,7 +341,7 @@ grappleWeapon:Callback(function(spell)
     awful.enemies.loop(function(enemy)
         -- Check if the enemy used a spell from the DisarmTable
         for spellID, _ in pairs(DisarmTable) do
-            if enemy.buff(spellID, spellName) then
+            if enemy.buff(spellID) then
                 -- Cast grappleWeapon on the enemy
                 awful.alert({
                     message="Casted Disarm ",
@@ -492,10 +492,6 @@ detox:Callback(function(spell)
 end)
 
 
-
-
-
-
 -- Callback for Tiger's Lust ability
 tigersLust:Callback(function(spell)
 
@@ -569,7 +565,6 @@ end
             return spell:Cast(player)
         end
     end)
-
 end)
 
 
@@ -747,7 +742,7 @@ faelineStomp:Callback(function(spell)
         -- If the target's position is available and within line of sight, cast Faeline Stomp
         if x and y and z then
             awful.alert({
-                message="Casted Faeline Stomp to Rebuff Teachings!",
+                message="Casted Faeline Stomp",
                 texture=388193,
             })
             spell:Cast(target)
@@ -916,7 +911,7 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, the enemy healer is not the player's target, and incapDR is 1
-    if enemyHealer.distance <= paralyze.range and target.hp < 70 and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR == 1 then
+    if enemyHealer.distance <= paralyze.range and target.hp < settings.para and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR == 1 then
         -- If the conditions are met, cast Paralyze on the enemy healer
         paralyze:Cast(enemyHealer)
         awful.alert({
