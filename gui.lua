@@ -16,8 +16,7 @@ local gui, settings, cmd = awful.UI:New("gladdyui", {
     colors = {
         title = darkGreen,           -- Title color is dark green
         primary = silver,            -- Primary text color is silver
-        accent = lightGreen,         -- Accent color is light green
-        background = dark,       -- Background color is dark grey
+        accent = lightGreen,         -- Acc,       -- Background color is dark grey
         tertiary = silver,           -- Tertiary color is silver     
     }
 })
@@ -60,8 +59,10 @@ local offensive = gui:Tab("Offensive")
 offensive:Slider({text = "Spear Hand Strike", var = "spear", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Use Spear Hand Strike on heals when enemy at % HP."})
 offensive:Slider({text = "Thunder Focus Tea", var = "tft", min = 0, max = 100, default = 75, valueType = "%", tooltip = "Use Thunder Focus Tea at % HP."})
 offensive:Slider({text = "Invoke Chi-Ji", var = "chiji", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Use Chi-Ji when teammate at % HP."})
+offensive:Slider({text = "Paralysis", var = "para", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Use Paralysis on healer if target at % HP and FULL DR."})
 offensive:Checkbox({text = "Chi-Ji on Enemy Burst", var = "cje", default = true, tooltip = "Enable/Disable Chi-Ji on enemy burst."})
 offensive:Checkbox({text = "Chi-Ji on Friendly Burst", var = "cjf", default = true, tooltip = "Enable/Disable Chi-Ji on friendly burst."})
+
 
 -- Defensive tab
 local defensive = gui:Tab("Defensive")
@@ -71,7 +72,9 @@ defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, defaul
 defensive:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
 defensive:Slider({text = "Fortifying Brew", var = "fb", min = 0, max = 100, default = 35, valueType = "%", tooltip = "Fortifying Brew triggered at % HP. (Normally will trade on enemy Burst!)"})
 defensive:Slider({text = "Transfer Juke", var = "xfer", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Transfer Juke triggered on stun at % HP."})
+defensive:Slider({text = "Ring of Peace", var = "rophp", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
 defensive:Checkbox({text = "Ring of Peace", var = "rop", default = true, tooltip = "Enable/Disable Ring of Peace on enemy burst."})
+
 
 -- Healing tab
 local healing = gui:Tab("Healing")
