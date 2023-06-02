@@ -237,12 +237,13 @@ summonJadeSerpent:Callback(function(spell)
         end
     end)
 
-    -- If we found a friend without a statue close by, cast the spell at their position
+    -- If we found a friend without a statue close by, cast the spell at the player's position
     if friendWithoutStatue then
-        local x, y, z = friendWithoutStatue.position()
+        local x, y, z = player.position()
         spell:AoECast(x, y, z)
     end
 end)
+
 
 
 invokeYulon:Callback(function(spell)
