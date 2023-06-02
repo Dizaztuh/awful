@@ -808,7 +808,6 @@ enveloping:Callback(function(spell)
     end)
 
     if lowestHpFriend then
-        awful.call("SpellStopCasting")
         spell:Cast(lowestHpFriend)
     end
 end)
@@ -878,7 +877,6 @@ vivify:Callback(function(spell)
     end)
 
     if lowestHpFriend then
-        awful.call("SpellStopCasting")
         spell:Cast(lowestHpFriend)
     end
 end)
