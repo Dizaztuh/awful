@@ -218,26 +218,25 @@ manaTea:Callback(function(spell)
     end
 end)
 
--- Define a variable to remember the last known statue position
 summonJadeSerpent:Callback(function(spell)
     local statue = nil
-    local statueDistanceToPlayer = nil
 
     -- Loop through all objects to find the statue
     awful.objects.loop(function(obj)
         if obj.name == "Jade Serpent Statue" then
             statue = obj
-            statueDistanceToPlayer = player.distanceTo(obj)
             return true  -- Breaks the loop
         end
     end)
 
-    -- If we didn't find a statue or the statue is farther than 40 yards away from the player, cast the spell
-    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer > 40) then
+    -- If there's no statue or if the statue has no health or if it's duration is zero (indicating it's no longer active)
+    -- or if the statue is farther than 40 yards away from the player, cast the spell
+    if not statue or statue.health == 0 or statue.duration == 0 or player.distanceTo(statue) > 40 then
         local x, y, z = player.position()
         spell:AoECast(x, y, z)
     end
 end)
+
 
 invokeYulon:Callback(function(spell)
     -- Loop through all enemy units
