@@ -71,6 +71,7 @@ end
 
 local function initCasterHealer()
     summonJadeSerpent()
+    sphereofDespair()
     ringOfPeace()
     detox()
     provoke()
@@ -91,7 +92,7 @@ local function initCasterHealer()
     if settings.soh then
     sphereofHope()
     end
-    sphereofDespair()
+
     if settings.revival then
     revival()
     end
