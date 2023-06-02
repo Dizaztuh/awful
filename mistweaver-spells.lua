@@ -858,7 +858,7 @@ vivify:Callback(function(spell)
     local lowestHp = 85 
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
+        if friend.hp < lowestHp and friend.hp > 70 and friend.buff("Soothing Mist") then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
@@ -941,7 +941,6 @@ faelineStomp:Callback(function(spell)
         end
     end
 end)
-
 
 
 -- Create a callback for the Essence Font ability
