@@ -73,11 +73,6 @@ mistweaver:Init(function()
             diffuseMagic()
         else
             summonJadeSerpent()
-            renewing()
-            soothingMist()
-            vivify()
-            envelopingMist()
-            vivify()
             ringOfPeace()
             detox()
             provoke()
@@ -91,6 +86,11 @@ mistweaver:Init(function()
             if settings.lc then
             lifeCocoon()
             end
+            renewing()
+            soothingMist()
+            vivify()
+            enveloping()
+            vivify()
             if settings.soh then
             sphereofHope()
             end
