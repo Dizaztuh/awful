@@ -842,7 +842,7 @@ enveloping:Callback(function(spell)
 
     awful.fgroup.loop(function(friend)
         -- Check if the friend's HP is lower than the lowest HP we've seen so far, if they have the Soothing Mist buff, and if they haven't been healed recently
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") and (not friend.healedRecently or awful.time - friend.healedRecently > 2) then
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") and (not friend.healedRecently or awful.time - friend.healedRecently > 1.5) then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
