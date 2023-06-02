@@ -838,22 +838,22 @@ end)
 
 enveloping:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 100
+    local lowestHp = 70 -- Changed from 100 to 70
 
     awful.fgroup.loop(function(friend)
-        -- Check if the friend's HP is lower than the lowest HP we've seen so far, if they have the Soothing Mist buff, and if they haven't been healed recently
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") and (not friend.healedRecently or awful.time - friend.healedRecently > 1.5) then
+        -- Check if the friend's HP is lower than the lowest HP we've seen so far, and if they have the Soothing Mist buff
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
     end)
 
-    if lowestHpFriend then
+    -- Check if Enveloping Mist is castable and if there's a suitable target before attempting to cast
+    if enveloping:Castable() and lowestHpFriend then
         spell:Cast(lowestHpFriend)
-        -- Mark the friend as having been healed recently
-        lowestHpFriend.healedRecently = awful.time
     end
 end)
+
 
 renewingMist:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
@@ -909,22 +909,22 @@ end)
 
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 100
+    local lowestHp = 90 -- Changed from 100 to 90
 
     awful.fgroup.loop(function(friend)
-        -- Check if the friend's HP is lower than the lowest HP we've seen so far, if they have the Soothing Mist buff, and if they haven't been healed recently
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") and (not friend.healedRecently or awful.time - friend.healedRecently > 2) then
+        -- Check if the friend's HP is lower than the lowest HP we've seen so far, and if they have the Soothing Mist buff
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
     end)
 
-    if lowestHpFriend then
+    -- Check if Vivify is castable and if there's a suitable target before attempting to cast
+    if vivify:Castable() and lowestHpFriend then
         spell:Cast(lowestHpFriend)
-        -- Mark the friend as having been healed recently
-        lowestHpFriend.healedRecently = awful.time
     end
 end)
+
 
 
 faelineStomp:Callback(function(spell)
