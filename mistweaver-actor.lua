@@ -71,7 +71,7 @@ mistweaver:Init(function()
             diffuseMagic()
         else
             invokeYulon()
-            summonJadeSerpant()
+            summonJadeSerpent()
             touchOfDeath()
             ringOfPeace()
             lifeCocoon()

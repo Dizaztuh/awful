@@ -11,7 +11,7 @@ awful.enabled = true
 
 awful.Populate({
     transfer = Spell(119996),
-    summonJadeSerpant = Spell(115313, { ignoreLoS = false }),
+    summonJadeSerpent = Spell(115313, { ignoreLoS = false }),
     zenFocusTea = Spell(209584),
     invokeYulon = Spell(322118),
     vivify = Spell(116670, { heal = true, ignoreChanneling = true }),
@@ -212,49 +212,37 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-summonJadeSerpant:Callback(function(spell)
-    -- Initialize variables for storing the lowest HP friend and their HP
+summonJadeSerpent:Callback(function(spell)
     local statue = nil
-    local statueName = "Jade Serpent Statue"
-    local lowestHpFriend = nil
-    local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
+    local friendWithoutStatue = nil
 
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        -- Check if the friend is within 40 yards and is in line of sight of the player
-        if player.distanceTo(friend) <= 40 and not player.losOf(friend) then
-            -- Check if the friend's HP is lower than the lowest HP we've seen so far
-            if friend.hp < lowestHp then
-                -- Update the lowest HP and lowest HP friend
-                lowestHp = friend.hp
-                lowestHpFriend = friend
+        -- Initialize a flag to check if a statue is close to this friend
+        local statueClose = false
+
+        -- Loop through all objects
+        awful.objects.loop(function(obj)
+            -- If this object is a Jade Serpent Statue and it's within 40 yards of the friend, set the flag
+            if obj.name == "Jade Serpent Statue" and friend.distanceTo(obj) <= 40 then
+                statueClose = true
+                return true  -- Breaks the loop
             end
+        end)
+
+        -- If we didn't find a statue close to this friend, remember this friend
+        if not statueClose then
+            friendWithoutStatue = friend
+            return true  -- Breaks the loop
         end
     end)
 
-    -- Loop through all objects to find the statue
-    awful.objects.loop(function(obj)
-        if obj.name == statueName then
-            statue = obj
-            return true  -- Break the loop
-        end
-    end)
-
-    -- If we found a friend with the lowest HP, check the distance to the statue
-    if lowestHpFriend and statue then
-        local x, y, z = lowestHpFriend.position()
-        -- Check if the statue exists and is within 40 yards of the lowest HP friend
-        if lowestHpFriend.distanceTo(statue) <= 40 then
-            -- Do not recast the spell
-            return
-        else
-            -- If the statue does not exist or is not within 40 yards, cast the spell at the friend's position
-            spell:AoECast(x, y, z)
-        end
+    -- If we found a friend without a statue close by, cast the spell at their position
+    if friendWithoutStatue then
+        local x, y, z = friendWithoutStatue.position()
+        spell:AoECast(x, y, z)
     end
 end)
-
-
 
 
 invokeYulon:Callback(function(spell)
@@ -273,19 +261,30 @@ invokeYulon:Callback(function(spell)
 end)
 
 soothingMist:Callback(function(spell)
+    -- Initialize variables for storing the lowest HP friend and their HP
+    local lowestHpFriend = nil
+    local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
+
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
-        -- Check if the friend's health is below 90% and within 40 yards
-        if friend.hp < 90 and friend.distance <= 40 then
-            -- Call awful's stopcast function to interrupt any current casting
-            awful.call("SpellStopCasting")
-            -- Cast Soothing Mist on the friend
-            spell:Cast(friend)
-            -- Break the loop once we've found a friend to heal
-            return true
+        -- Check if the friend's HP is lower than the lowest HP we've seen so far
+        if friend.hp < lowestHp then
+            -- Update the lowest HP and lowest HP friend
+            lowestHp = friend.hp
+            lowestHpFriend = friend
         end
     end)
+
+    -- If we found a friend with the lowest HP
+    if lowestHpFriend then
+        -- Stop any ongoing casting
+        awful.call("SpellStopCasting")
+
+        -- Cast Soothing Mist on the friend
+        spell:Cast(lowestHpFriend)
+    end
 end)
+
 
 -- Callback for Transfer
 transfer:Callback(function(spell)
@@ -306,10 +305,10 @@ transfer:Callback(function(spell)
 end)
 
 
--- Callback for Provoke ability
 provoke:Callback(function(spell)
     -- Define a variable to store the closest enemy with a DPS role
     local closestDpsEnemy = nil
+
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
         -- Check if the enemy has a DPS role (either melee or ranged)
@@ -322,22 +321,24 @@ provoke:Callback(function(spell)
     end)
     -- If we've found a closest DPS enemy
     if closestDpsEnemy then
-        local enemyCastingSpell = closestDpsEnemy.casting -- Get the name of the spell being cast by the enemy
-        -- Check if the enemy is casting a spell from the provokeTable
-        if enemyCastingSpell and closestDpsEnemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and closestDpsEnemy.castRemains < 0.5 
-        and (not spearHandStrike:Castable(closestDpsEnemy) or closestDpsEnemy.distance > 5) then
-            awful.alert({
-                message="Casting Provoke",
-                texture=115546,
-            })
-            -- If so, cast Provoke on the closestDpsEnemy right before their cast ends
-            awful.call("SpellStopCasting")
-            spell:Cast(closestDpsEnemy)
-        end
+        -- Then loop again through all enemies
+        awful.enemies.loop(function(enemy)
+            local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+            -- Check if any enemy is casting a spell from the provokeTable and if they're targeting the player
+            if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
+            and (not spearHandStrike:Castable(closestDpsEnemy) or closestDpsEnemy.distance > 5) then
+                awful.alert({
+                    message="Casting Provoke",
+                    texture=115546,
+                })
+                -- If so, cast Provoke on the closestDpsEnemy
+                awful.call("SpellStopCasting")
+                spell:Cast(closestDpsEnemy)
+                return true -- this breaks the loop as soon as the condition is met, so Provoke won't be cast more than once
+            end
+        end)
     end
 end)
-
-
 
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
@@ -788,6 +789,7 @@ end)
 
 enveloping:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
+    if not soothingMist.channeling then return end
     local lowestHpFriend = nil
     local lowestHpPercentage = 100
 
