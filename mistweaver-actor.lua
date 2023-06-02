@@ -93,7 +93,6 @@ mistweaver:Init(function()
             dampenHarm()
             fortifyingBrew()
             diffuseMagic()
-            stompTotems()
             spearHandStrike()
         end
     end
