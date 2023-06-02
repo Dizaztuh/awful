@@ -218,6 +218,9 @@ manaTea:Callback(function(spell)
     end
 end)
 
+local lastStatuePosition = nil
+local distanceTolerance = 10 -- tolerance for position difference
+
 summonJadeSerpent:Callback(function(spell)
     local statue = nil
 
@@ -229,13 +232,27 @@ summonJadeSerpent:Callback(function(spell)
         end
     end)
 
-    -- If there's no statue or if the statue has no health or if it's duration is zero (indicating it's no longer active)
-    -- or if the statue is farther than 40 yards away from the player, cast the spell
-    if not statue or statue.health == 0 or statue.duration == 0 or player.distanceTo(statue) > 40 then
-        local x, y, z = player.position()
-        spell:AoECast(x, y, z)
+    local playerX, playerY, playerZ = player.position()
+    local playerPosition = {x = playerX, y = playerY, z = playerZ}
+    
+    -- Check if statue exists and player is within 40 yards
+    if statue and player.distanceTo(statue) <= 40 then
+        return -- Don't cast if a statue is close
     end
+
+    -- Check if player has moved significantly from last statue position before summoning new statue
+    if lastStatuePosition then
+        local distanceFromLastStatue = ((playerPosition.x - lastStatuePosition.x) ^ 2 + (playerPosition.y - lastStatuePosition.y) ^ 2 + (playerPosition.z - lastStatuePosition.z) ^ 2) ^ 0.5
+        if distanceFromLastStatue < distanceTolerance then
+            return -- Don't cast if player hasn't moved far from last statue position
+        end
+    end
+
+    -- If we've passed all checks, it's safe to cast the spell
+    spell:AoECast(playerX, playerY, playerZ)
+    lastStatuePosition = playerPosition
 end)
+
 
 
 invokeYulon:Callback(function(spell)
