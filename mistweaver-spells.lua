@@ -887,7 +887,7 @@ vivify:Callback(function(spell)
     awful.fgroup.loop(function(friend)
         -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
         -- and if the friend has the Soothing Mist buff
-        if friend.hp < lowestHpPercentage then
+        if friend.hp < lowestHpPercentage and friend.buff("Soothing Mist") then
             -- Update lowestHpFriend and lowestHpPercentage
             lowestHpFriend = friend
             lowestHpPercentage = friend.hp
@@ -897,7 +897,7 @@ vivify:Callback(function(spell)
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if lowestHpFriend ~= nil then
         awful.alert({
-            message="Casted Vivify", 
+            message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
             texture=124682,
         })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
