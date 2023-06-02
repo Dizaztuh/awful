@@ -224,23 +224,64 @@ local statueSummonCooldown = 5 -- 5 second cooldown between statue summons
 local lastStatuePosition = nil
 local distanceTolerance = 10 -- tolerance for position difference
 
+local function jadeSerpentStatueCheck()
+    for index = 1, 4 do
+        local _, totemName, startTime, duration, _ = GetTotemInfo(index)
+        local est_dur = ((startTime + duration) - awful.time)
+        if totemName and string.find(totemName, "Jade Serpent Statue") then
+            return est_dur or 0  -- returns estimated remaining duration of the statue
+        end
+    end
+    return 0
+end
+
+local function jadeSerpentStatueCheck()
+    for index = 1, 4 do
+        local _, totemName, startTime, duration, _ = GetTotemInfo(index)
+        local est_dur = ((startTime + duration) - awful.time)
+        if totemName and string.find(totemName, "Jade Serpent Statue") then
+            return est_dur or 0  -- returns estimated remaining duration of the statue
+        end
+    end
+    return 0
+end
+
+local function jadeSerpentStatueCheck()
+    for index = 1, 4 do
+        local _, totemName, startTime, duration, _ = GetTotemInfo(index)
+        local est_dur = ((startTime + duration) - awful.time)
+        if totemName and string.find(totemName, "Jade Serpent Statue") then
+            return est_dur or 0  -- returns estimated remaining duration of the statue
+        end
+    end
+    return 0
+end
+
 summonJadeSerpent:Callback(function(spell)
     local statue = nil
-    local statueDistanceToPlayer = nil
 
     -- Loop through all objects to find the statue
     awful.objects.loop(function(obj)
         if obj.name == "Jade Serpent Statue" then
             statue = obj
-            statueDistanceToPlayer = player.distanceTo(obj)
             return true  -- Breaks the loop
         end
     end)
 
-    -- If there's no statue or it's 40 or more yards away, summon a new statue
-    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer >= 40) then
-        local x, y, z = player.position()
-        spell:AoECast(x, y, z)
+    if statue then
+        -- Find the number of players around the statue within 40 yards
+        local count = awful.list.around(statue, 40)
+        -- If there are less than 2 players within 40 yards of the statue, summon a new statue
+        if count < 2 then
+            local x, y, z = player.position()
+            spell:AoECast(x, y, z)
+        end
+    else
+        -- If there's no statue or it's almost expired, summon a new statue
+        if jadeSerpentStatueCheck() < 1 then
+            local x, y, z = player.position()
+            spell:AoECast(x, y, z)
+        end
     end
 end)
 
@@ -841,7 +882,7 @@ end)
 renewing:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 90
+    local lowestHpPercentage = 100
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
@@ -866,11 +907,11 @@ end)
 
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 101 
+    local lowestHp = 100
 
     awful.fgroup.loop(function(friend)
-        -- Check if the friend's HP is lower than the lowest HP we've seen so far and if they have the Soothing Mist buff
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
+        -- Check if the friend's HP is lower than the lowest HP we've seen so far, if they have the Soothing Mist buff, and if they haven't been healed recently
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") and (not friend.healedRecently or awful.time - friend.healedRecently > 2) then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
@@ -878,8 +919,11 @@ vivify:Callback(function(spell)
 
     if lowestHpFriend then
         spell:Cast(lowestHpFriend)
+        -- Mark the friend as having been healed recently
+        lowestHpFriend.healedRecently = awful.time
     end
 end)
+
 
 faelineStomp:Callback(function(spell)
     -- Check if the player doesn't have the Teachings buff
