@@ -28,6 +28,7 @@ mistweaver:Init(function()
     updateInstanceType()
     if player.buff("Arena Preparation") or player.buff("Drink") then return end
     if not player.mounted and (ARENA or BATTLEGROUND or DUNGEON or RAID or player.combat) then
+        if player.hasTalent(287503) then
             touchOfDeath()
             if settings.rop then
             ringOfPeace()
@@ -68,6 +69,33 @@ mistweaver:Init(function()
             dampenHarm()
             fortifyingBrew()
             diffuseMagic()
+        else
+            touchofDeath()
+            ringOfPeace()
+            lifeCocoon()
+            summonJadeSerpant()
+            sphereofHope()
+            renewingMist()
+            soothingMist()
+            vivify()
+            envelopingMist()
+            vivify()
+            sphereofDespair()
+            invokeYulon()
+            tigersLust()
+            detox()
+            grappleWeapon()
+            revival()
+            restoral()
+            provoke()
+            legsweep()
+            healingElixir()
+            dampenHarm()
+            fortifyingBrew()
+            diffuseMagic()
+            stompTotems()
+            spearHandStrike()
+        end
     end
 end)
 

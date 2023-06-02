@@ -6,11 +6,15 @@ local delayLowerBound = 0.4
 local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
 local settings = project.settings
+local SpellStopCasting = awful.unlock("SpellStopCasting") or awful.call("SpellStopCasting")
 awful.enabled = true
 
 awful.Populate({
     transfer = Spell(119996),
-    summonJadeSerpant = Spell(115313),
+    summonJadeSerpant = Spell(115313, { heal = true }),
+    zenFocusTea = Spell(209584),
+    invokeYulon = Spell(322118),
+    vivify = Spell(116670, { heal = true, ignoreChanneling = true }),
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, ignoreMoving = true }),
     blackoutKick = Spell(118166, { damage = "physical", targeted = true }),
     risingSunKick = Spell(107428, { damage = "physical", targeted = false, ranged = true, range = 5 }),
@@ -205,6 +209,36 @@ BurstCDS = {
     [12472] = true, -- Icy Veins
     [262161] = true -- Warbreaker
 }
+
+invokeYulon:Callback(function(spell)
+    -- Loop through all enemy units
+    awful.enemies.loop(function(enemy)
+        -- Check if the enemy has any buffs from the BurstCDS table
+        for spellID, _ in pairs(BurstCDS) do
+            if enemy.buff(spellID) then
+                -- Cast Invoke Yu'lon on the enemy
+                spell:Cast()
+                -- Break the loop once we've found an enemy with a buff
+                return true
+            end
+        end
+    end)
+end)
+
+soothingMist:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friend's health is below 90% and within 40 yards
+        if friend.hp < 90 and friend.distance <= 40 then
+            -- Call awful's stopcast function to interrupt any current casting
+            awful.call("SpellStopCasting")
+            -- Cast Soothing Mist on the friend
+            spell:Cast(friend)
+            -- Break the loop once we've found a friend to heal
+            return true
+        end
+    end)
+end)
 
 -- Callback for Transfer
 transfer:Callback(function(spell)
@@ -730,6 +764,31 @@ renewingMist:Callback(function(spell)
     end
 end)
 
+vivify:Callback(function(spell)
+    -- Initialize a variable to store the friendly unit with the lowest HP
+    local lowestHpFriend = nil
+    local lowestHpPercentage = 100
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
+        if friend.hp < lowestHpPercentage then
+            -- Update lowestHpFriend and lowestHpPercentage
+            lowestHpFriend = friend
+            lowestHpPercentage = friend.hp
+        end
+    end)
+
+    -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
+    if vivify.castTime == 0 and lowestHpFriend ~= nil then
+        awful.alert({
+            message="Casted Instant Renewing Mist Instant Proc on Lowest HP Ally!", 
+            texture=115151,
+            })
+        -- If the cooldown is 0, cast vivify on the friendly unit with the lowest HP
+        spell:Cast(lowestHpFriend)
+    end
+end)
 
 faelineStomp:Callback(function(spell)
     -- Check if the player doesn't have the Teachings buff
