@@ -2,6 +2,7 @@
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 settings = project.settings
+local player = awful.player
 local function updateInstanceType()
     local _, instanceType = IsInInstance()
     PVP = instanceType == "pvp" or instanceType == "arena"
