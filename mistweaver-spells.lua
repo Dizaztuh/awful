@@ -214,7 +214,6 @@ BurstCDS = {
 
 summonJadeSerpent:Callback(function(spell)
     -- Initialize variables for storing the lowest HP friend and their HP
-    local statue = awful.item(60849)
     local lowestHpFriend = nil
     local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
 
