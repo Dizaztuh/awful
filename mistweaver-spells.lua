@@ -838,11 +838,11 @@ end)
 
 enveloping:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 101 
+    local lowestHp = 100
 
     awful.fgroup.loop(function(friend)
-        -- Check if the friend's HP is lower than the lowest HP we've seen so far and if they have the Soothing Mist buff
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
+        -- Check if the friend's HP is lower than the lowest HP we've seen so far, if they have the Soothing Mist buff, and if they haven't been healed recently
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") and (not friend.healedRecently or awful.time - friend.healedRecently > 2) then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
@@ -850,6 +850,8 @@ enveloping:Callback(function(spell)
 
     if lowestHpFriend then
         spell:Cast(lowestHpFriend)
+        -- Mark the friend as having been healed recently
+        lowestHpFriend.healedRecently = awful.time
     end
 end)
 
