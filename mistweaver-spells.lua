@@ -887,7 +887,7 @@ vivify:Callback(function(spell)
     awful.fgroup.loop(function(friend)
         -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
         -- and if the friend has the Soothing Mist buff
-        if friend.hp < lowestHpPercentage and friend.buff("Soothing Mist") then
+        if friend.hp < lowestHpPercentage then
             -- Update lowestHpFriend and lowestHpPercentage
             lowestHpFriend = friend
             lowestHpPercentage = friend.hp
