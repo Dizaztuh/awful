@@ -214,7 +214,6 @@ BurstCDS = {
 
 summonJadeSerpent:Callback(function(spell)
     -- Initialize variables for storing the lowest HP friend and their HP
-    local statue = awful.totem("Jade Serpent Statue")
     local lowestHpFriend = nil
     local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
 
@@ -234,6 +233,10 @@ summonJadeSerpent:Callback(function(spell)
     -- If we found a friend with the lowest HP, check the distance to the statue
     if lowestHpFriend then
         local x, y, z = lowestHpFriend.position()
+        
+        -- Retrieve the statue at each function call
+        local statue = awful.totem("Jade Serpent Statue")
+
         -- Check if the statue exists and is within 40 yards of the lowest HP friend
         if statue and lowestHpFriend.distanceTo(statue) <= 40 then
             -- Do not recast the spell
@@ -244,6 +247,7 @@ summonJadeSerpent:Callback(function(spell)
         end
     end
 end)
+
 
 
 invokeYulon:Callback(function(spell)
