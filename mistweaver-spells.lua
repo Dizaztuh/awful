@@ -221,7 +221,7 @@ summonJadeSerpent:Callback(function(spell)
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
         -- Check if the friend is within 40 yards and is in line of sight of the player
-        if player.distanceTo(friend) <= 40 and player.losOf(friend) then
+        if player.distanceTo(friend) <= 40 and not player.losOf(friend) then
             -- Check if the friend's HP is lower than the lowest HP we've seen so far
             if friend.hp < lowestHp then
                 -- Update the lowest HP and lowest HP friend
