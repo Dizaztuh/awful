@@ -881,7 +881,7 @@ vivify:Callback(function(spell)
 
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 95
+    local lowestHpPercentage = 100
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
