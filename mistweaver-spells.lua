@@ -801,7 +801,7 @@ end)
 
 enveloping:Callback(function(spell)
     -- First, check if the player is channeling Soothing Mist
-    if not player.channeling or player.channeling.name ~= "Soothing Mist" then
+    if player.channeling ~= "Soothing Mist" then
         return
     end
 
