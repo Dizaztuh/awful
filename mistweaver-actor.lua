@@ -88,7 +88,6 @@ local function initCasterHealer()
     soothingMist()
     vivify()
     enveloping()
-    vivify()
     if settings.soh then
     sphereofHope()
     end
