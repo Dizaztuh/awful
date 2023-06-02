@@ -212,7 +212,7 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-summonJadeSerpent:Callback(function(spell)
+summonJadeSerpant:Callback(function(spell)
     -- Initialize variables for storing the lowest HP friend and their HP
     local lowestHpFriend = nil
     local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
