@@ -70,6 +70,7 @@ mistweaver:Init(function()
             fortifyingBrew()
             diffuseMagic()
         else
+            ringOfPeace()
             detox()
             provoke()
             paralyze()
@@ -78,7 +79,6 @@ mistweaver:Init(function()
             invokeYulon()
             summonJadeSerpent()
             touchOfDeath()
-            ringOfPeace()
             lifeCocoon()
             sphereofHope()
             renewing()
@@ -98,6 +98,7 @@ mistweaver:Init(function()
             if settings.tft then
             thunderFocusTea()
             end
+            manaTea()
         end
     end
 end)

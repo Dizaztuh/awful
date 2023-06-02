@@ -13,6 +13,7 @@ awful.Populate({
     transfer = Spell(119996),
     summonJadeSerpent = Spell(115313, { ignoreLoS = false }),
     zenFocusTea = Spell(209584),
+    manaTea = Spell(197908),
     invokeYulon = Spell(322118),
     vivify = Spell(116670, { heal = true, ignoreChanneling = true }),
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, ignoreMoving = true }),
@@ -212,35 +213,43 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
+
+manaTea:Callback(function(spell)
+    if player.manaPct <= 90 then return
+    spell:Cast(player)
+    end
+end)
+
+-- Define a variable to remember the last known statue position
+local lastStatuePosition = nil
+
 summonJadeSerpent:Callback(function(spell)
     local statue = nil
-    local friendWithoutStatue = nil
+    local statueDistanceToPlayer = nil
 
-    -- Loop through all friendly units
-    awful.friends.loop(function(friend)
-        -- Initialize a flag to check if a statue is close to this friend
-        local statueClose = false
-
-        -- Loop through all objects
-        awful.objects.loop(function(obj)
-            -- If this object is a Jade Serpent Statue and it's within 40 yards of the friend, set the flag
-            if obj.name == "Jade Serpent Statue" and friend.distanceTo(obj) <= 40 then
-                statueClose = true
-                return true  -- Breaks the loop
-            end
-        end)
-
-        -- If we didn't find a statue close to this friend, remember this friend
-        if not statueClose then
-            friendWithoutStatue = friend
+    -- Loop through all objects to find the statue
+    awful.objects.loop(function(obj)
+        if obj.name == "Jade Serpent Statue" then
+            statue = obj
+            statueDistanceToPlayer = player.distanceTo(obj)
             return true  -- Breaks the loop
         end
     end)
 
-    -- If we found a friend without a statue close by, cast the spell at the player's position
-    if friendWithoutStatue then
+    -- If we didn't find a statue within 40 yards of the player, cast the spell
+    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer > 40) then
         local x, y, z = player.position()
         spell:AoECast(x, y, z)
+        lastStatuePosition = {x = x, y = y, z = z}
+    elseif statue and lastStatuePosition then
+        -- If the statue exists and the player has moved more than 20 yards away from the last statue position, recast the spell
+        local playerPosition = {x = player.x, y = player.y, z = player.z}
+        local distanceFromLastStatue = ((playerPosition.x - lastStatuePosition.x) ^ 2 + (playerPosition.y - lastStatuePosition.y) ^ 2 + (playerPosition.z - lastStatuePosition.z) ^ 2) ^ 0.5
+        if distanceFromLastStatue > 20 then
+            local x, y, z = player.position()
+            spell:AoECast(x, y, z)
+            lastStatuePosition = {x = x, y = y, z = z}
+        end
     end
 end)
 
@@ -789,6 +798,11 @@ envelopingMist:Callback(function(spell)
 end)
 
 enveloping:Callback(function(spell)
+    -- First, check if the player is channeling Soothing Mist
+    if player.channeling ~= "Soothing Mist" then
+        return
+    end
+
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
     local lowestHpPercentage = 100
@@ -808,11 +822,12 @@ enveloping:Callback(function(spell)
         awful.alert({
             message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
             texture=124682,
-            })
+        })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
         spell:Cast(lowestHpFriend)
     end
 end)
+
 
 renewingMist:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
