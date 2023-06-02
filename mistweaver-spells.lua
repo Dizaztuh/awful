@@ -789,7 +789,9 @@ end)
 
 enveloping:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
-    if not soothingMist.channeling then return end
+    if not soothingMist.channeling then
+        return
+    end
     local lowestHpFriend = nil
     local lowestHpPercentage = 100
 
