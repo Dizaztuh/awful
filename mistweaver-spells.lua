@@ -226,7 +226,7 @@ local lastStatuePosition = nil
 summonJadeSerpent:Callback(function(spell)
     local statue = nil
     local statueDistanceToPlayer = nil
-    local tolerance = 5  -- Add a tolerance of 5 yards
+    local tolerance = 5  -- Tolerance of 5 yards
 
     -- Loop through all objects to find the statue
     awful.objects.loop(function(obj)
@@ -238,23 +238,21 @@ summonJadeSerpent:Callback(function(spell)
     end)
 
     -- If we didn't find a statue within 40 yards of the player, cast the spell
-    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer > 40 + tolerance) then
+    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer > 40) then
         local x, y, z = player.position()
         spell:AoECast(x, y, z)
         lastStatuePosition = {x = x, y = y, z = z}
-    elseif statue and lastStatuePosition then
-        -- If the statue exists and the player has moved more than 20 yards away from the last statue position, recast the spell
+    elseif statue and statueDistanceToPlayer > tolerance and lastStatuePosition then
+        -- If the statue exists, the player is more than the tolerance distance away from the statue, and the player has moved more than 20 yards away from the last statue position, recast the spell
         local playerPosition = {x = player.x, y = player.y, z = player.z}
         local distanceFromLastStatue = ((playerPosition.x - lastStatuePosition.x) ^ 2 + (playerPosition.y - lastStatuePosition.y) ^ 2 + (playerPosition.z - lastStatuePosition.z) ^ 2) ^ 0.5
-        if distanceFromLastStatue > 40 + tolerance then
+        if distanceFromLastStatue > 40 then
             local x, y, z = player.position()
             spell:AoECast(x, y, z)
             lastStatuePosition = {x = x, y = y, z = z}
         end
     end
 end)
-
-
 
 
 invokeYulon:Callback(function(spell)
@@ -813,19 +811,16 @@ envelopingMist:Callback(function(spell)
 end)
 
 enveloping:Callback(function(spell)
-    -- First, check if the player is channeling Soothing Mist
-    if not player.channeling == "Soothing Mist" then
-        return
-    end
 
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 100
+    local lowestHpPercentage = 90
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
         -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
-        if friend.hp < lowestHpPercentage then
+        -- and if the friend has the Soothing Mist buff
+        if friend.hp < lowestHpPercentage and friend.buff("Soothing Mist") then
             -- Update lowestHpFriend and lowestHpPercentage
             lowestHpFriend = friend
             lowestHpPercentage = friend.hp
@@ -842,6 +837,7 @@ enveloping:Callback(function(spell)
         spell:Cast(lowestHpFriend)
     end
 end)
+
 
 
 renewingMist:Callback(function(spell)
@@ -873,7 +869,7 @@ end)
 renewing:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 100
+    local lowestHpPercentage = 90
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
@@ -899,7 +895,7 @@ end)
 vivify:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 100
+    local lowestHpPercentage = 90
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
