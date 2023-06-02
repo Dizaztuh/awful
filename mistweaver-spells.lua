@@ -214,6 +214,8 @@ BurstCDS = {
 
 summonJadeSerpant:Callback(function(spell)
     -- Initialize variables for storing the lowest HP friend and their HP
+    local statue = nil
+    local statueName = "Jade Serpent Statue"
     local lowestHpFriend = nil
     local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
 
@@ -230,15 +232,19 @@ summonJadeSerpant:Callback(function(spell)
         end
     end)
 
-    -- If we found a friend with the lowest HP, check the distance to the statue
-    if lowestHpFriend then
-        local x, y, z = lowestHpFriend.position()
-        
-        -- Retrieve the statue at each function call
-        local statue = obj.name("Jade Serpent Statue")
+    -- Loop through all objects to find the statue
+    awful.objects.loop(function(obj)
+        if obj.name == statueName then
+            statue = obj
+            return true  -- Break the loop
+        end
+    end)
 
+    -- If we found a friend with the lowest HP, check the distance to the statue
+    if lowestHpFriend and statue then
+        local x, y, z = lowestHpFriend.position()
         -- Check if the statue exists and is within 40 yards of the lowest HP friend
-        if statue and lowestHpFriend.distanceTo(statue) <= 40 then
+        if lowestHpFriend.distanceTo(statue) <= 40 then
             -- Do not recast the spell
             return
         else
@@ -247,6 +253,7 @@ summonJadeSerpant:Callback(function(spell)
         end
     end
 end)
+
 
 
 
