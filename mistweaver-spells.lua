@@ -799,7 +799,7 @@ enveloping:Callback(function(spell)
 
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 100
+    local lowestHpPercentage = 85
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
@@ -881,7 +881,7 @@ vivify:Callback(function(spell)
 
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 90
+    local lowestHpPercentage = 95
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
