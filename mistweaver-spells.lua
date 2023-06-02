@@ -7,7 +7,6 @@ local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
 local settings = project.settings
 local SpellStopCasting = awful.unlock("SpellStopCasting") or awful.call("SpellStopCasting")
-local statue = awful.item(60849)
 awful.enabled = true
 
 awful.Populate({
@@ -215,6 +214,7 @@ BurstCDS = {
 
 summonJadeSerpent:Callback(function(spell)
     -- Initialize variables for storing the lowest HP friend and their HP
+    local statue = awful.item(60849)
     local lowestHpFriend = nil
     local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
 
