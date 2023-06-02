@@ -235,7 +235,7 @@ summonJadeSerpant:Callback(function(spell)
         local x, y, z = lowestHpFriend.position()
         
         -- Retrieve the statue at each function call
-        local statue = awful.totem("Jade Serpent Statue")
+        local statue = awful.unit("Jade Serpent Statue")
 
         -- Check if the statue exists and is within 40 yards of the lowest HP friend
         if statue and lowestHpFriend.distanceTo(statue) <= 40 then
