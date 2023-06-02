@@ -94,7 +94,9 @@ mistweaver:Init(function()
             fortifyingBrew()
             diffuseMagic()
             spearHandStrike()
+            if settings.tft then
             thunderFocusTea()
+            end
         end
     end
 end)
