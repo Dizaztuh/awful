@@ -226,37 +226,23 @@ local distanceTolerance = 10 -- tolerance for position difference
 
 summonJadeSerpent:Callback(function(spell)
     local statue = nil
+    local statueDistanceToPlayer = nil
 
     -- Loop through all objects to find the statue
     awful.objects.loop(function(obj)
         if obj.name == "Jade Serpent Statue" then
             statue = obj
+            statueDistanceToPlayer = player.distanceTo(obj)
             return true  -- Breaks the loop
         end
     end)
 
-    local playerX, playerY, playerZ = player.position()
-    local playerPosition = {x = playerX, y = playerY, z = playerZ}
-    
-    -- Check if statue exists and player is within 40 yards
-    if statue and player.distanceTo(statue) <= 40 then
-        return -- Don't cast if a statue is close
+    -- If there's no statue or it's 40 or more yards away, summon a new statue
+    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer >= 40) then
+        local x, y, z = player.position()
+        spell:AoECast(x, y, z)
     end
-
-    -- Check if player has moved significantly from last statue position before summoning new statue
-    if lastStatuePosition then
-        local distanceFromLastStatue = ((playerPosition.x - lastStatuePosition.x) ^ 2 + (playerPosition.y - lastStatuePosition.y) ^ 2 + (playerPosition.z - lastStatuePosition.z) ^ 2) ^ 0.5
-        if distanceFromLastStatue < distanceTolerance then
-            return -- Don't cast if player hasn't moved far from last statue position
-        end
-    end
-
-    -- If we've passed all checks, it's safe to cast the spell
-    spell:AoECast(playerX, playerY, playerZ)
-    lastStatuePosition = playerPosition
 end)
-
-
 
 invokeYulon:Callback(function(spell)
     -- Loop through all enemy units

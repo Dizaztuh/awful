@@ -89,9 +89,6 @@ mistweaver:Init(function()
             if settings.soh then
             sphereofHope()
             end
-            if settings.tft then
-            thunderFocusTea()
-            end
             renewing()
             soothingMist()
             vivify()
@@ -122,7 +119,10 @@ mistweaver:Init(function()
             if player.HasTalent(353584) and
              settings.transferJuke then
             transfer()
-             end
+            end
+            if settings.tft then
+            thunderFocusTea()
+            end
         end
     end
 end)
