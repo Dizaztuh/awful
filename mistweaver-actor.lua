@@ -83,7 +83,9 @@ mistweaver:Init(function()
             invokeYulon()
             summonJadeSerpent()
             touchOfDeath()
+            if settings.lc then
             lifeCocoon()
+            end
             sphereofHope()
             renewing()
             soothingMist()
