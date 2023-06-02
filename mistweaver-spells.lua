@@ -324,6 +324,7 @@ provoke:Callback(function(spell)
                 texture=115546,
             })
             -- If so, cast Provoke on the closestDpsEnemy right before their cast ends
+            awful.call("SpellStopCasting")
             spell:Cast(closestDpsEnemy)
         end
     end
