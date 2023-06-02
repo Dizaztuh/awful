@@ -94,8 +94,8 @@ mistweaver:Init(function()
             end
             renewing()
             soothingMist()
-            enveloping()
             vivify()
+            enveloping()
             vivify()
             sphereofDespair()
             if settings.revival then
