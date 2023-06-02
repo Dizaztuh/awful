@@ -839,21 +839,36 @@ end)
 
 enveloping:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 70 -- Changed from 100 to 70
+    local lowestHp = 70 
 
     awful.fgroup.loop(function(friend)
-        -- Check if the friend's HP is lower than the lowest HP we've seen so far, and if they have the Soothing Mist buff
         if friend.hp < lowestHp and friend.buff("Soothing Mist") then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
     end)
 
-    -- Check if Enveloping Mist is castable and if there's a suitable target before attempting to cast
     if enveloping:Castable() and lowestHpFriend then
         spell:Cast(lowestHpFriend)
     end
 end)
+
+vivify:Callback(function(spell)
+    local lowestHpFriend = nil
+    local lowestHp = 90 
+
+    awful.fgroup.loop(function(friend)
+        if friend.hp < lowestHp and friend.hp > 70 and friend.buff("Soothing Mist") then
+            lowestHp = friend.hp
+            lowestHpFriend = friend
+        end
+    end)
+
+    if vivify:Castable() and lowestHpFriend then
+        spell:Cast(lowestHpFriend)
+    end
+end)
+
 
 
 renewingMist:Callback(function(spell)
@@ -904,24 +919,6 @@ renewing:Callback(function(spell)
             texture=115151,
             })
         -- If the cooldown is 0, cast Renewing Mist on the friendly unit with the lowest HP
-        spell:Cast(lowestHpFriend)
-    end
-end)
-
-vivify:Callback(function(spell)
-    local lowestHpFriend = nil
-    local lowestHp = 90 -- Changed from 100 to 90
-
-    awful.fgroup.loop(function(friend)
-        -- Check if the friend's HP is lower than the lowest HP we've seen so far, and if they have the Soothing Mist buff
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
-            lowestHp = friend.hp
-            lowestHpFriend = friend
-        end
-    end)
-
-    -- Check if Vivify is castable and if there's a suitable target before attempting to cast
-    if vivify:Castable() and lowestHpFriend then
         spell:Cast(lowestHpFriend)
     end
 end)
