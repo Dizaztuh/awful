@@ -11,7 +11,7 @@ awful.enabled = true
 
 awful.Populate({
     transfer = Spell(119996),
-    summonJadeSerpant = Spell(115313, { heal = true }),
+    summonJadeSerpant = Spell(115313, { ignoreLoS = false }),
     zenFocusTea = Spell(209584),
     invokeYulon = Spell(322118),
     vivify = Spell(116670, { heal = true, ignoreChanneling = true }),
