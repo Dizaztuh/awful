@@ -51,7 +51,9 @@ mistweaver:Init(function()
             restoral()
             legSweep()
             provoke()
+            if settings.para then
             paralyze()
+            end
             disable()
             essenceFont()
             invokeChiJi()
@@ -73,7 +75,9 @@ mistweaver:Init(function()
             ringOfPeace()
             detox()
             provoke()
+            if settings.para then
             paralyze()
+            end
             tigersLust()
             grappleWeapon()
             invokeYulon()
