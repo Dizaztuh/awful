@@ -799,7 +799,7 @@ enveloping:Callback(function(spell)
 
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 85
+    local lowestHpPercentage = 100
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
@@ -897,7 +897,7 @@ vivify:Callback(function(spell)
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
     if lowestHpFriend ~= nil then
         awful.alert({
-            message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
+            message="Casted Vivify", 
             texture=124682,
         })
         -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
