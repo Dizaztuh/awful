@@ -95,10 +95,16 @@ mistweaver:Init(function()
             restoral()
             legSweep()
             healingElixir()
+            if settings.dh then
             dampenHarm()
+            end
             fortifyingBrew()
+            if settings.dm then
             diffuseMagic()
+            end
+            if settings.spear then
             spearHandStrike()
+            end
             if settings.tft then
             thunderFocusTea()
             end
