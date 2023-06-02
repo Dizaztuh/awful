@@ -321,6 +321,26 @@ provoke:Callback(function(spell)
     -- Define a variable to store the closest enemy with a DPS role
     local closestDpsEnemy = nil
 
+    -- First, let's check if any enemy is casting a spell from the provokeTable and if they're targeting the player
+    local isProvokingSpellBeingCasted = false
+
+    awful.enemies.loop(function(enemy)
+        local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
+
+        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
+        and (not spearHandStrike:Castable(closestDpsEnemy) or (closestDpsEnemy and closestDpsEnemy.distance > 5)) then
+            isProvokingSpellBeingCasted = true
+            return true -- Break the loop, no need to continue
+        end
+    end)
+
+    -- If no provoking spell is being casted, we don't need to find a DPS enemy
+    if not isProvokingSpellBeingCasted then
+        return
+    end
+
+    -- If we reach this point, it means we need to find the closest DPS enemy to provoke
+
     -- Loop through all enemies
     awful.enemies.loop(function(enemy)
         -- Check if the enemy has a DPS role (either melee or ranged)
@@ -331,26 +351,19 @@ provoke:Callback(function(spell)
             end
         end
     end)
+
     -- If we've found a closest DPS enemy
     if closestDpsEnemy then
-        -- Then loop again through all enemies
-        awful.enemies.loop(function(enemy)
-            local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
-            -- Check if any enemy is casting a spell from the provokeTable and if they're targeting the player
-            if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
-            and (not spearHandStrike:Castable(closestDpsEnemy) or closestDpsEnemy.distance > 5) then
-                awful.alert({
-                    message="Casting Provoke",
-                    texture=115546,
-                })
-                -- If so, cast Provoke on the closestDpsEnemy
-                awful.call("SpellStopCasting")
-                spell:Cast(closestDpsEnemy)
-                return true -- this breaks the loop as soon as the condition is met, so Provoke won't be cast more than once
-            end
-        end)
+        awful.alert({
+            message="Casting Provoke",
+            texture=115546,
+        })
+        -- Cast Provoke on the closestDpsEnemy
+        awful.call("SpellStopCasting")
+        spell:Cast(closestDpsEnemy)
     end
 end)
+
 
     bloodFury:Callback(function(spell)
         awful.enemies.loop(function(enemy)
@@ -801,7 +814,7 @@ end)
 
 enveloping:Callback(function(spell)
     -- First, check if the player is channeling Soothing Mist
-    if player.channeling ~= "Soothing Mist" then
+    if not player.channeling == "Soothing Mist" then
         return
     end
 
