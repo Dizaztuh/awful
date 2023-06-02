@@ -70,7 +70,7 @@ mistweaver:Init(function()
             fortifyingBrew()
             diffuseMagic()
         else
-            touchofDeath()
+            touchOfDeath()
             ringOfPeace()
             lifeCocoon()
             summonJadeSerpant()
