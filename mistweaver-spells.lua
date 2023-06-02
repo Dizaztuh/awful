@@ -224,7 +224,7 @@ local statueSummonCooldown = 5 -- 5 second cooldown between statue summons
 summonJadeSerpent:Callback(function(spell)
     -- Track if a statue is found
     local isStatueFound = false
-    local currentTime = os.time()
+    local currentTime = awful.time()
 
     -- Loop through all objects to find the statue
     awful.objects.loop(function(obj)
