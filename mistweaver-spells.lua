@@ -210,6 +210,22 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
+summonJadeSerpant:Callback(function(spell)
+    -- Loop through all friendly units
+    awful.friends.loop(function(friend)
+        -- Check if the friend is in combat
+        if friend.combat then
+            -- Get the friend's position
+            local x, y, z = friend.position()
+            -- Cast the spell at the friend's position
+            spell:AoECast(x, y, z)
+            -- Exit the loop since we've found a friend in combat
+            return true
+        end
+    end)
+end)
+
+
 invokeYulon:Callback(function(spell)
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
