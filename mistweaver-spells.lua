@@ -7,6 +7,7 @@ local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
 local settings = project.settings
 local SpellStopCasting = awful.unlock("SpellStopCasting") or awful.call("SpellStopCasting")
+local statue = awful.item(60849)
 awful.enabled = true
 
 awful.Populate({
@@ -212,20 +213,38 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-summonJadeSerpant:Callback(function(spell)
+summonJadeSerpent:Callback(function(spell)
+    -- Initialize variables for storing the lowest HP friend and their HP
+    local lowestHpFriend = nil
+    local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
+
     -- Loop through all friendly units
     awful.friends.loop(function(friend)
-        -- Check if the friend is in combat
-        if friend.combat then
-            -- Get the friend's position
-            local x, y, z = friend.position()
-            -- Cast the spell at the friend's position
-            spell:AoECast(x, y, z)
-            -- Exit the loop since we've found a friend in combat
-            return true
+        -- Check if the friend is within 40 yards and is in line of sight of the player
+        if player.distanceTo(friend) <= 40 and player.losOf(friend) then
+            -- Check if the friend's HP is lower than the lowest HP we've seen so far
+            if friend.hp < lowestHp then
+                -- Update the lowest HP and lowest HP friend
+                lowestHp = friend.hp
+                lowestHpFriend = friend
+            end
         end
     end)
+
+    -- If we found a friend with the lowest HP, check the distance to the statue
+    if lowestHpFriend then
+        local x, y, z = lowestHpFriend.position()
+        -- Check if the statue exists and is within 40 yards of the lowest HP friend
+        if statue and lowestHpFriend.distanceTo(statue) <= 40 then
+            -- Do not recast the spell
+            return
+        else
+            -- If the statue does not exist or is not within 40 yards, cast the spell at the friend's position
+            spell:AoECast(x, y, z)
+        end
+    end
 end)
+
 
 invokeYulon:Callback(function(spell)
     -- Loop through all enemy units
