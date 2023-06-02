@@ -21,6 +21,8 @@ awful.Populate({
     spinningCraneKick = Spell(101546, { damage = "physical" }),
     touchOfDeath = Spell(322109, { targeted = true, damage = "physical", ignoreMoving = true }),
     envelopingMist = Spell(124682, { heal = true, targeted = true, ignoreMoving = true }),
+    enveloping = Spell(124682, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
+    renewing = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
     essenceFont = Spell(191837, { heal = true, ignoreMoving = true, ignoreFacing = true }),
@@ -754,6 +756,32 @@ envelopingMist:Callback(function(spell)
     end
 end)
 
+enveloping:Callback(function(spell)
+    -- Initialize a variable to store the friendly unit with the lowest HP
+    local lowestHpFriend = nil
+    local lowestHpPercentage = 100
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
+        if friend.hp < lowestHpPercentage then
+            -- Update lowestHpFriend and lowestHpPercentage
+            lowestHpFriend = friend
+            lowestHpPercentage = friend.hp
+        end
+    end)
+
+    -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
+    if lowestHpFriend ~= nil then
+        awful.alert({
+            message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
+            texture=124682,
+            })
+        -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
+        spell:Cast(lowestHpFriend)
+    end
+end)
+
 renewingMist:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
@@ -771,6 +799,32 @@ renewingMist:Callback(function(spell)
 
     -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
     if renewingMist.castTime == 0 and lowestHpFriend ~= nil then
+        awful.alert({
+            message="Casted Instant Renewing Mist Instant Proc on Lowest HP Ally!", 
+            texture=115151,
+            })
+        -- If the cooldown is 0, cast Renewing Mist on the friendly unit with the lowest HP
+        spell:Cast(lowestHpFriend)
+    end
+end)
+
+renewing:Callback(function(spell)
+    -- Initialize a variable to store the friendly unit with the lowest HP
+    local lowestHpFriend = nil
+    local lowestHpPercentage = 100
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
+        if friend.hp < lowestHpPercentage then
+            -- Update lowestHpFriend and lowestHpPercentage
+            lowestHpFriend = friend
+            lowestHpPercentage = friend.hp
+        end
+    end)
+
+    -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
+    if lowestHpFriend ~= nil then
         awful.alert({
             message="Casted Instant Renewing Mist Instant Proc on Lowest HP Ally!", 
             texture=115151,
