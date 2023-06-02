@@ -316,49 +316,45 @@ end)
 
 
 provoke:Callback(function(spell)
-    -- Define a variable to store the closest enemy with a DPS role
-    local closestDpsEnemy = nil
+    -- Initialize variables to store the closest enemy and if an enemy is casting a spell from provokeTable
+    local closestEnemy = nil
+    local provokingSpellBeingCasted = false
 
-    -- First, let's check if any enemy is casting a spell from the provokeTable and if they're targeting the player
-    local isProvokingSpellBeingCasted = false
-
+    -- First, loop through all enemies to check if any enemy is casting a spell from the provokeTable
     awful.enemies.loop(function(enemy)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
-        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 
-        and (not spearHandStrike:Castable(closestDpsEnemy) or (closestDpsEnemy and closestDpsEnemy.distance > 5)) then
-            isProvokingSpellBeingCasted = true
+        -- If an enemy is casting a spell from the provokeTable and they're targeting the player
+        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
+            provokingSpellBeingCasted = true
             return true -- Break the loop, no need to continue
         end
     end)
 
-    -- If no provoking spell is being casted, we don't need to find a DPS enemy
-    if not isProvokingSpellBeingCasted then
+    -- If no provoking spell is being casted, we don't need to provoke
+    if not provokingSpellBeingCasted then
         return
     end
 
-    -- If we reach this point, it means we need to find the closest DPS enemy to provoke
-
-    -- Loop through all enemies
+    -- Then, loop through all enemies to find the closest enemy in combat
     awful.enemies.loop(function(enemy)
-        -- Check if the enemy has a DPS role (either melee or ranged)
-        if enemy.role == "melee" or enemy.role == "ranged" then
-            -- If this is the first DPS enemy we've found or if this enemy is closer than the current closest one
-            if not closestDpsEnemy or enemy.distance < closestDpsEnemy.distance then
-                closestDpsEnemy = enemy
+        if enemy.combat then
+            -- If this is the first enemy we've found or if this enemy is closer than the current closest one
+            if not closestEnemy or enemy.distance < closestEnemy.distance then
+                closestEnemy = enemy
             end
         end
     end)
 
-    -- If we've found a closest DPS enemy
-    if closestDpsEnemy then
+    -- If we've found a closest enemy
+    if closestEnemy then
         awful.alert({
             message="Casting Provoke",
             texture=115546,
         })
-        -- Cast Provoke on the closestDpsEnemy
+        -- Cast Provoke on the closest enemy in combat
         awful.call("SpellStopCasting")
-        spell:Cast(closestDpsEnemy)
+        spell:Cast(closestEnemy)
     end
 end)
 
