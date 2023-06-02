@@ -91,10 +91,16 @@ mistweaver:Init(function()
             enveloping()
             vivify()
             sphereofDespair()
+            if settings.revival then
             revival()
+            end
+            if settings.restoral then
             restoral()
+            end
             legSweep()
+            if settings.he then
             healingElixir()
+            end
             if settings.dh then
             dampenHarm()
             end
