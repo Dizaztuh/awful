@@ -801,7 +801,7 @@ end)
 
 enveloping:Callback(function(spell)
     -- First, check if the player is channeling Soothing Mist
-    if player.channeling ~= "Soothing Mist" then
+    if not player.channeling or player.channeling.name ~= "Soothing Mist" then
         return
     end
 
@@ -829,6 +829,7 @@ enveloping:Callback(function(spell)
         spell:Cast(lowestHpFriend)
     end
 end)
+
 
 
 renewingMist:Callback(function(spell)
