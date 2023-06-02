@@ -72,6 +72,11 @@ mistweaver:Init(function()
             fortifyingBrew()
             diffuseMagic()
         else
+            renewing()
+            soothingMist()
+            vivify()
+            enveloping()
+            vivify()
             ringOfPeace()
             detox()
             provoke()
@@ -89,11 +94,6 @@ mistweaver:Init(function()
             if settings.soh then
             sphereofHope()
             end
-            renewing()
-            soothingMist()
-            vivify()
-            enveloping()
-            vivify()
             sphereofDespair()
             if settings.revival then
             revival()
