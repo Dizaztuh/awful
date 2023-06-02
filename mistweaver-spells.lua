@@ -249,8 +249,6 @@ summonJadeSerpent:Callback(function(spell)
 end)
 
 
-
-
 invokeYulon:Callback(function(spell)
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)

@@ -89,6 +89,9 @@ mistweaver:Init(function()
             if settings.soh then
             sphereofHope()
             end
+            if settings.tft then
+            thunderFocusTea()
+            end
             renewing()
             soothingMist()
             vivify()
@@ -115,10 +118,11 @@ mistweaver:Init(function()
             if settings.spear then
             spearHandStrike()
             end
-            if settings.tft then
-            thunderFocusTea()
-            end
             manaTea()
+            if player.HasTalent(353584) and
+             settings.transferJuke then
+            transfer()
+             end
         end
     end
 end)
