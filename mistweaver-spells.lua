@@ -218,40 +218,36 @@ manaTea:Callback(function(spell)
     end
 end)
 
-local lastStatuePosition = nil
-local distanceTolerance = 10 -- tolerance for position difference
+local lastStatueSummonTime = nil
+local statueSummonCooldown = 5 -- 5 second cooldown between statue summons
 
 summonJadeSerpent:Callback(function(spell)
-    local statue = nil
+    -- Track if a statue is found
+    local isStatueFound = false
+    local currentTime = os.time()
 
     -- Loop through all objects to find the statue
     awful.objects.loop(function(obj)
-        if obj.name == "Jade Serpent Statue" then
-            statue = obj
+        -- Check if the object is a Jade Serpent Statue and within 40 yards of the player
+        if obj.name == "Jade Serpent Statue" and player.distanceTo(obj) <= 40 then
+            isStatueFound = true
             return true  -- Breaks the loop
         end
     end)
 
+    -- If a statue is found nearby or if statue was summoned less than statueSummonCooldown seconds ago, don't summon a new one
+    if isStatueFound or (lastStatueSummonTime and currentTime - lastStatueSummonTime < statueSummonCooldown) then
+        return 
+    end
+
+    -- If we reach here, it means it's safe to summon a new statue
     local playerX, playerY, playerZ = player.position()
-    local playerPosition = {x = playerX, y = playerY, z = playerZ}
-    
-    -- Check if statue exists and player is within 40 yards
-    if statue and player.distanceTo(statue) <= 40 then
-        return -- Don't cast if a statue is close
-    end
-
-    -- Check if player has moved significantly from last statue position before summoning new statue
-    if lastStatuePosition then
-        local distanceFromLastStatue = ((playerPosition.x - lastStatuePosition.x) ^ 2 + (playerPosition.y - lastStatuePosition.y) ^ 2 + (playerPosition.z - lastStatuePosition.z) ^ 2) ^ 0.5
-        if distanceFromLastStatue < distanceTolerance then
-            return -- Don't cast if player hasn't moved far from last statue position
-        end
-    end
-
-    -- If we've passed all checks, it's safe to cast the spell
     spell:AoECast(playerX, playerY, playerZ)
-    lastStatuePosition = playerPosition
+
+    -- Update last statue summon time
+    lastStatueSummonTime = currentTime
 end)
+
 
 
 
