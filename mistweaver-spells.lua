@@ -226,6 +226,7 @@ local lastStatuePosition = nil
 summonJadeSerpent:Callback(function(spell)
     local statue = nil
     local statueDistanceToPlayer = nil
+    local tolerance = 5  -- Add a tolerance of 5 yards
 
     -- Loop through all objects to find the statue
     awful.objects.loop(function(obj)
@@ -237,7 +238,7 @@ summonJadeSerpent:Callback(function(spell)
     end)
 
     -- If we didn't find a statue within 40 yards of the player, cast the spell
-    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer > 40) then
+    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer > 40 + tolerance) then
         local x, y, z = player.position()
         spell:AoECast(x, y, z)
         lastStatuePosition = {x = x, y = y, z = z}
@@ -245,13 +246,14 @@ summonJadeSerpent:Callback(function(spell)
         -- If the statue exists and the player has moved more than 20 yards away from the last statue position, recast the spell
         local playerPosition = {x = player.x, y = player.y, z = player.z}
         local distanceFromLastStatue = ((playerPosition.x - lastStatuePosition.x) ^ 2 + (playerPosition.y - lastStatuePosition.y) ^ 2 + (playerPosition.z - lastStatuePosition.z) ^ 2) ^ 0.5
-        if distanceFromLastStatue > 20 then
+        if distanceFromLastStatue > 40 + tolerance then
             local x, y, z = player.position()
             spell:AoECast(x, y, z)
             lastStatuePosition = {x = x, y = y, z = z}
         end
     end
 end)
+
 
 
 
