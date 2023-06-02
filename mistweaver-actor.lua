@@ -86,7 +86,9 @@ mistweaver:Init(function()
             if settings.lc then
             lifeCocoon()
             end
+            if settings.soh then
             sphereofHope()
+            end
             renewing()
             soothingMist()
             vivify()
