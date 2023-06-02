@@ -449,7 +449,7 @@ end)
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Check if the totem is not in the totemList or is not within 5 yards
-        if not totem.id or (not settings.totemstomp[totem.id] and player.distanceTo(totem) > 5) then return end
+        if not totem.id or (not settings.ts[totem.id] and player.distanceTo(totem) > 5) then return end
         awful.alert({
             message="Stomped a totem.",  
             texture=100780,
@@ -870,10 +870,10 @@ vivify:Callback(function(spell)
 
     awful.fgroup.loop(function(friend)
         -- Check if the friend's HP is lower than the lowest HP we've seen so far and if they have the Soothing Mist buff
-
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
             lowestHp = friend.hp
             lowestHpFriend = friend
-
+        end
     end)
 
     if lowestHpFriend then
