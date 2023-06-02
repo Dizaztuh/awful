@@ -870,10 +870,10 @@ vivify:Callback(function(spell)
 
     awful.fgroup.loop(function(friend)
         -- Check if the friend's HP is lower than the lowest HP we've seen so far and if they have the Soothing Mist buff
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
+
             lowestHp = friend.hp
             lowestHpFriend = friend
-        end
+
     end)
 
     if lowestHpFriend then
