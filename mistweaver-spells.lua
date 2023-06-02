@@ -22,7 +22,7 @@ awful.Populate({
     spinningCraneKick = Spell(101546, { damage = "physical" }),
     touchOfDeath = Spell(322109, { targeted = true, damage = "physical", ignoreMoving = true }),
     envelopingMist = Spell(124682, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
-    enveloping = Spell(124682, { heal = true, targeted = true, ignoreChanneling = true }),
+    enveloping = Spell(124682, { heal = true, ignoreChanneling = true }),
     renewing = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
