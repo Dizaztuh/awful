@@ -836,6 +836,7 @@ envelopingMist:Callback(function(spell)
     end
 end)
 
+
 enveloping:Callback(function(spell)
     local lowestHpFriend = nil
     local lowestHp = 70 -- Changed from 100 to 70
@@ -924,7 +925,6 @@ vivify:Callback(function(spell)
         spell:Cast(lowestHpFriend)
     end
 end)
-
 
 
 faelineStomp:Callback(function(spell)
