@@ -229,9 +229,9 @@ function singleTarget()
     end
 
     -- Now we have the friend with the lowest HP, let's proceed with the rotation
-    if player.lastcast ~= "Thunder Focus Tea" and thunderFocusTea:Castable() and lowestHpFriend.buff("Soothing Mist") then
+    if thunderFocusTea:Castable() and lowestHpFriend.buff("Soothing Mist") then
         thunderFocusTea:Cast(lowestHpFriend)
-    elseif player.lastCast == "Thunder Focus Tea" and vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
+    elseif vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
         vivify:Cast(lowestHpFriend)
     elseif player.lastCast == "Vivify" and enveloping:Castable() and lowestHpFriend.buff("Soothing Mist") then
         enveloping:Cast(lowestHpFriend)
