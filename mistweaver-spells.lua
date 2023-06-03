@@ -291,23 +291,51 @@ local lastCastTime = {}
 transfer:Callback(function(spell)
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
     if player.buff(101643) and player.hp <= settings.transferJuke and player.stunned and spell:Castable() then
-        -- If there's no record of this spell being cast or the delay has been met
-            -- Cast Transfer
-            spell:Cast()
-            -- Update the last cast time
-            lastCastTime[spell.id] = GetTime()
+        -- Cast Transfer
+        spell:Cast()
+        -- Update the last cast time
+        lastCastTime[spell.id] = GetTime()
+        
         -- Check if player has the Eminence talent
         if player.HasTalent(394110) then
-            -- If there's no record of this spell being cast or the delay has been met
-            if not lastCastTime[spell.id] or GetTime() - lastCastTime[spell.id] >= math.random(delayLowerBound, delayUpperBound) then
-                -- Cast Transfer
-                spell:Cast()
-                -- Update the last cast time
-                lastCastTime[spell.id] = GetTime()
+            -- Keep casting Vivify until player's HP is 100% or there's an enemy within 5 yards
+            while player.hp < 100 do
+                -- Initialize variable to track if any enemies are within 5 yards
+                local enemyWithin5Yards = false
+
+                -- Loop through all enemies
+                awful.enemies.loop(function(enemy)
+                    -- If the enemy is within 5 yards of the player
+                    if awful.distance(player, enemy) <= 5 then
+                        -- Set our variable to true and break the loop
+                        enemyWithin5Yards = true
+                        return true
+                    end
+                end)
+                
+                -- If there's an enemy within 5 yards, break the Vivify loop
+                if enemyWithin5Yards then
+                    break
+                end
+
+                -- Cast Vivify on the player
+                if vivify:Castable() then
+                    vivify:cast(player)
+                end
+            end
+            
+            -- If there's no record of this spell being cast or the delay has been met, cast Transcendence
+            if not lastCastTime[spell.id] or GetTime() - lastCastTime[spell.id] >= 8 then
+                if spell:Castable() then
+                    spell:Cast()
+                    -- Update the last cast time
+                    lastCastTime[spell.id] = GetTime()
+                end
             end
         end
     end
 end)
+
 
 
 
