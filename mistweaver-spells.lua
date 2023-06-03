@@ -872,7 +872,7 @@ renewing:Callback(function(spell)
     -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
     if lowestHpFriend ~= nil then
         awful.alert({
-            message="Casted Instant Renewing Mist", 
+            message="Casted Renewing Mist", 
             texture=115151,
             })
         -- If the cooldown is 0, cast Renewing Mist on the friendly unit with the lowest HP
