@@ -816,7 +816,7 @@ vivify:Callback(function(spell)
     local lowestHp = 90
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.hp > 70 and friend.buff("Soothing Mist") then
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
