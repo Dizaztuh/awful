@@ -324,7 +324,7 @@ transfer:Callback(function(spell)
                 end
 
                 -- Cast Vivify on the player
-                if vivify:Castable() then
+                if vivify:Castable(player) then
                     vivify:cast(player)
                 end
 
