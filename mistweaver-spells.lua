@@ -867,7 +867,7 @@ vivify:Callback(function(spell)
         end
     end)
 
-    if vivify:Castable() and player.buff(392883) and lowestHpFriend then
+    if vivify:Castable() and lowestHpFriend and player.buff(392883) or player.buff(388518) then
         spell:Cast(lowestHpFriend)
     end
 end)
