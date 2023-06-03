@@ -86,9 +86,12 @@ local function initCasterHealer()
     lifeCocoon()
     end
     soothingMist()
-renewing()
-enveloping()
-thunderFocusTea()
+    renewing()
+    vivify()
+    enveloping()
+    if settings.tft then
+    thunderFocusTea()
+    end
     if settings.soh then
     sphereofHope()
     end
