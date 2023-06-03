@@ -86,7 +86,9 @@ local function initCasterHealer()
     lifeCocoon()
     end
     soothingMist()
-    singleTarget()
+renewing()
+enveloping()
+thunderFocusTea()
     if settings.soh then
     sphereofHope()
     end

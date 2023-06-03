@@ -211,33 +211,6 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-function singleTarget()
-    local lowestHpFriend = nil
-    local lowestHp = 100
-
-    awful.fgroup.loop(function(friend)
-        -- Check if the friend's HP is lower than the lowest HP we've seen so far
-        if friend.hp < lowestHp then
-            lowestHp = friend.hp
-            lowestHpFriend = friend
-        end
-    end)
-
-    -- If no friend was found with HP less than 100, there's nothing to do
-    if not lowestHpFriend then
-        return
-    end
-
-    -- Now we have the friend with the lowest HP, let's proceed with the rotation
-    if thunderFocusTea:Castable() and lowestHpFriend.buff("Soothing Mist") then
-        thunderFocusTea:Cast(lowestHpFriend)
-    elseif player.lastCast == "Vivify" and enveloping:Castable() and lowestHpFriend.buff("Soothing Mist") then
-        enveloping:Cast(lowestHpFriend)
-    elseif player.lastCast == "Enveloping Mist" and vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
-        vivify:Cast(lowestHpFriend)
-    end
-end
-
 
 
 manaTea:Callback(function(spell)
