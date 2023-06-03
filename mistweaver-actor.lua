@@ -26,6 +26,7 @@ print("Sisterfister Loaded!")
 
 local function initFistweaver()
     touchOfDeath()
+    lifeCocoon()
     ringOfPeace()
     if settings.aa then
     castOnClosestEnemy()
@@ -45,15 +46,12 @@ local function initFistweaver()
     restoral()
     legSweep()
     provoke()
-    if settings.para then
     paralyze()
-    end
     disable()
     essenceFont()
     invokeChiJi()
     tigersLust()
     detox()
-    lifeCocoon()
     envelopingMist()
     renewingMist()
     thunderFocusTea()
