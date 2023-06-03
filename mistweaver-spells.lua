@@ -274,7 +274,7 @@ soothingMist:Callback(function(spell)
     end)
 
     -- If we found a friend with the lowest HP
-    if lowestHpFriend then
+    if lowestHpFriend and player.combat then
         -- Stop any ongoing casting
         awful.call("SpellStopCasting")
 
