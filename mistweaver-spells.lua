@@ -22,7 +22,7 @@ awful.Populate({
     spinningCraneKick = Spell(101546, { damage = "physical" }),
     touchOfDeath = Spell(322109, { targeted = true, damage = "physical", ignoreMoving = true }),
     envelopingMist = Spell(124682, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
-    enveloping = Spell(124682, { heal = true, targeted = true, ignoreChanneling = true }),
+    enveloping = Spell(124682, { heal = true, ignoreChanneling = true }),
     renewing = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true }),
@@ -477,7 +477,7 @@ end)
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Check if the totem is not in the totemList or is not within 5 yards
-        if not totem.id or (not settings.totemstomp[totem.id] and player.distanceTo(totem) > 5) then return end
+        if not totem.id or (not settings.ts[totem.id] and player.distanceTo(totem) > 5) then return end
         awful.alert({
             message="Stomped a totem.",  
             texture=100780,
@@ -823,30 +823,35 @@ envelopingMist:Callback(function(spell)
     end
 end)
 
+
 enveloping:Callback(function(spell)
-
-    -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 851
+    local lowestHp = 75 
 
-    -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
-        -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
-        -- and if the friend has the Soothing Mist buff
-        if friend.hp < lowestHpPercentage and friend.buff("Soothing Mist") then
-            -- Update lowestHpFriend and lowestHpPercentage
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
+            lowestHp = friend.hp
             lowestHpFriend = friend
-            lowestHpPercentage = friend.hp
         end
     end)
 
-    -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
-    if lowestHpFriend ~= nil then
-        awful.alert({
-            message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
-            texture=124682,
-        })
-        -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
+    if enveloping:Castable() and lowestHpFriend then
+        spell:Cast(lowestHpFriend)
+    end
+end)
+
+vivify:Callback(function(spell)
+    local lowestHpFriend = nil
+    local lowestHp = 85 
+
+    awful.fgroup.loop(function(friend)
+        if friend.hp < lowestHp and friend.hp > 70 and friend.buff("Soothing Mist") then
+            lowestHp = friend.hp
+            lowestHpFriend = friend
+        end
+    end)
+
+    if vivify:Castable() and lowestHpFriend then
         spell:Cast(lowestHpFriend)
     end
 end)
@@ -882,7 +887,7 @@ end)
 renewing:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 90
+    local lowestHpPercentage = 100
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
@@ -905,33 +910,6 @@ renewing:Callback(function(spell)
     end
 end)
 
-vivify:Callback(function(spell)
-
-    -- Initialize a variable to store the friendly unit with the lowest HP
-    local lowestHpFriend = nil
-    local lowestHpPercentage = 95
-
-    -- Loop through all friendly units
-    awful.fgroup.loop(function(friend)
-        -- Check if this friendly unit has a lower HP percentage than the current lowestHpPercentage
-        -- and if the friend has the Soothing Mist buff
-        if friend.hp < lowestHpPercentage then
-            -- Update lowestHpFriend and lowestHpPercentage
-            lowestHpFriend = friend
-            lowestHpPercentage = friend.hp
-        end
-    end)
-
-    -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
-    if lowestHpFriend ~= nil then
-        awful.alert({
-            message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
-            texture=124682,
-        })
-        -- If the cooldown is 0, cast Enveloping Mist on the friendly unit with the lowest HP
-        spell:Cast(lowestHpFriend)
-    end
-end)
 
 faelineStomp:Callback(function(spell)
     -- Check if the player doesn't have the Teachings buff
@@ -950,7 +928,6 @@ faelineStomp:Callback(function(spell)
         end
     end
 end)
-
 
 
 -- Create a callback for the Essence Font ability
