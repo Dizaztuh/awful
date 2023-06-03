@@ -235,19 +235,24 @@ summonJadeSerpent:Callback(function(spell)
             statueFound = true
             -- Save the statue's position
             statueX, statueY, statueZ = obj.position()
+
+            -- Check the values
+            print("Statue position: ", statueX, statueY, statueZ)
+
             -- Break the loop early as we've found a statue
             return true
         end
     end)
 
     -- If we didn't find a statue or the statue is more than 40 yards away, summon a new one
-    if not statueFound or awful.distance(x, y, z, statueX, statueY, statueZ) > 40 then
+    if not statueFound or awful.Distance(x, y, z, statueX, statueY, statueZ) > 40 then
         if not lastStatueSummonTime or (awful.time - lastStatueSummonTime >= statueSummonCooldown) then
             spell:AoECast(x, y, z)
             lastStatueSummonTime = awful.time
         end
     end
 end)
+
 
 
 invokeYulon:Callback(function(spell)
