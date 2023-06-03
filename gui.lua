@@ -23,7 +23,6 @@ local gui, settings, cmd = awful.UI:New("gladdyui", {
     }
 })
 
-
 project.settings = settings
 
 -- Totem list for totem stomping
@@ -67,8 +66,6 @@ offensive:Checkbox({text = "Chi-Ji on Friendly Burst", var = "cjf", default = tr
 
 -- Defensive tab
 local defensive = gui:Tab("Defensive")
-defensive:Slider({text = "Fortifying Brew", var = "fBrews", min = 0, max = 100, default = 35, valueType = "%", tooltip = "Fortifying Brew triggered at % HP."})
-defensive:Slider({text = "RoP", var = "ringofPeaces", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Ring of Peace trigger on friendly at % HP."})
 defensive:Slider({text = "Dampen Harm", var = "dh", min = 0, max = 100, default = 45, valueType = "%", tooltip = "Dampen Harm triggered at % HP."})
 defensive:Slider({text = "Life Cocoon", var = "lc", min = 0, max = 100, default = 40, valueType = "%", tooltip = "Life Cocoon triggered at % HP."})
 defensive:Slider({text = "Diffuse Magic", var = "dm", min = 0, max = 100, default = 30, valueType = "%", tooltip = "Diffuse Magic triggered at % HP."})
@@ -76,18 +73,16 @@ defensive:Slider({text = "Transfer", var = "transferJuke", min = 0, max = 100, d
 
 
 -- Healing tab
-local healing = gui:Tab("Healing")
---healing:Checkbox({text = "Renewing Mist (Fistweaver)", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
---healing:Checkbox({text = "Enveloping Mist (Fistweaver)", var = "em", default = true, tooltip = "Enable/Disable Auto Instant Proc Enveloping Mists."})
-healing:Slider({text = "Enveloping Mist(Caster)", var = "emist", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Enveloping Mist triggered at % HP while Soothing Mist"})
-healing:Slider({text = "Renewing Mist (Caster)", var = "rmist", min = 0, max = 100, default = 95, valueType = "%", tooltip = "Renewing Mist triggered at % HP."})
-healing:Slider({text = "Vivify (Caster)", var = "viv", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Vivify triggered at % HP while Soothing Mist."})
+local healing = gui:Tab("General Healing")
 healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Sphere of Hope ally at % HP. (Limited 15 second timer check.)"})
 healing:Slider({text = "Restoral", var = "restoral", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP."})
 healing:Slider({text = "Revival", var = "revival", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP."})
 healing:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
 
-
+local healing2 = gui:Tab("Caster Healing")
+healing2:Slider({text = "Enveloping Mist (Caster)", var = "emist", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Enveloping Mist triggered at % HP while Soothing Mist"})
+healing2:Slider({text = "Renewing Mist (Caster)", var = "rmist", min = 0, max = 100, default = 95, valueType = "%", tooltip = "Renewing Mist triggered at % HP."})
+healing2:Slider({text = "Vivify (Caster)", var = "viv", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Vivify triggered at % HP while Soothing Mist."})
 
 -- Misc tab
 local misc = gui:Tab("Misc")

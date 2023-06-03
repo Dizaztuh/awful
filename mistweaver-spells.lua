@@ -407,7 +407,7 @@ ringOfPeace:Callback(function(spell)
     end)
 
     awful.friends.loop(function(friend)
-        if friend.hp <= settings.ringofPeaces then
+        if friend.hp <= 40 then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
@@ -796,12 +796,10 @@ end)
 
 
 enveloping:Callback(function(spell)
-    local lowestHpFriend = nil
-    local lowestHp = settings.emist or 90
+    local lowestHpFriend
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
-            lowestHp = friend.hp
+        if friend.buff("Soothing Mist") and friend.hp < settings.emist then
             lowestHpFriend = friend
         end
     end)
@@ -811,9 +809,10 @@ enveloping:Callback(function(spell)
     end
 end)
 
+
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = settings.viv or 90
+    local lowestHp = settings.viv
 
     awful.fgroup.loop(function(friend)
         if friend.hp < lowestHp and friend.buff("Soothing Mist") then
@@ -863,7 +862,7 @@ end)
 renewing:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = settings.rmist or 95
+    local lowestHpPercentage = settings.rmist
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
@@ -878,7 +877,7 @@ renewing:Callback(function(spell)
     -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
     if lowestHpFriend ~= nil then
         awful.alert({
-            message="Casted Instant Renewing Mist Instant Proc on Lowest HP Ally!", 
+            message="Casted Instant Renewing Mist", 
             texture=115151,
             })
         -- If the cooldown is 0, cast Renewing Mist on the friendly unit with the lowest HP
@@ -940,7 +939,7 @@ fortifyingBrew:Callback(function(spell)
     end)
     
     -- Check if the player's health is at or below 40%
-    if player.hp <= settings.fBrews and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
+    if not (player.buff(122278) or player.buff(122783) or player.buff(116849)) and player.hp <= 35 then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
@@ -951,7 +950,7 @@ fortifyingBrew:Callback(function(spell)
 end)
 
 healingElixir:Callback(function(spell)
-    if player.hp <= settings.he and healingElixir.charges > 1 then
+    if player.hp <= settings.he and healingElixir.charges >= 1 then
         awful.alert({
             message="Casted Healing Elixir!", 
             texture=122281,
