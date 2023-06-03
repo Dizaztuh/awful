@@ -25,7 +25,7 @@ awful.Populate({
     enveloping = Spell(124682, { heal = true, ignoreChanneling = true }),
     renewing = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
-    soothingMist = Spell(115175, { heal = true, targeted = true }),
+    soothingMist = Spell(115175, { heal = true, targeted = true, ignoreLoS = false }),
     essenceFont = Spell(191837, { heal = true, ignoreMoving = true, ignoreFacing = true }),
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, ignoreCasting = true, ignoreFacing = true }),
@@ -799,7 +799,7 @@ enveloping:Callback(function(spell)
     local lowestHpFriend
 
     awful.fgroup.loop(function(friend)
-        if friend.buff("Soothing Mist") and friend.hp < settings.emist then
+        if friend.buff("Soothing Mist") and friend.hp < settings.emist and player.buffStacks(388048) == 2 then
             lowestHpFriend = friend
         end
     end)
