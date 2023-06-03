@@ -807,7 +807,7 @@ enveloping:Callback(function(spell)
     local lowestHp = settings.emist
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") and player.buffStacks(388048) >= 1 then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
