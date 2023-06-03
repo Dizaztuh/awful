@@ -89,9 +89,7 @@ local function initCasterHealer()
     diffuseMagic()
     spearHandStrike()
     manaTea()
-    if player.HasTalent(353584) then
     transfer()
-    end
 end
 
 
