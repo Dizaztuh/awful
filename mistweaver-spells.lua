@@ -227,7 +227,7 @@ summonJadeSerpent:Callback(function(spell)
     -- Loop through all objects
     awful.objects.loop(function(obj)
         -- If the object is a Jade Serpent Statue
-        if obj.id == 60849 then
+        if obj.name == "Jade Serpent Statue" then
             -- Set our statueFound variable to true
             statueFound = true
             -- Break the loop early as we've found a statue
