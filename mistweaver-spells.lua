@@ -211,8 +211,6 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-currentSpellInRotation = 1
-
 function singleTarget()
     local lowestHpFriend = nil
     local lowestHp = 100
@@ -230,26 +228,18 @@ function singleTarget()
         return
     end
 
-    -- Check that friend has Soothing Mist buff before proceeding with rotation
-    if not lowestHpFriend.buff("Soothing Mist") then
-        return
-    end
-
-    -- Use currentSpellInRotation to determine which spell to cast
-    if currentSpellInRotation == 1 and thunderFocusTea:Castable() then
-        thunderFocusTea:Cast()
-        currentSpellInRotation = 2
-    elseif currentSpellInRotation == 2 and vivify:Castable() then
+    -- Now we have the friend with the lowest HP, let's proceed with the rotation
+    if player.lastcast ~= "Thunder Focus Tea" and thunderFocusTea:Castable() and lowestHpFriend.buff("Soothing Mist") then
+        thunderFocusTea:Cast(lowestHpFriend)
+    elseif player.lastCast == "Thunder Focus Tea" and vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
         vivify:Cast(lowestHpFriend)
-        currentSpellInRotation = 3
-    elseif currentSpellInRotation == 3 and enveloping:Castable() then
+    elseif player.lastCast == "Vivify" and enveloping:Castable() and lowestHpFriend.buff("Soothing Mist") then
         enveloping:Cast(lowestHpFriend)
-        currentSpellInRotation = 4
-    elseif currentSpellInRotation == 4 and vivify:Castable() then
+    elseif player.lastCast == "Enveloping Mist" and vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
         vivify:Cast(lowestHpFriend)
-        currentSpellInRotation = 1
     end
 end
+
 
 
 manaTea:Callback(function(spell)
