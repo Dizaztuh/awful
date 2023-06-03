@@ -231,6 +231,7 @@ summonJadeSerpent:Callback(function(spell)
     local nearbyStatues, statueCount = awful.objects.around({x, y, z}, 40, isJadeSerpentStatue)
     -- If no statues were found nearby, summon a new one
             spell:AoECast(x, y, z)
+        end
     end
 end)
 
