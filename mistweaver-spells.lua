@@ -219,10 +219,26 @@ manaTea:Callback(function(spell)
     end
 end)
 
+local lastStatueSummonTime = nil
+local statueSummonCooldown = 15 -- 5 second cooldown between statue summons
+
 summonJadeSerpent:Callback(function(spell)
-    local jss = awful.objects.within(40).find(function(obj) return obj.id == 60849 and obj.creator.player end)
-    if not jss then
-        spell:Cast(player)
+    local x, y, z = player.position()
+    
+    -- Define a function to identify the Jade Serpent Statue
+    local isJadeSerpentStatue = function(obj)
+        return obj.name == "Jade Serpent Statue"
+    end
+
+    -- Check for statues within 40 yards of the player
+    local nearbyStatues, statueCount = awful.objects.around({x, y, z}, 40, isJadeSerpentStatue)
+
+    -- If no statues were found nearby, summon a new one
+    if statueCount == 0 then
+        if not lastStatueSummonTime or (awful.time - lastStatueSummonTime >= statueSummonCooldown) then
+            spell:AoECast(x, y, z)
+            lastStatueSummonTime = awful.time
+        end
     end
 end)
 
