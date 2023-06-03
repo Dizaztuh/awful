@@ -59,6 +59,7 @@ local function initFistweaver()
     dampenHarm()
     fortifyingBrew()
     diffuseMagic()
+    transfer()
 end
 
 local function initCasterHealer()
@@ -67,52 +68,30 @@ local function initCasterHealer()
     ringOfPeace()
     detox()
     provoke()
-    if settings.para then
     paralyze()
-    end
     tigersLust()
     grappleWeapon()
     invokeYulon()
     touchOfDeath()
-    if settings.lc then
     lifeCocoon()
-    end
     soothingMist()
     renewing()
     vivify()
     enveloping()
-    if settings.tft then
     thunderFocusTea()
-    end
-    if settings.soh then
     sphereofHope()
-    end
-    if settings.revival then
     revival()
-    end
-    if settings.restoral then
     restoral()
-    end
     legSweep()
-    if settings.he then
     healingElixir()
-    end
-    if settings.dh then
     dampenHarm()
-    end
     fortifyingBrew()
-    if settings.dm then
     diffuseMagic()
-    end
-    if settings.spear then
     spearHandStrike()
-    end
     manaTea()
-    if player.HasTalent(353584) and
-     settings.transferJuke then
+    if player.HasTalent(353584) then
     transfer()
     end
-end
 
 
 -- Initialize the mistweaver monk profile
