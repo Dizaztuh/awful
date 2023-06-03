@@ -284,23 +284,30 @@ soothingMist:Callback(function(spell)
 end)
 
 
--- Callback for Transfer
+-- Store last cast times
+local lastCastTime = {}
+
 transfer:Callback(function(spell)
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
     if player.buff(101643) and player.hp <= settings.transferJuke and player.stunned and spell:Castable() then
-        -- Cast Transfer
-        spell:Cast()
+        -- If there's no record of this spell being cast or the delay has been met
+            -- Cast Transfer
+            spell:Cast()
+            -- Update the last cast time
+            lastCastTime[spell.id] = GetTime()
         -- Check if player has the Eminence talent
         if player.HasTalent(394110) then
-            -- Add a random delay between 1 and 3 seconds before casting Transfer again
-            awful.timer(function()
-                if spell:Castable() then
-                    spell:Cast()
-                end
-            end, math.random(1, 2))
+            -- If there's no record of this spell being cast or the delay has been met
+            if not lastCastTime[spell.id] or GetTime() - lastCastTime[spell.id] >= math.random(delayLowerBound, delayUpperBound) then
+                -- Cast Transfer
+                spell:Cast()
+                -- Update the last cast time
+                lastCastTime[spell.id] = GetTime()
+            end
         end
     end
 end)
+
 
 
 provoke:Callback(function(spell)
