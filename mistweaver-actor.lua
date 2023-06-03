@@ -92,6 +92,7 @@ local function initCasterHealer()
     if player.HasTalent(353584) then
     transfer()
     end
+end
 
 
 -- Initialize the mistweaver monk profile
