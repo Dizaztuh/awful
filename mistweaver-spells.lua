@@ -822,10 +822,16 @@ vivify:Callback(function(spell)
         end
     end)
 
+    -- Check if player has 2 stacks of buff 388048 and return if so
+    if player.buffStacks(388048) == 2 then
+        return
+    end
+
     if vivify:Castable() and lowestHpFriend then
         spell:Cast(lowestHpFriend)
     end
 end)
+
 
 
 renewingMist:Callback(function(spell)
