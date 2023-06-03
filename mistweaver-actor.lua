@@ -85,10 +85,8 @@ local function initCasterHealer()
     if settings.lc then
     lifeCocoon()
     end
-    renewing()
     soothingMist()
-    vivify()
-    enveloping()
+    singleTarget()
     if settings.soh then
     sphereofHope()
     end
@@ -116,9 +114,6 @@ local function initCasterHealer()
     if player.HasTalent(353584) and
      settings.transferJuke then
     transfer()
-    end
-    if settings.tft then
-    thunderFocusTea()
     end
 end
 
