@@ -26,9 +26,7 @@ print("Sisterfister Loaded!")
 
 local function initFistweaver()
     touchOfDeath()
-    if settings.rop then
     ringOfPeace()
-    end
     if settings.aa then
     castOnClosestEnemy()
     end
