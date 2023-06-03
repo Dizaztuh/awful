@@ -376,7 +376,7 @@ ringOfPeace:Callback(function(spell)
     -- Otherwise, proceed with the casting actions and update the triggered time
     awful.enemies.loop(function(enemy)
         for spellID, _ in pairs(ROPDROP) do
-            if enemy.buff(spellID, spellName) then
+            if enemy.buff(spellID) then
                 local x, y, z = enemy.position()
                 if not player.losCoordsLiteral(x, y, z) then return end
                 if x and y and z then
@@ -390,8 +390,8 @@ ringOfPeace:Callback(function(spell)
             end
         end
 
-        for spellName, _ in pairs(enemyBuffTable) do
-            if enemy.buff(spellName) then
+        for spellID, _ in pairs(enemyBuffTable) do
+            if enemy.buff(spellID) then
                 local x, y, z = enemy.position()
                 if not player.losCoordsLiteral(x, y, z) then return end
                 if x and y and z then
@@ -407,7 +407,7 @@ ringOfPeace:Callback(function(spell)
     end)
 
     awful.friends.loop(function(friend)
-        if friend.hp <= settings.ringOfPeaces or 40 then
+        if friend.hp <= settings.ringofPeaces or 40 then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
