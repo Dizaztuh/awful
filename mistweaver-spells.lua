@@ -10,7 +10,7 @@ local SpellStopCasting = awful.unlock("SpellStopCasting") or awful.call("SpellSt
 awful.enabled = true
 
 awful.Populate({
-    transfer = Spell(119996),
+    transfer = Spell(119996, { ignoreMoving = true, ignoreCasting = true, ignoreChanneling = true }),
     summonJadeSerpent = Spell(115313, { ignoreLoS = false, ignoreMoving = true, ignoreChanneling = true }),
     zenFocusTea = Spell(209584),
     manaTea = Spell(197908),
