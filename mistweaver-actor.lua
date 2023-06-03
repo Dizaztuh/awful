@@ -56,12 +56,8 @@ local function initFistweaver()
     tigersLust()
     detox()
     lifeCocoon()
-    if settings.em then
     envelopingMist()
-    end
-    if settings.rm then
     renewingMist()
-    end
     thunderFocusTea()
     healingElixir()
     dampenHarm()
