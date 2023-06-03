@@ -917,7 +917,7 @@ renewing:Callback(function(spell)
     end)
 
     -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
-    if lowestHpFriend ~= nil then
+    if lowestHpFriend ~= nil and not lowestHpFriend.buff(119511) then
         awful.alert({
             message="Casted Renewing Mist", 
             texture=115151,
