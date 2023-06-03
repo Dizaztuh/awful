@@ -232,8 +232,6 @@ function singleTarget()
     if vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
         thunderFocusTea:Cast(lowestHpFriend)
         vivify:Cast(lowestHpFriend)
-    end
-    if vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
         vivify:Cast(lowestHpFriend)
     end
     if enveloping:Castable() and lowestHpFriend.buff("Soothing Mist") then
