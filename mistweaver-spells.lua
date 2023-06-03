@@ -220,33 +220,6 @@ manaTea:Callback(function(spell)
 end)
 
 
-summonJadeSerpent:Callback(function(spell)
-    local x, y, z = player.position()
-
-    -- Initialize a variable to track if we found a statue
-    local statueFound = false
-
-    -- Loop through all objects
-    awful.objects.loop(function(obj)
-        -- If the object is a Jade Serpent Statue
-        if obj.id == 60849 then
-            -- Set our statueFound variable to true
-            statueFound = true
-            -- Break the loop early as we've found a statue
-            return true
-        end
-    end)
-
-    -- If we didn't find a statue, summon one
-    if not statueFound then
-        if not lastStatueSummonTime or (awful.time - lastStatueSummonTime >= statueSummonCooldown) then
-            spell:AoECast(x, y, z)
-            lastStatueSummonTime = awful.time
-        end
-    end
-end)
-
-
 
 
 invokeYulon:Callback(function(spell)
