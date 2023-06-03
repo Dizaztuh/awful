@@ -52,7 +52,7 @@ awful.Populate({
     invokeChiJi = Spell(325197, { ignoreMoving = true, ignoreFacing = true, ignoreMoving = true }),
     bloodFury = Spell(33697),
     grappleWeapon = Spell (233759, { targeted = true, cc = true, effect = "physical", ignoreMoving = true }),
-    provoke = Spell (115546, { targeted = true, ignoreMoving = true, ignoreCasting = true })
+    provoke = Spell (115546, { targeted = true, ignoreMoving = true, ignoreCasting = true, ignoreChanneling = true })
 }, mistweaver, getfenv(1))
 
 local provokeTable = {
