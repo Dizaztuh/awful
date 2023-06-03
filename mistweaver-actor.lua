@@ -63,7 +63,6 @@ local function initFistweaver()
 end
 
 local function initCasterHealer()
-    summonJadeSerpent()
     sphereofDespair()
     ringOfPeace()
     detox()
