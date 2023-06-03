@@ -245,7 +245,7 @@ summonJadeSerpent:Callback(function(spell)
     end)
 
     -- If we didn't find a statue or the statue is more than 40 yards away, summon a new one
-    if not statueFound or awful.Distance(x, y, z, statueX, statueY, statueZ) > 40 then
+    if not statueFound or obj.distance(x, y, z, statueX, statueY, statueZ) > 40 then
         if not lastStatueSummonTime or (awful.time - lastStatueSummonTime >= statueSummonCooldown) then
             spell:AoECast(x, y, z)
             lastStatueSummonTime = awful.time
