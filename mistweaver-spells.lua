@@ -227,7 +227,7 @@ summonJadeSerpent:Callback(function(spell)
     
     -- Define a function to identify the Jade Serpent Statue
     local isJadeSerpentStatue = function(obj)
-        return obj.id == 60849
+        return obj.name == "Jade Serpent Statue"
     end
 
     -- Check for statues within 40 yards of the player
