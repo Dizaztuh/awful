@@ -46,7 +46,7 @@ awful.Populate({
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true, ignoreMoving = true }),
     sphereofHope = Spell (410777, { targeted = true, ignoreMoving = true }),
-    thunderFocusTea = Spell(116680,  { ignoreCasting = true, ignoreMoving = true }),
+    thunderFocusTea = Spell(116680,  { ignoreCasting = true, ignoreMoving = true, ignoreChanneling = true }),
     restoral = Spell(388615, { heal = true, ignoreControl = true, range = 40, ignoreFacing = true }),
     tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197, { ignoreMoving = true, ignoreFacing = true, ignoreMoving = true }),
