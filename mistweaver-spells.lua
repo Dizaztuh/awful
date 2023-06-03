@@ -220,12 +220,11 @@ manaTea:Callback(function(spell)
 end)
 
 summonJadeSerpent:Callback(function(spell)
-    local jss = awful.objects.within(40).find(function(obj) return obj.id == 60849 and obj.creator.friend end)
+    local jss = awful.objects.within(40).find(function(obj) return obj.id == 60849 and obj.creator.player end)
     if not jss then
         spell:Cast()
     end
 end)
-
 
 
 invokeYulon:Callback(function(spell)
