@@ -823,7 +823,7 @@ vivify:Callback(function(spell)
     local lowestHp = settings.viv 
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.hp > settings.emist and friend.buff("Soothing Mist") then
+        if friend.hp < lowestHp and friend.hp > settings.emist then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
@@ -833,6 +833,7 @@ vivify:Callback(function(spell)
         spell:Cast(lowestHpFriend)
     end
 end)
+
 
 
 
