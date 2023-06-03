@@ -407,7 +407,7 @@ ringOfPeace:Callback(function(spell)
     end)
 
     awful.friends.loop(function(friend)
-        if friend.hp <= 40 then
+        if friend.hp <= settings.ringOfPeaces or 40 then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
@@ -797,7 +797,7 @@ end)
 
 enveloping:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = settings.emist
+    local lowestHp = settings.emist or 90
 
     awful.fgroup.loop(function(friend)
         if friend.hp < lowestHp and friend.buff("Soothing Mist") then
@@ -813,7 +813,7 @@ end)
 
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = settings.viv
+    local lowestHp = settings.viv or 90
 
     awful.fgroup.loop(function(friend)
         if friend.hp < lowestHp and friend.buff("Soothing Mist") then
@@ -863,7 +863,7 @@ end)
 renewing:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = settings.rmist
+    local lowestHpPercentage = settings.rmist or 95
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
@@ -940,7 +940,7 @@ fortifyingBrew:Callback(function(spell)
     end)
     
     -- Check if the player's health is at or below 40%
-    if player.hp <= 40 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
+    if player.hp <= settings.fBrews or 40 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
