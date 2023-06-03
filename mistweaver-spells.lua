@@ -223,9 +223,8 @@ end)
 summonJadeSerpent:Callback(function(spell)
     local x, y, z = player.position()
 
-    -- Initialize a variable to track if we found a statue and its position
+    -- Initialize a variable to track if we found a statue
     local statueFound = false
-    local statueX, statueY, statueZ
 
     -- Loop through all objects
     awful.objects.loop(function(obj)
@@ -233,25 +232,20 @@ summonJadeSerpent:Callback(function(spell)
         if obj.id == 60849 then
             -- Set our statueFound variable to true
             statueFound = true
-            -- Save the statue's position
-            statueX, statueY, statueZ = obj.position()
-
-            -- Check the values
-            print("Statue position: ", statueX, statueY, statueZ)
-
             -- Break the loop early as we've found a statue
             return true
         end
     end)
 
-    -- If we didn't find a statue or the statue is more than 40 yards away, summon a new one
-    if not statueFound or obj.distance(x, y, z, statueX, statueY, statueZ) > 40 then
+    -- If we didn't find a statue, summon one
+    if not statueFound then
         if not lastStatueSummonTime or (awful.time - lastStatueSummonTime >= statueSummonCooldown) then
             spell:AoECast(x, y, z)
             lastStatueSummonTime = awful.time
         end
     end
 end)
+
 
 
 
