@@ -797,7 +797,7 @@ end)
 
 enveloping:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 75 
+    local lowestHp = 90
 
     awful.fgroup.loop(function(friend)
         if friend.hp < lowestHp and friend.buff("Soothing Mist") then
@@ -813,7 +813,7 @@ end)
 
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 85 
+    local lowestHp = 90
 
     awful.fgroup.loop(function(friend)
         if friend.hp < lowestHp and friend.hp > 70 and friend.buff("Soothing Mist") then
