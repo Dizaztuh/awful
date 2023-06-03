@@ -52,7 +52,7 @@ awful.Populate({
     invokeChiJi = Spell(325197, { ignoreMoving = true, ignoreFacing = true, ignoreMoving = true }),
     bloodFury = Spell(33697),
     grappleWeapon = Spell (233759, { targeted = true, cc = true, effect = "physical", ignoreMoving = true }),
-    provoke = Spell (115546, { targeted = true, ignoreMoving = true, ignoreCasting = true, ignoreChanneling = true })
+    provoke = Spell (115546, { targeted = true, ignoreMoving = true, ignoreCasting = true })
 }, mistweaver, getfenv(1))
 
 local provokeTable = {
@@ -219,17 +219,26 @@ manaTea:Callback(function(spell)
     end
 end)
 
-
+local lastStatueSummonTime = nil
+local statueSummonCooldown = 5 -- 5 second cooldown between statue summons
 
 summonJadeSerpent:Callback(function(spell)
     local x, y, z = player.position()
+    
     -- Define a function to identify the Jade Serpent Statue
     local isJadeSerpentStatue = function(obj)
         return obj.name == "Jade Serpent Statue"
     end
+
     -- Check for statues within 40 yards of the player
     local nearbyStatues, statueCount = awful.objects.around({x, y, z}, 40, isJadeSerpentStatue)
+
+    -- If no statues were found nearby, summon a new one
+    if statueCount == 0 then
+        if not lastStatueSummonTime or (awful.time - lastStatueSummonTime >= statueSummonCooldown) then
             spell:AoECast(x, y, z)
+            lastStatueSummonTime = awful.time
+        end
     end
 end)
 
