@@ -76,6 +76,8 @@ defensive:Slider({text = "Transfer", var = "transferJuke", min = 0, max = 100, d
 
 -- Healing tab
 local healing = gui:Tab("Healing")
+healing:Checkbox({text = "Renewing Mist (Fistweaver)", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
+healing:Checkbox({text = "Enveloping Mist (Fistweaver)", var = "em", default = true, tooltip = "Enable/Disable Auto Instant Proc Enveloping Mists."})
 healing:Slider({text = "Enveloping Mist(Caster)", var = "emist", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Enveloping Mist triggered at % HP while Soothing Mist"})
 healing:Slider({text = "Renewing Mist (Caster)", var = "rmist", min = 0, max = 100, default = 95, valueType = "%", tooltip = "Renewing Mist triggered at % HP."})
 healing:Slider({text = "Vivify (Caster)", var = "viv", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Vivify triggered at % HP while Soothing Mist."})
@@ -83,8 +85,7 @@ healing:Slider({text = "Sphere of Hope", var = "soh", min = 0, max = 100, defaul
 healing:Slider({text = "Restoral", var = "restoral", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP."})
 healing:Slider({text = "Revival", var = "revival", min = 0, max = 100, default = 37, valueType = "%", tooltip = "Restoral at friend % HP."})
 healing:Slider({text = "Healing Elixir", var = "he", min = 0, max = 100, default = 65, valueType = "%", tooltip = "Healing Elixir triggered at % HP."})
-healing:Checkbox({text = "Renewing Mist (Fistweaver)", var = "rm", default = true, tooltip = "Enable/Disable Auto Instant Proc Renewing Mists"})
-healing:Checkbox({text = "Enveloping Mist (Fistweaver)", var = "em", default = true, tooltip = "Enable/Disable Auto Instant Proc Enveloping Mists."})
+
 
 
 -- Misc tab
