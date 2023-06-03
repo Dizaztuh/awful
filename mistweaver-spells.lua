@@ -407,7 +407,7 @@ ringOfPeace:Callback(function(spell)
     end)
 
     awful.friends.loop(function(friend)
-        if friend.hp <= settings.ringofPeaces or 40 then
+        if friend.hp <= 40 then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
                     local x, y, z = friend.position()
@@ -940,7 +940,7 @@ fortifyingBrew:Callback(function(spell)
     end)
     
     -- Check if the player's health is at or below 40%
-    if player.hp <= settings.fBrews or 40 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
+    if player.hp <= 40 and not (player.buff(122278) or player.buff(122783) or player.buff(116849)) then
         awful.alert({
             message="Casted Fortifying Brew! Gettin fk'n Rekt!",
             texture=115203,
