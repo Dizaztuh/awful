@@ -809,19 +809,15 @@ enveloping:Callback(function(spell)
     end
 end)
 
-
 vivify:Callback(function(spell)
-    local lowestHpFriend = nil
-    local lowestHp = settings.viv
+    local lowestHpFriend
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") then
-            lowestHp = friend.hp
+        if friend.buff("Soothing Mist") and friend.hp < settings.viv then
             lowestHpFriend = friend
         end
     end)
 
-    -- Check if player has 2 stacks of buff 388048 and return if so
     if player.buffStacks(388048) == 2 then
         return
     end
@@ -830,7 +826,6 @@ vivify:Callback(function(spell)
         spell:Cast(lowestHpFriend)
     end
 end)
-
 
 
 renewingMist:Callback(function(spell)
