@@ -797,7 +797,7 @@ end)
 
 enveloping:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 90
+    local lowestHp = settings.emist
 
     awful.fgroup.loop(function(friend)
         if friend.hp < lowestHp and friend.buff("Soothing Mist") then
@@ -813,7 +813,7 @@ end)
 
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
-    local lowestHp = 90
+    local lowestHp = settings.viv
 
     awful.fgroup.loop(function(friend)
         if friend.hp < lowestHp and friend.buff("Soothing Mist") then
@@ -863,7 +863,7 @@ end)
 renewing:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 100
+    local lowestHpPercentage = settings.rmist
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)
