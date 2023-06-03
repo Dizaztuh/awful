@@ -211,6 +211,36 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
+function singleTarget()
+    local lowestHpFriend = nil
+    local lowestHp = 100
+
+    awful.fgroup.loop(function(friend)
+        -- Check if the friend's HP is lower than the lowest HP we've seen so far
+        if friend.hp < lowestHp then
+            lowestHp = friend.hp
+            lowestHpFriend = friend
+        end
+    end)
+
+    -- If no friend was found with HP less than 100, there's nothing to do
+    if not lowestHpFriend then
+        return
+    end
+
+    -- Now we have the friend with the lowest HP, let's proceed with the rotation
+    if vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
+        thunderFocusTea:Cast(lowestHpFriend)
+        vivify:Cast(lowestHpFriend)
+    end
+    if vivify:Castable() and lowestHpFriend.buff("Soothing Mist") then
+        vivify:Cast(lowestHpFriend)
+    end
+    if enveloping:Castable() and lowestHpFriend.buff("Soothing Mist") then
+        enveloping:Cast(lowestHpFriend)
+    end
+end
+
 
 manaTea:Callback(function(spell)
     if player.manaPct <= 90 then return
@@ -221,28 +251,26 @@ end)
 local lastStatueSummonTime = nil
 local statueSummonCooldown = 5 -- 5 second cooldown between statue summons
 
-local lastStatuePosition = nil
-local distanceTolerance = 10 -- tolerance for position difference
-
 summonJadeSerpent:Callback(function(spell)
-    local statue = nil
-    local statueDistanceToPlayer = nil
+    local x, y, z = player.position()
+    
+    -- Define a function to identify the Jade Serpent Statue
+    local isJadeSerpentStatue = function(obj)
+        return obj.name == "Jade Serpent Statue"
+    end
 
-    -- Loop through all objects to find the statue
-    awful.objects.loop(function(obj)
-        if obj.name == "Jade Serpent Statue" then
-            statue = obj
-            statueDistanceToPlayer = player.distanceTo(obj)
-            return true  -- Breaks the loop
+    -- Check for statues within 40 yards of the player
+    local nearbyStatues, statueCount = awful.objects.around({x, y, z}, 40, isJadeSerpentStatue)
+
+    -- If no statues were found nearby, summon a new one
+    if statueCount == 0 then
+        if not lastStatueSummonTime or (awful.time - lastStatueSummonTime >= statueSummonCooldown) then
+            spell:AoECast(x, y, z)
+            lastStatueSummonTime = awful.time
         end
-    end)
-
-    -- If there's no statue or it's 40 or more yards away, summon a new statue
-    if not statue or (statueDistanceToPlayer and statueDistanceToPlayer >= 40) then
-        local x, y, z = player.position()
-        spell:AoECast(x, y, z)
     end
 end)
+
 
 invokeYulon:Callback(function(spell)
     -- Loop through all enemy units
@@ -799,7 +827,7 @@ enveloping:Callback(function(spell)
 
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
-    local lowestHpPercentage = 85
+    local lowestHpPercentage = 851
 
     -- Loop through all friendly units
     awful.fgroup.loop(function(friend)

@@ -88,9 +88,7 @@ mistweaver:Init(function()
             end
             renewing()
             soothingMist()
-            vivify()
-            enveloping()
-            vivify()
+            singleTarget()
             if settings.soh then
             sphereofHope()
             end
