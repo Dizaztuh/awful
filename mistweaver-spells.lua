@@ -222,7 +222,6 @@ end)
 
 
 summonJadeSerpent:Callback(function(spell)
-    local jss = awful.objects.within(40).find(function(obj) return obj.id == 115313 and obj.creator.friend end)
     local x, y, z = player.position()
     -- Define a function to identify the Jade Serpent Statue
     local isJadeSerpentStatue = function(obj)
