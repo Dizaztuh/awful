@@ -220,7 +220,7 @@ manaTea:Callback(function(spell)
 end)
 
 local lastStatueSummonTime = nil
-local statueSummonCooldown = 5 -- 5 second cooldown between statue summons
+local statueSummonCooldown = 15 -- 5 second cooldown between statue summons
 
 summonJadeSerpent:Callback(function(spell)
     local x, y, z = player.position()
