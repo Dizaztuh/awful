@@ -10,7 +10,7 @@ local SpellStopCasting = awful.unlock("SpellStopCasting") or awful.call("SpellSt
 awful.enabled = true
 
 awful.Populate({
-    transfer = Spell(119996, { ignoreMoving = true, ignoreCasting = true, ignoreChanneling = true }),
+    transfer = Spell(119996, { ignoreMoving = true, ignoreCasting = true, ignoreChanneling = true, ignoreControl = true }),
     summonJadeSerpent = Spell(115313, { ignoreLoS = false, ignoreMoving = true, ignoreChanneling = true }),
     zenFocusTea = Spell(209584),
     manaTea = Spell(197908),
@@ -287,7 +287,7 @@ end)
 -- Callback for Transfer
 transfer:Callback(function(spell)
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
-    if player.hp <= settings.transferJuke and player.stunned and spell:Castable() then
+    if player.buff(101643) and player.hp <= settings.transferJuke and player.stunned and spell:Castable() then
         -- Cast Transfer
         spell:Cast()
         -- Check if player has the Eminence talent
