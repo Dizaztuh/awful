@@ -84,7 +84,7 @@ local function initCasterHealer()
     restoral()
     legSweep()
     healingElixir()
-    if not player.buff("Soothing Mist") then
+    if not player.casting("Soothing Mist") then
     renewingMist()
     envelopingMist()
     end

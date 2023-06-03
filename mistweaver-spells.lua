@@ -231,7 +231,7 @@ summonJadeSerpent:Callback(function(spell)
     end
 
     -- Check for statues within 40 yards of the player
-    local nearbyStatues, statueCount = awful.objects.around(player, 40, isJadeSerpentStatue)
+    local nearbyStatues, statueCount = awful.objects.around({x,y,z}, 40, isJadeSerpentStatue)
 
     -- If no statues were found nearby, summon a new one
     if statueCount == 0 then
