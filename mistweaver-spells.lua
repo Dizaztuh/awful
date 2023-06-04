@@ -861,13 +861,13 @@ vivify:Callback(function(spell)
     local lowestHp = settings.viv 
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp then
+        if friend.hp < lowestHp and friend.buff("Soothing Mist") and player.buff(388518) or player.buff(116680) or player.buff(392883) then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
     end)
 
-    if vivify:Castable() and lowestHp and (friend.buff("Soothing Mist") and player.buff(388518) or player.buff(116680) or player.buff(392883)) then
+    if vivify:Castable() and lowestHpFriend then
         spell:Cast(lowestHpFriend)
     end
 end)
