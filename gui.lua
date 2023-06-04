@@ -23,8 +23,6 @@ local gui, settings, cmd = awful.UI:New("gladdyui", {
     }
 })
 
-project.settings = settings
-
 -- Totem list for totem stomping
 local totemList = {
     ["Capacitor Totem"] = 59547,
@@ -98,3 +96,5 @@ misc:Dropdown({
 misc:Checkbox({text = "Closest Target Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
 misc:Checkbox({text = "Totem Stomp", var = "ts", default = true, tooltip = "Enable/Disable Totem Stomping."})
+
+project.settings = settings
