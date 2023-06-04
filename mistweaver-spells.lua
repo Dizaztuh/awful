@@ -297,42 +297,38 @@ transfer:Callback(function(spell)
         
         -- Check if player has the Eminence talent
         if player.HasTalent(394110) then
-            -- Initialize variable for max iterations
-            local maxIterations = 100
-            -- Initialize variable to track current iteration
-            local currentIteration = 0
 
-            -- Keep casting Vivify until player's HP is 100% or there's an enemy within 5 yards or max iterations reached
-            while player.hp < 100 and currentIteration < maxIterations do
-                -- Initialize variable to track if any enemies are within 5 yards
-                local enemyWithin5Yards = false
+            -- Initialize variable to track if any enemies are within melee range
+            local enemyWithinMeleeRange = false
 
-                -- Loop through all enemies
-                awful.enemies.loop(function(enemy)
-                    -- If the enemy is within 5 yards of the player
-                    if awful.distance(player, enemy) <= 5 then
-                        -- Set our variable to true and break the loop
-                        enemyWithin5Yards = true
-                        return true
+            -- Loop through all enemies
+            awful.enemies.loop(function(enemy)
+                -- If the enemy is within melee range of the player
+                if enemy.meleeRangeOf(player) then
+                    -- Set our variable to true and break the loop
+                    enemyWithinMeleeRange = true
+                    return true
+                end
+            end)
+
+            -- If there's no enemy within melee range, cast Soothing Mist and Vivify
+            if not enemyWithinMeleeRange then
+                if soothingMist:Castable(player) then
+                    soothingMist:Cast(player)
+                end
+                if player.buff("Soothing Mist") then
+                    if vivify:Castable(player) then
+                        vivify:Cast(player)
+                        vivify:Cast(player)
                     end
-                end)
-                
-                -- If there's an enemy within 5 yards, break the Vivify loop
-                if enemyWithin5Yards then
-                    break
+                    if enveloping:Castable(player) then
+                        enveloping:Cast(player)
+                    end
                 end
-
-                -- Cast Vivify on the player
-                if vivify:Castable(player) then
-                    vivify:cast(player)
-                end
-
-                -- Increment current iteration
-                currentIteration = currentIteration + 1
             end
-            
-            -- If there's no record of this spell being cast or the delay has been met, cast Transcendence
-            if not lastCastTime[spell.id] or GetTime() - lastCastTime[spell.id] >= 8 then
+
+            -- If there's an enemy within melee range, cast Transfer
+            if enemyWithinMeleeRange then
                 if spell:Castable() then
                     spell:Cast()
                     -- Update the last cast time
@@ -342,9 +338,6 @@ transfer:Callback(function(spell)
         end
     end
 end)
-
-
-
 
 
 provoke:Callback(function(spell)
