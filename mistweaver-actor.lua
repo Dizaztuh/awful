@@ -64,6 +64,7 @@ local function initFistweaver()
 end
 
 local function initCasterHealer()
+    updateInstanceType()
     sphereofDespair()
     ringOfPeace()
     detox()
