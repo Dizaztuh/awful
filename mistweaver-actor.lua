@@ -22,7 +22,7 @@ awful.onEvent(function(_, event)
     end
 end)
 
-print("Sisterfister Loaded!")
+print("Gladdy Sisterfister Loaded")
 
 local function initFistweaver()
     touchOfDeath()
