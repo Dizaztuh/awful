@@ -25,7 +25,6 @@ end)
 print("Sisterfister Loaded!")
 
 local function initFistweaver()
-    updateInstanceType()
     touchOfDeath()
     lifeCocoon()
     ringOfPeace()
@@ -65,7 +64,6 @@ local function initFistweaver()
 end
 
 local function initCasterHealer()
-    updateInstanceType()
     sphereofDespair()
     ringOfPeace()
     detox()
