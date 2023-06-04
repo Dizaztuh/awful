@@ -25,6 +25,7 @@ end)
 print("Sisterfister Loaded!")
 
 local function initFistweaver()
+    updateInstanceType()
     touchOfDeath()
     lifeCocoon()
     ringOfPeace()
