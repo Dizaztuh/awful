@@ -38,16 +38,16 @@ awful.Populate({
     legSweep = Spell(119381, { ignoreFacing = true, stun = true, ignoreMoving = true }),
     ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, AlwaysFace = true, ignoreMoving = true, effect = "magic", diameter = 15, offsetMin = 0, offsetMax = 5 }),
     flyingSerpentKick = Spell(101545),
-    fortifyingBrew = Spell(115203, { heal = true, ignoreCasting = true, ignoreMoving = true, ignoreChanneling = true }),
-    dampenHarm = Spell(122278,  { ignoreCasting = true, ignoreMoving = true, ignoreChanneling = true }),
-    revival = Spell(115310, { heal = true, ignoreFacing = true, range = 40, ignoreChanneling = true }),
-    diffuseMagic = Spell(122783, { ignoreCasting = true, ignoreMoving = true, ignoreChanneling = true }),
-    detox = Spell(115450, { targeted = true, ignoreMoving = true, range = 40, ignoreChanneling = true }),
+    fortifyingBrew = Spell(115203, { heal = true, ignoreCasting = true, ignoreMoving = true }),
+    dampenHarm = Spell(122278,  { ignoreCasting = true, ignoreMoving = true }),
+    revival = Spell(115310, { heal = true, ignoreFacing = true, range = 40 }),
+    diffuseMagic = Spell(122783, { ignoreCasting = true, ignoreMoving = true }),
+    detox = Spell(115450, { targeted = true, ignoreMoving = true, range = 40 }),
     spearHandStrike = Spell(116705,  { targeted = true, ignoreCasting = true }),
     healingElixir = Spell(122281, { heal = true, ignoreCasting = true, ignoreMoving = true }),
     sphereofHope = Spell (410777, { targeted = true, ignoreMoving = true }),
     thunderFocusTea = Spell(116680,  { ignoreCasting = true, ignoreMoving = true, ignoreChanneling = true }),
-    restoral = Spell(388615, { heal = true, ignoreControl = true, range = 40, ignoreFacing = true, ignoreChanneling = true }),
+    restoral = Spell(388615, { heal = true, ignoreControl = true, range = 40, ignoreFacing = true }),
     tigersLust = Spell(116841, { targeted = true }),
     invokeChiJi = Spell(325197, { ignoreMoving = true, ignoreFacing = true, ignoreMoving = true }),
     bloodFury = Spell(33697),
@@ -278,6 +278,7 @@ soothingMist:Callback(function(spell)
     if lowestHpFriend and player.combat then
         -- Stop any ongoing casting
         awful.call("SpellStopCasting")
+
         -- Cast Soothing Mist on the friend
         spell:Cast(lowestHpFriend)
     end
