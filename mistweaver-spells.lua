@@ -868,7 +868,7 @@ vivify:Callback(function(spell)
         end
     end)
 
-    if vivify:Castable() and ((lowestHpFriend and lowestHpFriend.buff("Soothing Mist")) or player.buff(388518) or player.buff(116680) or player.buff(392883)) then
+    if vivify:Castable() and ((lowestHpFriend and lowestHpFriend.buff("Soothing Mist")) or player.buff(388518) or player.buff(116680) or player.buff(392883) and not player.buff(325209) or player.buff(388519)) then
         spell:Cast(lowestHpFriend)
     end
     
