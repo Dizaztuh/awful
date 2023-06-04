@@ -850,7 +850,7 @@ enveloping:Callback(function(spell)
         end
     end)
 
-    if enveloping:Castable() and ((lowestHpFriend and lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1) or player.buff(388519) or player.buff(325209)) then
+    if enveloping:Castable() and ((lowestHpFriend and lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1) or player.buff(388519)) then
         spell:Cast(lowestHpFriend)
     end   
 end)
