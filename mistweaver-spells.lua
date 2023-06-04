@@ -845,13 +845,13 @@ enveloping:Callback(function(spell)
     local lowestHp = settings.emist
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") and player.buffStacks(388048) >= 1 or player.buff(388519) or player.buff(116680) or player.buff(325209) then
+        if friend.hp < lowestHp
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
     end)
 
-    if enveloping:Castable() and lowestHpFriend then
+    if enveloping:Castable() and lowestHpFriend and lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1 or player.buff(388519) or player.buff(116680) or player.buff(325209) then
         spell:Cast(lowestHpFriend)
     end
 end)
@@ -861,13 +861,13 @@ vivify:Callback(function(spell)
     local lowestHp = settings.viv 
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp and friend.buff("Soothing Mist") and player.buff(388518) or player.buff(116680) or player.buff(392883) then
+        if friend.hp < lowestHp then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
     end)
 
-    if vivify:Castable() and lowestHpFriend then
+    if vivify:Castable() and lowestHpFriend and lowestHpFriend.buff("Soothing Mist") and player.buff(388518) or player.buff(116680) or player.buff(392883) then
         spell:Cast(lowestHpFriend)
     end
 end)
