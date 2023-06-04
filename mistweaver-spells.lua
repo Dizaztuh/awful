@@ -845,7 +845,7 @@ enveloping:Callback(function(spell)
     local lowestHp = settings.emist
 
     awful.fgroup.loop(function(friend)
-        if friend.hp < lowestHp
+        if friend.hp < lowestHp then
             lowestHp = friend.hp
             lowestHpFriend = friend
         end
