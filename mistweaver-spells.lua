@@ -220,37 +220,6 @@ manaTea:Callback(function(spell)
 end)
 
 
-summonJadeSerpent:Callback(function(spell)
-    -- Use filter to get objects within 40 yards
-    local statues = awful.objects.filter(function(obj)
-        -- Ensure the object is a Jade Serpent Statue and is within 40 yards
-        return obj.name == "Jade Serpent Statue" and obj.distance < 40
-    end)
-
-    -- Initialize a variable to track if we found a statue within 40 yards
-    local statueWithinRange = false
-
-    -- Loop through the filtered statues
-    statues.loop(function(obj)
-        -- If we found a statue within 40 yards
-        if obj then
-            -- Set our statueWithinRange variable to true
-            statueWithinRange = true
-            -- Break the loop early as we've found a statue within range
-            return true
-        end
-    end)
-
-    -- If we didn't find a statue within range, summon one
-    if not statueWithinRange then
-        local x, y, z = player.position()
-        spell:AoECast(x, y, z)
-    end
-end)
-
-
-
-
 invokeYulon:Callback(function(spell)
     -- Loop through all enemy units
     awful.enemies.loop(function(enemy)
