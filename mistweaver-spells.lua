@@ -236,14 +236,15 @@ summonJadeSerpent:Callback(function(spell)
             -- Break the loop early as we've found a statue within range
             break
         end
-    end)
+    end
 
     -- If we didn't find a statue within range, summon one
     if not statueWithinRange then
         local x, y, z = player.position()
         spell:AoECast(x, y, z)
     end
-end
+end)
+
 
 
 invokeYulon:Callback(function(spell)
