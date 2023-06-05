@@ -221,27 +221,29 @@ end)
 
 
 summonJadeSerpent:Callback(function(spell)
-    -- Initialize a variable to track if we found a statue
-    local statueFound = false
+    -- Initialize a variable to track if we found a statue within 40 yards
+    local statueWithinRange = false
+
+    -- Use the list.around function to get a list of all objects around the player within 40 yards
+    local count, total, objects = awful.list.around(player, 40)
 
     -- Loop through all objects
-    awful.objects.loop(function(obj)
+    for i=1, count do
         -- If the object is a Jade Serpent Statue
-        if obj.name == "Jade Serpent Statue" then
-            -- Set our statueFound variable to true
-            statueFound = true
-            -- Break the loop early as we've found a statue
-            return true
+        if objects[i].name == "Jade Serpent Statue" then
+            -- Set our statueWithinRange variable to true
+            statueWithinRange = true
+            -- Break the loop early as we've found a statue within range
+            break
         end
     end)
 
-    -- If we didn't find a statue, summon one
-    if not statueFound then
+    -- If we didn't find a statue within range, summon one
+    if not statueWithinRange then
         local x, y, z = player.position()
         spell:AoECast(x, y, z)
     end
-end)
-
+end
 
 
 invokeYulon:Callback(function(spell)
