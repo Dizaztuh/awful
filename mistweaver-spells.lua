@@ -220,30 +220,7 @@ manaTea:Callback(function(spell)
 end)
 
 
-summonJadeSerpent:Callback(function(spell)
-    -- Initialize a variable to track if we found a statue within 40 yards
-    local statueWithinRange = false
 
-    -- Use the list.around function to get a list of all objects around the player within 40 yards
-    local count, total, objects = awful.objects.loop(player, 40)
-
-    -- Loop through all objects
-    for i=1, count do
-        -- If the object is a Jade Serpent Statue
-        if objects[i].name == "Jade Serpent Statue" then
-            -- Set our statueWithinRange variable to true
-            statueWithinRange = true
-            -- Break the loop early as we've found a statue within range
-            break
-        end
-    end
-
-    -- If we didn't find a statue within range, summon one
-    if not statueWithinRange then
-        local x, y, z = player.position()
-        spell:AoECast(x, y, z)
-    end
-end)
 
 
 invokeYulon:Callback(function(spell)
