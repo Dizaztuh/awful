@@ -7,7 +7,6 @@ local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
 local settings = project.settings
 local SpellStopCasting = awful.unlock("SpellStopCasting") or awful.call("SpellStopCasting")
-local healthstone = awful.Item(5512)
 awful.enabled = true
 
 awful.Populate({
@@ -212,7 +211,9 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-healthstone:Update(function(item)
+local healthstone = awful.Item(5512)
+
+healthstone:Callback(function(item)
     if not item:Usable then return end
     if player.hp < settings.hs then
       return item:Use()
