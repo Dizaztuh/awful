@@ -106,27 +106,31 @@ mistweaver:Init(function()
     end
 end)
 
--- Create a frame to handle the event
-local eventFrame = CreateFrame("Frame")
+interruptDurations = {
+    [47528] = 15, -- Mind Freeze - Death Knight
+    [183752] = 15, -- Disrupt - Demon Hunter
+    [106839] = 15, -- Skull Bash - Druid
+    [78675] = 60, -- Solar Beam - Druid
+    [351338] = 15, -- Quell - Evoker
+    [187707] = 15, -- Muzzle - Hunter
+    [147362] = 24, -- Counter Shot - Hunter
+    [2139] = 24, -- Counterspell - Mage
+    [116705] = 15, -- Spear Hand Strike - Monk
+    [96231] = 15, -- Rebuke - Paladin
+    [15487] = 45, -- Silence - Priest
+    [1766] = 15, -- Kick - Rogue
+    [57994] = 12, -- Wind Shear - Shaman
+    [19647] = 24, -- Spell Lock - Warlock
+    [119818] = 24, -- Call Felhunter - Warlock
+    [6552] = 15 -- Pummel - Warrior
+}
 
--- Register the "COMBAT_LOG_EVENT_UNFILTERED" event, which we'll use to detect when an interrupt is used
-eventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+interruptCDs = {}
 
--- Create a table to keep track of the cooldowns
-local interruptCooldowns = {}
-
--- Create a function to handle the event
-eventFrame:SetScript("OnEvent", function(self, event, ...)
-    -- Extract the necessary data from the event
-    local timestamp, subevent, _, sourceGUID, _, _, _, _, destName, _, _, spellId = CombatLogGetCurrentEventInfo()
-
-    -- Check if the event is an interrupt and if the source is an enemy
-    if subevent == "SPELL_INTERRUPT" and UnitCanAttack("player", sourceGUID) then
-        -- If so, set the cooldown for the spell
-        local cooldownDuration = interruptDurations[spellId]
-        if cooldownDuration then
-            interruptCooldowns[spellId] = GetTime() + cooldownDuration
-        end
+awful.onEvent('SPELL_CAST_SUCCESS', function(event)
+    if interruptDurations[event.spellID] then
+        interruptCDs[event.sourceGUID] = awful.time + interruptDurations[event.spellID]
     end
 end)
+
 
