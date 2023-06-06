@@ -834,10 +834,11 @@ enveloping:Callback(function(spell)
         end
     end)
 
-    if enveloping:Castable() and lowestHpFriend and ((lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1) or player.buff(388519) or (lowestHpFriend.buff("Soothing Mist") == nil and player.buff(116680))) then
+    if enveloping:Castable() and ((lowestHpFriend and lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1) or player.buff(388519) or player.buff(116680)) then
         spell:Cast(lowestHpFriend)
     end   
 end)
+
 
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
@@ -849,12 +850,11 @@ vivify:Callback(function(spell)
             lowestHpFriend = friend
         end
     end)
-
     if player.buff(388519) or player.buff(325209) or player.buffStacks(388048) >= 2 then return end
-
-    if vivify:Castable() and lowestHpFriend and ((lowestHpFriend.buff("Soothing Mist") or lowestHpFriend.buff("Soothing Mist") == nil) and player.buff(116680)) then
+    if vivify:Castable() and lowestHpFriend and lowestHpFriend.buff("Soothing Mist") or player.buff(116680) then
         spell:Cast(lowestHpFriend)
-    end   
+    end
+    
 end)
 
 
