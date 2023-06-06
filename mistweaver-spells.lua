@@ -219,10 +219,10 @@ BurstCDS = {
 }
 
 
-healthstone:Callback(function(item)
-    if not healthstone:Usable then return end
+healthstone:Update(function(item)
+    if not item:Usable then return end
     if player.hp < settings.hs then
-      return healthstone:Use()
+      return item:Use()
     end
   end)
 
