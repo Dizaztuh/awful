@@ -211,9 +211,9 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-local healthstone = awful.Item(5512)
 
 healthstone:Callback(function(item)
+    local healthstone = awful.Item(5512)
     if not item:Usable then return end
     if player.hp < settings.hs then
       return item:Use()
