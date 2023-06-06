@@ -212,10 +212,10 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-healthStone:Update(function(item)
-    if not item:Usable then return end
+healthStone:Callback(function(item)
+    if not healthstone:Usable then return end
     if player.hp < settings.hs then
-      return item:Use() and alert("Used Healthstone!")
+      return healthstone:Use()
     end
   end)
 
