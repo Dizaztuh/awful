@@ -678,19 +678,10 @@ end)
 
 -- Create a callback for Thunder Focus Tea
 thunderFocusTea:Callback(function(spell)
-    -- Check if the player's hp is at or below 75% and the spell is castable
-    if player.hp <= settings.tft and thunderFocusTea:Castable() then
-        awful.alert({
-            message="Casted Thunder Focus Tea!", 
-            texture=116680,
-            })
-        -- If the player's hp is at or below 75%, cast Thunder Focus Tea on the player
-        return spell:Cast(player)
-    else
         -- Loop through all friendly units to check their hp
         awful.fgroup.loop(function(friend)
             -- Check if the friendly unit's hp is at or below 75% and the spell is castable
-            if friend.hp <= 75 and thunderFocusTea:Castable() then
+            if friend.hp <= settings.tft and thunderFocusTea:Castable() then
                 awful.alert({
                     message="Casted Thunder Focus Tea!", 
                     texture=116680,
@@ -699,7 +690,6 @@ thunderFocusTea:Callback(function(spell)
                 return spell:Cast(player)
             end
         end)
-    end
 end)
 
 
@@ -825,11 +815,10 @@ enveloping:Callback(function(spell)
         end
     end)
 
-    if enveloping:Castable() and ((lowestHpFriend and lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1) or player.buff(388519)) then
+    if enveloping:Castable() and lowestHpFriend and (lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1 or player.buff(388519) or not lowestHpFriend.buff("Soothing Mist") and player.buff(116680)) then
         spell:Cast(lowestHpFriend)
     end   
 end)
-
 
 vivify:Callback(function(spell)
     local lowestHpFriend = nil
@@ -841,12 +830,14 @@ vivify:Callback(function(spell)
             lowestHpFriend = friend
         end
     end)
+
     if player.buff(388519) or player.buff(325209) or player.buffStacks(388048) >= 2 then return end
-    if vivify:Castable() and lowestHpFriend and lowestHpFriend.buff("Soothing Mist") then
+
+    if vivify:Castable() and lowestHpFriend and (lowestHpFriend.buff("Soothing Mist") or not lowestHpFriend.buff("Soothing Mist") and player.buff(116680)) then
         spell:Cast(lowestHpFriend)
-    end
-    
+    end   
 end)
+
 
 
 renewingMist:Callback(function(spell)
