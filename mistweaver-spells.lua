@@ -187,6 +187,25 @@ local DisarmTable = {
     [216331] = true -- Avenging Crusader
 }
 
+local interrupts = {
+    [47528] = true, -- Mind Freeze - Death Knight
+    [183752] = true, -- Disrupt - Demon Hunter
+    [106839] = true, -- Skull Bash - Druid
+    [78675] = true, -- Solar Beam - Druid
+    [351338] = true, -- Quell - Evoker
+    [187707] = true, -- Muzzle - Hunter
+    [147362] = true, -- Counter Shot - Hunter
+    [2139] = true, -- Counterspell - Mage
+    [116705] = true, -- Spear Hand Strike - Monk
+    [96231] = true, -- Rebuke - Paladin
+    [15487] = true, -- Silence - Priest
+    [1766] = true, -- Kick - Rogue
+    [57994] = true, -- Wind Shear - Shaman
+    [19647] = true, -- Spell Lock - Warlock
+    [119818] = true, -- Call Felhunter - Warlock (Replace xxxxxx with the actual ID for this spell)
+    [6552] = true -- Pummel - Warrior
+}
+
 BurstCDS = {
     [384352] = true, -- Doom Winds
     [121471] = true, -- Shadow Blades

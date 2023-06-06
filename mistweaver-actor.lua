@@ -106,3 +106,27 @@ mistweaver:Init(function()
     end
 end)
 
+-- Create a frame to handle the event
+local eventFrame = CreateFrame("Frame")
+
+-- Register the "COMBAT_LOG_EVENT_UNFILTERED" event, which we'll use to detect when an interrupt is used
+eventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+
+-- Create a table to keep track of the cooldowns
+local interruptCooldowns = {}
+
+-- Create a function to handle the event
+eventFrame:SetScript("OnEvent", function(self, event, ...)
+    -- Extract the necessary data from the event
+    local timestamp, subevent, _, sourceGUID, _, _, _, _, destName, _, _, spellId = CombatLogGetCurrentEventInfo()
+
+    -- Check if the event is an interrupt and if the source is an enemy
+    if subevent == "SPELL_INTERRUPT" and UnitCanAttack("player", sourceGUID) then
+        -- If so, set the cooldown for the spell
+        local cooldownDuration = interruptDurations[spellId]
+        if cooldownDuration then
+            interruptCooldowns[spellId] = GetTime() + cooldownDuration
+        end
+    end
+end)
+
