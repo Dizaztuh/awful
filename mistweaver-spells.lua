@@ -214,9 +214,9 @@ BurstCDS = {
 
 healthstone:Callback(function(item)
     local healthstone = awful.Item(5512)
-    if not item:Usable then return end
+    if not healthstone:Usable then return end
     if player.hp < settings.hs then
-      return item:Use()
+      return healthstone:Use()
     end
   end)
 
