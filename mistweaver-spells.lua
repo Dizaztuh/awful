@@ -219,13 +219,6 @@ BurstCDS = {
 }
 
 
-healthstone:Update(function(item)
-    if not item:Usable then return end
-    if player.hp < settings.hs then
-      return item:Use()
-    end
-  end)
-
 manaTea:Callback(function(spell)
     if player.manaPct <= 90 then return
     spell:Cast(player)

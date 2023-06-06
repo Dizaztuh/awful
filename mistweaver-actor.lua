@@ -89,7 +89,6 @@ local function initCasterHealer()
     diffuseMagic()
     spearHandStrike()
     manaTea()
-    healthstone()
     transfer()
 end
 
