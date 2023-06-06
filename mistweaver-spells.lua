@@ -55,6 +55,13 @@ awful.Populate({
     provoke = Spell (115546, { targeted = true, ignoreMoving = true, ignoreCasting = true, ignoreChanneling = true })
 }, mistweaver, getfenv(1))
 
+local actor = project.monk.mistweaver
+local items = {
+healthstone = awful.Item(5512)
+}
+
+awful.Populate(items, actor, getfenv(1))
+
 local provokeTable = {
     ["Hex"] = true, -- Hex
     ["Polymorph"] = true, -- Polymorph
@@ -213,7 +220,6 @@ BurstCDS = {
 
 
 healthstone:Callback(function(item)
-    local healthstone = awful.Item(5512)
     if not healthstone:Usable then return end
     if player.hp < settings.hs then
       return healthstone:Use()
