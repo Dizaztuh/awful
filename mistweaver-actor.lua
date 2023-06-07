@@ -52,6 +52,7 @@ local function initFistweaver()
     fortifyingBrew()
     diffuseMagic()
     transfer()
+    stompTotems()
 end
 
 local function initCasterHealer()
@@ -82,6 +83,7 @@ local function initCasterHealer()
     zenFocusTea()
     manaTea()
     transfer()
+    stompTotems()
 end
 
 

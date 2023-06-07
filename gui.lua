@@ -23,35 +23,6 @@ local gui, settings, cmd = awful.UI:New("gladdyui", {
     }
 })
 
--- Totem list for totem stomping
-totemList = {
-    ["Capacitor Totem"] = 59547,
-    ["Tremor Totem"] = 8143,
-    ["Earthbind Totem"] = 2484,
-    ["Spirit Link Totem"] = 98008,
-    ["Grounding Totem"] = 8177,
-    ["Skyfury Totem"] = 204330,
-    ["Counterstrike Totem"] = 204331,
-    ["Psyfiend"] = 108366,
-    ["Windfury Totem"] = 8512,
-    ["Fel Obelisk"] = 255774,
-    ["Static Totem"] = 301624,
-    ["Void Tendril"] = 115422,
-    ["War Banner"] = 246366,
-    ["Earthgrab Totem"] = 51485,
-    ["Healing Tide Totem"] = 108280,
-    ["Static Field Totem"] = 281902,
-    ["Fel Obelisk"] = 353601
-}
-
--- Convert your totem list into the required format for the options array and get the default list
-local options = {}
-local default = {}
-for totemName, totemID in pairs(totemList) do
-    table.insert(options, { label = totemName, value = totemID })
-    table.insert(default, totemID)
-end
-
 
 -- Offensive tab
 local offensive = gui:Tab("Offensive")
@@ -86,16 +57,32 @@ healing2:Slider({text = "Zen Focus Tea", var = "zft", min = 0, max = 100, defaul
 -- Misc tab
 local misc = gui:Tab("Misc")
 misc:Dropdown({
-    var = "totemStomp",
+    var = "totemsToStomp",
     multi = true,
     tooltip = "Choose the totems you want to stomp.",
-    options = options,
+    options = {
+        { label = "Capacitor Totem", value = 59547 },
+        { label = "Tremor Totem", value = 8143 },
+        { label = "Earthbind Totem", value = 2484 },
+        { label = "Spirit Link Totem", value = 98008 },
+        { label = "Grounding Totem", value = 8177 },
+        { label = "Skyfury Totem", value = 204330 },
+        { label = "Counterstrike Totem", value = 204331 },
+        { label = "Psyfiend", value = 108366 },
+        { label = "Windfury Totem", value = 8512 },
+        { label = "Fel Obelisk", value = 255774 },
+        { label = "Static Totem", value = 301624 },
+        { label = "Void Tendril", value = 115422 },
+        { label = "War Banner", value = 246366 },
+        { label = "Earthgrab Totem", value = 51485 },
+        { label = "Healing Tide Totem", value = 108280 },
+        { label = "Static Field Totem", value = 281902 },
+        { label = "Fel Obelisk", value = 353601 }
+    },
     placeholder = "Select totems",
     header = "Totems to stomp:",
-    default = default
 })
 misc:Checkbox({text = "Closest Target Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
-misc:Checkbox({text = "Totem Stomp", var = "ts", default = true, tooltip = "Enable/Disable Totem Stomping."})
 
 project.settings = settings
