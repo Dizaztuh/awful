@@ -84,5 +84,6 @@ misc:Dropdown({
 })
 misc:Checkbox({text = "Closest Target Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
+misc:Checkbox({text = "SS Bot Mode", var = "ssbot", default = false, tooltip = "Enable/Disable Solo Shuffle Bot Mode"})
 
 project.settings = settings
