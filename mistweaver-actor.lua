@@ -31,9 +31,6 @@ local function initFistweaver()
     blackoutKick()
     sphereofDespair()
     sphereofHope()
-    if settings.ts then
-    stompTotems()
-    end
     spearHandStrike()
     grappleWeapon()
     revival()
