@@ -16,12 +16,6 @@ local function updateInstanceType()
     WORLD = instanceType == "none"
 end
 
-awful.onEvent(function(_, event)
-    if event == "PLAYER_ENTERING_WORLD" then
-        updateInstanceType()
-    end
-end)
-
 print("Gladdy Sisterfister Loaded")
 
 local function initFistweaver()
@@ -69,9 +63,9 @@ local function initCasterHealer()
     provoke()
     sphereofHope()
     renewing()
+    soothingMist()
     enveloping()
     vivify()
-    soothingMist()
     sphereofDespair()
     ringOfPeace()
     healingElixir()
@@ -138,4 +132,9 @@ awful.onEvent(function(info, event, source, dest)
     end
 end)
 
+awful.onEvent(function(_, event)
+    if event == "PLAYER_ENTERING_WORLD" then
+        updateInstanceType()
+    end
+end)
 
