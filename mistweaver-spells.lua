@@ -237,6 +237,37 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
+zenFocusTea:Callback(function(spell)
+    -- Define the HP threshold at which you want to activate Zen Focus Tea
+    local hpThreshold = settings.zft  -- For example, we use 30%
+
+    -- Initialize variables for storing the lowest HP friend and their HP
+    local lowestHpFriend = nil
+    local lowestHp = 101  -- Since HP is in %, we start with a number higher than 100
+
+    -- Loop through all friendly units
+    awful.fgroup.loop(function(friend)
+        -- Check if the friend's HP is lower than the lowest HP we've seen so far
+        if friend.hp < lowestHp then
+            -- Update the lowest HP and lowest HP friend
+            lowestHp = friend.hp
+            lowestHpFriend = friend
+        end
+    end)
+
+    -- If we found a friend with HP below the threshold and Zen Focus Tea is castable
+    if lowestHpFriend and lowestHp <= hpThreshold and spell:Castable() then
+        -- Loop through interrupt cooldowns
+        for guid, time in pairs(interruptCDs) do
+            -- If the interrupt is off cooldown
+            if time <= GetTime() then
+                -- Cast Zen Focus Tea
+                spell:Cast()
+                return
+            end
+        end
+    end
+end)
 
 manaTea:Callback(function(spell)
     if player.manaPct <= 90 then return

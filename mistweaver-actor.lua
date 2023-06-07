@@ -88,6 +88,7 @@ local function initCasterHealer()
     revival()
     restoral()
     legSweep()
+    zenFocusTea()
     manaTea()
     transfer()
 end
