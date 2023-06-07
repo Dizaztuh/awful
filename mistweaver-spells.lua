@@ -883,7 +883,7 @@ vivify:Callback(function(spell)
         end
     end)
 
-    if player.buff(388519) or player.buff(325209) or player.buffStacks(388048) >= 2 then
+    if player.buff(388519) or player.buff(325209) or player.buffStacks(388048) >= 1 then
         return
     end
 
