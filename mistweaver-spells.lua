@@ -513,11 +513,21 @@ grappleWeapon:Callback(function(spell)
     end)
 end)
 
+-- Helper function to check if a value is in a table
+function tableContains(table, value)
+    for i = 1, #table do
+        if table[i] == value then
+            return true
+        end
+    end
+    return false
+end
+
 -- Stomp totems function
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Check if the totem is not in the totemList or is not within 5 yards
-        if not totem.id or ([totem.id] and player.distanceTo(totem) > 5) then return end
+        if not tableContains(default, totem.id) or player.distanceTo(totem) > 5 then return end
         awful.alert({
             message="Stomped a totem.",  
             texture=100780,
@@ -527,6 +537,7 @@ function stompTotems()
         blackoutKick:Cast(totem)
     end)
 end
+
 
 -- Callback for Disable ability
 disable:Callback(function(spell)
