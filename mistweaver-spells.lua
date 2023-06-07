@@ -889,8 +889,6 @@ vivify:Callback(function(spell)
 end)
 
 
-
-
 renewingMist:Callback(function(spell)
     -- Initialize a variable to store the friendly unit with the lowest HP
     local lowestHpFriend = nil
