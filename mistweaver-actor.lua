@@ -53,6 +53,7 @@ local function initFistweaver()
     diffuseMagic()
     transfer()
     stompTotems()
+    bloodFury()
 end
 
 local function initCasterHealer()
@@ -84,6 +85,7 @@ local function initCasterHealer()
     manaTea()
     transfer()
     stompTotems()
+    bloodFury()
 end
 
 
