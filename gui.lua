@@ -24,7 +24,7 @@ local gui, settings, cmd = awful.UI:New("gladdyui", {
 })
 
 -- Totem list for totem stomping
-local totemList = {
+totemList = {
     ["Capacitor Totem"] = 59547,
     ["Tremor Totem"] = 8143,
     ["Earthbind Totem"] = 2484,
