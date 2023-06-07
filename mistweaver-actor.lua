@@ -127,9 +127,13 @@ interruptDurations = {
 
 interruptCDs = {}
 
-awful.onEvent('SPELL_CAST_SUCCESS', function(event)
-    if interruptDurations[event.spellID] then
-        interruptCDs[event.sourceGUID] = awful.time + interruptDurations[event.spellID]
+awful.onEvent(function(info, event, source, dest)
+    if event ~= 'SPELL_CAST_SUCCESS' then return end
+    if not source.enemy then return end
+
+    local spellID = select(12, unpack(info))
+    if interruptDurations[spellID] then
+        interruptCDs[source.guid] = GetTime() + interruptDurations[spellID]
     end
 end)
 
