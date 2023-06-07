@@ -20,12 +20,12 @@ print("Gladdy Sisterfister Loaded")
 
 local function initFistweaver()
     touchOfDeath()
+    faelineStomp()
     lifeCocoon()
     ringOfPeace()
     if settings.aa then
     castOnClosestEnemy()
     end
-    faelineStomp()
     risingSunKick()
     tigerPalm()
     blackoutKick()
