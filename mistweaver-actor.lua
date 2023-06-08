@@ -18,6 +18,23 @@ end
 
 print("Gladdy Sisterfister Loaded")
 
+local function anyGroupMemberInCombat()
+    if IsInRaid() then
+        for i = 1, GetNumGroupMembers() do
+            if UnitAffectingCombat("raid"..i) then
+                return true
+            end
+        end
+    elseif IsInGroup() then
+        for i = 1, GetNumSubgroupMembers() do
+            if UnitAffectingCombat("party"..i) then
+                return true
+            end
+        end
+    end
+    return false
+  end
+
 local function initFistweaver()
     touchOfDeath()
     faelineStomp()
@@ -93,7 +110,7 @@ end
 mistweaver:Init(function()
     updateInstanceType()
     if player.buff("Arena Preparation") or player.buff("Preparation") or player.buff ("Drink") or player.buff ("Food") then return end
-    if not player.mounted and (ARENA or BATTLEGROUND or DUNGEON or INSTANCE or PVE) then
+    if not player.mounted and (ARENA or BATTLEGROUND or INSTANCE or (WORLD and anyGroupMemberInCombat())) then
         if player.hasTalent(287503) then
         initFistweaver()
         else
