@@ -14,6 +14,7 @@ awful.Populate({
     summonJadeSerpent = Spell(115313, { ignoreLoS = false, ignoreMoving = true, ignoreChanneling = true }),
     zenFocusTea = Spell(209584),
     manaTea = Spell(197908),
+    sheilunsGift = Spell(399491),
     invokeYulon = Spell(322118),
     vivify = Spell(116670, { heal = true, ignoreChanneling = true, targeted = true }),
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, ignoreMoving = true }),
@@ -236,6 +237,32 @@ BurstCDS = {
     [12472] = true, -- Icy Veins
     [262161] = true -- Warbreaker
 }
+
+
+-- Create a callback for the Sheilun's Gift ability
+sheilunsGift:Callback(function(spell)
+    -- Check if the player has at least 8 stacks of the buff and Sheilun's Gift is castable
+    if player.buffstacks(399491) >= 8 and spell:Castable() then
+        -- Loop through all friendly units
+        awful.fgroup.loop(function(friend)
+            -- Check if the friend's HP is below the Sheilun's threshold
+            if friend.hp < settings.sheiluns then
+                -- Loop through interrupt cooldowns
+                for guid, time in pairs(interruptCDs) do
+                    -- If the interrupt is off cooldown
+                    if time <= GetTime() then
+                        -- Cast Zen Focus Tea
+                        zenFocusTea:Cast()
+                    end
+                end
+                -- Cast Sheilun's Gift
+                spell:Cast()
+                return
+            end
+        end)
+    end
+end)
+
 
 zenFocusTea:Callback(function(spell)
     -- Define the HP threshold at which you want to activate Zen Focus Tea
