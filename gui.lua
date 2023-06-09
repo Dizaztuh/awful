@@ -53,7 +53,7 @@ local healing2 = gui:Tab("Caster Healing")
 healing2:Slider({text = "Enveloping Mist (Caster)", var = "emist", min = 0, max = 100, default = 85, valueType = "%", tooltip = "Enveloping Mist triggered at % HP while Soothing Mist"})
 healing2:Slider({text = "Renewing Mist (Caster)", var = "rmist", min = 0, max = 100, default = 95, valueType = "%", tooltip = "Renewing Mist triggered at % HP."})
 healing2:Slider({text = "Vivify (Caster)", var = "viv", min = 0, max = 100, default = 90, valueType = "%", tooltip = "Vivify triggered at % HP while Soothing Mist."})
-healing2:Slider({text = "Sheiluns Gift", var = "sheiluns", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Sheiluns Gift triggered at % HP. (and at 8 or more stacks)"})
+healing2:Slider({text = "Sheiluns Gift", var = "sheiluns", min = 0, max = 100, default = 70, valueType = "%", tooltip = "Sheiluns Gift triggered at % HP. (and at 8 or more stacks)"})
 
 -- Misc tab
 local misc = gui:Tab("Misc")
