@@ -7,6 +7,7 @@ local delayUpperBound = 0.6
 local ringOfPeaceTriggeredTime = 0
 local settings = project.settings
 local SpellStopCasting = awful.unlock("SpellStopCasting") or awful.call("SpellStopCasting")
+local enemyHealer = awful.enemyHealer
 awful.enabled = true
 
 awful.Populate({
