@@ -255,8 +255,8 @@ zenFocusTea:Callback(function(spell)
         end
     end)
 
-    -- If we found a friend with HP below the threshold and Zen Focus Tea is castable
-    if lowestHpFriend and lowestHp <= hpThreshold and spell:Castable() then
+    -- If we found a friend with HP below the threshold, Zen Focus Tea is castable, and the player is not stunned
+    if lowestHpFriend and lowestHp <= hpThreshold and spell:Castable() and not player.stunned then
         -- Loop through interrupt cooldowns
         for guid, time in pairs(interruptCDs) do
             -- If the interrupt is off cooldown
@@ -268,6 +268,7 @@ zenFocusTea:Callback(function(spell)
         end
     end
 end)
+
 
 manaTea:Callback(function(spell)
     if player.manaPct <= 90 then return
@@ -316,24 +317,25 @@ soothingMist:Callback(function(spell)
 end)
 
 
--- Define the cooldown period for Transfer spell
-local TRANSFER_COOLDOWN = 5  -- Adjust this value to your preference
-
 transfer:Callback(function(spell)
-    -- Get the current time
-    local currentTime = GetTime()
-
-    -- If Transfer was cast recently, then don't cast it again immediately
-    if lastCastTime[spell.id] and (currentTime - lastCastTime[spell.id]) < TRANSFER_COOLDOWN then
-        return
-    end
-
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
     if player.buff(101643) and player.hp <= settings.transferJuke and player.stunned and spell:Castable() then
         -- Cast Transfer
         spell:Cast()
-        -- Update the last cast time
-        lastCastTime[spell.id] = currentTime
+
+        -- Attempt to heal up the player using Soothing Mist and Vivify
+        if soothingMist:Castable(player) then
+            soothingMist:Cast(player)
+        end
+        if player.buff("Soothing Mist") then
+            if vivify:Castable(player) then
+                vivify:Cast(player)
+                vivify:Cast(player)
+            end
+            if enveloping:Castable(player) then
+                enveloping:Cast(player)
+            end
+        end
         
         -- Check if player has the Eminence talent
         if player.HasTalent(394110) then
@@ -350,40 +352,13 @@ transfer:Callback(function(spell)
                 end
             end)
 
-            -- If there's no enemy within melee range, cast Soothing Mist and Vivify
-            if not enemyWithinMeleeRange then
-                if soothingMist:Castable(player) then
-                    soothingMist:Cast(player)
-                end
-                if player.buff("Soothing Mist") then
-                    if vivify:Castable(player) then
-                        vivify:Cast(player)
-                        vivify:Cast(player)
-                    end
-                    if enveloping:Castable(player) then
-                        enveloping:Cast(player)
-                    end
-                end
-            end
-
-            -- If there's an enemy within melee range, cast Transfer
-            if enemyWithinMeleeRange then
-                -- Get the current time
-                currentTime = GetTime()
-                -- If Transfer was cast recently, then don't cast it again immediately
-                if lastCastTime[spell.id] and (currentTime - lastCastTime[spell.id]) < TRANSFER_COOLDOWN then
-                    return
-                end
-                if spell:Castable() then
-                    spell:Cast()
-                    -- Update the last cast time
-                    lastCastTime[spell.id] = currentTime
-                end
+            -- If there's an enemy within melee range and Transfer is castable, cast Transfer
+            if enemyWithinMeleeRange and spell:Castable() then
+                spell:Cast()
             end
         end
     end
 end)
-
 
 
 provoke:Callback(function(spell)
