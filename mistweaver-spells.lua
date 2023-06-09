@@ -34,7 +34,7 @@ awful.Populate({
     chiTorpedo = Spell(119582),
     disable = Spell(343731, { targeted = true, cc = true, effect = "physical", ignoreMoving = true }),
     faelineStomp = Spell(388193, { heal = true, alwaysFace = true, ignoreMoving = true }),
-    paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true }),
+    paralyze = Spell(115078, { stun = true, targeted = true, ignoreFacing = true, ignoreLoS = false }),
     legSweep = Spell(119381, { ignoreFacing = true, stun = true, ignoreMoving = true }),
     ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, AlwaysFace = true, ignoreMoving = true, effect = "magic", diameter = 15, offsetMin = 0, offsetMax = 5 }),
     flyingSerpentKick = Spell(101545),
@@ -316,20 +316,27 @@ soothingMist:Callback(function(spell)
 end)
 
 
--- Store last cast times
-local lastCastTime = {}
+-- Define the cooldown period for Transfer spell
+local TRANSFER_COOLDOWN = 5  -- Adjust this value to your preference
 
 transfer:Callback(function(spell)
+    -- Get the current time
+    local currentTime = GetTime()
+
+    -- If Transfer was cast recently, then don't cast it again immediately
+    if lastCastTime[spell.id] and (currentTime - lastCastTime[spell.id]) < TRANSFER_COOLDOWN then
+        return
+    end
+
     -- Check if player's HP is below 60, if player is stunned and if Transfer is castable
     if player.buff(101643) and player.hp <= settings.transferJuke and player.stunned and spell:Castable() then
         -- Cast Transfer
         spell:Cast()
         -- Update the last cast time
-        lastCastTime[spell.id] = GetTime()
+        lastCastTime[spell.id] = currentTime
         
         -- Check if player has the Eminence talent
         if player.HasTalent(394110) then
-
             -- Initialize variable to track if any enemies are within melee range
             local enemyWithinMeleeRange = false
 
@@ -361,15 +368,22 @@ transfer:Callback(function(spell)
 
             -- If there's an enemy within melee range, cast Transfer
             if enemyWithinMeleeRange then
+                -- Get the current time
+                currentTime = GetTime()
+                -- If Transfer was cast recently, then don't cast it again immediately
+                if lastCastTime[spell.id] and (currentTime - lastCastTime[spell.id]) < TRANSFER_COOLDOWN then
+                    return
+                end
                 if spell:Castable() then
                     spell:Cast()
                     -- Update the last cast time
-                    lastCastTime[spell.id] = GetTime()
+                    lastCastTime[spell.id] = currentTime
                 end
             end
         end
     end
 end)
+
 
 
 provoke:Callback(function(spell)
@@ -516,17 +530,23 @@ end)
 -- Stomp totems function
 function stompTotems()
     awful.totems.loop(function(totem)
-        -- Only stomp from selected totems
-        if not totem.id or not settings.totemsToStomp[totem.id] then return end
-        awful.alert({
-            message="Stomped a totem.",  
-            texture=100780,
-        })
-        -- If the totem is in the list and within range, cast Tiger Palm and Blackout Kick on the totem
-        tigerPalm:Cast(totem)
-        blackoutKick:Cast(totem)
+        -- Only stomp selected totems and within range
+        if totem.id and settings.totemsToStomp[totem.id] and totem.distance <= tigerPalm.range then
+            awful.alert({
+                message="Stomping a totem.",  
+                texture=100780,
+            })
+            -- If the totem is in the list and within range, and if abilities are castable, cast Tiger Palm and Blackout Kick on the totem
+            if tigerPalm:Castable(totem) then
+                tigerPalm:Cast(totem)
+            end
+            if blackoutKick:Castable(totem) then
+                blackoutKick:Cast(totem)
+            end
+        end
     end)
 end
+
 
 -- Callback for Disable ability
 disable:Callback(function(spell)
@@ -1128,17 +1148,27 @@ end)
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
     -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, the enemy healer is not the player's target, and incapDR is 1
-    if enemyHealer.distance <= paralyze.range and target.hp < settings.para and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR == 1 then
-        -- If the conditions are met, cast Paralyze on the enemy healer
-        paralyze:Cast(enemyHealer)
-        awful.alert({
-            message="Paralysis on Enemy Healer!", 
-            texture=115078,
-        })
+    if enemyHealer.distance <= paralyze.range and target.hp < settings.para and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR > 0.25 then
+        -- Loop through all friends
+        awful.friends.loop(function(friend)
+            -- Ensure the friend is valid
+            if not friend then return end
+
+            -- If the friend has a buff in the BurstCDS table
+            for spellID, _ in pairs(BurstCDS) do
+                if friend.buff(spellID) then
+                    -- Cast Paralyze on the enemy healer
+                    paralyze:Cast(enemyHealer)
+                    awful.alert({
+                        message="Paralysis on Enemy Healer during Burst CD!", 
+                        texture=115078,
+                    })
+                    return -- Stop the loop as soon as a match is found
+                end
+            end
+        end)
     end
 end)
-
-
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
