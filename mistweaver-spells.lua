@@ -256,7 +256,7 @@ sheilunsGift:Callback(function(spell)
                     end
                 end
                 -- Cast Sheilun's Gift
-                awful.controlMovement(awful.tickRate * 2)
+                awful.controlMovement(awful.tickRate * 2.5)
                 spell:Cast(player)
                 return
             end
