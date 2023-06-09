@@ -14,7 +14,7 @@ awful.Populate({
     summonJadeSerpent = Spell(115313, { ignoreLoS = false, ignoreMoving = true, ignoreChanneling = true }),
     zenFocusTea = Spell(209584),
     manaTea = Spell(197908),
-    sheilunsGift = Spell(399491, { heal = true, ignoreLoS = false }),
+    sheilunsGift = Spell(399491, { heal = true, ignoreLoS = false, target = true }),
     invokeYulon = Spell(322118),
     vivify = Spell(116670, { heal = true, ignoreChanneling = true, targeted = true }),
     tigerPalm = Spell(100780, { damage = "physical", targeted = true, ranged = true, ignoreMoving = true }),
