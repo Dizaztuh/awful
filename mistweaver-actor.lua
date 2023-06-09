@@ -21,19 +21,21 @@ print("Gladdy Sisterfister Loaded")
 local function anyGroupMemberInCombat()
     if IsInRaid() then
         for i = 1, GetNumGroupMembers() do
-            if UnitAffectingCombat("raid"..i) then
+            local unit = "raid"..i
+            if UnitAffectingCombat(unit) and CheckInteractDistance(unit, 4) then
                 return true
             end
         end
     elseif IsInGroup() then
         for i = 1, GetNumSubgroupMembers() do
-            if UnitAffectingCombat("party"..i) then
+            local unit = "party"..i
+            if UnitAffectingCombat(unit) and CheckInteractDistance(unit, 4) then
                 return true
             end
         end
     end
     return false
-  end
+end
 
 local function initFistweaver()
     touchOfDeath()
