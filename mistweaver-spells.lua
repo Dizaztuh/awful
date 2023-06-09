@@ -1172,7 +1172,7 @@ paralyze:Callback(function(spell)
 
         -- If the friend has a buff in the BurstCDS table
         for spellID, _ in pairs(BurstCDS) do
-            if friend.buff(spellID) and enemyHealer.distance <= paralyze.range and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR > 0.25 then
+            if friend.buff(spellID) and enemyHealer.distance <= paralyze.range and paralyze:Castable(enemyHealer) and not (friend.target == enemyHealer) and enemyHealer.incapDR > 0.25 then
                 -- Cast Paralyze on the enemy healer
                 paralyze:Cast(enemyHealer)
                 awful.alert({
