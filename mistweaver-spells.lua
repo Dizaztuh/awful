@@ -246,7 +246,7 @@ sheilunsGift:Callback(function(spell)
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
             -- Check if the friend's HP is below the Sheilun's threshold
-            if friend.hp < settings.sheiluns then
+            if friend.hp <= settings.sheiluns then
                 -- Loop through interrupt cooldowns
                 for guid, time in pairs(interruptCDs) do
                     -- If the interrupt is off cooldown
