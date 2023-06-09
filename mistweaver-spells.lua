@@ -1126,28 +1126,36 @@ end)
 
 -- Create a callback for the Paralyze ability
 paralyze:Callback(function(spell)
-    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, the enemy healer is not the player's target, and incapDR is 1
+    -- Check if the enemy healer is valid, within paralyze.range, the target's hp is below 40%, the spell is castable on the enemy healer, the enemy healer is not the player's target, and incapDR > 0.25
     if enemyHealer.distance <= paralyze.range and target.hp < settings.para and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR > 0.25 then
-        -- Loop through all friends
-        awful.friends.loop(function(friend)
-            -- Ensure the friend is valid
-            if not friend then return end
-
-            -- If the friend has a buff in the BurstCDS table
-            for spellID, _ in pairs(BurstCDS) do
-                if friend.buff(spellID) then
-                    -- Cast Paralyze on the enemy healer
-                    paralyze:Cast(enemyHealer)
-                    awful.alert({
-                        message="Paralysis on Enemy Healer during Burst CD!", 
-                        texture=115078,
-                    })
-                    return -- Stop the loop as soon as a match is found
-                end
-            end
-        end)
+        -- Cast Paralyze on the enemy healer
+        paralyze:Cast(enemyHealer)
+        awful.alert({
+            message="Paralysis on Enemy Healer!", 
+            texture=115078,
+        })
     end
+
+    -- Loop through all friends
+    awful.friends.loop(function(friend)
+        -- Ensure the friend is valid
+        if not friend then return end
+
+        -- If the friend has a buff in the BurstCDS table
+        for spellID, _ in pairs(BurstCDS) do
+            if friend.buff(spellID) and enemyHealer.distance <= paralyze.range and paralyze:Castable(enemyHealer) and not (player.target == enemyHealer) and enemyHealer.incapDR > 0.25 then
+                -- Cast Paralyze on the enemy healer
+                paralyze:Cast(enemyHealer)
+                awful.alert({
+                    message="Paralysis on Enemy Healer during Burst CD!", 
+                    texture=115078,
+                })
+                return -- Stop the loop as soon as a match is found
+            end
+        end
+    end)
 end)
+
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
