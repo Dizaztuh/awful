@@ -860,7 +860,7 @@ enveloping:Callback(function(spell)
         end
     end)
 
-    if enveloping:Castable() and lowestHpFriend and ((lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1) or player.buff(388519)) then
+    if enveloping:Castable() and lowestHpFriend and ((lowestHpFriend.buff("Soothing Mist") and player.buffStacks(388048) >= 1) or player.buff(388519) or player.buff(116680)) then
         spell:Cast(lowestHpFriend)
     end
     
@@ -878,7 +878,7 @@ vivify:Callback(function(spell)
         end
     end)
 
-    if player.buff(388519) or player.buff(325209) or player.buffStacks(388048) >= 1 then
+    if player.buff(388519) or player.buff(325209) or player.buffStacks(388048) >= 1 or player.buff(116680) then
         return
     end
 
@@ -1052,7 +1052,7 @@ end)
 -- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
     -- Get the number of players in range
-    local playersInRange = enemies.around(player, 6)   
+    local playersInRange = enemies.around(player, 6)
     -- Check if the spell is castable on the target
     local didCastLegSweep = false
     if spell:Castable() then
@@ -1065,6 +1065,9 @@ legSweep:Callback(function(spell)
         -- If the target's HP is below 40%, cast Leg Sweep on the target
         elseif target.hp < 50 and target.distance <= 6 then
             didCastLegSweep = spell:Cast()
+        -- If enemyHealer is within 6 yards and its stunDR is greater than .25, cast Leg Sweep on the target
+        elseif enemyHealer.distance <= 6 and enemyHealer.stunDR > .25 then
+            didCastLegSweep = spell:Cast()
         end
     end
     if didCastLegSweep then
@@ -1074,6 +1077,7 @@ legSweep:Callback(function(spell)
         })
     end
 end)
+
 
 dampenHarm:Callback(function(spell)
     -- Loop through all enemy units
