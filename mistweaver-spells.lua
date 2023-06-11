@@ -160,18 +160,28 @@ local ROPDROP = {
     }
 
     local cleanseTable = {
-    [51514] = true, -- Hex
-    [375901] = true, -- Mindgames
-    [64695] = true, -- EarthGrab
-    [385408] = true, -- Sepsis
-    [358385] = true, -- Landslide
-    [118] = true, -- Polymorph
-    [5782] = true, -- Fear
-    [411038] = true, -- Sphere of Despair
-    [8122] = true, -- Psychic Scream
-    [853] = true, -- Hammer of Justice
-    [187650] = true, -- Freezing Trap
-    [360806] = true -- Sleep Walk
+        [51514] = true, -- Hex
+        [117405] = true, -- Binding Shot
+        [375901] = true, -- Mindgames
+        [64695] = true, -- EarthGrab
+        [102359] = true, -- Mass Entanglement
+        [339] = true, -- Entangling Roots
+        [393456] = true, -- Entrapment
+        [385408] = true, -- Sepsis
+        [355689] = true, -- Landslide
+        [118] = true, -- Polymorph
+        [118699] = true, -- Fear
+        [411038] = true, -- Sphere of Despair
+        [8122] = true, -- Psychic Scream
+        [853] = true, -- Hammer of Justice
+        [187650] = true, -- Freezing Trap
+        [360806] = true, -- Sleep Walk
+        [212638] = true, -- Tracker's Net
+        [109248] = true, -- Binding Shot
+        [113724] = true, -- Ring of Frost
+        [5484] = true, -- Howl of Terror
+        [122] = true -- Frost Nova
+
     }
 
     -- Define the DisarmTable
