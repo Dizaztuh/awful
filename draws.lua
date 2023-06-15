@@ -76,6 +76,9 @@ Draw(function(draw)
         
         -- Draw a light blue circle of radius 8 yards around the player
         local px, py, pz = player.position()  -- Get the player's current position
+        draw:SetColor(226, 245, 39, 200)   -- Set the color to light blue (RGB: 173, 216, 230)
+        draw:Circle(px, py, pz, 6)  -- Draw the circle
+        
         if player.hasTalent(388193) then
         draw:SetColor(0, 255, 142, 200)   -- Set the color to light blue (RGB: 173, 216, 230)
         draw:Circle(px, py, pz, 30)  -- Draw the circle

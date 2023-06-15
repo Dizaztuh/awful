@@ -1110,32 +1110,75 @@ diffuseMagic:Callback(function(spell)
     end
 end)
 
--- Create a callback for the Leg Sweep ability
 legSweep:Callback(function(spell)
-    -- Get the number of players in range
-    local playersInRange = enemies.around(player, 6)
-    -- Check if the spell is castable on the target
-    local didCastLegSweep = false
-    if spell:Castable() then
-        -- If there are 2 or more enemies around the player within a range of 6 yards, cast Leg Sweep on the target
-        if playersInRange > 1 then
-            didCastLegSweep = spell:Cast()
-        -- If the player's HP is below 45%, cast Leg Sweep on the target
-        elseif player.hp < 45 and playersInRange <= 1 then
-            didCastLegSweep = spell:Cast()
-        -- If the target's HP is below 40%, cast Leg Sweep on the target
-        elseif target.hp < 50 and target.distance <= 6 then
-            didCastLegSweep = spell:Cast()
-        -- If enemyHealer is within 6 yards and its stunDR is greater than .25, cast Leg Sweep on the target
-        elseif enemyHealer.distance <= 6 and enemyHealer.stunDR > .25 then
-            didCastLegSweep = spell:Cast()
+    if not spell:Castable() then return end  -- Return early if spell is not castable
+
+    local enemiesWithBurstCDs = 0
+    local enemiesInRange = 0
+    local ccEnemy = nil
+    local enemyHealerInRange = nil
+
+    -- Loop through enemies just once
+    awful.enemies.loop(function(enemy)
+        if enemy.distanceTo(player) <= 6 and player.losOf(enemy) and not enemy.cc then
+            -- Check for burst CDs
+            for spellID, _ in pairs(BurstCDS) do
+                if enemy.buff(spellID) then
+                    enemiesWithBurstCDs = enemiesWithBurstCDs + 1
+                    break
+                end
+            end
+
+            -- Check for enemies in range
+            enemiesInRange = enemiesInRange + 1
         end
+
+        -- Check for CC'd enemies
+        if enemy.distanceTo(player) <= 6 and player.losOf(enemy) and not enemy.buff(408557) and enemy.cc and enemy.ccRemains <= awful.buffer + awful.latency then
+            ccEnemy = enemy
+        end
+    end)
+
+    -- Check for enemy healer
+    if enemyHealer and enemyHealer.distance <= 6 and not enemyHealer.cc then
+        enemyHealerInRange = enemyHealer
     end
-    if didCastLegSweep then
+
+    -- Analyze gathered data and cast the spell accordingly
+    if enemiesWithBurstCDs >= 1 then
         awful.alert({
-            message="Casted Leg Sweep!", 
+            message="Casting Leg Sweep on enemies with burst cooldowns",
             texture=119381,
         })
+        spell:Cast()
+        return
+    end
+
+    if player.hp < 40 and enemiesInRange >= 1 then
+        awful.alert({
+            message="Casting Leg Sweep due to low player health",
+            texture=119381,
+        })
+        spell:Cast()
+        return
+    end
+
+    if ccEnemy then
+        awful.alert({
+            message="Casting Leg Sweep on crowd controlled enemy whose CC is about to end",
+            texture=119381,
+        })
+        spell:Cast()
+        return
+    end
+
+    if enemyHealerInRange then
+        awful.alert({
+            message="Casting Leg Sweep due to enemy healer in range",
+            texture=119381,
+        })
+        spell:Cast()
+        return
     end
 end)
 
