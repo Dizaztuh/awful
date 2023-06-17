@@ -74,6 +74,7 @@ local function initFistweaver()
     transfer()
     sheilunsGift()
     bloodFury()
+    roll()
 end
 
 local function initCasterHealer()

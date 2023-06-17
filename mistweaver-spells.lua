@@ -272,6 +272,45 @@ BurstCDS = {
 }
 
 
+roll:Callback(function(spell)
+    local target = player.target
+
+    if target then
+        local x, y, z = target.position()
+        local distanceToTarget = player.distance(x, y, z)
+
+        if distanceToTarget > 5 and distanceToTarget < 15 then
+            if not player.losCoordsLiteral(x, y, z) then return end
+            if x and y and z then
+                awful.alert({
+                    message="Casting Roll",
+                    texture=<rollTextureId>,  -- Replace with the texture ID of the roll spell
+                })
+                roll:AoECast(x, y, z)
+            end
+        end
+    end
+end)
+
+chiTorpedo:Callback(function(spell)
+    local target = player.target
+
+    if target then
+        local x, y, z = target.position()
+        local distanceToTarget = player.distance(x, y, z)
+
+        if distanceToTarget > 5 and distanceToTarget < 15 then
+            if not player.losCoordsLiteral(x, y, z) then return end
+            if x and y and z then
+                awful.alert({
+                    message="Casting Roll",
+                    texture=<rollTextureId>,  -- Replace with the texture ID of the roll spell
+                })
+                roll:AoECast(x, y, z)
+            end
+        end
+    end
+end)
 
 
 -- Create a callback for the Sheilun's Gift ability
