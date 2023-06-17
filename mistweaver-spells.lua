@@ -297,23 +297,23 @@ chiWave:Callback(function(spell)
 end)
 
 
+local function getTargetDistance(target)
+    return target and target.distance
+end
+
 roll:Callback(function(spell)
     local target = player.target
 
-    if target then
-        -- Directly access 'distance' property as a number, not as a function
-        local distanceToTarget = target.distance
-
-        if distanceToTarget and distanceToTarget > 5 and distanceToTarget < 15 and player.facing(target) then
-            awful.alert({
-                message="Casting Roll",
-                texture=109132,  -- Replace with the texture ID of the roll spell
-            })
-            roll:Cast()
-        end
+    local distanceToTarget = getTargetDistance(target)
+    
+    if distanceToTarget and distanceToTarget > 5 and distanceToTarget < 15 and player.facing(target) then
+        awful.alert({
+            message="Casting Roll",
+            texture=109132,  -- Replace with the texture ID of the roll spell
+        })
+        roll:Cast()
     end
 end)
-
 
 
 -- Create a callback for the Sheilun's Gift ability
