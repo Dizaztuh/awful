@@ -284,7 +284,7 @@ roll:Callback(function(spell)
             if x and y and z then
                 awful.alert({
                     message="Casting Roll",
-                    texture=<rollTextureId>,  -- Replace with the texture ID of the roll spell
+                    texture=109132,  -- Replace with the texture ID of the roll spell
                 })
                 roll:AoECast(x, y, z)
             end
@@ -304,7 +304,7 @@ chiTorpedo:Callback(function(spell)
             if x and y and z then
                 awful.alert({
                     message="Casting Roll",
-                    texture=<rollTextureId>,  -- Replace with the texture ID of the roll spell
+                    texture=109132,  -- Replace with the texture ID of the roll spell
                 })
                 roll:AoECast(x, y, z)
             end
