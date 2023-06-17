@@ -276,41 +276,25 @@ roll:Callback(function(spell)
     local target = player.target
 
     if target then
-        local x, y, z = target.position()
-        local distanceToTarget = player.position(x, y, z)
+        local px, py, pz = player.position()  -- player's position
+        local tx, ty, tz = target.position()  -- target's position
+
+        -- Calculate Euclidean distance
+        local distanceToTarget = math.sqrt((tx - px)^2 + (ty - py)^2 + (tz - pz)^2)
 
         if distanceToTarget > 5 and distanceToTarget < 15 then
-            if not player.losCoordsLiteral(x, y, z) then return end
-            if x and y and z then
+            if not player.losCoordsLiteral(tx, ty, tz) then return end
+            if tx and ty and tz then
                 awful.alert({
                     message="Casting Roll",
                     texture=109132,  -- Replace with the texture ID of the roll spell
                 })
-                roll:AoECast(x, y, z)
+                roll:AoECast(tx, ty, tz)
             end
         end
     end
 end)
 
-chiTorpedo:Callback(function(spell)
-    local target = player.target
-
-    if target then
-        local x, y, z = target.position()
-        local distanceToTarget = player.position(x, y, z)
-
-        if distanceToTarget > 5 and distanceToTarget < 15 then
-            if not player.losCoordsLiteral(x, y, z) then return end
-            if x and y and z then
-                awful.alert({
-                    message="Casting Roll",
-                    texture=109132,  -- Replace with the texture ID of the roll spell
-                })
-                roll:AoECast(x, y, z)
-            end
-        end
-    end
-end)
 
 
 -- Create a callback for the Sheilun's Gift ability
