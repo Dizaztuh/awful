@@ -114,7 +114,7 @@ end
 mistweaver:Init(function()
     updateInstanceType()
     if player.buff("Arena Preparation") or player.buff("Preparation") or player.buff ("Drink") or player.buff ("Food") then return end
-    if not player.mounted and (ARENA or BATTLEGROUND or INSTANCE or (WORLD and anyGroupMemberInCombat() and not BATTLEGROUND)) then
+    if not player.mounted and (ARENA or BATTLEGROUND or INSTANCE or (WORLD and anyGroupMemberInCombat() and not BATTLEGROUND) or player.target == "PvP Training Dummy") then
         if player.hasTalent(287503) then
         initFistweaver()
         else
