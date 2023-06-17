@@ -1346,10 +1346,13 @@ blackoutKick:Callback(function(spell)
     end
 end)
 
--- Callback for Rising Sun Kick
+
 risingSunKick:Callback(function(spell)
+    if allEnemies.around(player, 5) <= 2 then
         spell:Cast(target)
+    end
 end)
+
 
 touchOfDeath:Callback(function(spell)
     enemies.loop(function(enemy)
