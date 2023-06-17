@@ -121,7 +121,7 @@ mistweaver:Init(function()
         initCasterHealer()
         end
     end
-end)
+end, 0.001)
 
 interruptDurations = {
     [47528] = 15, -- Mind Freeze - Death Knight
