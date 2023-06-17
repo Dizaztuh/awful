@@ -284,7 +284,7 @@ roll:Callback(function(spell)
 
         if distanceToTarget > 5 and distanceToTarget < 15 then
             if not player.losCoordsLiteral(tx, ty, tz) then return end
-            if tx and ty and tz then
+            if tx and ty and tz and player.facing(target) then
                 awful.alert({
                     message="Casting Roll",
                     texture=109132,  -- Replace with the texture ID of the roll spell
