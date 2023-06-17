@@ -271,30 +271,6 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
--- Callback for Chi Wave
-chiWave:Callback(function(spell)
-    local closestEnemy
-    awful.enemies.loop(function(enemy)
-        if player.distance(enemy) <= 5 then
-            closestEnemy = enemy
-        end
-    end)
-    
-    if closestEnemy and spell:Castable(closestEnemy) then
-        return spell:Cast(closestEnemy)
-    end
-
-    local lowestHpFriend
-    awful.friends.loop(function(friend)
-        if not lowestHpFriend or friend.hp < lowestHpFriend.hp then
-            lowestHpFriend = friend
-        end
-    end)
-
-    if lowestHpFriend and spell:Castable(lowestHpFriend) then
-        return spell:Cast(lowestHpFriend)
-    end
-end)
 
 
 roll:Callback(function(spell)
