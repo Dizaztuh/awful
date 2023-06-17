@@ -275,7 +275,7 @@ BurstCDS = {
 chiWave:Callback(function(spell)
     local closestEnemy
     awful.enemies.loop(function(enemy)
-        if player:distanceTo(enemy) <= 5 then
+        if player.distanceTo(enemy) <= 5 then
             closestEnemy = enemy
         end
     end)
