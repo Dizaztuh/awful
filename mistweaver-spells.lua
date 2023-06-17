@@ -277,7 +277,7 @@ roll:Callback(function(spell)
 
     if target then
         local x, y, z = target.position()
-        local distanceToTarget = player.distance(x, y, z)
+        local distanceToTarget = player.position(x, y, z)
 
         if distanceToTarget > 5 and distanceToTarget < 15 then
             if not player.losCoordsLiteral(x, y, z) then return end
@@ -297,7 +297,7 @@ chiTorpedo:Callback(function(spell)
 
     if target then
         local x, y, z = target.position()
-        local distanceToTarget = player.distance(x, y, z)
+        local distanceToTarget = player.position(x, y, z)
 
         if distanceToTarget > 5 and distanceToTarget < 15 then
             if not player.losCoordsLiteral(x, y, z) then return end
