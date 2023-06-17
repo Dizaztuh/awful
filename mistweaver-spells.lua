@@ -291,7 +291,7 @@ chiWave:Callback(function(spell)
         end
     end)
 
-    if lowestHpFriend and spell:CanCast(lowestHpFriend) then
+    if lowestHpFriend and spell:Castable(lowestHpFriend) then
         return spell:Cast(lowestHpFriend)
     end
 end)
