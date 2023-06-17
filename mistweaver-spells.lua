@@ -32,8 +32,8 @@ awful.Populate({
     chiWave = Spell(115098, { heal = true }),
     lifeCocoon = Spell(116849, { heal = true, targeted = true, ignoreCasting = true, ignoreFacing = true }),
     sphereofDespair = Spell(410777, { targeted = true, effect = "magic", ignoreMoving = true }),
-    roll = Spell(109132),
-    chiTorpedo = Spell(119582),
+    roll = Spell(109132, { ignoreMoving = true }),
+    chiTorpedo = Spell(119582, {ignoreMoving = true }),
     disable = Spell(343731, { targeted = true, cc = true, effect = "physical", ignoreMoving = true }),
     faelineStomp = Spell(388193, { heal = true, alwaysFace = true, ignoreMoving = true }),
     paralyze = Spell(115078, { cc = true, targeted = true, ignoreFacing = true, ignoreLoS = false }),
@@ -270,6 +270,8 @@ BurstCDS = {
     [12472] = true, -- Icy Veins
     [262161] = true -- Warbreaker
 }
+
+
 
 
 -- Create a callback for the Sheilun's Gift ability
