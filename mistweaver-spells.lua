@@ -289,7 +289,7 @@ roll:Callback(function(spell)
                     message="Casting Roll",
                     texture=109132,  -- Replace with the texture ID of the roll spell
                 })
-                roll:AoECast(tx, ty, tz)
+                roll:Cast()
             end
         end
     end
