@@ -276,21 +276,14 @@ roll:Callback(function(spell)
     local target = player.target
 
     if target then
-        local px, py, pz = player.position()  -- player's position
-        local tx, ty, tz = target.position()  -- target's position
+        local distanceToTarget = target.distance
 
-        -- Calculate Euclidean distance
-        local distanceToTarget = math.sqrt((tx - px)^2 + (ty - py)^2 + (tz - pz)^2)
-
-        if distanceToTarget > 5 and distanceToTarget < 15 then
-            if not player.losCoordsLiteral(tx, ty, tz) then return end
-            if tx and ty and tz and player.facing(target) then
-                awful.alert({
-                    message="Casting Roll",
-                    texture=109132,  -- Replace with the texture ID of the roll spell
-                })
-                roll:Cast()
-            end
+        if distanceToTarget > 5 and distanceToTarget < 15 and player.facing(target) then
+            awful.alert({
+                message="Casting Roll",
+                texture=109132,  -- Replace with the texture ID of the roll spell
+            })
+            roll:Cast()
         end
     end
 end)
