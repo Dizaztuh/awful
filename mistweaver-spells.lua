@@ -271,7 +271,30 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
+-- Callback for Chi Wave
+chiWave:Callback(function(spell)
+    local closestEnemy
+    awful.enemies.loop(function(enemy)
+        if player.distance(enemy) <= 5 then
+            closestEnemy = enemy
+        end
+    end)
+    
+    if closestEnemy and spell:Castable(closestEnemy) then
+        return spell:Cast(closestEnemy)
+    end
 
+    local lowestHpFriend
+    awful.friends.loop(function(friend)
+        if not lowestHpFriend or friend.hp < lowestHpFriend.hp then
+            lowestHpFriend = friend
+        end
+    end)
+
+    if lowestHpFriend and spell:Castable(lowestHpFriend) then
+        return spell:Cast(lowestHpFriend)
+    end
+end)
 
 
 roll:Callback(function(spell)
@@ -586,7 +609,7 @@ end)
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Only stomp selected totems and within range
-        if totem.id and settings.totemsToStomp[totem.id] and totem.distance <= 5 then
+        if totem.id and settings.totemsToStomp[totem.id] and totem.distance <= tigerPalm.range then
             awful.alert({
                 message="Stomping a totem.",  
                 texture=100780,
