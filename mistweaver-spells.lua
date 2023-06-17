@@ -296,7 +296,6 @@ roll:Callback(function(spell)
 end)
 
 
-
 -- Create a callback for the Sheilun's Gift ability
 sheilunsGift:Callback(function(spell)
     -- Check if the player has at least 8 stacks of the buff and Sheilun's Gift is castable
