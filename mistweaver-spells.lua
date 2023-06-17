@@ -271,14 +271,13 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-
 roll:Callback(function(spell)
     local target = player.target
 
     if target then
         local distanceToTarget = target.distance
 
-        if distanceToTarget > 5 and distanceToTarget < 15 and player.facing(target) then
+        if distanceToTarget and distanceToTarget > 5 and distanceToTarget < 15 and player.facing(target) then
             awful.alert({
                 message="Casting Roll",
                 texture=109132,  -- Replace with the texture ID of the roll spell
@@ -1323,6 +1322,9 @@ end)
 
 -- Callback for Rising Sun Kick
 risingSunKick:Callback(function(spell)
+    if allEnemies.around(player, 5) > 2 then return end
+    return spell:Cast()
+end
         spell:Cast(target)
 end)
 
