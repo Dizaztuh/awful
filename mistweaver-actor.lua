@@ -120,7 +120,7 @@ if settings.mode == "arm" then
 elseif settings.mode == "bgm" then
     tickRate = 0.015
 else
-    tickRate = 0.05  -- or some default value
+    tickRate = 0.01  -- or some default value
 end
 
 mistweaver:Init(function()
