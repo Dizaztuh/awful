@@ -1373,7 +1373,7 @@ end)
 
 
 risingSunKick:Callback(function(spell)
-    if allEnemies.around(player, 5) <= 2 then
+    if allEnemies.around(player, 5) <= 3 then
         spell:Cast(target)
     elseif player.buff(116680) then
         spell:Cast(target)
@@ -1414,7 +1414,7 @@ function castOnClosestEnemy()
     if closestUnit and minDistance <= 5 then
         if risingSunKick:Castable(closestUnit) then
             -- Prioritize casting Rising Sun Kick when available
-            if awful.allEnemies.around(player, 5) <= 2 then
+            if awful.allEnemies.around(player, 5) <= 3 then
                 risingSunKick:Cast(closestUnit)
                 return
             end
