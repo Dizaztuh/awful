@@ -82,11 +82,21 @@ misc:Dropdown({
     placeholder = "Select totems",
     header = "Totems to stomp:",
 })
+General:Dropdown({
+	var = "mode",
+	tooltip = "Choose your mode. Can be a lot of test or a little, or anywhere inbetween on the test spectrum.\n\nIf you need any more test, don't hesitate to contact us:\n\n1-800-TEST-123",
+	options = {
+		{ label = "BG Mode", value = "bgm", tooltip = "BG Mode, higher tick rate for more FPS." },
+		{ label = "Arena Mode", value = "arm", tooltip = "Arena Mode, lower tick rate for higher performance." },
+
+	},
+	placeholder = "Select your mode",
+	header = "Performance Modes",
+    default = { arm }
+})
 misc:Slider({text = "Zen Focus Tea", var = "zft", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Use ZFT at % HP. (If interrupts are available)"})
-misc:Checkbox({text = "Closest Target Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
+misc:Checkbox({text = "Auto Attack Mode", var = "aa", default = true, tooltip = "Enable/Disable Auto attack (if target out of range)"})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
 misc:Checkbox({text = "SS Bot Mode", var = "ssbot", default = false, tooltip = "Enable/Disable Solo Shuffle Bot Mode"})
-misc:Checkbox({text = "Arena Mode", var = "arm", default = true, tooltip = "Enable/Disable Arena Bot Mode, highest performance for arena. May hurt FPS in large game modes."})
-misc:Checkbox({text = "BG Mode", var = "bgm", default = false, tooltip = "Enable/Disable BG Mode, this should increase FPS in large game modes."})
 
 project.settings = settings

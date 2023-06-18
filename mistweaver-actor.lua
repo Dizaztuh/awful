@@ -115,12 +115,12 @@ end
 
 -- Initialize the mistweaver monk profile
 local tickRate
-if settings.arm then
+if settings.mode == "arm" then
     tickRate = 0.001
-elseif settings.bgm then
+elseif settings.mode == "bgm" then
     tickRate = 0.015
 else
-    tickRate = 0.1  -- or some default value
+    tickRate = 0.05  -- or some default value
 end
 
 mistweaver:Init(function()
