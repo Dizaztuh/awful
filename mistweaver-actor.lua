@@ -116,7 +116,7 @@ local tickRate
 if settings.mode == "arm" then
     tickRate = 0.001
 elseif settings.mode == "bgm" then
-    tickRate = 0.15
+    tickRate = 0.2
 else
     tickRate = 0.01  -- or some default value
 end
