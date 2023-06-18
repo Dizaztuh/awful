@@ -1048,7 +1048,7 @@ end)
 
 faelineStomp:Callback(function(spell)
     -- Check if the player doesn't have the Teachings buff
-    if not player.buff(389387) then
+    if not (player.buff(389387) or player.buff(388026)) then
         -- Get the target's position
         local x, y, z = target.position()
         -- Check if the target is within line of sight
