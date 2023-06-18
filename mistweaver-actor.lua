@@ -112,8 +112,6 @@ local function initCasterHealer()
     bloodFury()
 end
 
-
--- Initialize the mistweaver monk profile
 local tickRate
 if settings.mode == "arm" then
     tickRate = 0.001
@@ -134,7 +132,6 @@ mistweaver:Init(function()
         end
     end
 end, tickRate)
-
 
 interruptDurations = {
     [47528] = 15, -- Mind Freeze - Death Knight
