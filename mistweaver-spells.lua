@@ -36,7 +36,7 @@ awful.Populate({
     chiTorpedo = Spell(119582, { ignoreMoving = true }),
     disable = Spell(343731, { targeted = true, cc = true, effect = "physical", ignoreMoving = true }),
     faelineStomp = Spell(388193, { heal = true, alwaysFace = true, ignoreMoving = true }),
-    paralyze = Spell(115078, { cc = true, targeted = true, ignoreFacing = true, ignoreLoS = false }),
+    paralyze = Spell(115078, { cc = true, targeted = true, ignoreLoS = false }),
     legSweep = Spell(119381, { ignoreFacing = true, stun = true, ignoreMoving = true }),
     ringOfPeace = Spell(116844, { ignoreCasting = true, ignoreChanneling = true, AlwaysFace = true, ignoreMoving = true, effect = "magic", diameter = 15, offsetMin = 0, offsetMax = 5 }),
     flyingSerpentKick = Spell(101545),
@@ -475,7 +475,7 @@ provoke:Callback(function(spell)
         local enemyCastingSpell = enemy.casting -- Get the name of the spell being cast by the enemy
 
         -- If an enemy is casting a spell from the provokeTable and they're targeting the player
-        if enemyCastingSpell and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
+        if enemyCastingSpell and enemy.castTarget ~=nil and enemy.castTarget.isUnit(player) and provokeTable[enemyCastingSpell] and enemy.castRemains < 0.5 then
             provokingSpellBeingCasted = true
             return true -- Break the loop, no need to continue
         end
