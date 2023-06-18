@@ -1399,8 +1399,8 @@ function castOnClosestEnemy()
             -- Prioritize casting Rising Sun Kick when available
             if awful.allEnemies.around(player, 5) <= 2 then
                 risingSunKick:Cast(closestUnit)
+                return
             end
-            return
         end
         if player.lastCast == tigerPalm.id and blackoutKick:Castable(closestUnit) then
             -- Cast Blackout Kick if Tiger Palm was last cast
