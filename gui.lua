@@ -90,7 +90,6 @@ misc:Dropdown({
 		{ label = "Arena Mode", value = "arm", tooltip = "Arena Mode, lower tick rate for higher performance." },
 
 	},
-	placeholder = "Select your mode",
 	header = "Performance Modes",
     default = { arm }
 })
