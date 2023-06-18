@@ -26,6 +26,7 @@ awful.Populate({
     envelopingMist = Spell(124682, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     enveloping = Spell(124682, { heal = true, ignoreChanneling = true, targeted = true }),
     renewing = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
+    prehot = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true, ignoreLoS = false }),
     essenceFont = Spell(191837, { heal = true, ignoreMoving = true, ignoreFacing = true }),
@@ -273,6 +274,16 @@ BurstCDS = {
     [12472] = true, -- Icy Veins
     [262161] = true -- Warbreaker
 }
+
+preHot:Callback(function()
+    awful.friends.loop(function(friend)
+        if friend.hp == 100 and not friend.combat and not friend.buff("renewing mist") then
+            if renewingMist:Castable(friend) then
+                renewingMist:Cast(friend)
+            end
+        end
+    end)
+end)
 
 -- Callback for Chi Wave
 chiWave:Callback(function(spell)
