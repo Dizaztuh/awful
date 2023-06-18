@@ -303,7 +303,7 @@ roll:Callback(function(spell)
     if target then
         local distanceToTarget = target.distance
 
-        if distanceToTarget and distanceToTarget > 8 and distanceToTarget < 15 and player.facing(target) then
+        if distanceToTarget and distanceToTarget > 10 and distanceToTarget < 15 and player.facing(target) then
             awful.alert({
                 message="Casting Roll",
                 texture=109132,  -- Replace with the texture ID of the roll spell
