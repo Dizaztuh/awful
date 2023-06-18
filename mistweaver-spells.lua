@@ -1361,8 +1361,11 @@ end)
 risingSunKick:Callback(function(spell)
     if allEnemies.around(player, 5) <= 2 then
         spell:Cast(target)
+    elseif player.buff(116680) then
+        spell:Cast(target)
     end
 end)
+
 
 
 touchOfDeath:Callback(function(spell)
