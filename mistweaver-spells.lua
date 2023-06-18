@@ -26,7 +26,7 @@ awful.Populate({
     envelopingMist = Spell(124682, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     enveloping = Spell(124682, { heal = true, ignoreChanneling = true, targeted = true }),
     renewing = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
-    prehot = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
+    preHot = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     renewingMist = Spell(115151, { heal = true, targeted = true, ignoreMoving = true, ignoreChanneling = true }),
     soothingMist = Spell(115175, { heal = true, targeted = true, ignoreLoS = false }),
     essenceFont = Spell(191837, { heal = true, ignoreMoving = true, ignoreFacing = true }),
