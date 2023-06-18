@@ -1009,7 +1009,7 @@ renewingMist:Callback(function(spell)
     end)
 
     -- Check if Renewing Mist's cast time is 0 and the lowestHpFriend is found
-    if renewingMist.castTime == 0 and lowestHpFriend ~= nil and not lowestHpFriend.buff(119611) then
+    if player.buffStacks(343820) == 3 and lowestHpFriend ~= nil and not lowestHpFriend.buff(119611) then
         awful.alert({
             message="Casted Instant Renewing Mist Instant Proc on Lowest HP Ally!", 
             texture=115151,
