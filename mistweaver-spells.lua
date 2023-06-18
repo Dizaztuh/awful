@@ -608,7 +608,7 @@ end)
 
 -- Stomp totems function
 function stompTotems()
-    awful.totems.loop(function(totem)
+    awful.totems.stomp(function(totem, uptime)
         -- Only stomp selected totems and within range
         if totem.id and settings.totemsToStomp[totem.id] and totem.distance <= tigerPalm.range then
             awful.alert({
