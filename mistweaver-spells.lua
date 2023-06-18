@@ -878,7 +878,7 @@ local lastCastTimeHope = 0
 
 sphereofHope:Callback(function(spell)
     -- Check if 30 seconds have passed since the last cast
-    if GetTime() - lastCastTimeHope >= 30 then
+    if GetTime() - lastCastTimeHope >= 20 then
         -- Loop through all friendly units
         awful.fgroup.loop(function(friend)
             if not friend.combat or friend.hp > settings.soh or friend.buff(411036) then
@@ -902,7 +902,7 @@ end)
 local lastCastTimeDespair = 0
 
 sphereofDespair:Callback(function(spell)
-    if GetTime() - lastCastTimeDespair >= 30 then
+    if GetTime() - lastCastTimeDespair >= 20 then
         local lowestHpEnemy = nil
         local lowestHp = math.huge
 
