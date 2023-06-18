@@ -700,7 +700,7 @@ spearHandStrike:Callback(function(spell)
     end)
 end)
 
-
+local lastCastTime = 0
 -- Create a callback function for Purify
 detox:Callback(function(spell)
     -- Loop through all friendly units
