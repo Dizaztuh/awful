@@ -941,7 +941,7 @@ envelopingMist:Callback(function(spell)
     end)
 
     -- Check if Enveloping Mist's cast time is 0 and the lowestHpFriend is found
-    if player.buffStacks(343820) > 3 and lowestHpFriend ~= nil then
+    if player.buffStacks(343820) > 3 and not player.buff(116680) and lowestHpFriend ~= nil then
         awful.alert({
             message="Casted Instant Enveloping Mist Instant Proc on Lowest HP Ally!", 
             texture=124682,
