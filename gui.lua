@@ -86,5 +86,7 @@ misc:Slider({text = "Zen Focus Tea", var = "zft", min = 0, max = 100, default = 
 misc:Checkbox({text = "Closest Target Auto Attack", var = "aa", default = true, tooltip = "Enable/Disable Auto attack closest target for continued healing."})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
 misc:Checkbox({text = "SS Bot Mode", var = "ssbot", default = false, tooltip = "Enable/Disable Solo Shuffle Bot Mode"})
+misc:Checkbox({text = "Arena Mode", var = "arm", default = true, tooltip = "Enable/Disable Arena Bot Mode, highest performance for arena. May hurt FPS in large game modes."})
+misc:Checkbox({text = "BG Mode", var = "bgm", default = false, tooltip = "Enable/Disable BG Mode, this should increase FPS in large game modes."})
 
 project.settings = settings
