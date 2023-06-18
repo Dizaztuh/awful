@@ -82,7 +82,7 @@ misc:Dropdown({
     placeholder = "Select totems",
     header = "Totems to stomp:",
 })
-General:Dropdown({
+misc:Dropdown({
 	var = "mode",
 	tooltip = "Choose your mode. Can be a lot of test or a little, or anywhere inbetween on the test spectrum.\n\nIf you need any more test, don't hesitate to contact us:\n\n1-800-TEST-123",
 	options = {
