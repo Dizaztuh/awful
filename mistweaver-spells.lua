@@ -1396,7 +1396,9 @@ function castOnClosestEnemy()
     if closestUnit and minDistance <= 5 then
         if risingSunKick:Castable(closestUnit) then
             -- Prioritize casting Rising Sun Kick when available
+            if allEnemies.around(player, 5) <= 2 then
                 risingSunKick:Cast(closestUnit)
+            end
             return
         end
         if player.lastCast == tigerPalm.id and blackoutKick:Castable(closestUnit) then
