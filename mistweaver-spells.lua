@@ -208,6 +208,9 @@ local ROPDROP = {
 
     -- Define the DisarmTable
 local DisarmTable = {
+    [114050] = true, -- Ascendence
+    [114051] = true, -- Ascendence 2
+    [114052] = true, -- Ascendence 3
     [384352] = true, -- Doom Winds
     [121471] = true, -- Shadow Blades
     [360952] = true, -- Coordinated Assault
@@ -215,7 +218,7 @@ local DisarmTable = {
     [288613] = true, -- Trueshot
     [31884] = true, -- Avenging Wrath
     [185313] = true, -- Shadow Dance
-    [2825] = true, -- Bloodlust
+    [204361] = true, -- Bloodlust
     [107574] = true, -- Avatar
     [262161] = true, -- Warbreaker
     [216331] = true -- Avenging Crusader
