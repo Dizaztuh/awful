@@ -300,7 +300,7 @@ end)
 roll:Callback(function(spell)
     local target = player.target
 
-    if target then
+    if target and target.enemy then  -- check if target is an enemy
         local distanceToTarget = target.distance
 
         if distanceToTarget and distanceToTarget > 10 and distanceToTarget < 15 and player.facing(target) then
@@ -312,7 +312,6 @@ roll:Callback(function(spell)
         end
     end
 end)
-
 
 
 -- Create a callback for the Sheilun's Gift ability
