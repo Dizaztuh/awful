@@ -114,17 +114,27 @@ end
 
 
 -- Initialize the mistweaver monk profile
+local tickRate
+if settings.arm then
+    tickRate = 0.001
+elseif settings.bgm then
+    tickRate = 0.015
+else
+    tickRate = 0.1  -- or some default value
+end
+
 mistweaver:Init(function()
     updateInstanceType()
     if player.buff("Arena Preparation") or player.buff("Preparation") or player.buff ("Drink") or player.buff ("Food") then return end
     if not player.mounted and (ARENA or BATTLEGROUND or INSTANCE or (WORLD and anyGroupMemberInCombat() and not BATTLEGROUND) or player.target.name == "PvP Training Dummy") then
         if player.hasTalent(287503) then
-        initFistweaver()
+            initFistweaver()
         else
-        initCasterHealer()
+            initCasterHealer()
         end
     end
-end, if settings.arm then 0.001 end if settings.bgm then 0.015 end)
+end, tickRate)
+
 
 interruptDurations = {
     [47528] = 15, -- Mind Freeze - Death Knight
