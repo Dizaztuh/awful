@@ -1222,7 +1222,18 @@ legSweep:Callback(function(spell)
         spell:Cast()
         return
     end
+
+    -- Add new condition
+    if enemiesInRange >= 2 then
+        awful.alert({
+            message="Casting Leg Sweep due to more than 2 enemies in range",
+            texture=119381,
+        })
+        spell:Cast()
+        return
+    end
 end)
+
 
 
 dampenHarm:Callback(function(spell)
