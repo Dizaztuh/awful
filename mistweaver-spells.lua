@@ -1380,6 +1380,7 @@ end)
 function castOnClosestEnemy()
     local minDistance = math.huge
     local closestUnit = nil
+    local allEnemies = nil
 
     -- Combining the enemies and pets loop into one
     for _, unit in pairs({awful.enemies, awful.pets}) do
