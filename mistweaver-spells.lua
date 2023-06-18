@@ -619,21 +619,23 @@ grappleWeapon:Callback(function(spell)
     end)
 end)
 
--- Stomp totems function
 function stompTotems()
     awful.totems.loop(function(totem)
         -- Only stomp selected totems and within range
-        if totem.id and settings.totemsToStomp[totem.id] and totem.distance <= 5 then
-            awful.alert({
-                message="Stomping a totem.",  
-                texture=100780,
-            })
-            -- If the totem is in the list and within range, and if abilities are castable, cast Tiger Palm and Blackout Kick on the totem
-            if tigerPalm:Castable(totem) then
-                tigerPalm:Cast(totem)
-            end
-            if blackoutKick:Castable(totem) then
-                blackoutKick:Cast(totem)
+        for _, selectedTotemId in ipairs(settings.totemsToStomp) do
+            if totem.id == selectedTotemId and totem.distance <= 5 then
+                awful.alert({
+                    message="Stomping a totem.",  
+                    texture=100780,
+                })
+                -- If the totem is in the list and within range, and if abilities are castable, cast Tiger Palm and Blackout Kick on the totem
+                if tigerPalm:Castable(totem) then
+                    tigerPalm:Cast(totem)
+                end
+                if blackoutKick:Castable(totem) then
+                    blackoutKick:Cast(totem)
+                end
+                break
             end
         end
     end)
