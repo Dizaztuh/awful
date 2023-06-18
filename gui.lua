@@ -84,7 +84,7 @@ misc:Dropdown({
 })
 misc:Dropdown({
 	var = "mode",
-	tooltip = "Choose your mode. Can be a lot of test or a little, or anywhere inbetween on the test spectrum.\n\nIf you need any more test, don't hesitate to contact us:\n\n1-800-TEST-123",
+	tooltip = "Choose your mode.",
 	options = {
 		{ label = "BG Mode", value = "bgm", tooltip = "BG Mode, higher tick rate for more FPS." },
 		{ label = "Arena Mode", value = "arm", tooltip = "Arena Mode, lower tick rate for higher performance." },

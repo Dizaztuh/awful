@@ -621,7 +621,7 @@ end)
 
 -- Stomp totems function
 function stompTotems()
-    awful.totems.stomp(function(totem)
+    awful.totems.loop(function(totem)
         -- Only stomp selected totems and within range
         if totem.id and settings.totemsToStomp[totem.id] and totem.distance <= 5 then
             awful.alert({
