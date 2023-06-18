@@ -1380,7 +1380,7 @@ end)
 function castOnClosestEnemy()
     local minDistance = math.huge
     local closestUnit = nil
-    local allEnemies = nil
+ 
 
     -- Combining the enemies and pets loop into one
     for _, unit in pairs({awful.enemies, awful.pets}) do
@@ -1397,7 +1397,7 @@ function castOnClosestEnemy()
     if closestUnit and minDistance <= 5 then
         if risingSunKick:Castable(closestUnit) then
             -- Prioritize casting Rising Sun Kick when available
-            if allEnemies.around(player, 5) <= 2 then
+            if awful.allEnemies.around(player, 5) <= 2 then
                 risingSunKick:Cast(closestUnit)
             end
             return
