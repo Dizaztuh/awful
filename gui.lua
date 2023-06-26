@@ -93,8 +93,16 @@ misc:Dropdown({
 	header = "Performance Modes",
     default = { arm }
 })
+misc:Slider({
+	text = "HealthStone", 
+	var = "hst", 
+	min = 0, 
+	max = 100, 
+	default = 35, 
+	valueType = "%", 
+	tooltip = "Use Health Stone at % HP."
+})
 misc:Slider({text = "Zen Focus Tea", var = "zft", min = 0, max = 100, default = 60, valueType = "%", tooltip = "Use ZFT at % HP. (If interrupts are available)"})
-misc:Checkbox({text = "Auto Attack Mode", var = "aa", default = true, tooltip = "Enable/Disable Auto attack (if target out of range)"})
 misc:Checkbox({text = "Arena Drawings", var = "draws", default = true, tooltip = "Enable/Disable Line / LOS drawings in Arena."})
 misc:Checkbox({text = "SS Bot Mode", var = "ssbot", default = false, tooltip = "Enable/Disable Solo Shuffle Bot Mode"})
 

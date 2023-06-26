@@ -55,7 +55,7 @@ local function initFistweaver()
     paralyze()
     legSweep()
     invokeChiJi()
-    if settings.aa then
+    if not settings.ssbot then
     castOnClosestEnemy()
     end
     sphereofDespair()
