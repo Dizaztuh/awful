@@ -1393,7 +1393,6 @@ tigerPalm:Callback(function(spell)
                 if enemy.distance < minDistance then
                     closestEnemy = enemy
                     minDistance = enemy.distance
-    end
                 end
             end)
         end
@@ -1403,6 +1402,7 @@ tigerPalm:Callback(function(spell)
         -- Cast Tiger Palm on the closest enemy.
         spell:Cast(closestEnemy)
         return
+    end
     end
 end)
 
