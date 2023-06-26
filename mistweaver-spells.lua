@@ -1372,7 +1372,7 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    if settings.ssbot then
+    if not settings.ssbot then
         if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
             -- Cast Tiger Palm on the target.
             tigerPalm:Cast(target)
