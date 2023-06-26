@@ -275,10 +275,44 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
+local healthStone = awful.NewItem(5512)
 function healthStone()
     local healthStone = awful.NewItem(5512)
     if healthStone:Usable() and player.hp < settings.hst and healthStone.count >= 1 and healthStone.cd < 1 then
         healthStone:Use()
+    end
+end
+
+function collectHealthstone()
+    -- If player does not have either "Arena Preparation" or "Preparation" buffs, return
+    if not player.buff("Arena Preparation") and not player.buff("Preparation") then
+        return
+    end
+
+    -- Loop through all friendly units to check if there is a Warlock present
+    local warlockPresent = false
+    awful.fgroup.loop(function(friend)
+        if friend.class2 == "WARLOCK" then
+            warlockPresent = true
+            return
+        end
+    end)
+
+    -- If no Warlock is present, return
+    if not warlockPresent then
+        return
+    end
+
+    local soulwelled = awful.objects.within(5).find(function(obj) return obj.id == 303148 and obj.creator.friend end)
+    if healthstone.count < 1 then
+        if soulwelled then
+            if Unlocker.type == "daemonic" then
+                Interact(soulwelled.pointer)
+            else
+                ObjectInteract(soulwelled.pointer)
+            end
+            return
+        end
     end
 end
 
