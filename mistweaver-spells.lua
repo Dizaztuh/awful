@@ -275,14 +275,7 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
-local healthStone = awful.NewItem(5512)
-function healthStone()
-    local healthStone = awful.NewItem(5512)
-    if healthStone:Usable() and player.hp < settings.hst and healthStone.count >= 1 and healthStone.cd < 1 then
-        healthStone:Use()
-    end
-end
-
+local healthstone = awful.NewItem(5512)
 function collectHealthstone()
     -- If player does not have either "Arena Preparation" or "Preparation" buffs, return
     if not player.buff("Arena Preparation") and not player.buff("Preparation") then
@@ -313,6 +306,13 @@ function collectHealthstone()
             end
             return
         end
+    end
+end
+
+function healthStone()
+    local healthStone = awful.NewItem(5512)
+    if healthStone:Usable() and player.hp < settings.hst and healthStone.count >= 1 and healthStone.cd < 1 then
+        healthStone:Use()
     end
 end
 
