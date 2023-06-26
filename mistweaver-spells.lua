@@ -1372,13 +1372,14 @@ end)
 
 -- Callback for Tiger Palm
 tigerPalm:Callback(function(spell)
-    if not settings.ssbot then
+    if settings.ssbot then
         if tigerPalm:Castable(target) and player.lastCast ~= tigerPalm.id then
             -- Cast Tiger Palm on the target.
             tigerPalm:Cast(target)
             return
         end
     end
+    if not settings.ssbot then
     -- Define closestEnemy as target for future checks
     local closestEnemy = target
     -- If player has Alpha Tiger buff and the buff's remaining time is more than 1 second
@@ -1392,6 +1393,7 @@ tigerPalm:Callback(function(spell)
                 if enemy.distance < minDistance then
                     closestEnemy = enemy
                     minDistance = enemy.distance
+    end
                 end
             end)
         end
