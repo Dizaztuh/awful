@@ -275,6 +275,13 @@ BurstCDS = {
     [262161] = true -- Warbreaker
 }
 
+function healthStone()
+    local healthStone = awful.NewItem(5512)
+    if healthStone:Usable() and player.hp < settings.hst and healthStone.count >= 1 and healthStone.cd < 1 then
+        healthStone:Use()
+    end
+end
+
 preHot:Callback(function()
     awful.friends.loop(function(friend)
         if friend.hp == 100 and not friend.combat and not friend.buff("renewing mist") then

@@ -77,6 +77,7 @@ local function initFistweaver()
     bloodFury()
     roll()
     preHot()
+    healthStone()
 end
 
 local function initCasterHealer()
@@ -110,6 +111,7 @@ local function initCasterHealer()
     transfer()
     stompTotems()
     bloodFury()
+    healthStone()
 end
 
 local tickRate
