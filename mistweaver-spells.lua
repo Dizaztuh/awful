@@ -225,7 +225,8 @@ local DisarmTable = {
     [216331] = true -- Avenging Crusader
 }
 
-local interrupts = {
+
+local interruptDurations = {
     [47528] = true, -- Mind Freeze - Death Knight
     [183752] = true, -- Disrupt - Demon Hunter
     [106839] = true, -- Skull Bash - Druid
@@ -240,7 +241,7 @@ local interrupts = {
     [1766] = true, -- Kick - Rogue
     [57994] = true, -- Wind Shear - Shaman
     [19647] = true, -- Spell Lock - Warlock
-    [119818] = true, -- Call Felhunter - Warlock (Replace xxxxxx with the actual ID for this spell)
+    [119818] = true, -- Call Felhunter - Warlock
     [6552] = true -- Pummel - Warrior
 }
 
@@ -396,8 +397,9 @@ end)
 
 
 zenFocusTea:Callback(function(spell)
+    if not spell:Castable() then return end
     -- Define the HP threshold at which you want to activate Zen Focus Tea
-    local hpThreshold = settings.zft  -- For example, we use 30%
+    local hpThreshold = settings.swg  -- For example, we use 30%
 
     -- Initialize variables for storing the lowest HP friend and their HP
     local lowestHpFriend = nil
@@ -414,16 +416,19 @@ zenFocusTea:Callback(function(spell)
     end)
 
     -- If we found a friend with HP below the threshold, Zen Focus Tea is castable, and the player is not stunned
-    if lowestHpFriend and lowestHp <= hpThreshold and spell:Castable() and not player.stunned then
-        -- Loop through interrupt cooldowns
-        for guid, time in pairs(interruptCDs) do
-            -- If the interrupt is off cooldown
-            if time <= GetTime() then
-                -- Cast Zen Focus Tea
-                spell:Cast()
-                return
+    if lowestHpFriend and lowestHp <= hpThreshold and not player.stunned then
+        -- Loop through all enemies
+        awful.enemies.loop(function(enemy)
+            -- Loop through each spellID in the interruptDurations table
+            for spellID in pairs(interruptDurations) do  
+                -- Check if the enemy's interrupt spell is on cooldown
+                if enemy.cd(spellID) > 0 then  -- If interrupt is on cooldown, cd > 0
+                    -- If interrupt is on cooldown, cast spiritWalkersGrace
+                    spell:Cast()
+                    return
+                end
             end
-        end
+        end)
     end
 end)
 

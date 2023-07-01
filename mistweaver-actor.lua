@@ -16,25 +16,29 @@ local function updateInstanceType()
     WORLD = instanceType == "none"
 end
 
-print("Gladdy Sisterfister Loaded")
+awful.addEventCallback(function() 
+    updateInstanceType()
+end, "PLAYER_ENTERING_WORLD")
+
+awful.addEventCallback(function()
+    groupInCombat = true
+end, "PLAYER_REGEN_DISABLED")
+
+awful.addEventCallback(function()
+    groupInCombat = false
+end, "PLAYER_REGEN_ENABLED")
 
 local function anyGroupMemberInCombat()
-    if IsInRaid() then
-        for i = 1, GetNumGroupMembers() do
-            local unit = "raid"..i
-            if UnitAffectingCombat(unit) and CheckInteractDistance(unit, 4) then
-                return true
-            end
-        end
-    elseif IsInGroup() then
-        for i = 1, GetNumSubgroupMembers() do
-            local unit = "party"..i
-            if UnitAffectingCombat(unit) and CheckInteractDistance(unit, 4) then
-                return true
-            end
-        end
-    end
-    return false
+    return groupInCombat
+end
+
+local tickRate
+if settings.mode == "arm" then
+    tickRate = 0.001
+elseif settings.mode == "bgm" then
+    tickRate = 0.2
+else
+    tickRate = 0.1  -- or some default value
 end
 
 local function initFistweaver()
@@ -114,15 +118,6 @@ local function initCasterHealer()
     healthStone()
 end
 
-local tickRate
-if settings.mode == "arm" then
-    tickRate = 0.001
-elseif settings.mode == "bgm" then
-    tickRate = 0.2
-else
-    tickRate = 0.01  -- or some default value
-end
-
 mistweaver:Init(function()
     updateInstanceType()
     collectHealthstone()
@@ -136,41 +131,3 @@ mistweaver:Init(function()
         end
     end
 end, tickRate)
-
-interruptDurations = {
-    [47528] = 15, -- Mind Freeze - Death Knight
-    [183752] = 15, -- Disrupt - Demon Hunter
-    [106839] = 15, -- Skull Bash - Druid
-    [78675] = 60, -- Solar Beam - Druid
-    [351338] = 15, -- Quell - Evoker
-    [187707] = 15, -- Muzzle - Hunter
-    [147362] = 24, -- Counter Shot - Hunter
-    [2139] = 24, -- Counterspell - Mage
-    [116705] = 15, -- Spear Hand Strike - Monk
-    [96231] = 15, -- Rebuke - Paladin
-    [15487] = 45, -- Silence - Priest
-    [1766] = 15, -- Kick - Rogue
-    [57994] = 12, -- Wind Shear - Shaman
-    [19647] = 24, -- Spell Lock - Warlock
-    [119818] = 24, -- Call Felhunter - Warlock
-    [6552] = 15 -- Pummel - Warrior
-}
-
-interruptCDs = {}
-
-awful.onEvent(function(info, event, source, dest)
-    if event ~= 'SPELL_CAST_SUCCESS' then return end
-    if not source.enemy then return end
-
-    local spellID = select(12, unpack(info))
-    if interruptDurations[spellID] then
-        interruptCDs[source.guid] = GetTime() + interruptDurations[spellID]
-    end
-end)
-
-awful.onEvent(function(_, event)
-    if event == "PLAYER_ENTERING_WORLD" then
-        updateInstanceType()
-    end
-end)
-
