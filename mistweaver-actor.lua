@@ -5,6 +5,8 @@ settings = project.settings
 local player = awful.player
 local groupInCombat = false
 
+print("Gladdy Sisterfister Loaded")
+
 local function updateInstanceType()
     local _, instanceType = IsInInstance()
     PVP = instanceType == "pvp" or instanceType == "arena"
