@@ -52,7 +52,7 @@ awful.Populate({
     thunderFocusTea = Spell(116680,  { ignoreCasting = true, ignoreMoving = true, ignoreChanneling = true }),
     restoral = Spell(388615, { heal = true, ignoreControl = true, range = 40, ignoreChanneling = true }),
     tigersLust = Spell(116841, { targeted = true }),
-    invokeChiJi = Spell(325197, { ignoreMoving = true, ignoreMoving = true }),
+    invokeChiJi = Spell(325197, { ignoreMoving = true }),
     bloodFury = Spell(33697),
     grappleWeapon = Spell (233759, { targeted = true, cc = true, effect = "physical", ignoreMoving = true }),
     provoke = Spell (115546, { targeted = true, ignoreMoving = true, ignoreCasting = true, ignoreChanneling = true })
