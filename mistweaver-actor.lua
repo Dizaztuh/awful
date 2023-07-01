@@ -38,7 +38,7 @@ if settings.mode == "arm" then
 elseif settings.mode == "bgm" then
     tickRate = 0.2
 else
-    tickRate = 0.1  -- or some default value
+    tickRate = 0.050  -- or some default value
 end
 
 local function initFistweaver()
