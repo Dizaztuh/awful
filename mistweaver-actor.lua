@@ -1,4 +1,3 @@
--- Import the necessary modules and get the mistweaver monk profile
 local Unlocker, awful, project = ...
 local mistweaver = project.monk.mistweaver
 settings = project.settings
@@ -38,7 +37,7 @@ end
 
 local tickRate
 if settings.mode == "arm" then
-    tickRate = 0.001
+    tickRate = 0.01
 elseif settings.mode == "bgm" then
     tickRate = 0.2
 else
