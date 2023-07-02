@@ -27,11 +27,15 @@ local classColors = {
     ["MONK"] = {0, 255, 142}  -- Brightish Green
 }
 
-Draw(function(draw)
-    -- Get the instance type every time Draw is called
-    local _, instanceType = IsInInstance()
+local instanceType = nil
 
-    -- Check if the instance type is 'arena' and if drawing is enabled in the settings
+-- add a callback for when the player enters a new instance
+awful.addEventCallback(function()
+    _, instanceType = IsInInstance()
+end, "PLAYER_ENTERING_WORLD")
+
+Draw(function(draw)
+    -- only draw if we're in an arena instance and drawing is enabled
     if instanceType == "arena" and settings.draws then
         -- Set the width of the lines
         draw:SetWidth(3)
