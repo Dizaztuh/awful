@@ -23,17 +23,24 @@ awful.addEventCallback(function()
     updateInstanceType()
 end, "PLAYER_ENTERING_WORLD")
 
-awful.addEventCallback(function()
-    groupInCombat = true
-end, "PLAYER_REGEN_DISABLED")
-
-awful.addEventCallback(function()
-    groupInCombat = false
-end, "PLAYER_REGEN_ENABLED")
-
 local function anyGroupMemberInCombat()
-    return groupInCombat
-end
+    if IsInRaid() then
+        for i = 1, GetNumGroupMembers() do
+            local unit = "raid"..i
+            if UnitAffectingCombat(unit) and CheckInteractDistance(unit, 4) then
+                return true
+            end
+        end
+    elseif IsInGroup() then
+        for i = 1, GetNumSubgroupMembers() do
+            local unit = "party"..i
+            if UnitAffectingCombat(unit) and CheckInteractDistance(unit, 4) then
+                return true
+            end
+        end
+    end
+    return false
+  end
 
 local tickRate
 if settings.mode == "arm" then
