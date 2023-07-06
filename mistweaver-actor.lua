@@ -19,9 +19,11 @@ local function updateInstanceType()
     WORLD = instanceType == "none"
 end
 
-awful.addEventCallback(function() 
-    updateInstanceType()
-end, "PLAYER_ENTERING_WORLD")
+awful.onEvent(function(_, event)
+    if event == "PLAYER_ENTERING_WORLD" then
+        updateInstanceType()
+    end
+end)
 
 local function anyGroupMemberInCombat()
     if IsInRaid() then
