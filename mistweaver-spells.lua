@@ -311,7 +311,7 @@ function healthStone()
 end
 
 preHot:Callback(function()
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         if friend.hp == 100 and not friend.combat and not friend.buff("renewing mist") then
             if renewingMist:Castable(friend) then
                 renewingMist:Cast(friend)
@@ -334,7 +334,7 @@ chiWave:Callback(function(spell)
     end
 
     local lowestHpFriend
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         if not lowestHpFriend or friend.hp < lowestHpFriend.hp then
             lowestHpFriend = friend
         end
@@ -620,7 +620,7 @@ ringOfPeace:Callback(function(spell)
         end
     end)
 
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         if friend.hp <= 40 and not friend.buff (116849) then
             awful.enemies.loop(function(enemy)
                 if enemy.meleeRangeOf(friend) and lifeCocoon.cd > 1 then
@@ -824,7 +824,7 @@ tigersLust:Callback(function(spell)
     end
 
     -- Second condition: Check if friend is rooted and root remains >= 3 using friends loop
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         if friend.rooted and friend.rootRemains >= 3 then
             awful.alert({
                 message="Casted Tiger's Lust!",
@@ -854,7 +854,7 @@ end
 
 if settings.cjf then
     -- Second condition: Check if friends cast any spells from the BurstCDS table
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         for spellID, _ in pairs(BurstCDS) do
             if friend.buff(spellID) then
                 awful.alert({
@@ -1348,7 +1348,7 @@ paralyze:Callback(function(spell)
     end
 
     -- Loop through all friends
-    awful.friends.loop(function(friend)
+    awful.fgroup.loop(function(friend)
         -- Ensure the friend is valid
         if not friend then return end
 
