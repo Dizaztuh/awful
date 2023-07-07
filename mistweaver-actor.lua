@@ -19,9 +19,6 @@ local function updateInstanceType()
     WORLD = instanceType == "none"
 end
 
-awful.addEventCallback(function() 
-    updateInstanceType()
-end, "PLAYER_ENTERING_WORLD")
 
 local function anyGroupMemberInCombat()
     if IsInRaid() then
@@ -129,6 +126,7 @@ local function initCasterHealer()
 end
 
 mistweaver:Init(function()
+    updateInstanceType()
     if player.mounted then return end
     if player.buff("Arena Preparation") or player.buff("Preparation") or player.buff ("Drink") or player.buff ("Food") then return end
     if (ARENA or BATTLEGROUND or INSTANCE or (WORLD and anyGroupMemberInCombat() and not BATTLEGROUND or player.target.name == "PvP Training Dummy")) then
