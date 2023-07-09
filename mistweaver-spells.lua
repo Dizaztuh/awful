@@ -392,7 +392,7 @@ end)
 zenFocusTea:Callback(function(spell)
     if not spell:Castable() then return end
     -- Define the HP threshold at which you want to activate Zen Focus Tea
-    local hpThreshold = settings.swg  -- For example, we use 30%
+    local hpThreshold = settings.zft  -- For example, we use 30%
 
     -- Initialize variables for storing the lowest HP friend and their HP
     local lowestHpFriend = nil
