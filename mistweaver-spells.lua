@@ -486,7 +486,6 @@ transfer:Callback(function(spell)
         if player.buff("Soothing Mist") then
             if vivify:Castable(player) then
                 vivify:Cast(player)
-                vivify:Cast(player)
             end
             if enveloping:Castable(player) then
                 enveloping:Cast(player)
